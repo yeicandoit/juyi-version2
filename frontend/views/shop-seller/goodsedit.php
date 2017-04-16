@@ -7,8 +7,13 @@ use yii\helpers\ArrayHelper;
 <?=Html::cssFile('@web/css/sellerhome.css')?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <?=Html::cssFile('@web/css/jquery.Jcrop.css')?>
-<?=Html::jsFile('@web/js/ajaxupload.js')?>
-<?=Html::jsFile('@web/js/jquery.Jcrop.min.js')?>
+
+<?php
+//frontend\assets\AppAsset does not work, so use registerJsFile to load javascript file.
+$this->registerJsFile('@web/js/ajaxupload.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]);
+$this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]);
+?>
+
 <style type="text/css">
     .jcorp-holder{position: relative;}
     #frm{margin-bottom:0px; }

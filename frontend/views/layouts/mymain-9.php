@@ -19,13 +19,13 @@ use yii\helpers\Url;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+	<?= Html::jsFile('@web/assets/57c9d7e8/jquery.js') ?>
     <?php $this->head() ?>
     
        
     
 
     <link rel="shortcut icon" href="mybootstrap/flatui/img/favicon.ico">
-	<?= Html::jsFile('@web/assets/57c9d7e8/jquery.js') ?>
 
     
    

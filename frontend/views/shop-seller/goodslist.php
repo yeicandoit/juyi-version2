@@ -51,7 +51,7 @@ use yii\grid\GridView;
                         $catName[] = $catExt->category->name;
                     }
                     $strCats = join(',',$catName);
-                    return "<div style='max-width: 250px;word-wrap: break-word;word-break: normal;overflow:auto;'>$strCats</div>";
+                    return "<div style='max-width: 250px;white-space: normal;'>$strCats</div>";
                 }
             ],
             'sell_price',
