@@ -760,4 +760,3 @@ if (Yii::$app->user->isGuest) {
 </body>
 </html>
 <?php $this->endPage() ?>
-   <?= Html::jsFile('@web/assets/811c9078/js/bootstrap.js') ?>
