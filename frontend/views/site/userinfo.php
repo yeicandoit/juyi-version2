@@ -63,12 +63,13 @@ use dosamigos\datepicker\DatePicker;
         <?= DatePicker::widget([
             'model' => $userinfo,
             'attribute' => 'birthday',
+            'language' => 'zh-CN',
             'template' => '{addon}{input}',
             'clientOptions' => [
                 'autoclose' => true,
                 'format' => 'yyyy-mm-dd',
-                'language'=>'zh', //
-                'todayHighlight' => true,
+                'todayHighlight'=>true,
+                'pickButtonIcon' => 'glyphicon glyphicon-time'
             ]
         ]);?>
         </div>

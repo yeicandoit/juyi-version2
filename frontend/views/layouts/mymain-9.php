@@ -32,8 +32,6 @@ use yii\helpers\Url;
     <?php 
 AppAsset::register($this);
 AppAsset::addCss($this,Yii::$app->request->baseUrl."/assets/6f93f37f/jquery-ui.css");
-AppAsset::addScript($this,Yii::$app->request->baseUrl."/assets/6f93f37f/jquery-ui.js");
-
 ?>
     
 

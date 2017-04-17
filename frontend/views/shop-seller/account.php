@@ -1,7 +1,8 @@
 <?php
 use yii\helpers\Html;
-use miloschuman\highcharts\Highcharts;
 use dosamigos\datepicker\DatePicker;
+
+$this->registerJsFile('@web/assets/new/_systemjs/highcharts/highcharts.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]);
 ?>
 <?=Html::cssFile('@web/css/sellerhome.css')?>
 <?=Html::cssFile('@web/css/reg.css')?>
@@ -34,10 +35,13 @@ use dosamigos\datepicker\DatePicker;
             <td>
                 <?= DatePicker::widget([
                     'name' => 'startDate',
+                    'language' => 'zh-CN',
                     'template' => '{addon}{input}',
                     'clientOptions' => [
                         'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight'=>true,
+                        'pickButtonIcon' => 'glyphicon glyphicon-time'
                     ]
                 ]);?>
             </td>
@@ -47,10 +51,13 @@ use dosamigos\datepicker\DatePicker;
             <td>
                 <?= DatePicker::widget([
                     'name' => 'endDate',
+                    'language' => 'zh-CN',
                     'template' => '{addon}{input}',
                     'clientOptions' => [
                         'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight'=>true,
+                        'pickButtonIcon' => 'glyphicon glyphicon-time'
                     ]
                 ]);?>
             </td>
@@ -60,28 +67,48 @@ use dosamigos\datepicker\DatePicker;
         </tr></table>
         <?=Html::endForm()?>
     </div>
-    <div id="myChart" style="width:100%;min-height:320px;" onclick="test()">
-        <?php
-        echo Highcharts::widget([
-            'options' => [
-                'title' => ['text' => '销售统计'],
-                'xAxis' => [
-                    'title' => ['text' => '时间'],
-                    'categories' => array_keys($countData)
-                ],
-                'yAxis' => [
-                    'title' => ['text' => '销售额(元)']
-                ],
-                'series' => [
-                    ['name' => '销售额', 'data' => array_values($countData)],
-                ],
-                'tooltip' => [
-                    'valueSuffix' => '元',
-                ],
-            ]
-        ]);
-        ?>
+    <div id="myChart" style="width:100%;min-height:320px;">
     </div>
 </div>
+<script type='text/javascript'>
+    //图表生成
+    $(function()
+    {
+        //图标模板
+        userHighChart = $('#myChart').highcharts(
+            {
+                title:
+                {
+                    text:'销售统计'
+                },
+                xAxis:
+                {
+                    title:
+                    {
+                        text:'时间'
+                    },
+                    categories:<?php echo json_encode(array_keys($countData));?>,
+                },
+                yAxis:
+                {
+                    title:
+                    {
+                        text:'销售额(元)'
+                    },
+                },
+                series:
+                    [
+                        {
+                            name:'销售额',
+                            data:<?php echo json_encode(array_values($countData));?>
+                        }
+                    ],
+                tooltip:
+                {
+                    valueSuffix:'元'
+                }
+            });
+    })
+</script>
 
 
