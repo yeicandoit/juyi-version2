@@ -1,0 +1,204 @@
+.menuInfo {
+	position: absolute;
+	float: left;
+}
+
+.sellerinfo {
+	position: relative;
+	float: left;
+	left: 200px;
+}
+
+.infoborder{
+	height: 255px;
+	border: 1px groove #e8e8e8;
+}
+
+ul li
+{
+	list-style-type:none;
+	height: 25px;
+}
+
+.list {
+	margin: 0;
+	padding: 0;
+	width: 100px;
+}
+
+.cont {
+	width: 150px;
+	border:1px solid #e8e8e8;
+	padding-left:20px;
+}
+
+.smenu {
+	width: 150px;
+	background-color: #116Fb5;
+	border:1px solid #c4e3f3;
+	padding-left:20px;
+	color: #fdfdfd;
+	font-size: 15px;
+}
+
+.info_bar {
+	background-color: #bababa;
+	min-width: 800px;
+	height: 30px;
+	padding-left: 20px;
+	padding-top: 5px;
+}
+
+.curscore {
+	width: 800px;
+	height: 40px;
+	padding-left: 20px;
+	border: 1px groove #e8e8e8;
+	padding-top: 10px;
+}
+
+.blank {
+	height: 10px;
+}
+
+.scoredetail {
+	padding-top: 15px;
+	padding-left: 20px;
+	border-bottom:1px inset;
+	padding-bottom: 10px;
+}
+
+.scoreintro {
+	float:left;
+	width: 450px;
+	padding-top: 20px
+}
+
+.scoreex {
+	padding-left:20px;
+	border-bottom:1px inset;
+}
+
+.scorebtn{
+	padding-top: 5px;
+}
+
+.userinfo_box {
+	padding-left: 5px;
+}
+
+.userinfotable{
+	height: 180px;
+}
+
+.scorehint{
+	padding-top:10px;
+	padding-left:20px;
+	background-color: #f7ecb5;
+	height:120px;
+}
+
+.user_ico_img{
+	width: 150px;
+	height: 150px;
+	border: 1px groove #e8e8e8;
+}
+
+.user_fav_img{
+	width: 80px;
+	height: 80px;
+	border: 1px groove #e8e8e8;
+}
+
+.stat{
+	padding-left: 20px;
+}
+
+.borderbottom {
+	padding-left:20px;
+	padding-top: 20px;
+	border-bottom:1px inset;
+}
+
+.form-adrdetail{
+	padding-left: 30px;
+	padding-top:20px;
+	padding-bottom: 20px;
+	border: 1px groove #e8e8e8;
+}
+
+.form-chpwd{
+	padding-top: 20px;
+	padding-left:30px;
+}
+
+.form-userinfo{
+	padding-top: 20px;
+	padding-left:30px;
+}
+
+.form-common{
+	padding-top: 20px;
+	padding-left:30px;
+}
+
+.gridview{
+	padding-top: 15px;
+}
+
+.detail-order{
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: 1px groove #e8e8e8;
+}
+
+#menu {
+	font:12px verdana, arial, sans-serif;
+}
+#menu, #menu li {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+#menu li {
+	float:left;
+}
+#menu li a {
+	display:block;
+	/* 如果是中英文混排的文字，建议用固定宽度
+    width:150px;
+    height:30px;
+    line-height:30px;
+    text-align:center;
+    */
+	padding:8px 50px;
+	background:#116fb5;
+	color:#fff;
+	text-decoration:none;
+	border-right:1px solid #000;
+}
+#menu li a:hover {
+	background:#146C9C;
+	color:#fff;
+	text-decoration:none;
+	border-right:1px solid #000;
+}
+/*
+#menu li a.last {
+	border-right:0; /* 去掉左侧边框 */
+/*} */
+
+/* grade style start */
+span.grade{display:inline-block;width:70px;height:15px;background:url(../images/grade_bg.gif) 0 -16px no-repeat}
+span.grade i{display:inline-block;height:15px;background:url(../images/grade_bg.gif) 0 2px no-repeat}
+/* grade style end */
+
+dl{clear:left;}
+dt,dd{float:left;}
+tr{height: 40px;}
+
+
+
+
+

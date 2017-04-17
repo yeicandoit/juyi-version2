@@ -1,0 +1,76 @@
+.signbk {
+	width:1200px;
+	height:479px;
+	margin:auto;
+	margin-top:100px;
+    background-color: #398439;
+}
+.signad {
+	width:477px;
+	height:479px;
+	margin:0 auto;
+	background:#9bd711;
+	float:right;
+}
+.signin {
+	width:477px;
+	height:479px;
+	background:url(../images/login_bg.png) no-repeat;
+	margin:0 auto;
+	
+	position:relative;
+	float:left;
+}
+.signin-head {
+	margin:0 auto;
+	padding-top:30px;
+	width:120px;
+}
+.form-signin {
+  max-width: 330px;
+  padding: 43px 15px 15px 15px;
+  margin: 0 auto;
+}
+.form-signin .checkbox {
+  margin-bottom: 10px;
+  padding-left:20px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[id="username"] {
+  margin-bottom: 14px;
+  border-radius: 0;
+  background: url(../images/login_user.png) 0 0 #bdbdbd no-repeat;
+  padding-left:60px;
+  color:#FFFFFF;
+}
+.form-signin input[id="password"] {
+  margin-bottom: 10px;
+  border-radius: 0;
+  background: url(../images/login_pas.png) 0 0 #bdbdbd no-repeat;
+  padding-left:60px;
+  color:#FFFFFF;
+}
+.form-signin input[id="email"] {
+  margin-bottom: 10px;
+  border-radius: 0;
+  background: url(../images/login_pas.png) 0 0 #bdbdbd no-repeat;
+  padding-left:60px;
+  color:#FFFFFF;
+}
+.form-signin button {
+  border-radius: 0;
+}

@@ -1,0 +1,84 @@
+.signbk {
+	width:1000px;
+	height:479px;
+    border:1px groove #c4e3f3;
+	margin:auto;
+	margin-top:100px;
+}
+.signad {
+	width:477px;
+	height:479px;
+	margin:0 auto;
+	background:#9bd711;
+	float:right;
+}
+.signin {
+	width:477px;
+	height:479px;
+	margin:0 auto;
+	border-right:1px inset;
+	position:relative;
+	float:left;
+}
+.signin-head {
+	margin:0 auto;
+	padding-top:30px;
+	width:120px;
+}
+
+.signin-advise {
+  margin:0 auto;
+  padding-top:60px;
+  width:400px;
+}
+.form-signin {
+  max-width: 800px;
+  padding: 43px 15px 15px 15px;
+  margin: 0 auto;
+}
+.form-signin .checkbox {
+  margin-bottom: 10px;
+  padding-left:20px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  height: 40px;
+  width: 200px;
+  background:#bdbdbd;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[id="username-img"] {
+  margin-bottom: 14px;
+  border-radius: 0;
+  background: url(../images/login_user.png) 0 0 #bdbdbd no-repeat;
+  padding-left:60px;
+  color:#FFFFFF;
+}
+.form-signin input[id="password-img"] {
+  margin-bottom: 10px;
+  border-radius: 0;
+  background: url(../images/login_pas.png) 0 0 #bdbdbd no-repeat;
+  padding-left:60px;
+  color:#FFFFFF;
+}
+.form-signin input[id=""] {
+  margin-bottom: 10px;
+  border-radius: 0;
+  background: url(../images/login_pas.png) 0 0 #bdbdbd no-repeat;
+  padding-left:60px;
+  color:#FFFFFF;
+}
+.form-signin button {
+  border-radius: 0;
+}
