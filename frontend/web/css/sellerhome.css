@@ -184,6 +184,12 @@ ul li
 	text-decoration:none;
 	border-right:1px solid #000;
 }
+
+.goodInfoBox {
+	border: 1px solid #c4e3f3;
+	padding-left: 10px;
+	padding-top: 5px;
+}
 /*
 #menu li a.last {
 	border-right:0; /* 去掉左侧边框 */

@@ -319,7 +319,6 @@ class ShopSellerController extends Controller
 
     public  function  actionUpload()
     {
-        Yii::info("actionUpload debug 1");
         $path = Yii::$app->basePath."/web/avatar/";
         $tmpath="/avatar/";
         if(!empty($_FILES)){
@@ -333,7 +332,7 @@ class ShopSellerController extends Controller
             if(false == in_array(substr(strrchr($fileName,"."),1), $fileTypes)){
                 die("图片格式不正确!");
             }
-            $saveName = time().'.'.substr(strrchr($fileName,"."),1);
+            $saveName = Yii::$app->user->getId().'_'.time().'.'.substr(strrchr($fileName,"."),1);
             //最后保存服务器地址
             if(!is_dir($path)){
                 mkdir($path);
@@ -360,7 +359,7 @@ class ShopSellerController extends Controller
             $imgSrc=Yii::$app->basePath.'/web'.$imgSrc;//真实的图片路径
             $suffix = substr(strrchr($imgSrc,"."),1);
             $img_r = $imgCrtMap[$suffix]($imgSrc);
-            $ext=$path.time().".jpg";//生成的引用路径
+            $ext=$path.Yii::$app->user->getId().'_'.time().".$suffix";//生成的引用路径
             $dst_r = ImageCreateTrueColor($targ_w, $targ_h);
             imagecopyresampled($dst_r,$img_r,0,0,Yii::$app->request->post('x'),Yii::$app->request->post('y'),
                 $targ_w,$targ_h,Yii::$app->request->post('w'),Yii::$app->request->post('h'));

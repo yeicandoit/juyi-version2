@@ -120,27 +120,30 @@ JS;
     <?= $form->field($goods, 'sort')->textInput(['style'=>'width:25%'])->label('商品排序')?>
     <?= $form->field($goods, 'unit')->textInput(['style'=>'width:25%'])->label('计量单位显示')?>
     <?= $form->field($goods, 'is_del')->radioList([3=>'申请上架', 2=>'下架'])->label('计量单位显示')?>
+    <div class="goodInfoBox">
     <label>基本数据</label>
-    <?php $goodsNo = $goods->goods_no;
-        if(!isset($goods->goods_no)){
-            $goodsNo = "JY" . time();
-        }
-    ?>
-    <table>
-        <tr>
-            <th>商品货号</th><th>库存</th><th>市场价格</th><th>销售价格</th><th>成本价格</th><th>重量(克)</th>
-        </tr>
-        <tr>
-            <td style="width: 150px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:120px'])?></td>
-            <td style="width: 150px;"><?= $form->field($goods, 'store_nums', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
-            <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
-            <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
-            <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
-            <td style="width: 150px;"><?= $form->field($goods, 'weight', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
-        </tr>
-    </table>
-    <div style="display: none"><?= $form->field($goods, 'model_id')->textInput(['style'=>'width:25%', 'value'=>'1'])?></div>
-    <div style="border: 1px groove #8699a4;padding-left: 10px; padding-top: 5px;">
+        <?php $goodsNo = $goods->goods_no;
+            if(!isset($goods->goods_no)){
+                $goodsNo = "JY" . time();
+            }
+        ?>
+        <table>
+            <tr>
+                <th>商品货号</th><th>库存</th><th>市场价格</th><th>销售价格</th><th>成本价格</th><th>重量(克)</th>
+            </tr>
+            <tr>
+                <td style="width: 150px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:120px'])?></td>
+                <td style="width: 150px;"><?= $form->field($goods, 'store_nums', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+                <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+                <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
+                <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+                <td style="width: 150px;"><?= $form->field($goods, 'weight', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+            </tr>
+        </table>
+        <div style="display: none"><?= $form->field($goods, 'model_id')->textInput(['style'=>'width:25%', 'value'=>'1'])?></div>
+    </div>
+    <br>
+    <div class="goodInfoBox">
         <p><label>添加规格</label></p>
         <div id="specPay">
             <label>支付种类:</label>
@@ -159,23 +162,16 @@ JS;
             <label id='addTest'><?=Html::a('+', '#', ['onclick'=>'addTest()']);?></label>
         </div>
     </div>
-    <?=$form->field($goods, 'brand_id')->dropDownList(ArrayHelper::map(frontend\models\ShopBrand::find()->asArray()->all(),'id','name'), ['style'=>'width:300px'])?>
-    <div style="border: 1px groove #8699a4;padding-left: 10px; padding-top: 5px;">
-        <p><label>产品相册</label></p>
-        <?=Html::fileInput('goodsImgs[]',null,['multiple' => true, 'accept' => 'image/*'])?>
-        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M</p>
+    <br>
+    <div class="goodInfoBox">
+        <?=$form->field($goods, 'brand_id')
+            ->dropDownList(ArrayHelper::map(frontend\models\ShopBrand::find()->asArray()->all(),'id','name'), ['style'=>'width:300px'])?>
     </div>
-    <?= Html::submitButton('确定', [ 'style' => 'width:50px'])?>
-    <?= Html::resetButton('重置', [ 'style' => 'width:50px'])?>
-    <?php ActiveForm::end(); ?>
-
-    <div>
-        <h3>商品图像上传：</h3>
-
-        <div class="text">
-            <img class="img-circle tx" src="/avatar/photo.jpg" alt=""/>
-        </div>
-        <form id="frm" action="#" method="post">
+    <br>
+    <div class="goodInfoBox">
+        <p><label>产品相册</label></p>
+        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M</p>
+        <div>
             <input type="hidden" id="x" name="x" />
             <input type="hidden" id="y" name="y" />
             <input type="hidden" id="w" name="w" />
@@ -183,15 +179,20 @@ JS;
             <input type="hidden" id="f" name="f" />
             <input id='upload' name="file_upload" type="button" value='上传' class='btn btn-large btn-primary'>
             <input type="button" name="btn" value="确认裁剪" class="btn" />
-        </form>
-        <div class="info"></div>
-        <div class="pic-display"></div><div class="text-info"></div>
-
+            <div class="info"></div>
+            <div class="text-info" >
+                <table><tr id="goodsImgs"></tr></table>
+            </div>
+            <div class="pic-display"></div>
+        </div>
     </div>
+    <br>
+    <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-large btn-primary'])?>
+    <?= Html::resetButton('重置', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary'])?>
+    <?php ActiveForm::end(); ?>
 </div>
 
 <script>
-    var url="http://"+window.location.host;
     var g_oJCrop = null;
     //异步上传文件
     new AjaxUpload("#upload", {
@@ -203,10 +204,8 @@ JS;
                 alert('文件格式不正确,请选择 png|gif|jpeg 格式的文件!', '系统提示');
                 return false;
             }
-            if($(".text-info img").length>0){
-                $(".info").html("<div style='color:#E3583B;margin:5px;'>文件已经裁剪过！</div>");return false;
-            }
             $(".info").html("<div style='color:#008000;margin:5px;'>上传中...</div>");
+            $("input[name=btn]").show();
         },
         onComplete: function(file, response) {
             if(g_oJCrop!=null){g_oJCrop.destroy();}
@@ -277,11 +276,16 @@ JS;
         if(w>0){
             $.post('index.php?r=shop-seller/cutpic',{'x':$("input[name=x]").val(),'y':$("input[name=y]").val(),'w':$("input[name=w]").val(),'h':$("input[name=h]").val(),'f':$("input[name=f]").val()},function(data){
                 if(data.status==1){
-                    $(".pic-display").remove();
+                    $(".pic-display").html('');
                     $(".info").html("<div style='color:#008000;margin:10px 5px;'>裁剪成功!</div>")
-                    $(".text-info").html("<img src='"+data.data+"'>");
-                    $(".tx").attr('src',data.data);
                     $("input[name=btn]").hide();
+                    var info = '<td style="padding-left: 10px">' +
+                            '<img src="' + data.data + '" style="width: 100px;height: 100px;">'
+                            + '<br>'
+                            + '<a href="#" onclick="$(this).parent().remove();">&nbsp;&nbsp;删除</a>'
+                            + '<input type="hidden" name="goodsImgs[]" value="' + data.data + '">'
+                            + '</td>';
+                    $("#goodsImgs").append(info);
                 }
             },'json');
         }else{
