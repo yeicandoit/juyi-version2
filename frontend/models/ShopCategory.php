@@ -26,7 +26,7 @@ class ShopCategory extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_category';
+        return '{{%category}}';
     }
 
     /**

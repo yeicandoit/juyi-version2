@@ -26,7 +26,7 @@ class ShopAccountLog extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_account_log';
+        return '{{%account_log}}';
     }
 
     /**

@@ -61,7 +61,7 @@ class ShopGoods extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_goods';
+        return '{{%goods}}';
     }
 
     /**

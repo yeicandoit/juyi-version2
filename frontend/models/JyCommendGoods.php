@@ -20,7 +20,7 @@ class JyCommendGoods extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'jy_commend_goods';
+        return '{{%commend_goods}}';
     }
 
     /**

@@ -22,7 +22,7 @@ class ShopPointLog extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_point_log';
+        return '{{%point_log}}';
     }
 
     /**

@@ -68,7 +68,7 @@ class ShopOrder extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_order';
+        return '{{%order}}';
     }
 
     /**

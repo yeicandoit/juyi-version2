@@ -20,7 +20,7 @@ class JyAppointinfo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'jy_appointinfo';
+        return '{{%appointinfo}}';
     }
 
     /**

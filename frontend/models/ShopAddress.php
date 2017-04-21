@@ -29,7 +29,7 @@ class ShopAddress extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_address';
+        return '{{%address}}';
     }
 
     /**

@@ -29,7 +29,7 @@ class ShopProp extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_prop';
+        return '{{%prop}}';
     }
 
     /**

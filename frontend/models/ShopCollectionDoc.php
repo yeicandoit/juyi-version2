@@ -27,7 +27,7 @@ class ShopCollectionDoc extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_collection_doc';
+        return '{{%collection_doc}}';
     }
 
     /**

@@ -39,7 +39,7 @@ class ShopDeliveryDoc extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_delivery_doc';
+        return '{{%delivery_doc}}';
     }
 
     /**

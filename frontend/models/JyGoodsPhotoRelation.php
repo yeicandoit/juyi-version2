@@ -18,7 +18,7 @@ class JyGoodsPhotoRelation extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'jy_goods_photo_relation';
+        return '{{%goods_photo_relation}}';
     }
 
     /**

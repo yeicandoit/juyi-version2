@@ -22,7 +22,7 @@ class ShopBrand extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_brand';
+        return '{{%brand}}';
     }
 
     /**

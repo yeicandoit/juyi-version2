@@ -38,7 +38,7 @@ class ShopMember extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_member';
+        return '{{%member}}';
     }
 
     /**

@@ -23,7 +23,7 @@ class ShopFreightCompany extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_freight_company';
+        return '{{%freight_company}}';
     }
 
     /**

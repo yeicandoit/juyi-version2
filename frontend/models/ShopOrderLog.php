@@ -24,7 +24,7 @@ class ShopOrderLog extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_order_log';
+        return '{{%order_log}}';
     }
 
     /**

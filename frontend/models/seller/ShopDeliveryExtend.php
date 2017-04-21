@@ -33,7 +33,7 @@ class ShopDeliveryExtend extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_delivery_extend';
+        return '{{%delivery_extend}}';
     }
 
     /**

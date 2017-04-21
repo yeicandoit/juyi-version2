@@ -32,7 +32,7 @@ class ShopRefundmentDoc extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_refundment_doc';
+        return '{{%refundment_doc}}';
     }
 
     /**

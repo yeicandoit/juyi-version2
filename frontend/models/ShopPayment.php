@@ -28,7 +28,7 @@ class ShopPayment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shop_payment';
+        return '{{%payment}}';
     }
 
     /**

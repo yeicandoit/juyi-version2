@@ -37,7 +37,7 @@ use yii\grid\GridView;
         <div style="float:left; margin: 0 auto;width: 280px;">
             <?=$form->field($useraddrup, 'province', [ 'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div>
             <div style=\"float:left; margin: 0 auto;\">{input}</div>", ]
-            )->dropDownList(ArrayHelper::map(app\models\ShopAreas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
+            )->dropDownList(ArrayHelper::map(frontend\models\ShopAreas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
                 [
                     'style'=>'width:180px',
                     'prompt'=>'请选择省',
@@ -50,7 +50,7 @@ use yii\grid\GridView;
         </div>
         <div style="float:left; margin: 0 auto;width: 165px;">
             <?=$form->field($useraddrup, 'city', [ 'template' => "{input}", ]
-            )->dropDownList(ArrayHelper::map(app\models\ShopAreas::find()->where(['parent_id'=>$useraddrup->province])->asArray()->all(),'area_id','area_name'),
+            )->dropDownList(ArrayHelper::map(frontend\models\ShopAreas::find()->where(['parent_id'=>$useraddrup->province])->asArray()->all(),'area_id','area_name'),
                 [
                     'style'=>'width:180px',
                     'prompt'=>'请选择市',
@@ -60,7 +60,7 @@ use yii\grid\GridView;
                 ]); ?>
         </div>
         <?=$form->field($useraddrup, 'area', [ 'template' => "{input}", ]
-        )->dropDownList(ArrayHelper::map(app\models\ShopAreas::find()->where(['parent_id'=>$useraddrup->city])->asArray()->all(),'area_id','area_name'),
+        )->dropDownList(ArrayHelper::map(frontend\models\ShopAreas::find()->where(['parent_id'=>$useraddrup->city])->asArray()->all(),'area_id','area_name'),
             [
                 'style'=>'width:180px',
                 'prompt'=>'请选择县',
