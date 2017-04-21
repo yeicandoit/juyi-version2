@@ -23,9 +23,9 @@ use yii\helpers\ArrayHelper;
 <div class="sellerinfo">
     <div class="info_bar"><b>
             <?php
-                if('expert' == $sellerinfo->regType){ ?>
-                    <?=Html::a('基本信息', '#')?>&nbsp;&nbsp;
-                    <?=Html::a('详细信息', '#')?>
+                if('expertreg' == $sellerinfo->regType){ ?>
+                    <?=Html::a('基本信息', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
+                    <?=Html::a('详细信息', '#', ['onclick'=>'showDetailInfo()'])?>
                 <?php } else {
                     echo '商户信息';
                 }
@@ -80,20 +80,35 @@ use yii\helpers\ArrayHelper;
         ]); ?>
     <?= $form->field($sellerinfo, 'address')->textInput(['style'=>'width:250px'])?>
     <?= $form->field($sellerinfo, 'homeurl')->textInput(['style'=>'width:250px'])->hint('官网的URL网址，如：http://www.example.com', ['style'=>'padding-left:100px'])?>
-    <?= Html::submitButton('保存', [ 'style' => 'width:50px']) ?>
-    <?= Html::resetButton('取消', [ 'style' => 'width:50px']) ?>
+    <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
+    <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?php ActiveForm::end(); ?>
 
     <?php $form = ActiveForm::begin([
+        'action'=>['shop-seller/expertinfo'],
         'id' => 'detailInfo',
-        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;'],
+        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px; display:none'],
         'fieldConfig' => [
-            'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style='float: left'>{input}</div>
+            'template' => "<div style=\"float:left; width:70px; margin: 0 auto;\">{label}</div><div style='float: left'>{input}</div>
            <div style='padding-left: 380px;'>{hint}</div><div>{error}</div>",
         ],
     ]); ?>
-    <?= $form->field($sellerinfo, 'description')->textarea(['rows'=>3, 'style'=>'width:280px'])->label('备注:')?>
-    <?= $form->field($sellerinfo, 'direction')->textarea(['rows'=>3, 'style'=>'width:280px'])->label('备注:')?>
+    <?= $form->field($sellerinfo, 'description')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('专家介绍:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'direction')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('研究方向:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'education')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('教育背景:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'work')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('工作经历:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'research')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('科研成果:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'project')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('科研项目:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'award')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('荣誉奖励:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
+    <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?php ActiveForm::end(); ?>
 </div>
 
@@ -115,6 +130,18 @@ use yii\helpers\ArrayHelper;
     }
     /*用window.onload调用myfun()*/
     window.onload=setDropDownList;
+
+    function showDetailInfo()
+    {
+        $("#basicInfo").hide();
+        $("#detailInfo").show();
+    }
+
+    function showBasicInfo()
+    {
+        $("#basicInfo").show();
+        $("#detailInfo").hide();
+    }
 </script>
 
 
