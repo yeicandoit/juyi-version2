@@ -29,16 +29,21 @@ class SellerDetailForm extends Model
     public $homeurl;
     public $regType;
 
+    //For expert
     public $title;
     public $institute;
     public $lab;
-    public $description;
+    public $description; //also for lab
     public $direction;
     public $education;
     public $work;
     public $research;
     public $project;
     public $award;
+
+    //For lab
+    public $team;
+    public $outwork;
 
     //For merch ship info
     public $shipName;
@@ -50,6 +55,7 @@ class SellerDetailForm extends Model
 
     public $_seller = false;
     public $_expertInfo = false;
+    public $_labInfo = false;
     const ViewAddr = 'viewaddr';
 
     public function __construct($view = '')
@@ -86,6 +92,13 @@ class SellerDetailForm extends Model
                     $this->award = $this->_expertInfo->award;
                     $this->title = $this->_expertInfo->title;
                 }
+            } else {
+                $this->_labInfo = $this->_seller->labInfo;
+                if($this->_labInfo){
+                    $this->description = $this->_labInfo->description;
+                    $this->team = $this->_labInfo->team;
+                    $this->outwork = $this->_labInfo->outwork;
+                }
             }
         }
     }
@@ -97,7 +110,7 @@ class SellerDetailForm extends Model
         return [
             [['name', 'newpwd', 'cfmnewpwd', 'truename', 'paperimg', 'cash', 'account', 'mobile', 'email', 'province',
                 'city', 'area', 'address', 'homeurl', 'regType', 'title', 'institute', 'lab', 'description', 'direction',
-            'education', 'work', 'research', 'project', 'award'], 'safe'],
+            'education', 'work', 'research', 'project', 'award', 'team', 'outwork'], 'safe'],
             [[ 'province', 'city', 'area'], 'integer'],
             ['cash', 'number'],
             ['account', 'string'],
@@ -180,6 +193,21 @@ class SellerDetailForm extends Model
             $this->_expertInfo->award = $this->award;
         }
         return $this->_expertInfo->save();
+    }
+
+    public function saveLabInfo()
+    {
+        if($this->_labInfo) {
+        } else {
+            $this->_labInfo = new LabInfo();
+        }
+        if ($this->_labInfo) {
+            $this->_labInfo->seller_id = Yii::$app->user->id;
+            $this->_labInfo->description = $this->description;
+            $this->_labInfo->team = $this->team;
+            $this->_labInfo->outwork = $this->outwork;
+        }
+        return $this->_labInfo->save();
     }
 
     public function saveShipInfo()

@@ -134,6 +134,11 @@ class ShopSeller extends \yii\db\ActiveRecord
         ShopAreas::findOne($this->area)->area_name;
     }
 
+    public function getLabInfo()
+    {
+        return $this->hasOne(LabInfo::className(), ['seller_id' => 'id']);
+    }
+
     public function validatePassword($password)
     {
         return $this->password === $password;

@@ -40,16 +40,13 @@ use yii\helpers\Html;
 
         </div>
         <div id="showlab_2" style="padding-top: 10px;display:none;">
-            实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况
-            实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况实验室概况
+            <?=$labInfo->description?>
         </div>
         <div id="showlab_3" style="padding-top: 10px;display:none;">
-            科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍
-            科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍科研队伍
+            <?=$labInfo->team?>
         </div>
         <div id="showlab_4" style="padding-top: 10px;display:none;">
-            科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果
-            科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果
+            <?=$labInfo->outwork?>
         </div>
     </td>
     </tr>

@@ -25,10 +25,11 @@ use yii\helpers\ArrayHelper;
             <?php
                 if('expertreg' == $sellerinfo->regType){ ?>
                     <?=Html::a('基本信息', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
-                    <?=Html::a('详细信息', '#', ['onclick'=>'showDetailInfo()'])?>
-                <?php } else {
-                    echo '商户信息';
-                }
+                    <?=Html::a('详细信息', '#', ['onclick'=>'showExpertInfo()'])?>
+                <?php } else { ?>
+                    <?=Html::a('基本信息', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
+                    <?=Html::a('详细信息', '#', ['onclick'=>'showLabInfo()'])?>
+                <?php }
             ?>
         </b>
     </div>
@@ -86,7 +87,7 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin([
         'action'=>['shop-seller/expertinfo'],
-        'id' => 'detailInfo',
+        'id' => 'expertInfo',
         'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px; display:none'],
         'fieldConfig' => [
             'template' => "<div style=\"float:left; width:70px; margin: 0 auto;\">{label}</div><div style='float: left'>{input}</div>
@@ -116,6 +117,25 @@ use yii\helpers\ArrayHelper;
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?php ActiveForm::end(); ?>
+
+    <?php $form = ActiveForm::begin([
+        'action'=>['shop-seller/labinfo'],
+        'id' => 'labInfo',
+        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px; display:none'],
+        'fieldConfig' => [
+            'template' => "<div style=\"float:left; width:80px; margin: 0 auto;\">{label}</div><div style='float: left'>{input}</div>
+           <div style='padding-left: 380px;'>{hint}</div><div>{error}</div>",
+        ],
+    ]); ?>
+    <?= $form->field($sellerinfo, 'description')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('实验室概况:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'team')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('科研队伍:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= $form->field($sellerinfo, 'outwork')->textarea(['rows'=>3, 'style'=>'width:500px'])
+        ->label('科研成果:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+    <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
+    <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
+    <?php ActiveForm::end(); ?>
 </div>
 
 <script type="text/javascript">
@@ -137,17 +157,24 @@ use yii\helpers\ArrayHelper;
     /*用window.onload调用myfun()*/
     window.onload=setDropDownList;
 
-    function showDetailInfo()
+    function showExpertInfo()
     {
+        $("#expertInfo").show();
         $("#basicInfo").hide();
-        $("#detailInfo").show();
+        $("#labInfo").hide();
     }
 
     function showBasicInfo()
     {
         $("#basicInfo").show();
-        $("#detailInfo").hide();
+        $("#expertInfo").hide();
+        $("#labInfo").hide();
+    }
+
+    function  showLabInfo()
+    {
+        $("#labInfo").show();
+        $("#basicInfo").hide();
+        $("#expertInfo").hide();
     }
 </script>
-
-

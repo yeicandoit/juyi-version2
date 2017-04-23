@@ -7,9 +7,6 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-
-$this->title = 'ExpertReg';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 

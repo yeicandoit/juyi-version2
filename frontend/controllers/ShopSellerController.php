@@ -103,6 +103,15 @@ class ShopSellerController extends Controller
         return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
     }
 
+    public function actionLabinfo()
+    {
+        $sellerinfo = new SellerDetailForm();
+        if($sellerinfo->load(Yii::$app->request->post()) && $sellerinfo->saveLabInfo()){
+            return $this->redirect(['sellerhome']);
+        }
+        return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
+    }
+
     public function actionMerchship()
     {
         $searchModel = new ShopMerchShipInfoSearch();
@@ -398,8 +407,13 @@ class ShopSellerController extends Controller
         return '专家号有误';
     }
 
-    public function actionLab()
+    public function actionLab($id)
     {
-        return $this->render('lab');
+        $lab = ShopSeller::findOne($id);
+        if($lab && 'expertreg' != $lab->phone){
+            $labInfo = $lab->labInfo;
+            return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo]);
+        }
+        return '商家号有误';
     }
 }

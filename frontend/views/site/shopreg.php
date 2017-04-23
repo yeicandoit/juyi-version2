@@ -7,9 +7,6 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-
-$this->title = 'Shopreg';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <div id="signup-box" class="widget-box no-border">
