@@ -93,6 +93,8 @@ use yii\helpers\ArrayHelper;
            <div style='padding-left: 380px;'>{hint}</div><div>{error}</div>",
         ],
     ]); ?>
+    <?= $form->field($sellerinfo, 'title')->textInput(['style'=>'width:300px'])
+        ->label('职称:')?>
     <?= $form->field($sellerinfo, 'institute')->textInput(['style'=>'width:300px'])
         ->label('学院:')?>
     <?= $form->field($sellerinfo, 'lab')->textInput(['style'=>'width:300px'])

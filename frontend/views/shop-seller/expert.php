@@ -43,16 +43,19 @@ use yii\helpers\Html;
                     <td valign="top"><?= Html::img('/images/expert.png',['style'=>'width:192px;height:230px'])?></td>
                     <td style="padding-left: 20px; valign="top"">
                         <div style="border-bottom:1px inset;">
-                            <p><strong style="font-size: large">解码专家:肖学良</strong>&nbsp;<span>博士&nbsp;副教授</span></p>
+                            <p><strong style="font-size: large">解码专家:<?=$expert->true_name?></strong>&nbsp;<span><?=$expertInfo->title?></span></p>
                         </div>
                         <div style="padding-top: 5px">
                             <?=Html::img('@web/images/map.png', ['style'=>'width:12px;height:18px'])?>
-                            <span>上海/黄埔区</span>
+                            <?php
+                                $location = $expert->getLocation("/");
+                            ?>
+                            <span><?=$location?></span>
                         </div>
-                        <p style="padding-top: 5px">江南大学纺织服装学院</p>
-                        <p>江南大学复合材料研究中心</p>
-                        <p><?=Html::label('邮箱:')?> moumou@163.com</p>
-                        <p><?=Html::label('个人主页:')?> http://www.juyitest.com/</p>
+                        <p style="padding-top: 5px"><?=$expertInfo->institute?></p>
+                        <p><?=$expertInfo->lab?></p>
+                        <p><?=Html::label('邮箱:')?><?=$expert->email?></p>
+                        <p><?=Html::label('个人主页:')?><?=$expert->home_url?></p>
                         <!--<button class="expert-concern">关注此专家</button>  The button image is too big to be in!!-->
                         <button style="background-color: #116fb5;color: #fdfdfd;border-radius:5px 5px 5px 5px">关注此专家</button>
                     </td>
@@ -77,51 +80,43 @@ use yii\helpers\Html;
         <div id="description" style="padding-top: 20px;max-width: 465px">
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;专家介绍</div>
             <div>
-                工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能
-                解码专家:肖学良解码专家:肖学良解码专家:肖学良解码专家:肖学良解码专家:肖学良解码专家:肖学良
-                解码专家:肖学良解码专家:肖学良解码专家:肖学良解码专家:肖学良
+                <?=$expertInfo->description?>
             </div>
         </div>
         <div id="direction" style="padding-top: 20px;max-width: 465px">
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;研究方向</div>
             <div>
-                工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能
-                工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能工业节能
+                <?=$expertInfo->direction?>
             </div>
         </div>
         <div id="education" style="padding-top: 20px;max-width: 465px">
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;教育背景</div>
             <div>
-                教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景
-                教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景教育背景
+                <?=$expertInfo->education?>
             </div>
         </div>
         <div id="work" style="padding-top: 20px;max-width: 465px">
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;工作经历</div>
             <div>
-                工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历
-                工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历工作经历
+                <?=$expertInfo->work?>
             </div>
         </div>
         <div id="research" style="padding-top: 20px;max-width: 465px">
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;科研成果</div>
             <div>
-                科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果
-                科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果科研成果
+                <?=$expertInfo->research?>
             </div>
         </div>
         <div id="project" style="padding-top: 20px;max-width: 465px">
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;科研项目</div>
             <div>
-                科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目
-                科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目科研项目
+                <?=$expertInfo->project?>
             </div>
         </div>
         <div id="award" style="padding-top: 20px;max-width: 465px">
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;荣誉奖励</div>
             <div>
-                荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励
-                荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励荣誉奖励
+                <?=$expertInfo->award?>
             </div>
         </div>
     </td>

@@ -29,6 +29,7 @@ class SellerDetailForm extends Model
     public $homeurl;
     public $regType;
 
+    public $title;
     public $institute;
     public $lab;
     public $description;
@@ -83,6 +84,7 @@ class SellerDetailForm extends Model
                     $this->research = $this->_expertInfo->research;
                     $this->project = $this->_expertInfo->project;
                     $this->award = $this->_expertInfo->award;
+                    $this->title = $this->_expertInfo->title;
                 }
             }
         }
@@ -94,7 +96,7 @@ class SellerDetailForm extends Model
     {
         return [
             [['name', 'newpwd', 'cfmnewpwd', 'truename', 'paperimg', 'cash', 'account', 'mobile', 'email', 'province',
-                'city', 'area', 'address', 'homeurl', 'regType', 'institute', 'lab', 'description', 'direction',
+                'city', 'area', 'address', 'homeurl', 'regType', 'title', 'institute', 'lab', 'description', 'direction',
             'education', 'work', 'research', 'project', 'award'], 'safe'],
             [[ 'province', 'city', 'area'], 'integer'],
             ['cash', 'number'],
@@ -166,6 +168,7 @@ class SellerDetailForm extends Model
         }
         if ($this->_expertInfo) {
             $this->_expertInfo->seller_id = Yii::$app->user->id;
+            $this->_expertInfo->title = $this->title;
             $this->_expertInfo->institute = $this->institute;
             $this->_expertInfo->lab = $this->lab;
             $this->_expertInfo->description = $this->description;

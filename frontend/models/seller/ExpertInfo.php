@@ -39,7 +39,7 @@ class ExpertInfo extends \yii\db\ActiveRecord
         return [
             [['seller_id'], 'required'],
             [['seller_id'], 'integer'],
-            [['institute', 'lab'], 'string', 'max' => 128],
+            [['title', 'institute', 'lab'], 'string', 'max' => 128],
             [['description', 'direction', 'education', 'work', 'research', 'project', 'award', 'reserve1', 'reserve2'], 'string', 'max' => 512],
             [['seller_id'], 'unique'],
         ];
@@ -53,6 +53,7 @@ class ExpertInfo extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'seller_id' => Yii::t('app', '专家id'),
+            'title' => Yii::t('app', '职称'),
             'institute' => Yii::t('app', '学院'),
             'lab' => Yii::t('app', '研究所'),
             'description' => Yii::t('app', '专家介绍'),

@@ -3,6 +3,7 @@
 namespace frontend\models\seller;
 
 use Yii;
+use frontend\models\ShopAreas;
 
 /**
  * This is the model class for table "shop_seller".
@@ -124,6 +125,13 @@ class ShopSeller extends \yii\db\ActiveRecord
     public function getExpertInfo()
     {
         return $this->hasOne(ExpertInfo::className(), ['seller_id' => 'id']);
+    }
+
+    public function getLocation($separator)
+    {
+        return ShopAreas::findOne($this->province)->area_name . $separator .
+        ShopAreas::findOne($this->city)->area_name . $separator .
+        ShopAreas::findOne($this->area)->area_name;
     }
 
     public function validatePassword($password)

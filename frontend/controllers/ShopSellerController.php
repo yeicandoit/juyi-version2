@@ -388,9 +388,14 @@ class ShopSellerController extends Controller
         }
     }
 
-    public function actionExpert()
+    public function actionExpert($id)
     {
-        return $this->render('expert');
+        $expert = ShopSeller::findOne($id);
+        if($expert && 'expertreg' == $expert->phone){
+            $expertInfo = $expert->expertInfo;
+            return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo]);
+        }
+        return '专家号有误';
     }
 
     public function actionLab()
