@@ -94,6 +94,15 @@ class ShopSellerController extends Controller
         return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
     }
 
+    public function actionExpertinfo()
+    {
+        $sellerinfo = new SellerDetailForm();
+        if($sellerinfo->load(Yii::$app->request->post()) && $sellerinfo->saveExpertInfo()){
+            return $this->redirect(['sellerhome']);
+        }
+        return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
+    }
+
     public function actionMerchship()
     {
         $searchModel = new ShopMerchShipInfoSearch();

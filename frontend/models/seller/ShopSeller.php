@@ -121,6 +121,11 @@ class ShopSeller extends \yii\db\ActiveRecord
         return $this->hasMany(ShopDeliveryExtend::className(), ['seller_id' => 'id']);
     }
 
+    public function getExpertInfo()
+    {
+        return $this->hasOne(ExpertInfo::className(), ['seller_id' => 'id']);
+    }
+
     public function validatePassword($password)
     {
         return $this->password === $password;

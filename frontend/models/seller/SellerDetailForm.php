@@ -29,6 +29,8 @@ class SellerDetailForm extends Model
     public $homeurl;
     public $regType;
 
+    public $institute;
+    public $lab;
     public $description;
     public $direction;
     public $education;
@@ -46,6 +48,7 @@ class SellerDetailForm extends Model
     public $isdefault;
 
     public $_seller = false;
+    public $_expertInfo = false;
     const ViewAddr = 'viewaddr';
 
     public function __construct($view = '')
@@ -68,6 +71,20 @@ class SellerDetailForm extends Model
             $this->city = $this->_seller->city;
             $this->area = $this->_seller->area;
             $this->regType = $this->_seller->phone;
+            if('expertreg' == $this->regType) {
+                $this->_expertInfo = $this->_seller->expertInfo;
+                if($this->_expertInfo){
+                    $this->institute = $this->_expertInfo->institute;
+                    $this->lab = $this->_expertInfo->lab;
+                    $this->description = $this->_expertInfo->description;
+                    $this->direction = $this->_expertInfo->direction;
+                    $this->education = $this->_expertInfo->education;
+                    $this->work = $this->_expertInfo->work;
+                    $this->research = $this->_expertInfo->research;
+                    $this->project = $this->_expertInfo->project;
+                    $this->award = $this->_expertInfo->award;
+                }
+            }
         }
     }
     /**
@@ -77,7 +94,8 @@ class SellerDetailForm extends Model
     {
         return [
             [['name', 'newpwd', 'cfmnewpwd', 'truename', 'paperimg', 'cash', 'account', 'mobile', 'email', 'province',
-                'city', 'area', 'address', 'homeurl', 'regType'], 'safe'],
+                'city', 'area', 'address', 'homeurl', 'regType', 'institute', 'lab', 'description', 'direction',
+            'education', 'work', 'research', 'project', 'award'], 'safe'],
             [[ 'province', 'city', 'area'], 'integer'],
             ['cash', 'number'],
             ['account', 'string'],
@@ -138,6 +156,27 @@ class SellerDetailForm extends Model
         //}
 
         return $this->_seller->update();
+    }
+
+    public function saveExpertInfo()
+    {
+        if($this->_expertInfo) {
+        } else {
+            $this->_expertInfo = new ExpertInfo();
+        }
+        if ($this->_expertInfo) {
+            $this->_expertInfo->seller_id = Yii::$app->user->id;
+            $this->_expertInfo->institute = $this->institute;
+            $this->_expertInfo->lab = $this->lab;
+            $this->_expertInfo->description = $this->description;
+            $this->_expertInfo->direction = $this->direction;
+            $this->_expertInfo->education = $this->education;
+            $this->_expertInfo->work = $this->work;
+            $this->_expertInfo->research = $this->research;
+            $this->_expertInfo->project = $this->project;
+            $this->_expertInfo->award = $this->award;
+        }
+        return $this->_expertInfo->save();
     }
 
     public function saveShipInfo()

@@ -5,10 +5,12 @@ namespace frontend\models\seller;
 use Yii;
 
 /**
- * This is the model class for table "jy_expert_info".
+ * This is the model class for table "{{%expert_info}}".
  *
  * @property integer $id
  * @property integer $seller_id
+ * @property string $institute
+ * @property string $lab
  * @property string $description
  * @property string $direction
  * @property string $education
@@ -19,7 +21,7 @@ use Yii;
  * @property string $reserve1
  * @property string $reserve2
  */
-class JyExpertInfo extends \yii\db\ActiveRecord
+class ExpertInfo extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -37,6 +39,7 @@ class JyExpertInfo extends \yii\db\ActiveRecord
         return [
             [['seller_id'], 'required'],
             [['seller_id'], 'integer'],
+            [['institute', 'lab'], 'string', 'max' => 128],
             [['description', 'direction', 'education', 'work', 'research', 'project', 'award', 'reserve1', 'reserve2'], 'string', 'max' => 512],
             [['seller_id'], 'unique'],
         ];
@@ -50,6 +53,8 @@ class JyExpertInfo extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'seller_id' => Yii::t('app', '专家id'),
+            'institute' => Yii::t('app', '学院'),
+            'lab' => Yii::t('app', '研究所'),
             'description' => Yii::t('app', '专家介绍'),
             'direction' => Yii::t('app', '研究方向'),
             'education' => Yii::t('app', '教育背景'),

@@ -93,6 +93,10 @@ use yii\helpers\ArrayHelper;
            <div style='padding-left: 380px;'>{hint}</div><div>{error}</div>",
         ],
     ]); ?>
+    <?= $form->field($sellerinfo, 'institute')->textInput(['style'=>'width:300px'])
+        ->label('学院:')?>
+    <?= $form->field($sellerinfo, 'lab')->textInput(['style'=>'width:300px'])
+        ->label('研究所:')?>
     <?= $form->field($sellerinfo, 'description')->textarea(['rows'=>3, 'style'=>'width:500px'])
         ->label('专家介绍:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
     <?= $form->field($sellerinfo, 'direction')->textarea(['rows'=>3, 'style'=>'width:500px'])
