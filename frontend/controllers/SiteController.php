@@ -23,7 +23,6 @@ use frontend\models\EntryForm;
 use yii\web\UploadedFile;
 use frontend\models\GlobalRegion;
 use frontend\models\ShopAreas;
-use frontend\models\ExpertregForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use frontend\models\UserMenu;
@@ -136,19 +135,6 @@ class SiteController extends Controller
             }
         }
         return $this->render('shopreg', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionExpertreg()
-    {
-        $model = new ExpertregForm();
-        if($model->load(Yii::$app->request->post())){
-            if($model->register()) {
-                return $this->goHome();
-            }
-        }
-        return $this->render('expertreg', [
             'model' => $model,
         ]);
     }

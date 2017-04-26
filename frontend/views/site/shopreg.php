@@ -100,6 +100,6 @@ use yii\helpers\ArrayHelper;
 
 <script type="text/javascript">
     function jumpUrl(){
-        location.href = '/index.php?r=site/' + $("#shopregform-regtype").val();
+        location.href = '/index.php?r=shop-seller/' + $("#shopregform-regtype").val();
     };
 </script>

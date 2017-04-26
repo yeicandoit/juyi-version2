@@ -27,6 +27,7 @@ use frontend\models\seller\LoginForm;
 use frontend\models\seller\SellerMenu;
 use frontend\models\seller\ShopMerchShipInfoSearch;
 use frontend\models\ShopOrderSearch;
+use frontend\models\seller\ExpertregForm;
 
 /**
  * ShopSellerController implements the CRUD actions for ShopSeller model.
@@ -415,5 +416,18 @@ class ShopSellerController extends Controller
             return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo]);
         }
         return '商家号有误';
+    }
+
+    public function actionExpertreg()
+    {
+        $model = new ExpertregForm();
+        if($model->load(Yii::$app->request->post())){
+            if($model->register()) {
+                return $this->goHome();
+            }
+        }
+        return $this->render('expertreg', [
+            'model' => $model,
+        ]);
     }
 }
