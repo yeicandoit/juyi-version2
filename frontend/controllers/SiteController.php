@@ -20,7 +20,6 @@ use frontend\models\RegisterForm;
 use frontend\models\ShopregForm;
 use frontend\models\ContactForm;
 use frontend\models\EntryForm;
-use yii\web\UploadedFile;
 use frontend\models\GlobalRegion;
 use frontend\models\ShopAreas;
 use yii\helpers\ArrayHelper;
@@ -119,22 +118,6 @@ class SiteController extends Controller
             return $this->goHome();
         }
         return $this->render('register', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionShopreg()
-    {
-        $model = new ShopregForm();
-        if($model->load(Yii::$app->request->post())){
-            $model->file = UploadedFile::getInstance($model, 'file');
-            $upSec = $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
-
-            if($upSec && $model->register()) {
-                return $this->goHome();
-            }
-        }
-        return $this->render('shopreg', [
             'model' => $model,
         ]);
     }

@@ -28,6 +28,8 @@ use frontend\models\seller\SellerMenu;
 use frontend\models\seller\ShopMerchShipInfoSearch;
 use frontend\models\ShopOrderSearch;
 use frontend\models\seller\ExpertregForm;
+use frontend\models\seller\ShopregForm;
+use yii\web\UploadedFile;
 
 /**
  * ShopSellerController implements the CRUD actions for ShopSeller model.
@@ -427,6 +429,22 @@ class ShopSellerController extends Controller
             }
         }
         return $this->render('expertreg', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionShopreg()
+    {
+        $model = new ShopregForm();
+        if($model->load(Yii::$app->request->post())){
+            $model->file = UploadedFile::getInstance($model, 'file');
+            $upSec = $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
+
+            if($upSec && $model->register()) {
+                return $this->goHome();
+            }
+        }
+        return $this->render('shopreg', [
             'model' => $model,
         ]);
     }

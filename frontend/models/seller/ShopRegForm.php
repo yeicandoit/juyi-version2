@@ -1,10 +1,9 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 use yii\base\Model;
-use frontend\models\seller\ShopSeller;
 
 /**
  * LoginForm is the model behind the login form.
@@ -40,6 +39,7 @@ class ShopregForm extends Model
         return [
             ['username', 'required', 'message'=>'用户名不能为空'],
             ['username', 'trim'],
+            ['username', 'validateName'],
 
             ['password', 'required', 'message'=>'密码不能为空'],
             ['confirmpwd', 'required', 'message'=>"确认密码不能为空"],
@@ -57,6 +57,16 @@ class ShopregForm extends Model
             ['detailAddress', 'required', 'message'=>"详细地址不能为空"],
             [['provinces', 'citys', 'countrys', 'regType', 'comWeb', 'shopType'], 'safe'],
         ];
+    }
+
+    public function validateName($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            if(Seller::find()->where(['seller_name'=>$this->username])->one())
+            {
+                $this->addError($attribute, '用户名已存在');
+            }
+        }
     }
 
     /**
@@ -78,21 +88,27 @@ class ShopregForm extends Model
     public function register()
     {
         if($this->validate()){
-            $this->_shop = new ShopSeller();
+            $this->_shop = new Seller();
             $this->_shop->seller_name = $this->username;
-            $this->_shop->create_time = date('Y-m-d H:i:s',time());
-            $this->_shop->email = $this->email;
-            $this->_shop->password = md5($this->password);
             $this->_shop->true_name = $this->shopRealName;
+            $this->_shop->affliation = '';
+            $this->_shop->affliationtype = '';
+            $this->_shop->login_time = date('Y-m-d H:i:s', 0);
+            $this->_shop->phone = '';
+            $this->_shop->country = 0;
+            $this->_shop->email = $this->email;
             $this->_shop->mobile = $this->phoneNumber;
-            //$this->_shop->shopType = $this->shopType;
-            $this->_shop->phone = $this->regType;
+            $this->_shop->server_num = '';
+            $this->_shop->password = md5($this->password);
             $this->_shop->paper_img = $this->file->baseName . '.' . $this->file->extension;
+            $this->_shop->create_time = date('Y-m-d H:i:s',time());
+            $this->_shop->cash = 0;
             $this->_shop->province = $this->provinces;
             $this->_shop->city = $this->citys;
             $this->_shop->area = $this->countrys;
             $this->_shop->address = $this->detailAddress;
-            $this->_shop->home_url = $this->comWeb;
+            $this->_shop->account = '';
+            $this->_shop->qualification = '';
 
             return $this->_shop->save();
        }
