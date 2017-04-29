@@ -18,7 +18,7 @@ class LoginForm extends Model implements \yii\web\IdentityInterface
     public $rememberMe = true;
     public $id;
 
-    private $_seller = false;
+    private $_shop = false;
 
 
     /**
@@ -28,7 +28,7 @@ class LoginForm extends Model implements \yii\web\IdentityInterface
     {
         return [
             // username and password are both required
-            ['username', 'required', 'message'=>'商户/专家名不能为空'],
+            ['username', 'required', 'message'=>'商户名不能为空'],
             ['username', 'trim'],
             ['password', 'required', 'message'=>'密码不能为空'],
             // password is validated by validatePassword()
@@ -46,13 +46,13 @@ class LoginForm extends Model implements \yii\web\IdentityInterface
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $seller = $this->getSeller();
+            $shop = $this->getShop();
 
-            if (!$seller ) {
+            if (!$shop ) {
                 $this->addError($attribute, '用户名不存在.');
                 return;
             }
-            if(!$seller->validatePassword(md5($this->password))) {
+            if(!$shop->validatePassword(md5($this->password))) {
                 $this->addError($attribute, '密码错误.');
                 return;
             }
@@ -66,8 +66,8 @@ class LoginForm extends Model implements \yii\web\IdentityInterface
     public function login()
     {
         if ($this->validate()) {
-            if($this->_seller){
-                $this->id = $this->_seller->id;
+            if($this->_shop){
+                $this->id = $this->_shop->shopid;
             }
             return Yii::$app->user->login($this, $this->rememberMe ? 3600*24*30 : 0);
         }
@@ -79,13 +79,13 @@ class LoginForm extends Model implements \yii\web\IdentityInterface
      *
      * @return User|null
      */
-    public function getSeller()
+    public function getShop()
     {
-        if ($this->_seller === false) {
-            $this->_seller = ShopSeller::find()->where(['seller_name'=>$this->username])->one();
+        if ($this->_shop === false) {
+            $this->_shop = ShopMember::find()->where(['name'=>$this->username])->one();
         }
 
-        return $this->_seller;
+        return $this->_shop;
     }
 
     /**

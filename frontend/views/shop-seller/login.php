@@ -6,9 +6,6 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <div style="font-size:20px; color: #43478e;"><b>商家后台管理中心</b></div>

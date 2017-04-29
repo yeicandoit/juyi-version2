@@ -48,4 +48,9 @@ class ShopMember extends \yii\db\ActiveRecord
             'password' => Yii::t('app', '密码'),
         ];
     }
+
+    public function validatePassword($password)
+    {
+        return $this->password === $password;
+    }
 }
