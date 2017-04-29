@@ -93,4 +93,15 @@ class Expert extends \yii\db\ActiveRecord
             'comments' => Yii::t('app', '评论次数'),
         ];
     }
+
+    public function getExt()
+    {
+        $ext = ExpertExt::find()->where(['expert_id'=>$this->id])->one();
+        if(!$ext) {
+            $ext = new ExpertExt();
+            $ext->expert_id = $this->id;
+            $ext->save();
+        };
+        return $ext;
+    }
 }

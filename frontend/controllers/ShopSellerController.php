@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\seller\ExpertExt;
 use frontend\models\seller\SellerDetailForm;
 use frontend\models\seller\SellerExt;
 use frontend\models\seller\ShopMember;
@@ -117,13 +118,13 @@ class ShopSellerController extends Controller
         return $this->render("$shopView", ['menu'=>SellerMenu::getMenu(), "$shopView"=>$shopInfo, "$shopExtView"=>$shopExt]);
     }
 
-    public function actionExpertinfo()
+    public function actionExpertext()
     {
-        $sellerinfo = new SellerDetailForm();
-        if($sellerinfo->load(Yii::$app->request->post()) && $sellerinfo->saveExpertInfo()){
+        $expertext = ExpertExt::find()->where(['expert_id'=> Yii::$app->session->get('shopid')])->one();
+        if($expertext->load(Yii::$app->request->post()) && $expertext->save()){
             return $this->redirect(['sellerhome']);
         }
-        return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
+        return $this->goBack();
     }
 
     public function actionSellerext()
