@@ -28,10 +28,11 @@ class ShopMember extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopid', 'name', 'password'], 'required'],
+            [['shopid', 'name', 'password', 'regtype'], 'required'],
             [['shopid'], 'integer'],
             [['name'], 'string', 'max' => 20],
             [['password'], 'string', 'max' => 32],
+            [['regtype'], 'string', 'max' => 20],
             [['name'], 'unique'],
         ];
     }
@@ -46,6 +47,7 @@ class ShopMember extends \yii\db\ActiveRecord
             'shopid' => Yii::t('app', '商户id'),
             'name' => Yii::t('app', '商户名'),
             'password' => Yii::t('app', '密码'),
+            'regtype' => Yii::t('app', '注册类型'),
         ];
     }
 
