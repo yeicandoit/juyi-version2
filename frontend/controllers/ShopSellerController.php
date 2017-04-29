@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use frontend\models\seller\SellerDetailForm;
+use frontend\models\seller\SellerExt;
+use frontend\models\seller\ShopMember;
 use frontend\models\seller\ShopMerchShipInfo;
 use frontend\models\seller\ShopSpec;
 use frontend\models\seller\ShopSpecSearch;
@@ -76,10 +78,6 @@ class ShopSellerController extends Controller
 
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $seller = ShopSeller::find()->where(['seller_name'=>$model->username])->one();
@@ -97,6 +95,28 @@ class ShopSellerController extends Controller
         return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
     }
 
+    public function actionShopinfo()
+    {
+        $shopId = Yii::$app->session->get('shopid');
+        if (!$shopId) {
+            return  $this->redirect(['login']);
+        }
+        $shopMember = ShopMember::find()->where(['shopid'=>$shopId])->one();
+        $shopInfo = $shopMember->shopInfo;
+        $shopView = $shopMember->regtype . "info";
+        $shopExt = $shopInfo->ext;
+        $shopExtView = $shopMember->regtype . "ext";
+        if(!$shopInfo) {
+            return false;
+        }
+
+        if($shopInfo->load(Yii::$app->request->post()) && $shopInfo->save()){
+            return $this->redirect(['sellerhome']);
+        }
+        //return $this->render("$shopView", ['menu'=>SellerMenu::getMenu(), "$shopView"=>$shopInfo]);
+        return $this->render("$shopView", ['menu'=>SellerMenu::getMenu(), "$shopView"=>$shopInfo, "$shopExtView"=>$shopExt]);
+    }
+
     public function actionExpertinfo()
     {
         $sellerinfo = new SellerDetailForm();
@@ -106,13 +126,13 @@ class ShopSellerController extends Controller
         return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
     }
 
-    public function actionLabinfo()
+    public function actionSellerext()
     {
-        $sellerinfo = new SellerDetailForm();
-        if($sellerinfo->load(Yii::$app->request->post()) && $sellerinfo->saveLabInfo()){
+        $sellerext = SellerExt::find()->where(['seller_id'=> Yii::$app->session->get('shopid')])->one();
+        if($sellerext->load(Yii::$app->request->post()) && $sellerext->save()){
             return $this->redirect(['sellerhome']);
         }
-        return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
+        return $this->goBack();
     }
 
     public function actionMerchship()

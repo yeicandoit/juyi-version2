@@ -127,7 +127,7 @@ class ExpertregForm extends Model
                     $shopMember->shopid = $expert->id;
                     $shopMember->name = $expert->name;
                     $shopMember->password = $expert->password;
-                    $shopMember->regtype = 'expertreg';
+                    $shopMember->regtype = 'expert';
                     return $shopMember->save();
                 }
             }

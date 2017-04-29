@@ -110,4 +110,16 @@ class Seller extends \yii\db\ActiveRecord
             'home_url' => Yii::t('app', '企业URL网站'),
         ];
     }
+
+    public function getExt()
+    {
+        $ext = SellerExt::find()->where(['seller_id'=>$this->id])->one();
+        if(!$ext) {
+            $ext = new SellerExt();
+            $ext->seller_id = $this->id;
+            $ext->save();
+        };
+        return $ext;
+    }
+
 }

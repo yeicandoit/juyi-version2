@@ -19,18 +19,11 @@ use yii\helpers\ArrayHelper;
         </div>
     <?php }?>
 </div>
-<!--Show seller info-->
 <div class="sellerinfo">
-    <div class="info_bar"><b>
-            <?php
-                if('expertreg' == $sellerinfo->regType){ ?>
-                    <?=Html::a('基本信息', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
-                    <?=Html::a('详细信息', '#', ['onclick'=>'showExpertInfo()'])?>
-                <?php } else { ?>
-                    <?=Html::a('基本信息', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
-                    <?=Html::a('详细信息', '#', ['onclick'=>'showLabInfo()'])?>
-                <?php }
-            ?>
+    <div class="info_bar">
+        <b>
+            <?=Html::a('基本信息', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
+            <?=Html::a('详细信息', '#', ['onclick'=>'showLabInfo()'])?>
         </b>
     </div>
     <div class="blank"></div>
@@ -42,15 +35,19 @@ use yii\helpers\ArrayHelper;
             <div style='padding-left: 280px;'>{hint}</div><div>{error}</div>",
         ],
     ]); ?>
-    <?= $form->field($sellerinfo, 'name')->textInput(['readonly'=>"readonly"])->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
-    <?= $form->field($sellerinfo, 'newpwd')->passwordInput()->hint('改变密码时需填写', ['style'=>'padding-left:30px',])?>
-    <?= $form->field($sellerinfo, 'cfmnewpwd')->passwordInput()->hint('改变密码时需填写', ['style'=>'padding-left:30px',])?>
-    <?= $form->field($sellerinfo, 'truename')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])?>
-    <?= $form->field($sellerinfo, 'paperimg')->textInput(['readonly'=>"readonly"])?>
+    <?= $form->field($sellerinfo, 'seller_name')->textInput(['readonly'=>"readonly"])
+        ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
+    <?= $form->field($sellerinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
+    <?= $form->field($sellerinfo, 'affliation')->textInput()?>
+    <?= $form->field($sellerinfo, 'affliationtype')->textInput()?>
+    <?= $form->field($sellerinfo, 'phone')->textInput()?>
+    <?= $form->field($sellerinfo, 'country')->textInput()?>
+    <?= $form->field($sellerinfo, 'paper_img')->textInput(['readonly'=>"readonly"])?>
     <?= $form->field($sellerinfo, 'cash')->textInput(['readonly'=>"readonly"])?>
     <?= $form->field($sellerinfo, 'account')->textInput()->hint('标明开户行，卡号，账户名称等',['style'=>'padding-left:30px',])?>
     <?= $form->field($sellerinfo, 'mobile')->textInput()?>
     <?= $form->field($sellerinfo, 'email')->textInput()?>
+    <?= $form->field($sellerinfo, 'server_num')->textInput()?>
     <div style="float:left; margin: 0 auto;width: 280px;">
         <?=$form->field($sellerinfo, 'province', [ 'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div>
         <div style=\"float:left; margin: 0 auto;\">{input}</div>", ]
@@ -58,9 +55,9 @@ use yii\helpers\ArrayHelper;
             [
                 'style'=>'width:180px',
                 'onchange'=>'$.post("index.php?r=site/areas&id='.'"+$(this).val(),function(data){
-                 $("#sellerdetailform-city").html("<option value=0>请选择市</option>");
-                 $("#sellerdetailform-area").html("<option value=0>请选择县</option>");
-                 $("#sellerdetailform-city").append(data);
+                 $("#seller-city").html("<option value=0>请选择市</option>");
+                 $("#seller-area").html("<option value=0>请选择县</option>");
+                 $("#seller-city").append(data);
             });',
             ])->label('所在地区:'); ?>
     </div>
@@ -70,8 +67,8 @@ use yii\helpers\ArrayHelper;
             [
                 'style'=>'width:180px',
                 'onchange'=>'$.get("/index.php?r=site/areas&id='.'"+$(this).val(),function(data){
-                $("#sellerdetailform-area").html("<option value=0>请选择县</option>");
-                $("#sellerdetailform-area").append(data);});',
+                $("#seller-area").html("<option value=0>请选择县</option>");
+                $("#seller-area").append(data);});',
             ]); ?>
     </div>
     <?=$form->field($sellerinfo, 'area', [ 'template' => "{input}", ])->dropDownList(
@@ -80,46 +77,18 @@ use yii\helpers\ArrayHelper;
             'style'=>'width:180px',
         ]); ?>
     <?= $form->field($sellerinfo, 'address')->textInput(['style'=>'width:250px'])?>
-    <?= $form->field($sellerinfo, 'homeurl')->textInput(['style'=>'width:250px'])->hint('官网的URL网址，如：http://www.example.com', ['style'=>'padding-left:100px'])?>
+    <?= $form->field($sellerinfo, 'grade')->textInput(['readonly'=>"readonly"])?>
+    <?= $form->field($sellerinfo, 'comments')->textInput(['readonly'=>"readonly"])?>
+    <?= $form->field($sellerinfo, 'sale')->textInput(['readonly'=>"readonly"])?>
+    <?= $form->field($sellerinfo, 'qualification')->textInput()?>
+    <?= $form->field($sellerinfo, 'logo')->textInput()?>
+    <?= $form->field($sellerinfo, 'tax')->textInput()?>
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?php ActiveForm::end(); ?>
 
     <?php $form = ActiveForm::begin([
-        'action'=>['shop-seller/expertinfo'],
-        'id' => 'expertInfo',
-        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px; display:none'],
-        'fieldConfig' => [
-            'template' => "<div style=\"float:left; width:70px; margin: 0 auto;\">{label}</div><div style='float: left'>{input}</div>
-           <div style='padding-left: 380px;'>{hint}</div><div>{error}</div>",
-        ],
-    ]); ?>
-    <?= $form->field($sellerinfo, 'title')->textInput(['style'=>'width:300px'])
-        ->label('职称:')?>
-    <?= $form->field($sellerinfo, 'institute')->textInput(['style'=>'width:300px'])
-        ->label('学院:')?>
-    <?= $form->field($sellerinfo, 'lab')->textInput(['style'=>'width:300px'])
-        ->label('研究所:')?>
-    <?= $form->field($sellerinfo, 'description')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('专家介绍:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'direction')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('研究方向:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'education')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('教育背景:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'work')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('工作经历:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'research')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('科研成果:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'project')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('科研项目:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'award')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('荣誉奖励:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
-    <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
-    <?php ActiveForm::end(); ?>
-
-    <?php $form = ActiveForm::begin([
-        'action'=>['shop-seller/labinfo'],
+        'action'=>['shop-seller/sellerext'],
         'id' => 'labInfo',
         'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px; display:none'],
         'fieldConfig' => [
@@ -127,11 +96,11 @@ use yii\helpers\ArrayHelper;
            <div style='padding-left: 380px;'>{hint}</div><div>{error}</div>",
         ],
     ]); ?>
-    <?= $form->field($sellerinfo, 'description')->textarea(['rows'=>3, 'style'=>'width:500px'])
+    <?= $form->field($sellerext, 'description')->textarea(['rows'=>3, 'style'=>'width:500px'])
         ->label('实验室概况:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'team')->textarea(['rows'=>3, 'style'=>'width:500px'])
+    <?= $form->field($sellerext, 'team')->textarea(['rows'=>3, 'style'=>'width:500px'])
         ->label('科研队伍:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerinfo, 'outwork')->textarea(['rows'=>3, 'style'=>'width:500px'])
+    <?= $form->field($sellerext, 'outwork')->textarea(['rows'=>3, 'style'=>'width:500px'])
         ->label('科研成果:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
@@ -142,32 +111,24 @@ use yii\helpers\ArrayHelper;
     function setDropDownList()
     {
         if (0 == <?=$sellerinfo->province?>) {
-            $("#sellerdetailform-province").append("<option value=0>请选择省</option>");
-            $("#sellerdetailform-province").val(0);
+            $("#seller-province").append("<option value=0>请选择省</option>");
+            $("#seller-province").val(0);
         }
         if (0 == <?=$sellerinfo->city?>) {
-            $("#sellerdetailform-city").append("<option value=0>请选择市</option>");
-            $("#sellerdetailform-city").val(0);
+            $("#seller-city").append("<option value=0>请选择市</option>");
+            $("#seller-city").val(0);
         }
         if (0 == <?=$sellerinfo->area?>) {
-            $("#sellerdetailform-area").append("<option value=0>请选择县</option>");
-            $("#sellerdetailform-area").val(0);
+            $("#seller-area").append("<option value=0>请选择县</option>");
+            $("#seller-area").val(0);
         }
     }
     /*用window.onload调用myfun()*/
     window.onload=setDropDownList;
 
-    function showExpertInfo()
-    {
-        $("#expertInfo").show();
-        $("#basicInfo").hide();
-        $("#labInfo").hide();
-    }
-
     function showBasicInfo()
     {
         $("#basicInfo").show();
-        $("#expertInfo").hide();
         $("#labInfo").hide();
     }
 
@@ -175,6 +136,5 @@ use yii\helpers\ArrayHelper;
     {
         $("#labInfo").show();
         $("#basicInfo").hide();
-        $("#expertInfo").hide();
     }
 </script>

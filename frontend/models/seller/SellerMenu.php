@@ -1,6 +1,8 @@
 <?php
 namespace frontend\models\seller;
 
+use yii\helpers\Url;
+
 class SellerMenu
 {
 //菜单的配制数据
@@ -27,7 +29,7 @@ class SellerMenu
             "物流配送" => "/index.php?r=shop-seller/delivery",
             "消息通知" => "/index.php?r=site/userrecharge",
             "发货地址" => "/index.php?r=shop-seller/merchship",
-            "资料修改" => "/index.php?r=shop-seller/sellerinfo",
+            "资料修改" => "/index.php?r=shop-seller/shopinfo",
             "QQ客服" => "/index.php?r=site/userrecharge",
         ),
     );

@@ -536,7 +536,7 @@ if (Yii::$app->user->isGuest) {
    </div>
         
    </li>
-   <li><a href="<?=Url::to(["site/shopreg"])?>">申请入驻</a></li>
+   <li><a href="<?=Url::to(["shop-seller/sellerreg"])?>">申请入驻</a></li>
    <li><a href="<?=Url::to(["shop-seller/login"])?>">商家登录</a></li>
    <li class="navdown">关注聚仪
       <div id="weixin">
@@ -696,7 +696,6 @@ if (Yii::$app->user->isGuest) {
 
 
 <footer class="footer">
-   
     <div id="footernav">
         <div style="width:1000px;margin:auto">
             <ul>
@@ -750,7 +749,6 @@ if (Yii::$app->user->isGuest) {
      </div>
 
  </div>
- 
 </footer>
 
 

@@ -11,12 +11,11 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
-class LoginForm extends Model implements \yii\web\IdentityInterface
+class LoginForm extends Model
 {
     public $username;
     public $password;
     public $rememberMe = true;
-    public $id;
 
     private $_shop = false;
 
@@ -65,11 +64,9 @@ class LoginForm extends Model implements \yii\web\IdentityInterface
      */
     public function login()
     {
-        if ($this->validate()) {
-            if($this->_shop){
-                $this->id = $this->_shop->shopid;
-            }
-            return Yii::$app->user->login($this, $this->rememberMe ? 3600*24*30 : 0);
+        if ($this->validate() && $this->_shop) {
+            Yii::$app->session->set('shopid', $this->_shop->shopid);
+            return true;
         }
         return false;
     }
@@ -86,46 +83,5 @@ class LoginForm extends Model implements \yii\web\IdentityInterface
         }
 
         return $this->_shop;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne($id);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        return static::findOne(['access_token' => $token]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        //return $this->authKey;
-        return '';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
     }
 }

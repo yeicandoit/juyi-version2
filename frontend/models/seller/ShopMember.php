@@ -55,4 +55,15 @@ class ShopMember extends \yii\db\ActiveRecord
     {
         return $this->password === $password;
     }
+
+    public function getShopInfo()
+    {
+        if('seller' == $this->regtype){
+            return Seller::findOne($this->shopid);
+        } else if ('expert' == $this->regtype){
+            return Expert::findOne($this->shopid);
+        }
+
+        return false;
+    }
 }
