@@ -21,7 +21,7 @@ use yii\helpers\ArrayHelper;
     ]); ?>
 
     <?= $form->field($model, 'regType',[])->dropDownList(
-        [ 'expertreg'=>'专家入驻', 'shopreg'=>'商家入驻'],
+        [ 'expertreg'=>'专家入驻', 'sellerreg'=>'商家入驻'],
         ['onchange'=>'jumpUrl()']
     )->label("选择入驻类型:"); ?>
     <?= $form->field($model, 'name', [])->textInput()

@@ -19,7 +19,7 @@ use yii\helpers\ArrayHelper;
         ],
     ]); ?>
     <?= $form->field($model, 'regType',[])->dropDownList(
-        ['shopreg'=>'商家入驻', 'expertreg'=>'专家入驻'],
+        ['sellerreg'=>'商家入驻', 'expertreg'=>'专家入驻'],
         ['onchange'=>'jumpUrl()']
     )->label("选择入驻类型:"); ?>
     <?= $form->field($model, 'username', [
@@ -68,9 +68,9 @@ use yii\helpers\ArrayHelper;
             'style'=>'width:200px',
             'prompt'=>'请选择省',
             'onchange'=>'$.post("index.php?r=site/areas&id='.'"+$(this).val(),function(data){
-                 $("#shopregform-citys").html("<option value=0>请选择市</option>");
-                 $("#shopregform-countrys").html("<option value=0>请选择县</option>");
-                 $("#shopregform-citys").append(data);
+                 $("#sellerregform-citys").html("<option value=0>请选择市</option>");
+                 $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
+                 $("#sellerregform-citys").append(data);
             });',
         ])->label('地区:'); ?>
     </div>
@@ -80,8 +80,8 @@ use yii\helpers\ArrayHelper;
             'style'=>'width:200px',
             'prompt'=>'请选择市',
             'onchange'=>'$.get("/index.php?r=site/areas&id='.'"+$(this).val(),function(data){
-             $("#shopregform-countrys").html("<option value=0>请选择县</option>");
-             $("#shopregform-countrys").append(data);
+             $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
+             $("#sellerregform-countrys").append(data);
         });',
         ]); ?>
     </div>
@@ -100,6 +100,6 @@ use yii\helpers\ArrayHelper;
 
 <script type="text/javascript">
     function jumpUrl(){
-        location.href = '/index.php?r=shop-seller/' + $("#shopregform-regtype").val();
+        location.href = '/index.php?r=shop-seller/' + $("#sellerregform-regtype").val();
     };
 </script>

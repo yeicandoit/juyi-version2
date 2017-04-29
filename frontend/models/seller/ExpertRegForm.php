@@ -38,8 +38,6 @@ class ExpertregForm extends Model
 
     public $regType;
 
-    private $expert = false;
-
     /**
      * @return array the validation rules.
      */
@@ -100,31 +98,37 @@ class ExpertregForm extends Model
     public function register()
     {
         if($this->validate()){
-            $this->expert = new Expert();
-            if ($this->expert) {
-                $this->expert->name = $this->name;
-                $this->expert->true_name = $this->trueName;
-                $this->expert->password = md5($this->password);
-                $this->expert->regedittime = date('Y-m-d H:i:s', time());
-                $this->expert->logintime = date('Y-m-d H:i:s', 0);
-                $this->expert->age = $this->age;
-                $this->expert->sex = $this->sex;
-                $this->expert->degree = $this->degree;
-                $this->expert->title = $this->tile;
-                $this->expert->mobile = $this->mobile;
-                $this->expert->server_num = $this->serverNum;
-                $this->expert->email = $this->email;
-                $this->expert->country = isset($this->country) ? $this->country : 0;
-                $this->expert->province = isset($this->province) ? $this->province : 0;
-                $this->expert->city =  isset($this->city) ? $this->city : 0;
-                $this->expert->area =  isset($this->area) ? $this->area : 0;
-                $this->expert->address = $this->address;
-                $this->expert->home_url = $this->homeUrl;
-                $this->expert->affliation = $this->affliation;
-                $this->expert->affliationtype = $this->affliationType;
-                $this->expert->account = $this->account;
+            $expert = new Expert();
+            if ($expert) {
+                $expert->name = $this->name;
+                $expert->true_name = $this->trueName;
+                $expert->password = md5($this->password);
+                $expert->regedittime = date('Y-m-d H:i:s', time());
+                $expert->logintime = date('Y-m-d H:i:s', 0);
+                $expert->age = $this->age;
+                $expert->sex = $this->sex;
+                $expert->degree = $this->degree;
+                $expert->title = $this->tile;
+                $expert->mobile = $this->mobile;
+                $expert->server_num = $this->serverNum;
+                $expert->email = $this->email;
+                $expert->country = isset($this->country) ? $this->country : 0;
+                $expert->province = isset($this->province) ? $this->province : 0;
+                $expert->city =  isset($this->city) ? $this->city : 0;
+                $expert->area =  isset($this->area) ? $this->area : 0;
+                $expert->address = $this->address;
+                $expert->home_url = $this->homeUrl;
+                $expert->affliation = $this->affliation;
+                $expert->affliationtype = $this->affliationType;
+                $expert->account = $this->account;
 
-                return $this->expert->save();
+                if($expert->save()){
+                    $shopMember = new ShopMember();
+                    $shopMember->shopid = $expert->id;
+                    $shopMember->name = $expert->name;
+                    $shopMember->password = $expert->password;
+                    return $shopMember->save();
+                }
             }
        }
         return false;

@@ -11,7 +11,7 @@ use yii\base\Model;
  * @property User|null $user This property is read-only.
  *
  */
-class ShopregForm extends Model
+class SellerregForm extends Model
 {
     public $username;
     public $password;
@@ -28,8 +28,6 @@ class ShopregForm extends Model
     public $regType;
 
     public $file;
-
-    private $_shop = false;
 
     /**
      * @return array the validation rules.
@@ -88,29 +86,36 @@ class ShopregForm extends Model
     public function register()
     {
         if($this->validate()){
-            $this->_shop = new Seller();
-            $this->_shop->seller_name = $this->username;
-            $this->_shop->true_name = $this->shopRealName;
-            $this->_shop->affliation = '';
-            $this->_shop->affliationtype = '';
-            $this->_shop->login_time = date('Y-m-d H:i:s', 0);
-            $this->_shop->phone = '';
-            $this->_shop->country = 0;
-            $this->_shop->email = $this->email;
-            $this->_shop->mobile = $this->phoneNumber;
-            $this->_shop->server_num = '';
-            $this->_shop->password = md5($this->password);
-            $this->_shop->paper_img = $this->file->baseName . '.' . $this->file->extension;
-            $this->_shop->create_time = date('Y-m-d H:i:s',time());
-            $this->_shop->cash = 0;
-            $this->_shop->province = $this->provinces;
-            $this->_shop->city = $this->citys;
-            $this->_shop->area = $this->countrys;
-            $this->_shop->address = $this->detailAddress;
-            $this->_shop->account = '';
-            $this->_shop->qualification = '';
+            $seller = new Seller();
+            $seller->seller_name = $this->username;
+            $seller->true_name = $this->shopRealName;
+            $seller->affliation = '';
+            $seller->affliationtype = '';
+            $seller->login_time = date('Y-m-d H:i:s', 0);
+            $seller->phone = '';
+            $seller->country = 0;
+            $seller->email = $this->email;
+            $seller->mobile = $this->phoneNumber;
+            $seller->server_num = '';
+            $seller->password = md5($this->password);
+            $seller->paper_img = $this->file->baseName . '.' . $this->file->extension;
+            $seller->create_time = date('Y-m-d H:i:s',time());
+            $seller->cash = 0;
+            $seller->province = $this->provinces;
+            $seller->city = $this->citys;
+            $seller->area = $this->countrys;
+            $seller->address = $this->detailAddress;
+            $seller->account = '';
+            $seller->qualification = '';
 
-            return $this->_shop->save();
-       }
+            if($seller->save()){
+                $shopMember = new ShopMember();
+                $shopMember->shopid = $seller->id;
+                $shopMember->name = $seller->seller_name;
+                $shopMember->password = $seller->password;
+                return $shopMember->save();
+            }
+        }
+        return false;
     }
 }

@@ -28,7 +28,7 @@ use frontend\models\seller\SellerMenu;
 use frontend\models\seller\ShopMerchShipInfoSearch;
 use frontend\models\ShopOrderSearch;
 use frontend\models\seller\ExpertregForm;
-use frontend\models\seller\ShopregForm;
+use frontend\models\seller\SellerregForm;
 use yii\web\UploadedFile;
 
 /**
@@ -433,9 +433,9 @@ class ShopSellerController extends Controller
         ]);
     }
 
-    public function actionShopreg()
+    public function actionSellerreg()
     {
-        $model = new ShopregForm();
+        $model = new SellerregForm();
         if($model->load(Yii::$app->request->post())){
             $model->file = UploadedFile::getInstance($model, 'file');
             $upSec = $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
@@ -444,7 +444,7 @@ class ShopSellerController extends Controller
                 return $this->goHome();
             }
         }
-        return $this->render('shopreg', [
+        return $this->render('sellerreg', [
             'model' => $model,
         ]);
     }
