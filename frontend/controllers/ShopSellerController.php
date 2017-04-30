@@ -3,6 +3,8 @@
 namespace frontend\controllers;
 
 use frontend\models\seller\ExpertExt;
+use frontend\models\seller\Goods;
+use frontend\models\seller\Goodsspec;
 use frontend\models\seller\SellerDetailForm;
 use frontend\models\seller\SellerExt;
 use frontend\models\seller\ShopMember;
@@ -74,6 +76,10 @@ class ShopSellerController extends Controller
 
     public function actionSellerhome()
     {
+        $shopId = Yii::$app->session->get('shopid');
+        if (!$shopId) {
+            return  $this->redirect(['login']);
+        }
         return $this->render('sellerhome', ['menu'=>SellerMenu::getMenu()]);
     }
 
@@ -269,25 +275,21 @@ class ShopSellerController extends Controller
     {
         if(Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $goods = new ShopGoods();
+            $goods = new Goods();
             $goods->load($post);
-            $goods->seller_id = Yii::$app->user->id;
+            $goods->seller_id = Yii::$app->session->get('shopid');
             $goods->create_time = date('Y-m-d H:i:s',time());
             $goods->sort = isset($goods->sort) ? $goods->sort : 10;
             $goods->is_del = 3;
-            $specArr = array();
-            $specArr['specPay'] = $post['specPay'];
-            $specArr['specTest'] = $post['specTest'];
-            $goods->spec_array = json_encode($specArr);
             if($goods->save()){
-                if(isset($post['goodsCategory'])){
-                    $goods->saveCat($post['goodsCategory']);
+                if(isset($post['specName'])){
+                    $goods->addSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
                 }
                 return $this->redirect(['goodslist']);
             }
             return $this->goHome();
         }
-        $goods = new ShopGoods();
+        $goods = new Goods();
         return $this->render('goodsedit', ['menu'=>SellerMenu::getMenu(), 'goods'=>$goods]);
     }
 

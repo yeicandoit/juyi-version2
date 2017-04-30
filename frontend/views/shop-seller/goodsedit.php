@@ -77,6 +77,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
     <?= $form->field($goods, 'name')->textInput(['style'=>'width:60%'])?>
     <?= $form->field($goods, 'search_words')->textInput(['style'=>'width:60%'])->label('关键词')
     ->hint('每个关键词最长为15个字符，超过后系统不予存储，每个词以逗号分隔')?>
+    <div class="goodInfoBox">
     <div>
         <?=Html::label('所属分类');?>
         <div id="catContainer">
@@ -115,11 +116,14 @@ JS;
             Modal::end();
             ?>
         </div>
-    </div>
-    <div class="blank"></div>
-    <?= $form->field($goods, 'sort')->textInput(['style'=>'width:25%'])->label('商品排序')?>
-    <?= $form->field($goods, 'unit')->textInput(['style'=>'width:25%'])->label('计量单位显示')?>
-    <?= $form->field($goods, 'is_del')->radioList([3=>'申请上架', 2=>'下架'])->label('计量单位显示')?>
+    </div></div>
+    <br>
+    <?php if (isset($goods->is_del)) {?>
+        <div class="goodInfoBox">
+            <?= $form->field($goods, 'is_del')->radioList([3=>'申请上架', 2=>'下架'])->label('商品状态')?>
+        </div>
+    <?php }?>
+    <br>
     <div class="goodInfoBox">
     <label>基本数据</label>
         <?php $goodsNo = $goods->goods_no;
@@ -129,7 +133,7 @@ JS;
         ?>
         <table>
             <tr>
-                <th>商品货号</th><th>库存</th><th>市场价格</th><th>销售价格</th><th>成本价格</th><th>重量(克)</th>
+                <th>商品货号</th><th>库存</th><th>市场价格</th><th>销售价格</th><th>成本价格</th>
             </tr>
             <tr>
                 <td style="width: 150px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:120px'])?></td>
@@ -137,35 +141,28 @@ JS;
                 <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
-                <td style="width: 150px;"><?= $form->field($goods, 'weight', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
             </tr>
         </table>
         <div style="display: none"><?= $form->field($goods, 'model_id')->textInput(['style'=>'width:25%', 'value'=>'1'])?></div>
     </div>
     <br>
     <div class="goodInfoBox">
-        <p><label>添加规格</label></p>
-        <div id="specPay">
-            <label>支付种类:</label>
-            <ctrlarea id="pay_0">
-                <input name="specPay[]" value="直接支付" type="hidden">
-                <?=Html::a('直接支付','#',['onclick'=>'rmSpecNode("0")'])?>
-            </ctrlarea>
-            <label id='addPay'><?=Html::a('+', '#', ['onclick'=>'addPay()']);?></label>
-        </div>
-        <div id="specTest">
-            <label>测试种类:</label>
-            <ctrlarea id="test_0">
-                <input name="specTest[]" value="直接测试" type="hidden">
-                <?=Html::a('直接测试','#',['onclick'=>'rmTestNode("0")'])?>
-            </ctrlarea>
-            <label id='addTest'><?=Html::a('+', '#', ['onclick'=>'addTest()']);?></label>
-        </div>
+        <p><label>商品规格</label></p>
+        <?= Html::button('添加', ['onclick'=>'addSpec()']); ?>
+        <table id="specTable">
+            <tr>
+                <th style="width: 150px;">规格名称</th>
+                <th style="width: 150px;">市场价格</th>
+                <th style="width: 150px;">销售价格</th>
+                <th style="width: 150px;"></th>
+            </tr>
+        </table>
     </div>
     <br>
     <div class="goodInfoBox">
-        <?=$form->field($goods, 'brand_id')
+        <?=$form->field($goods, 'brandid')
             ->dropDownList(ArrayHelper::map(frontend\models\ShopBrand::find()->asArray()->all(),'id','name'), ['style'=>'width:300px'])?>
+        <?= $form->field($goods, 'brandversion')->textInput(['style'=>'width:200px'])->label("品牌型号")?>
     </div>
     <br>
     <div class="goodInfoBox">
@@ -312,11 +309,16 @@ JS;
         }
     }
 
-    function rmSpecNode(id)
+    function addSpec()
     {
-        if(confirm('确定删除此支付规格？')){
-            $('#pay_'+id).remove();
-        }
+        var str = '';
+        str += '<tr>'
+            + '<td>' + '<input name="specName[]" type="text" style="width: 120px;">' + '</td>'
+            + '<td>' + '<input name="specMktPrice[]" type="text" style="width: 120px;">' + '</td>'
+            + '<td>' + '<input name="specSellPrice[]" type="text" style="width: 120px;">' + '</td>'
+            + '<td>' + '<a href="#" onclick="$(this).parent().parent().remove();">&nbsp;&nbsp;删除</a>' + '</td>'
+            + '</tr>';
+        $("#specTable").append(str);
     }
 
     function addPay()
@@ -330,64 +332,6 @@ JS;
             '<a href="#" class="btn btn-xs" onclick="cfmPay(' + mtime + ')">'+
             '确定' + '</a>&nbsp;&nbsp;</ctrlarea>';
         $('#specPay').append(str);
-    }
-
-    function cfmPay(id)
-    {
-        if(confirm('确定添加？')){
-            var inputPay = $('#inputPay_'+id).val();
-            $('#pay_'+id).remove();
-            var str = '';
-            str += '<ctrlarea id=' + 'pay_' + id + '>' +
-                '<input name="specPay[]" type="hidden" value='+ inputPay + '>' +
-                '<a href="#" onclick="rmSpecNode('+ id +')">'+
-                inputPay + '</a>&nbsp;&nbsp;</ctrlarea>' +
-                '<label id="addPay"><a href="#", onclick="addPay()">+</a></label>';
-            $('#specPay').append(str);
-        } else {
-            $('#pay_'+id).remove();
-            var str = '<label id="addPay"><a href="#", onclick="addPay()">+</a></label>';
-            $('#specPay').append(str);
-        }
-    }
-
-    function addTest()
-    {
-        $('#addTest').remove();
-        var mtime = (new Date()).valueOf();
-        var str = '';
-        var ctrlId = 'test_' + mtime;
-        str += '<ctrlarea id=' + ctrlId + '>' +
-            '<input name="specTest[]" type="text" id='+ 'inputTest_' + mtime + '>' +
-            '<a href="#" class="btn btn-xs" onclick="cfmTest(' + mtime + ')">'+
-            '确定' + '</a>&nbsp;&nbsp;</ctrlarea>';
-        $('#specTest').append(str);
-    }
-
-    function cfmTest(id)
-    {
-        if(confirm('确定添加？')){
-            var inputTest = $('#inputTest_'+id).val();
-            $('#test_'+id).remove();
-            var str = '';
-            str += '<ctrlarea id=' + 'test_' + id + '>' +
-                '<input name="specTest[]" type="hidden" value='+ inputTest + '>' +
-                '<a href="#" onclick="rmTestNode('+ id +')">'+
-                inputTest + '</a>&nbsp;&nbsp;</ctrlarea>' +
-                '<label id="addTest"><a href="#", onclick="addTest()" >+</a></label>';
-            $('#specTest').append(str);
-        } else {
-            $('#test_'+id).remove();
-            var str = '<label id="addTest"><a href="#", onclick="addTest()">+</a></label>';
-            $('#specTest').append(str);
-        }
-    }
-
-    function rmTestNode(id)
-    {
-        if(confirm('确定删除此测试规格？')){
-            $('#test_'+id).remove();
-        }
     }
 </script>
 
