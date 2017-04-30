@@ -129,4 +129,10 @@ class Goods extends \yii\db\ActiveRecord
             $spec->save();
         }
     }
+
+    public function statusText()
+    {
+        $data = array('0' => '上架','1' => '删除','2' => '下架','3' => '等审');
+        return isset($data[$this->is_del]) ? $data[$this->is_del] : '';
+    }
 }

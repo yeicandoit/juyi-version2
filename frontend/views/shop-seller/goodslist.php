@@ -55,7 +55,6 @@ use yii\grid\GridView;
                 }
             ],
             'sell_price',
-            'store_nums',
             [
                 'label'=>'状态',
                 'format'=>'raw',

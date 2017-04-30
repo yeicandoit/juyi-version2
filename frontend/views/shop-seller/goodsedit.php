@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
+use \yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/sellerhome.css')?>
 <?=Html::cssFile('@web/css/reg.css')?>
@@ -133,11 +134,10 @@ JS;
         ?>
         <table>
             <tr>
-                <th>商品货号</th><th>库存</th><th>市场价格</th><th>销售价格</th><th>成本价格</th>
+                <th>商品货号</th><th>市场价格</th><th>销售价格</th><th>成本价格</th>
             </tr>
             <tr>
                 <td style="width: 150px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:120px'])?></td>
-                <td style="width: 150px;"><?= $form->field($goods, 'store_nums', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
@@ -174,12 +174,13 @@ JS;
             <input type="hidden" id="w" name="w" />
             <input type="hidden" id="h" name="h" />
             <input type="hidden" id="f" name="f" />
-            <input id='upload' name="file_upload" type="button" value='上传' class='btn btn-large btn-primary'>
+            <input id="upload" name="file_upload" type="button" value='上传' class='btn btn-large btn-primary'>
             <input type="button" name="btn" value="确认裁剪" class="btn" />
             <div class="info"></div>
             <div class="text-info" >
                 <table><tr id="goodsImgs"></tr></table>
             </div>
+            <?= $form->field($goods, 'img', ['options'=>['style'=>"display:none"]])->textInput()?>
             <div class="pic-display"></div>
         </div>
     </div>
@@ -192,8 +193,10 @@ JS;
 <script>
     var g_oJCrop = null;
     //异步上传文件
+    <?php $actionUrl = Url::to(['shop-seller/upload'])?>
+    <?php $postUrl = Url::to(['shop-seller/cutpic'])?>
     new AjaxUpload("#upload", {
-        action: 'index.php?r=shop-seller/upload',
+        action: <?="\"$actionUrl\""?>,
         name:'myfile',
         data: {},
         onSubmit: function(file, ext) {
@@ -271,16 +274,20 @@ JS;
             w=0;
         }
         if(w>0){
-            $.post('index.php?r=shop-seller/cutpic',{'x':$("input[name=x]").val(),'y':$("input[name=y]").val(),'w':$("input[name=w]").val(),'h':$("input[name=h]").val(),'f':$("input[name=f]").val()},function(data){
+            $.post(<?="\"$postUrl\""?>,{'x':$("input[name=x]").val(),'y':$("input[name=y]").val(),'w':$("input[name=w]").val(),'h':$("input[name=h]").val(),'f':$("input[name=f]").val()},function(data){
                 if(data.status==1){
                     $(".pic-display").html('');
                     $(".info").html("<div style='color:#008000;margin:10px 5px;'>裁剪成功!</div>")
                     $("input[name=btn]").hide();
+                    var mtime = (new Date()).valueOf();
+                    var imgId = 'defaultImg_' + mtime;
+                    var inputId = 'inputDefault_' + mtime;
                     var info = '<td style="padding-left: 10px">' +
-                            '<img src="' + data.data + '" style="width: 100px;height: 100px;">'
+                            '<img src="' + data.data + '" style="width: 100px;height: 100px;" onclick="defaultThis('+ mtime + ')">'
                             + '<br>'
                             + '<a href="#" onclick="$(this).parent().remove();">&nbsp;&nbsp;删除</a>'
-                            + '<input type="hidden" name="goodsImgs[]" value="' + data.data + '">'
+                            + '<input id=' + inputId + ' type="hidden" name="goodsImgs[]" value="' + data.data + '">'
+                            + '<label class="defaultImg" style="display: none" id=' + imgId + '>&nbsp;&nbsp;主图</label>'
                             + '</td>';
                     $("#goodsImgs").append(info);
                 }
@@ -289,6 +296,13 @@ JS;
             $(".info").html("<div style='color:#E3583B;margin:5px;'>亲！还没有选择裁剪区域哦！</div>");
         }
     });
+
+    function defaultThis(id)
+    {
+        $(".defaultImg").hide();
+        $("#defaultImg_" + id).show();
+        $("input[name='img']").val($("#inputDefault_" + id).val());
+    }
 
     function setCategory(){
         var str = '';
@@ -319,19 +333,6 @@ JS;
             + '<td>' + '<a href="#" onclick="$(this).parent().parent().remove();">&nbsp;&nbsp;删除</a>' + '</td>'
             + '</tr>';
         $("#specTable").append(str);
-    }
-
-    function addPay()
-    {
-        $('#addPay').remove();
-        var mtime = (new Date()).valueOf();
-        var str = '';
-        var ctrlId = 'pay_' + mtime;
-        str += '<ctrlarea id=' + ctrlId + '>' +
-            '<input name="specPay[]" type="text" id='+ 'inputPay_' + mtime + '>' +
-            '<a href="#" class="btn btn-xs" onclick="cfmPay(' + mtime + ')">'+
-            '确定' + '</a>&nbsp;&nbsp;</ctrlarea>';
-        $('#specPay').append(str);
     }
 </script>
 

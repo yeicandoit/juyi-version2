@@ -15,7 +15,7 @@ use frontend\models\ShopCategory;
 use frontend\models\ShopComment;
 use frontend\models\ShopCommentSearch;
 use frontend\models\ShopGoods;
-use frontend\models\ShopGoodsSearch;
+use frontend\models\Seller\GoodsSearch;
 use frontend\models\ShopOrder;
 use frontend\models\ShopOrderGoods;
 use frontend\models\ShopRefundmentDoc;
@@ -321,7 +321,7 @@ class ShopSellerController extends Controller
 
     public function actionGoodslist()
     {
-        $searchModel = new ShopGoodsSearch(['seller_id'=>Yii::$app->user->id]);
+        $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->session->get('shopid')]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('goodslist', ['menu'=>SellerMenu::getMenu(), 'dataProvider'=>$dataProvider]);
     }
