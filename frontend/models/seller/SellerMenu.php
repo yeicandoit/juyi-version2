@@ -8,29 +8,26 @@ class SellerMenu
 //菜单的配制数据
     public static $menu = array(
         "统计结算模块" => array(
-             "管理首页" => "/index.php?r=shop-seller/sellerhome",
-             "销售额统计" => "/index.php?r=shop-seller/account",
+             "管理首页" => "shop-seller/sellerhome",
+             "销售额统计" => "shop-seller/account",
         ),
 
         "商品模块" => array(
-             "商品列表" => "/index.php?r=shop-seller/goodslist",
-             "添加商品" => "/index.php?r=shop-seller/goodsadd",
-             "商品咨询" => "/ucenter/consult",
-             "商品评价" => "/index.php?r=shop-seller/comment",
-             "商品退款" => "/index.php?r=shop-seller/refundment",
-             "规格列表" => "/index.php?r=shop-seller/speclist",
+             "商品列表" => "shop-seller/goodslist",
+             "添加商品" => "shop-seller/goodsadd",
+             "商品评价" => "shop-seller/comment",
+             "商品退款" => "shop-seller/refundment",
         ),
 
         "订单模块" => array(
-            "订单列表" => "/index.php?r=shop-seller/order" ,
+            "订单列表" => "shop-seller/order" ,
         ),
 
         "配置模块" => array(
-            "物流配送" => "/index.php?r=shop-seller/delivery",
-            "消息通知" => "/index.php?r=site/userrecharge",
-            "发货地址" => "/index.php?r=shop-seller/merchship",
-            "资料修改" => "/index.php?r=shop-seller/shopinfo",
-            "QQ客服" => "/index.php?r=site/userrecharge",
+            "物流配送" => "shop-seller/delivery",
+            "消息通知" => "shop-seller/userrecharge",
+            "资料修改" => "shop-seller/shopinfo",
+            "QQ客服" => "shop-seller/userrecharge",
         ),
     );
 

@@ -9,6 +9,7 @@ use backend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
+use frontend\models\seller\SellerMenu;
 
 ?>
 <?php $this->beginPage() ?>
@@ -687,12 +688,27 @@ if (Yii::$app->user->isGuest) {
     
  <div class="container">
 
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>  <!-- container -->
+     <?= Breadcrumbs::widget([
+         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+     ]) ?>
+     <?= Alert::widget() ?>
+	 <?=Html::cssFile('@web/css/sellerhome.css')?>
+	 <div class="menuInfo">
+		 <?php foreach(SellerMenu::getMenu() as $item=>$subMenu){?>
+			 <div class="box">
+				 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
+				 <div class="cont">
+					 <ul class="list">
+						 <?php foreach($subMenu as $moreKey => $moreValue){?>
+							 <li><a target="_blank"  href="<?php echo Url::to([$moreValue]);?>"><?php echo isset($moreKey)?$moreKey:"";?></a></li>
+						 <?php }?>
+					 </ul>
+				 </div>
+			 </div>
+		 <?php }?>
+	 </div>
+     <?= $content ?>
+ </div>  <!-- container -->
 
 
 <footer class="footer">
