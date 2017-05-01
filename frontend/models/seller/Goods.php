@@ -118,7 +118,7 @@ class Goods extends \yii\db\ActiveRecord
         return $this->hasMany(ShopCategoryExtend::className(), ['goods_id' => 'id']);
     }
 
-    public function addSpec($specName, $specMktPrice, $specSellPrice)
+    public function saveSpec($specName, $specMktPrice, $specSellPrice)
     {
         foreach($specName as $k => $v){
             $spec = new Goodsspec();

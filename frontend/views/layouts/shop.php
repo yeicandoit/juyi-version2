@@ -544,9 +544,7 @@ if (Yii::$app->user->isGuest) {
      <img src="upload/2017/wechat.jpg" alt="Norway" style="width:100%;">
 
      </div>
-   
-   
-   
+
    </li> 
 
 </ul> 
@@ -555,18 +553,6 @@ if (Yii::$app->user->isGuest) {
 
 </div><!--mynavcontent-->
 </div> <!--mynav -->
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    
       <div id="header2">
 <div id="header2-1">
 <img src="upload/2017/logo.png" alt="Norway" style="height:100%">
@@ -608,11 +594,6 @@ if (Yii::$app->user->isGuest) {
 			</div><!-- /.col-lg-6 -->
 		</div><!-- /.row -->
 	</form>
-		
-		
-		
-		
-		
 	</div>
 	<div class="tab-pane fade" id="ios">
 					<form class="bs-example bs-example-form" role="form">
@@ -642,50 +623,25 @@ if (Yii::$app->user->isGuest) {
 <div id="header2-2-2" >
 热门搜索： 
 </div>
-
-
-
 </div><!--header2-2-->
 <div id="header2-3">
 <a href=""><img src="upload/2017/buycar.png" alt="Norway" style="width:100%;"></a>
-
 </div> <!--header2-3-->
-
 <div id="header2-4">
-
 <a href=""><img src="upload/2017/wechat.jpg" alt="Norway" style="width:100%;"></a>
 </div> <!--header2-4-->
-
 </div> <!--header2-->
-    
-    
-   
-    
-    
-
     <div id="fenge">
-
     <ul class="fenge-ul">
-    
         <li><a href="<?=Url::to(["site/mainpage3"])?>">检测中心</a></li>
         <li><a href="">需求大厅</a></li>
         <li><a href="">专家解码</a></li>
         <li><a href="">科研辅助</a></li>
         <li><a href="">数值模拟</a></li>
         <li><a href="">关注聚仪</a></li>
-      
     </ul>
-    
-
-    
     </div> <!-- fenge -->
-    
-    
   <div id="fenge2"></div>
-    
-    
-    
-    
  <div class="container">
 
      <?= Breadcrumbs::widget([
@@ -693,20 +649,25 @@ if (Yii::$app->user->isGuest) {
      ]) ?>
      <?= Alert::widget() ?>
 	 <?=Html::cssFile('@web/css/sellerhome.css')?>
-	 <div class="menuInfo">
-		 <?php foreach(SellerMenu::getMenu() as $item=>$subMenu){?>
-			 <div class="box">
-				 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
-				 <div class="cont">
-					 <ul class="list">
-						 <?php foreach($subMenu as $moreKey => $moreValue){?>
-							 <li><a target="_blank"  href="<?php echo Url::to([$moreValue]);?>"><?php echo isset($moreKey)?$moreKey:"";?></a></li>
-						 <?php }?>
-					 </ul>
+	 <?php $actionId = Yii::$app->controller->action->id;
+	 if($actionId != 'expertreg'
+			 && $actionId != 'sellerreg'
+	 		 && $actionId != 'login') {?>
+		 <div class="menuInfo">
+			 <?php foreach(SellerMenu::getMenu() as $item=>$subMenu){?>
+				 <div class="box">
+					 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
+					 <div class="cont">
+						 <ul class="list">
+							 <?php foreach($subMenu as $moreKey => $moreValue){?>
+								 <li><a target="_blank"  href="<?php echo Url::to([$moreValue]);?>"><?php echo isset($moreKey)?$moreKey:"";?></a></li>
+							 <?php }?>
+						 </ul>
+					 </div>
 				 </div>
-			 </div>
-		 <?php }?>
-	 </div>
+			 <?php }?>
+		 </div>
+	 <?php }?>
      <?= $content ?>
  </div>  <!-- container -->
 

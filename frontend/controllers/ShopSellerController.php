@@ -43,7 +43,7 @@ class ShopSellerController extends Controller
 {
     //To enable ajaxupload, set csrf to be false;
     public $enableCsrfValidation = false;
-    public $layout = 'mymain-9';
+    public $layout = 'shop';
     /**
      * @inheritdoc
      */
@@ -87,8 +87,7 @@ class ShopSellerController extends Controller
     {
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $seller = ShopSeller::find()->where(['seller_name'=>$model->username])->one();
-            return $this->render('sellerhome', ['menu'=>SellerMenu::getMenu(), 'seller'=>$seller, 'sellerid'=>Yii::$app->user->id]);
+            return $this->redirect(['sellerhome']);
         }
         return $this->render('login', ['model'=>$model]);
     }
@@ -283,7 +282,7 @@ class ShopSellerController extends Controller
             $goods->is_del = 3;
             if($goods->save()){
                 if(isset($post['specName'])){
-                    $goods->addSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
+                    $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
                 }
                 return $this->redirect(['goodslist']);
             }
