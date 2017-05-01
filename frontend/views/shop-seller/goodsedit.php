@@ -60,6 +60,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
     <div class="info_bar"><b>商品编辑</b></div>
     <div class="blank"></div>
     <?php $form = ActiveForm::begin([]); ?>
+    <?= $form->field($goods, 'id', ['options'=>['style'=>"display:none"]])?>
     <?= $form->field($goods, 'name')->textInput(['style'=>'width:60%'])?>
     <?= $form->field($goods, 'search_words')->textInput(['style'=>'width:60%'])->label('关键词')
     ->hint('每个关键词最长为15个字符，超过后系统不予存储，每个词以逗号分隔')?>
@@ -68,7 +69,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
         <?=Html::label('所属分类');?>
         <div id="catContainer">
             <?php
-                foreach($goods->shopCategoryExtends as $key=>$catExt){
+                foreach($goods->categoryExtends as $key=>$catExt){
                     $catId = $catExt->category_id;
                     $catName = $catExt->category->name;
             ?>

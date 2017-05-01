@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 
@@ -19,7 +19,7 @@ use Yii;
  *
  * @property ShopCategoryExtend[] $shopCategoryExtends
  */
-class ShopCategory extends \yii\db\ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -65,6 +65,6 @@ class ShopCategory extends \yii\db\ActiveRecord
      */
     public function getShopCategoryExtends()
     {
-        return $this->hasMany(ShopCategoryExtend::className(), ['category_id' => 'id']);
+        return $this->hasMany(CategoryExtend::className(), ['category_id' => 'id']);
     }
 }

@@ -11,7 +11,7 @@ use frontend\models\seller\ShopMember;
 use frontend\models\seller\ShopMerchShipInfo;
 use frontend\models\seller\ShopSpec;
 use frontend\models\seller\ShopSpecSearch;
-use frontend\models\ShopCategory;
+use frontend\models\seller\Category;
 use frontend\models\ShopComment;
 use frontend\models\ShopCommentSearch;
 use frontend\models\ShopGoods;
@@ -90,15 +90,6 @@ class ShopSellerController extends Controller
             return $this->redirect(['sellerhome']);
         }
         return $this->render('login', ['model'=>$model]);
-    }
-
-    public function actionSellerinfo()
-    {
-        $sellerinfo = new SellerDetailForm();
-        if($sellerinfo->load(Yii::$app->request->post()) && $sellerinfo->saveInfo()){
-            return $this->redirect(['sellerhome']);
-        }
-        return $this->render('sellerinfo', ['menu'=>SellerMenu::getMenu(), 'sellerinfo'=>$sellerinfo]);
     }
 
     public function actionShopinfo()
@@ -284,35 +275,38 @@ class ShopSellerController extends Controller
                 if(isset($post['specName'])){
                     $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
                 }
+                if(isset($post['goodsCategory'])){
+                    $goods->saveCat($post['goodsCategory']);
+                }
+                if(isset($post['goodsImgs'])){
+                    $goods->saveImgs($post['goodsImgs']);
+                }
                 return $this->redirect(['goodslist']);
             }
             return $this->goHome();
         }
         $goods = new Goods();
-        return $this->render('goodsedit', ['menu'=>SellerMenu::getMenu(), 'goods'=>$goods]);
+        return $this->render('goodsedit', ['goods'=>$goods]);
     }
 
     public function actionGoodsedit($id)
     {
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
-            $goods = ShopGoods::findOne($post['ShopGoods']);
+            $goods = Goods::findOne($post['Goods']['id']);
             $goods->load($post);
             if($goods->save()){
-                if(isset($post['goodsCategory'])){
-                    $goods->saveCat($post['goodsCategory']);
-                }
                 return $this->redirect(['goodslist']);
             }
             return $this->goHome();
         }
-        $goods = ShopGoods::findOne($id);
-        return $this->render('goodsedit', ['menu'=>SellerMenu::getMenu(), 'goods'=>$goods]);
+        $goods = Goods::findOne($id);
+        return $this->render('goodsedit', ['goods'=>$goods]);
     }
 
     public function actionGoodscategory()
     {
-        $data = ShopCategory::find()->asArray()->all();
+        $data = Category::find()->asArray()->all();
         $idname = ArrayHelper::map($data, 'id', 'name');
         $idmap = ArrayHelper::map($data, 'id', 'parent_id');
         return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap]);
@@ -322,7 +316,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->session->get('shopid')]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('goodslist', ['menu'=>SellerMenu::getMenu(), 'dataProvider'=>$dataProvider]);
+        return $this->render('goodslist', ['dataProvider'=>$dataProvider]);
     }
 
     public function actionGoodsstat($id, $status)

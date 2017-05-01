@@ -32,7 +32,7 @@ use yii\grid\GridView;
                 'format'=>'raw',
                 'value'=>function($model){
                     $catName = array();
-                    foreach($model->shopCategoryExtends as $key=>$catExt){
+                    foreach($model->categoryExtends as $key=>$catExt){
                         $catName[] = $catExt->category->name;
                     }
                     $strCats = join(',',$catName);

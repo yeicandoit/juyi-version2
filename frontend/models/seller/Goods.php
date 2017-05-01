@@ -113,9 +113,9 @@ class Goods extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getShopCategoryExtends()
+    public function getcategoryExtends()
     {
-        return $this->hasMany(ShopCategoryExtend::className(), ['goods_id' => 'id']);
+        return $this->hasMany(CategoryExtend::className(), ['goods_id' => 'id']);
     }
 
     public function saveSpec($specName, $specMktPrice, $specSellPrice)
@@ -134,5 +134,30 @@ class Goods extends \yii\db\ActiveRecord
     {
         $data = array('0' => '上架','1' => '删除','2' => '下架','3' => '等审');
         return isset($data[$this->is_del]) ? $data[$this->is_del] : '';
+    }
+
+    public function saveCat($cats)
+    {
+        foreach($cats as $key=>$val){
+            $catExt = new CategoryExtend();
+            $catExt->goods_id = $this->id;
+            $catExt->category_id = $val;
+            $catExt->save();
+        }
+        return true;
+    }
+
+    public function saveImgs($imgs)
+    {
+        foreach($imgs as $k=>$v){
+            $photo = new GoodsPhoto();
+            $photo->img = $v;
+            if($photo->save()){
+                $relaion = new GoodsPhotoRelation();
+                $relaion->goods_id = $this->id;
+                $relaion->photo_id = $photo->id;
+                $relaion->save();
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 
@@ -14,7 +14,7 @@ use Yii;
  * @property ShopGoods $goods
  * @property ShopCategory $category
  */
-class ShopCategoryExtend extends \yii\db\ActiveRecord
+class CategoryExtend extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -32,8 +32,8 @@ class ShopCategoryExtend extends \yii\db\ActiveRecord
         return [
             [['goods_id', 'category_id'], 'required'],
             [['goods_id', 'category_id'], 'integer'],
-            [['goods_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopGoods::className(), 'targetAttribute' => ['goods_id' => 'id']],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['goods_id'], 'exist', 'skipOnError' => true, 'targetClass' => Goods::className(), 'targetAttribute' => ['goods_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -54,7 +54,7 @@ class ShopCategoryExtend extends \yii\db\ActiveRecord
      */
     public function getGoods()
     {
-        return $this->hasOne(ShopGoods::className(), ['id' => 'goods_id']);
+        return $this->hasOne(Goods::className(), ['id' => 'goods_id']);
     }
 
     /**
@@ -62,6 +62,6 @@ class ShopCategoryExtend extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(ShopCategory::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 }
