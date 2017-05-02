@@ -292,20 +292,38 @@ JS;
 
     function setCategory(){
         var str = '';
-        $("input[name='category']:checked").each(function(){
+        $("input[name='category']:checked").each(function() {
+            var actionId = "<?= Yii::$app->controller->action->id;?>";
+            if ('goodsedit' == actionId) {
+                var goodsId = "<?=$goods->id?>";
+                //TODO could not edit str in $.get function. To find why.
+                $.get("<?=Url::to(['shop-seller/addcat'])?>" + "&goodsId=" + goodsId + "&catId=" + $(this).val(), function (data) {});
+            }
             str += '<ctrlarea id=' + 'ctrl' + $(this).val() + '>' +
                 '<input name="goodsCategory[]" type="hidden" value=' + $(this).val() + '>' +
-                '<a href="#" onclick="rmCatNode(' + $(this).val() + ')">'+
-               idname[$(this).val()] + '</a>&nbsp;&nbsp;</ctrlarea>';
+                '<a href="#" onclick="rmCatNode(' + $(this).val() + ')">' +
+                idname[$(this).val()] + '</a>&nbsp;&nbsp;</ctrlarea>';
         });
         $("#catContainer").append(str);
     }
 
-    function rmCatNode(id)
+    function rmCatNode(catId)
     {
         if(confirm('确定删除此分类？')) {
-            node = '#ctrl' + id;
-            $(node).remove();
+            var actionId = "<?= Yii::$app->controller->action->id;?>";
+            var node = '#ctrl' + catId;
+            if ('goodsedit' == actionId) {
+                var goodsId = "<?=$goods->id?>";
+                $.get("<?=Url::to(['shop-seller/delcat'])?>" + "&goodsId=" + goodsId + "&catId=" + catId, function (data) {
+                    if (data == "OK") {
+                        $(node).remove();
+                    } else {
+                        alert("删除节点失败");
+                    }
+                });
+            } else {
+                $(node).remove();
+            }
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\seller\CategoryExtend;
 use frontend\models\seller\ExpertExt;
 use frontend\models\seller\Goods;
 use frontend\models\seller\Goodsspec;
@@ -310,6 +311,28 @@ class ShopSellerController extends Controller
         $idname = ArrayHelper::map($data, 'id', 'name');
         $idmap = ArrayHelper::map($data, 'id', 'parent_id');
         return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap]);
+    }
+
+    public function actionDelcat($goodsId, $catId)
+    {
+        $catExt = CategoryExtend::find()->where(['goods_id'=>$goodsId, 'category_id'=>$catId])->one();
+        if($catExt->delete()){
+            echo "OK";
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionAddcat($goodsId, $catId)
+    {
+        $catExt = new CategoryExtend();
+        $catExt->goods_id = $goodsId;
+        $catExt->category_id = $catId;
+        if($catExt->save()){
+            echo "OK";
+        } else {
+            echo "Failed";
+        }
     }
 
     public function actionGoodslist()
