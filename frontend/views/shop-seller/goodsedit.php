@@ -142,6 +142,15 @@ JS;
                 <th style="width: 150px;">销售价格</th>
                 <th style="width: 150px;"></th>
             </tr>
+            <?php foreach($goods->goodsSpec as $k => $spec) { ?>
+            <tr>
+                <td><input type="text" style="width: 120px;" readonly="readonly" value="<?=$spec->specname?>"></td>
+                <td><input type="text" style="width: 120px;" readonly="readonly" value="<?=$spec->market_price?>"></td>
+                <td><input type="text" style="width: 120px;" readonly="readonly" value="<?=$spec->sell_price?>"></td>
+                <td><a href="#" onclick="$(this).parent().parent().remove();delSpec('<?=$spec->specname?>')">&nbsp;&nbsp;删除</a></td>
+            </tr>
+            <?php } ?>
+
         </table>
     </div>
     <br>
@@ -178,6 +187,8 @@ JS;
 
 <script>
     var g_oJCrop = null;
+    var actionId = "<?= Yii::$app->controller->action->id;?>";
+    var goodsId = "<?=$goods->id?>";
     //异步上传文件
     <?php $actionUrl = Url::to(['shop-seller/upload'])?>
     <?php $postUrl = Url::to(['shop-seller/cutpic'])?>
@@ -293,9 +304,7 @@ JS;
     function setCategory(){
         var str = '';
         $("input[name='category']:checked").each(function() {
-            var actionId = "<?= Yii::$app->controller->action->id;?>";
             if ('goodsedit' == actionId) {
-                var goodsId = "<?=$goods->id?>";
                 //TODO could not edit str in $.get function. To find why.
                 $.get("<?=Url::to(['shop-seller/addcat'])?>" + "&goodsId=" + goodsId + "&catId=" + $(this).val(), function (data) {});
             }
@@ -310,10 +319,8 @@ JS;
     function rmCatNode(catId)
     {
         if(confirm('确定删除此分类？')) {
-            var actionId = "<?= Yii::$app->controller->action->id;?>";
             var node = '#ctrl' + catId;
             if ('goodsedit' == actionId) {
-                var goodsId = "<?=$goods->id?>";
                 $.get("<?=Url::to(['shop-seller/delcat'])?>" + "&goodsId=" + goodsId + "&catId=" + catId, function (data) {
                     if (data == "OK") {
                         $(node).remove();
@@ -337,6 +344,13 @@ JS;
             + '<td>' + '<a href="#" onclick="$(this).parent().parent().remove();">&nbsp;&nbsp;删除</a>' + '</td>'
             + '</tr>';
         $("#specTable").append(str);
+    }
+
+    function delSpec(specName)
+    {
+        if('goodsedit' == actionId){
+            $.get("<?=Url::to(['shop-seller/delspec'])?>" + "&goodsId=" + goodsId + "&specName=" + specName, function (data) {});
+        }
     }
 </script>
 

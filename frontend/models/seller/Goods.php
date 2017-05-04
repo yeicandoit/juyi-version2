@@ -118,15 +118,22 @@ class Goods extends \yii\db\ActiveRecord
         return $this->hasMany(CategoryExtend::className(), ['goods_id' => 'id']);
     }
 
+    public function getGoodsSpec()
+    {
+        return $this->hasMany(Goodsspec::className(), ['goodsid' => 'id']);
+    }
+
     public function saveSpec($specName, $specMktPrice, $specSellPrice)
     {
         foreach($specName as $k => $v){
-            $spec = new Goodsspec();
-            $spec->goodsid = $this->id;
-            $spec->specname = $v;
-            $spec->market_price = $specMktPrice[$k];
-            $spec->sell_price = $specSellPrice[$k];
-            $spec->save();
+            if (isset($v)) {
+                $spec = new Goodsspec();
+                $spec->goodsid = $this->id;
+                $spec->specname = $v;
+                $spec->market_price = $specMktPrice[$k];
+                $spec->sell_price = $specSellPrice[$k];
+                $spec->save();
+            }
         }
     }
 

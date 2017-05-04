@@ -297,9 +297,12 @@ class ShopSellerController extends Controller
             $goods = Goods::findOne($post['Goods']['id']);
             $goods->load($post);
             if($goods->save()){
+                if(isset($post['specName'])){
+                    $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
+                }
                 return $this->redirect(['goodslist']);
             }
-            return $this->goHome();
+            return $this->goBack();
         }
         $goods = Goods::findOne($id);
         return $this->render('goodsedit', ['goods'=>$goods]);
@@ -329,6 +332,16 @@ class ShopSellerController extends Controller
         $catExt->goods_id = $goodsId;
         $catExt->category_id = $catId;
         if($catExt->save()){
+            echo "OK";
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionDelspec($goodsId, $specName)
+    {
+        $spec = Goodsspec::find()->where(['goodsid'=>$goodsId, 'specname'=>$specName])->one();
+        if($spec->delete()){
             echo "OK";
         } else {
             echo "Failed";
