@@ -62,6 +62,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
     <?php $form = ActiveForm::begin([]); ?>
     <?= $form->field($goods, 'id', ['options'=>['style'=>"display:none"]])?>
     <?= $form->field($goods, 'name')->textInput(['style'=>'width:60%'])?>
+    <?= $form->field($goods, 'img', ['options'=>['style'=>"display:none"]])?>
     <?= $form->field($goods, 'search_words')->textInput(['style'=>'width:60%'])->label('关键词')
     ->hint('每个关键词最长为15个字符，超过后系统不予存储，每个词以逗号分隔')?>
     <div class="goodInfoBox">
@@ -173,7 +174,29 @@ JS;
             <input type="button" name="btn" value="确认裁剪" class="btn" />
             <div class="info"></div>
             <div class="text-info" >
-                <table><tr id="goodsImgs"></tr></table>
+                <br>
+                <table>
+                    <tr id="goodsImgs">
+                        <?php foreach ($goods->goodsPhotoRelations as $k => $photoRelation) {
+                            $photo = $photoRelation->photo->img;
+                            $photoId = $photoRelation->photo_id; ?>
+                            <?php
+                                $imgId = "defaultImg_$photoId";
+                                if ($photo == $goods->img) {
+                                    $display = '';
+                                } else {
+                                    $display = 'display: none';
+                                }
+                            ?>
+                            <td style="padding-left: 10px">
+                                <img src='<?=$photo?>' style="width: 100px;height: 100px;" onclick="defaultImg('<?=$photo?>', <?=$photoId?>)">
+                                <br>
+                                <a href="#" onclick="delImg(<?=$photoId?>);">&nbsp;&nbsp;删除</a>
+                                <label class="defaultImg" style="<?=$display?>" id='<?=$imgId?>'>&nbsp;&nbsp;主图</label>
+                            </td>
+                        <?php }?>
+                    </tr>
+                </table>
             </div>
             <?= $form->field($goods, 'img', ['options'=>['style'=>"display:none"]])->textInput()?>
             <div class="pic-display"></div>
@@ -282,7 +305,7 @@ JS;
                     var info = '<td style="padding-left: 10px">' +
                             '<img src="' + data.data + '" style="width: 100px;height: 100px;" onclick="defaultThis('+ mtime + ')">'
                             + '<br>'
-                            + '<a href="#" onclick="$(this).parent().remove();">&nbsp;&nbsp;删除</a>'
+                            + '<a href="#" onclick="delImg(' + mtime + ')">&nbsp;&nbsp;删除</a>'
                             + '<input id=' + inputId + ' type="hidden" name="goodsImgs[]" value="' + data.data + '">'
                             + '<label class="defaultImg" style="display: none" id=' + imgId + '>&nbsp;&nbsp;主图</label>'
                             + '</td>';
@@ -298,7 +321,25 @@ JS;
     {
         $(".defaultImg").hide();
         $("#defaultImg_" + id).show();
-        $("input[name='img']").val($("#inputDefault_" + id).val());
+        $("input[name='Goods[img]']").val($("#inputDefault_" + id).val());
+    }
+
+    function defaultImg(imgSrc, id)
+    {
+        $(".defaultImg").hide();
+        $("#defaultImg_" + id).show();
+        $("input[name='Goods[img]']").val(imgSrc);
+    }
+
+    function delImg(photoId)
+    {
+        if($("#defaultImg_" + photoId).css('display') != 'none') {
+            $("input[name='Goods[img]']").val(null);
+        }
+        if('goodsedit' == actionId){
+            $.get("<?=Url::to(['shop-seller/delimg'])?>" + "&goodsId=" + goodsId + "&photoId=" + photoId, function (data) {});
+        }
+        $("#defaultImg_" + photoId).parent().remove();
     }
 
     function setCategory(){

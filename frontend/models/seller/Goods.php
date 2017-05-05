@@ -113,7 +113,7 @@ class Goods extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getcategoryExtends()
+    public function getCategoryExtends()
     {
         return $this->hasMany(CategoryExtend::className(), ['goods_id' => 'id']);
     }
@@ -121,6 +121,11 @@ class Goods extends \yii\db\ActiveRecord
     public function getGoodsSpec()
     {
         return $this->hasMany(Goodsspec::className(), ['goodsid' => 'id']);
+    }
+
+    public function getGoodsPhotoRelations()
+    {
+        return $this->hasMany(GoodsPhotoRelation::className(), ['goods_id'=>'id']);
     }
 
     public function saveSpec($specName, $specMktPrice, $specSellPrice)

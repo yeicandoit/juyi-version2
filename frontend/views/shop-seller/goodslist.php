@@ -19,9 +19,14 @@ use yii\grid\GridView;
                 'label'=>'商品名称',
                 'format'=>'raw',
                 'value'=> function($model){
+                    if($model->img){
+                        $src = $model->img;
+                    } else {
+                        $src = '/images/user_ico.gif';
+                    }
                     return "<table>
                                    <tr>
-                                   <td><a href=''><img class='user_fav_img' src='/images/user_ico.gif'/></a></td>
+                                   <td><a href=''><img class='user_fav_img' src=$src/></a></td>
                                    <td>$model->name</td>
                                    </tr>
                                 </table>";

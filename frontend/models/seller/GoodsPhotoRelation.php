@@ -43,4 +43,9 @@ class GoodsPhotoRelation extends \yii\db\ActiveRecord
             'photo_id' => Yii::t('app', '图片ID'),
         ];
     }
+
+    public function getPhoto()
+    {
+        return $this->hasOne(GoodsPhoto::className(), ['id'=>'photo_id']);
+    }
 }

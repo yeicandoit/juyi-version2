@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use frontend\models\seller\CategoryExtend;
 use frontend\models\seller\ExpertExt;
 use frontend\models\seller\Goods;
+use frontend\models\seller\GoodsPhoto;
+use frontend\models\seller\GoodsPhotoRelation;
 use frontend\models\seller\Goodsspec;
 use frontend\models\seller\SellerDetailForm;
 use frontend\models\seller\SellerExt;
@@ -300,6 +302,9 @@ class ShopSellerController extends Controller
                 if(isset($post['specName'])){
                     $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
                 }
+                if(isset($post['goodsImgs'])){
+                    $goods->saveImgs($post['goodsImgs']);
+                }
                 return $this->redirect(['goodslist']);
             }
             return $this->goBack();
@@ -323,6 +328,23 @@ class ShopSellerController extends Controller
             echo "OK";
         } else {
             echo "Failed";
+        }
+    }
+
+    public function actionDelimg($goodsId, $photoId)
+    {
+        $photo = GoodsPhoto::findOne($photoId);
+        $goodsPhotoRelation = GoodsPhotoRelation::find()->where(['goods_id'=>$goodsId, 'photo_id'=>$photoId])->one();
+        $goods = Goods::findOne($goodsId);
+        //If delete default img, set goods->img to be null
+        if($goods->img == $photo->img){
+            $goods->img = null;
+            $goods->save();
+        }
+        if($photo->delete() && $goodsPhotoRelation->delete()){
+            echo 'OK';
+        } else {
+            echo 'Failed';
         }
     }
 
@@ -426,7 +448,7 @@ class ShopSellerController extends Controller
             $imgSaveMap = array('jpg'=>'imagejpeg', 'jpeg'=>'imagejpeg',
                 'png'=>'imagepng', 'gif'=>'imagegif');
 
-            $path="/avatar/";
+            $path="/goodsImg/";
             $targ_w = $targ_h = 300;
             $imgSrc =Yii::$app->request->post('f');
             $imgSrc=Yii::$app->basePath.'/web'.$imgSrc;//真实的图片路径
