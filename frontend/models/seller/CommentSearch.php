@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 use yii\base\Model;
@@ -10,7 +10,7 @@ use frontend\models\ShopComment;
 /**
  * ShopCommentSearch represents the model behind the search form about `app\models\ShopComment`.
  */
-class ShopCommentSearch extends ShopComment
+class CommentSearch extends Comment
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class ShopCommentSearch extends ShopComment
      */
     public function search($params)
     {
-        $query = ShopComment::find();
+        $query = Comment::find();
 
         // add conditions that should always apply here
 

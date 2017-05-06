@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -27,7 +28,7 @@ use yii\grid\GridView;
                 }
             }],
             ['label'=>'查看', 'format'=>'raw', 'value'=>function($model){
-                return Html::a('查看', "/index.php?r=shop-seller/commentedit&id=$model->id");
+                return Html::a('查看', Url::to(['shop-seller/commentedit', 'id'=>$model->id]));
             }],
         ],
     ]); ?>

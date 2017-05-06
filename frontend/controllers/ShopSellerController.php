@@ -15,9 +15,8 @@ use frontend\models\seller\ShopMerchShipInfo;
 use frontend\models\seller\ShopSpec;
 use frontend\models\seller\ShopSpecSearch;
 use frontend\models\seller\Category;
-use frontend\models\ShopComment;
-use frontend\models\ShopCommentSearch;
-use frontend\models\ShopGoods;
+use frontend\models\seller\Comment;
+use frontend\models\seller\CommentSearch;
 use frontend\models\Seller\GoodsSearch;
 use frontend\models\ShopOrder;
 use frontend\models\ShopOrderGoods;
@@ -29,7 +28,6 @@ use frontend\models\seller\ShopSellerSearch;
 use frontend\models\seller\ShopDeliverySearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\seller\LoginForm;
 use frontend\models\seller\SellerMenu;
@@ -244,24 +242,24 @@ class ShopSellerController extends Controller
 
     public function actionComment()
     {
-        $searchModel = new ShopCommentSearch(['seller_id'=>Yii::$app->user->id]);
+        $searchModel = new CommentSearch(['seller_id'=>Yii::$app->session->get('shopid')]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('comment', ['menu'=>SellerMenu::getMenu(), 'dataProvider'=>$dataProvider]);
+        return $this->render('comment', [ 'dataProvider'=>$dataProvider]);
     }
 
     public function actionCommentedit($id)
     {
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
-            $comment = ShopComment::findOne($post['ShopComment']['id']);
+            $comment = Comment::findOne($post['ShopComment']['id']);
             if($comment->load($post) && $comment->saveRecontents()){
                 $this->redirect(['comment']);
             } else {
                 $this->goBack();
             }
         }
-        $comment = ShopComment::findOne($id);
-        return $this->render('commentedit', ['menu'=>SellerMenu::getMenu(), 'comment'=>$comment]);
+        $comment = Comment::findOne($id);
+        return $this->render('commentedit', [ 'comment'=>$comment]);
     }
 
     public function actionGoodsadd()
