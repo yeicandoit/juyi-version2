@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 use yii\db\Query;

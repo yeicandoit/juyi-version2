@@ -12,8 +12,6 @@ use frontend\models\seller\SellerDetailForm;
 use frontend\models\seller\SellerExt;
 use frontend\models\seller\ShopMember;
 use frontend\models\seller\ShopMerchShipInfo;
-use frontend\models\seller\ShopSpec;
-use frontend\models\seller\ShopSpecSearch;
 use frontend\models\seller\Category;
 use frontend\models\seller\Comment;
 use frontend\models\seller\CommentSearch;
@@ -383,19 +381,6 @@ class ShopSellerController extends Controller
             $goods->save();
         }
         return $this->redirect(['goodslist']);
-    }
-
-    public function actionSpeclist()
-    {
-        $searchModel = new ShopSpecSearch(['seller_id'=>Yii::$app->user->id]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('speclist', ['menu'=>SellerMenu::getMenu(), 'dataProvider'=>$dataProvider]);
-    }
-
-    public function actionSpecedit($id)
-    {
-        $spec = ShopSpec::findOne($id);
-        return $this->render('specedit', ['menu'=>SellerMenu::getMenu(), 'spec'=>$spec]);
     }
 
     public function actionAccount()
