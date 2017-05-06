@@ -57,9 +57,14 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
 
 <!--Show seller info-->
 <div class="sellerinfo">
-    <div class="info_bar"><b>商品编辑</b></div>
+    <div class="info_bar">
+        <b>
+            <?=Html::a('商品编辑', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
+            <?=Html::a('详细信息', '#', ['onclick'=>'showDetailInfo()'])?>
+        </b>
+    </div>
     <div class="blank"></div>
-    <?php $form = ActiveForm::begin([]); ?>
+    <?php $form = ActiveForm::begin(['id' => 'basicInfo']); ?>
     <?= $form->field($goods, 'id', ['options'=>['style'=>"display:none"]])?>
     <?= $form->field($goods, 'name')->textInput(['style'=>'width:60%'])?>
     <?= $form->field($goods, 'img', ['options'=>['style'=>"display:none"]])?>
@@ -205,6 +210,29 @@ JS;
     <br>
     <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-large btn-primary'])?>
     <?= Html::resetButton('重置', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary'])?>
+    <?php ActiveForm::end(); ?>
+
+    <?php $form = ActiveForm::begin([
+        'action'=>['shop-seller/goodscontent'],
+        'id' => 'detailInfo',
+        'options' => ['style'=>'padding-left: 20px; display:none'],
+    ]); ?>
+    <?= $form->field($goodsContent, 'content')->widget(\yii\redactor\widgets\Redactor::className(),
+        [
+            'clientOptions' => [
+                'imageManagerJson' => ['/redactor/upload/image-json'],
+                'imageUpload' => ['/redactor/upload/image'],
+                'fileUpload' => ['/redactor/upload/file'],
+                'lang' => 'zh_cn',
+                'plugins' => ['clips', 'fontcolor','imagemanager']
+            ]
+        ]) ?>
+    <?php
+    if(isset($goods->id)) {
+        echo $form->field($goodsContent, 'goodid', ['options' => ['style' => "display:none"]])->textInput(['value' => $goods->id]);
+    }
+    ?>
+    <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>
     <?php ActiveForm::end(); ?>
 </div>
 
@@ -392,6 +420,18 @@ JS;
         if('goodsedit' == actionId){
             $.get("<?=Url::to(['shop-seller/delspec'])?>" + "&goodsId=" + goodsId + "&specName=" + specName, function (data) {});
         }
+    }
+
+    function showBasicInfo()
+    {
+        $("#basicInfo").show();
+        $("#detailInfo").hide();
+    }
+
+    function  showDetailInfo()
+    {
+        $("#detailInfo").show();
+        $("#basicInfo").hide();
     }
 </script>
 

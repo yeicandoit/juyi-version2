@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use frontend\models\seller\CategoryExtend;
 use frontend\models\seller\ExpertExt;
 use frontend\models\seller\Goods;
+use frontend\models\seller\Goodscontent;
 use frontend\models\seller\GoodsPhoto;
 use frontend\models\seller\GoodsPhotoRelation;
 use frontend\models\seller\Goodsspec;
@@ -110,7 +111,7 @@ class ShopSellerController extends Controller
             return $this->redirect(['sellerhome']);
         }
         //return $this->render("$shopView", ['menu'=>SellerMenu::getMenu(), "$shopView"=>$shopInfo]);
-        return $this->render("$shopView", ['menu'=>SellerMenu::getMenu(), "$shopView"=>$shopInfo, "$shopExtView"=>$shopExt]);
+        return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt]);
     }
 
     public function actionExpertext()
@@ -285,7 +286,8 @@ class ShopSellerController extends Controller
             return $this->goHome();
         }
         $goods = new Goods();
-        return $this->render('goodsedit', ['goods'=>$goods]);
+        $goodsContent = new Goodscontent();
+        return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
     }
 
     public function actionGoodsedit($id)
@@ -306,7 +308,27 @@ class ShopSellerController extends Controller
             return $this->goBack();
         }
         $goods = Goods::findOne($id);
-        return $this->render('goodsedit', ['goods'=>$goods]);
+        $goodsContent = Goodscontent::find()->where(['goodid'=>$id])->one();
+        if($goodsContent == null) {
+            $goodsContent = new Goodscontent();
+        }
+        return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
+    }
+
+    public function actionGoodscontent()
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            if(isset($post['Goodscontent']['goodid'])) {
+                $goodsContent = Goodscontent::find()->where(['goodid' => $post['Goodscontent']['goodid']])->one();
+                if (null == $goodsContent) {
+                    $goodsContent = new Goodscontent();
+                }
+                $goodsContent->load($post);
+                $goodsContent->save();
+            }
+            return $this->redirect(['goodslist']);
+        }
     }
 
     public function actionGoodscategory()
