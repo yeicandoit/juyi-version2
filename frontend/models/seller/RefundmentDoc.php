@@ -1,11 +1,11 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 
 /**
- * This is the model class for table "shop_refundment_doc".
+ * This is the model class for table "refundment_doc".
  *
  * @property string $id
  * @property string $order_no
@@ -23,9 +23,9 @@ use Yii;
  * @property string $seller_id
  * @property integer $refund_type
  *
- * @property ShopOrder $order
+ * @property Order $order
  */
-class ShopRefundmentDoc extends \yii\db\ActiveRecord
+class RefundmentDoc extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -47,7 +47,7 @@ class ShopRefundmentDoc extends \yii\db\ActiveRecord
             [['time', 'dispose_time'], 'safe'],
             [['content', 'dispose_idea', 'order_goods_id'], 'string'],
             [['order_no'], 'string', 'max' => 20],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShopOrder::className(), 'targetAttribute' => ['order_id' => 'id']],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::className(), 'targetAttribute' => ['order_id' => 'id']],
         ];
     }
 
@@ -80,12 +80,12 @@ class ShopRefundmentDoc extends \yii\db\ActiveRecord
      */
     public function getOrder()
     {
-        return $this->hasOne(ShopOrder::className(), ['id' => 'order_id']);
+        return $this->hasOne(Order::className(), ['id' => 'order_id']);
     }
 
-    public function getShopOrderGoods()
+    public function getOrderGoods()
     {
-        $orderGoods = ShopOrderGoods::findBySql("select * from shop_order_goods where id in ($this->order_goods_id)")->all();
+        $orderGoods = OrderGoods::findBySql("select * from shop_order_goods where id in ($this->order_goods_id)")->all();
         return $orderGoods;
     }
 

@@ -20,8 +20,8 @@ use frontend\models\seller\CommentSearch;
 use frontend\models\Seller\GoodsSearch;
 use frontend\models\ShopOrder;
 use frontend\models\ShopOrderGoods;
-use frontend\models\ShopRefundmentDoc;
-use frontend\models\ShopRefundmentDocSearch;
+use frontend\models\seller\RefundmentDoc;
+use frontend\models\seller\RefundmentDocSearch;
 use Yii;
 use frontend\models\seller\ShopSeller;
 use frontend\models\seller\ShopSellerSearch;
@@ -230,14 +230,14 @@ class ShopSellerController extends Controller
 
     public function actionRefundment()
     {
-        $searchModel = new ShopRefundmentDocSearch(['seller_id'=>Yii::$app->user->id]);
+        $searchModel = new RefundmentDocSearch(['seller_id'=>Yii::$app->session->get('shopid')]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('refundment', ['menu'=>SellerMenu::getMenu(), 'dataProvider'=>$dataProvider]);
+        return $this->render('refundment', [ 'dataProvider'=>$dataProvider]);
     }
 
     public function actionRefundmentinfo($id){
-        $refundment = ShopRefundmentDoc::findOne($id);
-        return $this->render('refundmentinfo', ['menu'=>SellerMenu::getMenu(), 'refundment'=>$refundment]);
+        $refundment = RefundmentDoc::findOne($id);
+        return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
     }
 
     public function actionComment()

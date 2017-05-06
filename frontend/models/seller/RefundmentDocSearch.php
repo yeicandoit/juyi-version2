@@ -1,16 +1,12 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\ShopRefundmentDoc;
 
-/**
- * ShopRefundmentDocSearch represents the model behind the search form about `app\models\ShopRefundmentDoc`.
- */
-class ShopRefundmentDocSearch extends ShopRefundmentDoc
+class RefundmentDocSearch extends RefundmentDoc
 {
     /**
      * @inheritdoc
@@ -42,7 +38,7 @@ class ShopRefundmentDocSearch extends ShopRefundmentDoc
      */
     public function search($params)
     {
-        $query = ShopRefundmentDoc::find()->orderBy(['time'=>SORT_DESC]);
+        $query = RefundmentDoc::find()->orderBy(['time'=>SORT_DESC]);
 
         // add conditions that should always apply here
 
