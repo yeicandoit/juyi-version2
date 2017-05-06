@@ -379,7 +379,7 @@ class ShopSellerController extends Controller
 
     public function actionGoodsstat($id, $status)
     {
-        $goods = ShopGoods::findOne($id);
+        $goods = Goods::findOne($id);
         if($goods){
             $goods->is_del = $status;
             $goods->save();

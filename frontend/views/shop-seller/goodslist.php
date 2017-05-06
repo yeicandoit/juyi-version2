@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+use \yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -57,10 +58,10 @@ use yii\grid\GridView;
                 'label'=>'操作',
                 'format'=>'raw',
                 'value'=>function($model){
-                    $edit = Html::a('修改', '/index.php?r=shop-seller/goodsedit&id='.$model->id);
-                    $del = Html::a('删除', '/index.php?r=shop-seller/goodsstat&id='.$model->id.'&status='.'1');
-                    $down = Html::a('下架', '/index.php?r=shop-seller/goodsstat&id='.$model->id.'&status='.'2');
-                    $up = Html::a('提交审核', '/index.php?r=shop-seller/goodsstat&id='.$model->id.'&status='.'3');
+                    $edit = Html::a('修改', Url::to(['shop-seller/goodsedit', 'id'=>$model->id]));
+                    $del = Html::a('删除', Url::to(['shop-seller/goodsstat', 'id'=>$model->id, 'status'=>1]));
+                    $down = Html::a('下架',  Url::to(['shop-seller/goodsstat', 'id'=>$model->id, 'status'=>2]));
+                    $up = Html::a('提交审核',  Url::to(['shop-seller/goodsstat', 'id'=>$model->id, 'status'=>3]));
                     return "$edit|$del|$down|$up";
                 }
             ]

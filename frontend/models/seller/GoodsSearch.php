@@ -5,7 +5,6 @@ namespace frontend\models\seller;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\seller\Goods;
 
 /**
  * GoodsSearch represents the model behind the search form about `frontend\models\seller\Goods`.
@@ -48,7 +47,11 @@ class GoodsSearch extends Goods
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>false,
+            'sort'=>[
+                'defaultOrder' => [
+                    'is_del' => SORT_DESC,
+                ]
+            ],
             'pagination' => ['pagesize' => '10'],
         ]);
 
