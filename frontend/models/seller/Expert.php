@@ -50,7 +50,7 @@ class Expert extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'true_name', 'password', 'regedittime', 'logintime', 'degree', 'mobile', 'server_num', 'email', 'country', 'province', 'city', 'area', 'address', 'account', 'affliation', 'affliationtype'], 'required'],
+            [['name', 'true_name', 'password', 'regedittime', 'logintime', 'degree', 'mobile', 'server_num', 'email', 'country', 'province', 'city', 'area', 'address', 'account', 'affliation', 'affliationtype'], 'safe'],
             [['regedittime', 'logintime'], 'safe'],
             [['age', 'sex', 'country', 'province', 'city', 'area', 'grade', 'comments'], 'integer'],
             [['name', 'true_name', 'degree', 'title'], 'string', 'max' => 60],

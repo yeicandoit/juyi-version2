@@ -7,6 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <div id="signup-box" class="widget-box no-border">
@@ -63,11 +64,11 @@ use yii\helpers\ArrayHelper;
     <div style="float:left; margin: 0 auto;">
     <?=$form->field($model, 'provinces', [ 'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div>
         <div style=\"float:left; margin: 0 auto; width: 230px;\">{input}</div>", ]
-        )->dropDownList(ArrayHelper::map(frontend\models\ShopAreas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
+        )->dropDownList(ArrayHelper::map(frontend\models\seller\Areas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
         [
             'style'=>'width:200px',
             'prompt'=>'请选择省',
-            'onchange'=>'$.post("index.php?r=site/areas&id='.'"+$(this).val(),function(data){
+            'onchange'=>'$.post("index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
                  $("#sellerregform-citys").html("<option value=0>请选择市</option>");
                  $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
                  $("#sellerregform-citys").append(data);
@@ -79,7 +80,7 @@ use yii\helpers\ArrayHelper;
         [
             'style'=>'width:200px',
             'prompt'=>'请选择市',
-            'onchange'=>'$.get("/index.php?r=site/areas&id='.'"+$(this).val(),function(data){
+            'onchange'=>'$.get("/index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
              $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
              $("#sellerregform-countrys").append(data);
         });',

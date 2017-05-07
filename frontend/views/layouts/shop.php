@@ -526,8 +526,10 @@ if (Yii::$app->user->isGuest) {
 	<?php
 		$shop = \frontend\models\seller\ShopMember::find()->where(['shopid'=>Yii::$app->session->get('shopid')])->one();
 		$action = 'shop-seller/lab';
-		if('expert' == $shop->regtype) {
-			$action = 'shop-seller/expert';
+		if($shop) {
+			if ('expert' == $shop->regtype) {
+				$action = 'shop-seller/expert';
+			}
 		}
 	?>
 	<li><a href="<?=Url::to(["$action", 'id'=>Yii::$app->session->get('shopid')])?>">商家主页</a></li>

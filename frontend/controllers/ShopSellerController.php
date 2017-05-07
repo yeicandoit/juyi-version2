@@ -23,7 +23,6 @@ use frontend\models\ShopOrderGoods;
 use frontend\models\seller\RefundmentDoc;
 use frontend\models\seller\RefundmentDocSearch;
 use Yii;
-use frontend\models\seller\ShopSeller;
 use frontend\models\seller\ShopSellerSearch;
 use frontend\models\seller\ShopDeliverySearch;
 use yii\helpers\ArrayHelper;
@@ -36,6 +35,8 @@ use frontend\models\ShopOrderSearch;
 use frontend\models\seller\ExpertregForm;
 use frontend\models\seller\SellerregForm;
 use yii\web\UploadedFile;
+use frontend\models\seller\Areas;
+use yii\helpers\Html;
 
 /**
  * ShopSellerController implements the CRUD actions for ShopSeller model.
@@ -499,7 +500,7 @@ class ShopSellerController extends Controller
         $model = new ExpertregForm();
         if($model->load(Yii::$app->request->post())){
             if($model->register()) {
-                return $this->goHome();
+                return $this->redirect(['sellerhome']);
             }
         }
         return $this->render('expertreg', [
@@ -515,11 +516,20 @@ class ShopSellerController extends Controller
             $upSec = $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
 
             if($upSec && $model->register()) {
-                return $this->goHome();
+                return $this->redirect(['sellerhome']);
             }
         }
         return $this->render('sellerreg', [
             'model' => $model,
         ]);
+    }
+
+    public function actionAreas($id)
+    {
+        $data = ArrayHelper::map(Areas::find()->where(['parent_id'=>$id])->asArray()->all(),'area_id','area_name');
+        foreach($data as $value=>$name)
+        {
+            echo Html::tag('option',Html::encode($name),array('value'=>$value));
+        }
     }
 }

@@ -17,8 +17,6 @@ class ExpertregForm extends Model
     public $trueName;
     public $password;
     public $confirmPwd;
-    public $age;
-    public $sex;
     public $degree;
     public $tile;
     public $mobile;
@@ -30,11 +28,7 @@ class ExpertregForm extends Model
     public $city;
     public $area;
     public $address;
-    public $homeUrl;
-    public $affliation;
-    public $affliationType;
     public $title;
-    public $account;
 
     public $regType;
 
@@ -51,7 +45,6 @@ class ExpertregForm extends Model
             ['password', 'required', 'message'=>'密码不能为空'],
             ['confirmPwd', 'required', 'message'=>"确认密码不能为空"],
             ['confirmPwd', 'validatePassword'],
-            ['degree', 'required', 'message'=>'学历不能为空'],
             ['mobile', 'required', 'message'=>"手机号码不能为空"],
             ['email', 'required', 'message'=>"邮箱不能为空"],
             ['email', 'filter', 'filter'=>'trim'],
@@ -59,10 +52,7 @@ class ExpertregForm extends Model
             ['serverNum', 'required', 'message'=>'QQ不能为空'],
             [['country', 'province', 'city', 'area'], 'safe'], //TODO if set to be 'required', $this->validate() will return false!!!
             ['address', 'required', 'message'=>"详细地址不能为空"],
-            ['affliation', 'required', 'message'=>"单位不能为空"],
-            ['affliationType', 'required', 'message'=>"单位不能为空"],
-            ['account', 'required', 'message'=>"账户不能为空"],
-            [['age', 'sex', 'title', 'homeUrl', 'regType'], 'safe'],
+            [[ 'regType'], 'safe'],
 
             ['verifyCode', 'required', 'message'=>'请填写验证码'],
             ['verifyCode', 'captcha', 'message' => '验证码错误'],
@@ -105,10 +95,7 @@ class ExpertregForm extends Model
                 $expert->password = md5($this->password);
                 $expert->regedittime = date('Y-m-d H:i:s', time());
                 $expert->logintime = date('Y-m-d H:i:s', 0);
-                $expert->age = $this->age;
-                $expert->sex = $this->sex;
-                $expert->degree = $this->degree;
-                $expert->title = $this->tile;
+                $expert->degree = "";
                 $expert->mobile = $this->mobile;
                 $expert->server_num = $this->serverNum;
                 $expert->email = $this->email;
@@ -117,10 +104,10 @@ class ExpertregForm extends Model
                 $expert->city =  isset($this->city) ? $this->city : 0;
                 $expert->area =  isset($this->area) ? $this->area : 0;
                 $expert->address = $this->address;
-                $expert->home_url = $this->homeUrl;
-                $expert->affliation = $this->affliation;
-                $expert->affliationtype = $this->affliationType;
-                $expert->account = $this->account;
+                $expert->home_url = '';
+                $expert->affliation ='';
+                $expert->affliationtype = '';
+                $expert->account = '';
 
                 if($expert->save()){
                     $shopMember = new ShopMember();

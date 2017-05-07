@@ -1,18 +1,18 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 
 /**
- * This is the model class for table "shop_areas".
+ * This is the model class for table "areas".
  *
  * @property string $area_id
  * @property string $parent_id
  * @property string $area_name
  * @property string $sort
  */
-class ShopAreas extends \yii\db\ActiveRecord
+class Areas extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
