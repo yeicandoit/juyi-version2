@@ -521,31 +521,16 @@ if (Yii::$app->user->isGuest) {
   }
   ?>
 
-  
-
-   <li id="dingdan" style="width:100px" class="navdown">我的聚仪 
- <img class="icon1" src="upload/2017/icon.jpg" alt="Norway" style="width:20px;heigh:20px;">
- <img class="icon2" src="upload/2017/icon2.jpg" alt="Norway" style="width:20px;heigh:20px; display:none;">
- 
-   <div id="dingdancontent">
-   <ul class="contentul">
-   <li>待付款订单</li>
-   <li>待确认订单</li>
-   <li>[登录]</li>
-   </ul>
-
-   </div>
-        
-   </li>
    <li><a href="<?=Url::to(["shop-seller/sellerreg"])?>">申请入驻</a></li>
    <li><a href="<?=Url::to(["shop-seller/login"])?>">商家登录</a></li>
-   <li class="navdown">关注聚仪
-      <div id="weixin">
-     <img src="upload/2017/wechat.jpg" alt="Norway" style="width:100%;">
-
-     </div>
-
-   </li> 
+	<?php
+		$shop = \frontend\models\seller\ShopMember::find()->where(['shopid'=>Yii::$app->session->get('shopid')])->one();
+		$action = 'shop-seller/lab';
+		if('expert' == $shop->regtype) {
+			$action = 'shop-seller/expert';
+		}
+	?>
+	<li><a href="<?=Url::to(["$action", 'id'=>Yii::$app->session->get('shopid')])?>">商家主页</a></li>
 
 </ul> 
 
