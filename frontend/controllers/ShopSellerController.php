@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\seller\CategoryExtend;
+use frontend\models\seller\Expert;
 use frontend\models\seller\ExpertExt;
 use frontend\models\seller\Goods;
 use frontend\models\seller\Goodscontent;
@@ -481,12 +482,9 @@ class ShopSellerController extends Controller
 
     public function actionExpert($id)
     {
-        $expert = ShopSeller::findOne($id);
-        if($expert && 'expertreg' == $expert->phone){
-            $expertInfo = $expert->expertInfo;
-            return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo]);
-        }
-        return '专家号有误';
+        $expert = Expert::findOne($id);
+        $expertInfo = $expert->ext;
+        return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo]);
     }
 
     public function actionLab($id)

@@ -652,7 +652,8 @@ if (Yii::$app->user->isGuest) {
 	 <?php $actionId = Yii::$app->controller->action->id;
 	 if($actionId != 'expertreg'
 			 && $actionId != 'sellerreg'
-	 		 && $actionId != 'login') {?>
+	 		 && $actionId != 'login'
+	 		 && $actionId != 'expert') {?>
 		 <div class="menuInfo">
 			 <?php foreach(SellerMenu::getMenu() as $item=>$subMenu){?>
 				 <div class="box">
