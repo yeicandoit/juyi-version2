@@ -112,7 +112,7 @@ class ExpertregForm extends Model
                 if($expert->save()){
                     $shopMember = new ShopMember();
                     $shopMember->shopid = $expert->id;
-                    $shopMember->name = $expert->name;
+                    $shopMember->username = $expert->name;
                     $shopMember->password = $expert->password;
                     $shopMember->regtype = 'expert';
                     return $shopMember->save();

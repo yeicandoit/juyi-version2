@@ -66,7 +66,7 @@ class LoginForm extends Model
     {
         if ($this->validate() && $this->_shop) {
             Yii::$app->session->set('shopid', $this->_shop->shopid);
-            return true;
+            return Yii::$app->user->login($this->getShop(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
     }
@@ -79,7 +79,7 @@ class LoginForm extends Model
     public function getShop()
     {
         if ($this->_shop === false) {
-            $this->_shop = ShopMember::find()->where(['name'=>$this->username])->one();
+            $this->_shop = ShopMember::find()->where(['username'=>$this->username])->one();
         }
 
         return $this->_shop;

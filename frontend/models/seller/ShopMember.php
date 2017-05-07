@@ -12,7 +12,7 @@ use Yii;
  * @property string $name
  * @property string $password
  */
-class ShopMember extends \yii\db\ActiveRecord
+class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * @inheritdoc
@@ -28,12 +28,12 @@ class ShopMember extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopid', 'name', 'password', 'regtype'], 'required'],
+            [['shopid', 'username', 'password', 'regtype'], 'required'],
             [['shopid'], 'integer'],
-            [['name'], 'string', 'max' => 20],
+            [['username'], 'string', 'max' => 20],
             [['password'], 'string', 'max' => 32],
             [['regtype'], 'string', 'max' => 20],
-            [['name'], 'unique'],
+            [['username'], 'unique'],
         ];
     }
 
@@ -45,10 +45,57 @@ class ShopMember extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'shopid' => Yii::t('app', '商户id'),
-            'name' => Yii::t('app', '商户名'),
+            'username' => Yii::t('app', '商户名'),
             'password' => Yii::t('app', '密码'),
             'regtype' => Yii::t('app', '注册类型'),
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAuthKey()
+    {
+        //return $this->authKey;
+        return '';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey)
+    {
+        //return $this->authKey === $authKey;
+        return true;
+    }
+
+    public function getShopid()
+    {
+        return $this->shopid;
     }
 
     public function validatePassword($password)
