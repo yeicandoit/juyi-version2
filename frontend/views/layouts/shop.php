@@ -653,7 +653,8 @@ if (Yii::$app->user->isGuest) {
 	 if($actionId != 'expertreg'
 			 && $actionId != 'sellerreg'
 	 		 && $actionId != 'login'
-	 		 && $actionId != 'expert') {?>
+	 		 && $actionId != 'expert'
+			 && $actionId != 'lab') {?>
 		 <div class="menuInfo">
 			 <?php foreach(SellerMenu::getMenu() as $item=>$subMenu){?>
 				 <div class="box">

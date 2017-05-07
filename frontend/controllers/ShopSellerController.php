@@ -10,7 +10,7 @@ use frontend\models\seller\Goodscontent;
 use frontend\models\seller\GoodsPhoto;
 use frontend\models\seller\GoodsPhotoRelation;
 use frontend\models\seller\Goodsspec;
-use frontend\models\seller\SellerDetailForm;
+use frontend\models\seller\Seller;
 use frontend\models\seller\SellerExt;
 use frontend\models\seller\ShopMember;
 use frontend\models\seller\ShopMerchShipInfo;
@@ -489,12 +489,9 @@ class ShopSellerController extends Controller
 
     public function actionLab($id)
     {
-        $lab = ShopSeller::findOne($id);
-        if($lab && 'expertreg' != $lab->phone){
-            $labInfo = $lab->labInfo;
-            return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo]);
-        }
-        return '商家号有误';
+        $lab = Seller::findOne($id);
+        $labInfo = $lab->ext;
+        return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo]);
     }
 
     public function actionExpertreg()

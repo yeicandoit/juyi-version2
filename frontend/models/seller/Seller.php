@@ -122,4 +122,9 @@ class Seller extends \yii\db\ActiveRecord
         return $ext;
     }
 
+    public function getGoods()
+    {
+        return $this->hasMany(Goods::className(), ['seller_id'=>'id']);
+    }
+
 }
