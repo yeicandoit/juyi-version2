@@ -39,10 +39,10 @@ use yii\helpers\ArrayHelper;
     <div style="float:left; margin: 0 auto;width: 280px;">
         <?=$form->field($expertinfo, 'province', [ 'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div>
         <div style=\"float:left; margin: 0 auto;\">{input}</div>", ]
-        )->dropDownList(ArrayHelper::map(frontend\models\ShopAreas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
+        )->dropDownList(ArrayHelper::map(frontend\models\seller\Areas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
             [
                 'style'=>'width:180px',
-                'onchange'=>'$.post("index.php?r=site/areas&id='.'"+$(this).val(),function(data){
+                'onchange'=>'$.post("index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
                  $("#expert-city").html("<option value=0>请选择市</option>");
                  $("#expert-area").html("<option value=0>请选择县</option>");
                  $("#expert-city").append(data);
@@ -51,16 +51,16 @@ use yii\helpers\ArrayHelper;
     </div>
     <div style="float:left; margin: 0 auto;width: 165px;">
         <?=$form->field($expertinfo, 'city', [ 'template' => "{input}", ])->dropDownList(
-            ArrayHelper::map(frontend\models\ShopAreas::find()->where(['parent_id'=>$expertinfo->province])->asArray()->all(),'area_id','area_name'),
+            ArrayHelper::map(frontend\models\seller\Areas::find()->where(['parent_id'=>$expertinfo->province])->asArray()->all(),'area_id','area_name'),
             [
                 'style'=>'width:180px',
-                'onchange'=>'$.get("/index.php?r=site/areas&id='.'"+$(this).val(),function(data){
+                'onchange'=>'$.get("/index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
                 $("#expert-area").html("<option value=0>请选择县</option>");
                 $("#expert-area").append(data);});',
             ]); ?>
     </div>
     <?=$form->field($expertinfo, 'area', [ 'template' => "{input}", ])->dropDownList(
-        ArrayHelper::map(frontend\models\ShopAreas::find()->where(['parent_id'=>$expertinfo->city])->asArray()->all(),'area_id','area_name'),
+        ArrayHelper::map(frontend\models\seller\Areas::find()->where(['parent_id'=>$expertinfo->city])->asArray()->all(),'area_id','area_name'),
         [
             'style'=>'width:180px',
         ]); ?>
