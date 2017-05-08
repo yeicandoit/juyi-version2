@@ -3,7 +3,6 @@
 namespace frontend\models\seller;
 
 use Yii;
-use frontend\models\ShopAreas;
 
 /**
  * This is the model class for table "{{%expert}}".
@@ -108,9 +107,9 @@ class Expert extends \yii\db\ActiveRecord
 
     public function getLocation($separator)
     {
-        return ShopAreas::findOne($this->province)->area_name . $separator .
-        ShopAreas::findOne($this->city)->area_name . $separator .
-        ShopAreas::findOne($this->area)->area_name;
+        return Areas::findOne($this->province)->area_name . $separator .
+        Areas::findOne($this->city)->area_name . $separator .
+        Areas::findOne($this->area)->area_name;
     }
 
     public function getGoods()

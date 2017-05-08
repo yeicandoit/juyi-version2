@@ -23,7 +23,6 @@ use frontend\models\ShopOrderGoods;
 use frontend\models\seller\RefundmentDoc;
 use frontend\models\seller\RefundmentDocSearch;
 use Yii;
-use frontend\models\seller\ShopSellerSearch;
 use frontend\models\seller\ShopDeliverySearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -270,6 +269,9 @@ class ShopSellerController extends Controller
 
     public function actionGoodsadd()
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->redirect(['login']);
+        }
         if(Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $goods = new Goods();
