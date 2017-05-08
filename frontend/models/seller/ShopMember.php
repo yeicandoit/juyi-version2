@@ -19,7 +19,9 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
      */
     public static function tableName()
     {
-        return '{{%shop_member}}';
+        if('shop-seller' == Yii::$app->controller->id) {
+            return '{{%shop_member}}';
+        }
     }
 
     /**
@@ -28,11 +30,10 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     public function rules()
     {
         return [
-            [['shopid', 'username', 'password', 'regtype'], 'required'],
-            [['shopid'], 'integer'],
-            [['username'], 'string', 'max' => 20],
+            [['id', 'username', 'password', 'regtype'], 'required'],
+            [['id'], 'integer'],
+            [['username', 'regtype'], 'string', 'max' => 20],
             [['password'], 'string', 'max' => 32],
-            [['regtype'], 'string', 'max' => 20],
             [['username'], 'unique'],
         ];
     }
@@ -43,9 +44,8 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'shopid' => Yii::t('app', '商户id'),
-            'username' => Yii::t('app', '商户名'),
+            'id' => Yii::t('app', '商户id'),
+            'username' => Yii::t('app', '用户名'),
             'password' => Yii::t('app', '密码'),
             'regtype' => Yii::t('app', '注册类型'),
         ];
@@ -93,11 +93,6 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
         return true;
     }
 
-    public function getShopid()
-    {
-        return $this->shopid;
-    }
-
     public function validatePassword($password)
     {
         return $this->password === $password;
@@ -106,9 +101,9 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
     public function getShopInfo()
     {
         if('seller' == $this->regtype){
-            return Seller::findOne($this->shopid);
+            return Seller::findOne($this->id);
         } else if ('expert' == $this->regtype){
-            return Expert::findOne($this->shopid);
+            return Expert::findOne($this->id);
         }
 
         return false;

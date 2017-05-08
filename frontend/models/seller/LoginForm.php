@@ -65,7 +65,6 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate() && $this->_shop) {
-            Yii::$app->session->set('shopid', $this->_shop->shopid);
             return Yii::$app->user->login($this->getShop(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;

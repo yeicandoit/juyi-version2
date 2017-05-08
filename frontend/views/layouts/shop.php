@@ -505,7 +505,7 @@ if (Yii::$app->user->isGuest) {
    <li>欢迎您</li>
    <li> $curuser </li>".
    '<li>'
-    			. Html::beginForm(['/site/logout'], 'post')
+    			. Html::beginForm(['/shop-seller/logout'], 'post')
     			. Html::submitButton(
     					'[注销] ',
     					['class' => 'btn btn-link logout']
@@ -524,10 +524,13 @@ if (Yii::$app->user->isGuest) {
    <li><a href="<?=Url::to(["shop-seller/sellerreg"])?>">申请入驻</a></li>
    <li><a href="<?=Url::to(["shop-seller/login"])?>">商家登录</a></li>
 	<?php
-		$shop = \frontend\models\seller\ShopMember::find()->where(['shopid'=>Yii::$app->session->get('shopid')])->one();
-		$action = 'shop-seller/lab';
-		if($shop) {
-			if ('expert' == $shop->regtype) {
+		if(Yii::$app->user->isGuest) {
+			$action = 'shop-seller/login';
+		} else{
+			$shop = \frontend\models\seller\ShopMember::findOne(Yii::$app->user->id);
+			if ('seller' == $shop->regtype) {
+				$action = 'shop-seller/seller';
+			} else {
 				$action = 'shop-seller/expert';
 			}
 		}

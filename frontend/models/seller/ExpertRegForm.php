@@ -62,7 +62,8 @@ class ExpertregForm extends Model
     public function validateName($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            if(Expert::find()->where(['name'=>$this->name])->one())
+            if(Expert::find()->where(['name'=>$this->name])->one()
+            || ShopMember::find()->where(['username'=>$this->name])->one())
             {
                 $this->addError($attribute, '用户名已存在');
             }
@@ -111,7 +112,7 @@ class ExpertregForm extends Model
 
                 if($expert->save()){
                     $shopMember = new ShopMember();
-                    $shopMember->shopid = $expert->id;
+                    $shopMember->id = $expert->id;
                     $shopMember->username = $expert->name;
                     $shopMember->password = $expert->password;
                     $shopMember->regtype = 'expert';

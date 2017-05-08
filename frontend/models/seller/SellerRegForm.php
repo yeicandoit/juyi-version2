@@ -60,7 +60,8 @@ class SellerregForm extends Model
     public function validateName($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            if(Seller::find()->where(['seller_name'=>$this->username])->one())
+            if(Seller::find()->where(['seller_name'=>$this->username])->one()
+            || ShopMember::find()->where(['username'=>$this->username])->one())
             {
                 $this->addError($attribute, '用户名已存在');
             }
@@ -110,7 +111,7 @@ class SellerregForm extends Model
 
             if($seller->save()){
                 $shopMember = new ShopMember();
-                $shopMember->shopid = $seller->id;
+                $shopMember->id = $seller->id;
                 $shopMember->username = $seller->seller_name;
                 $shopMember->password = $seller->password;
                 $shopMember->regtype = 'seller';
