@@ -35,6 +35,8 @@ use frontend\models\seller\ExpertregForm;
 use frontend\models\seller\SellerregForm;
 use yii\web\UploadedFile;
 use frontend\models\seller\Areas;
+use frontend\models\seller\SetappointmentForm;
+use frontend\models\seller\Setappointment;
 use yii\helpers\Html;
 
 /**
@@ -537,6 +539,30 @@ class ShopSellerController extends Controller
         foreach($data as $value=>$name)
         {
             echo Html::tag('option',Html::encode($name),array('value'=>$value));
+        }
+    }
+
+    public function actionSetappointment()
+    {
+        $model = new SetappointmentForm();
+        $hintinfo = "";
+        if ($model->load(Yii::$app->request->post())) {
+            if ($id = $model->appoint()) {
+                $datainfo = Setappointment::find()->where(['goodid' => $id])->all();
+                $hintinfo = "预约设定成功，如需要请继续设定";
+                return $this->render('setappointment1', [
+                    'model' => $model,
+                    'hintinfo' => $hintinfo,
+                    'datainfo' => $datainfo,
+                ]);
+            } else {
+                echo "there are some wrong";
+            }
+        } else {
+            return $this->render('setappointment', [
+                'model' => $model,
+                'hintinfo' => $hintinfo,
+            ]);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace frontend\models\seller;
 use Yii;
 
 /**
- * This is the model class for table "{{%setappointment}}".
+ * This is the model class for table "setappointment".
  *
  * @property integer $id
  * @property integer $goodid
@@ -44,15 +44,15 @@ class Setappointment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'goodid' => Yii::t('app', 'Goodid'),
-            'appointdate' => Yii::t('app', 'Appointdate'),
-            'numoftime1' => Yii::t('app', 'Numoftime1'),
-            'numoftime2' => Yii::t('app', 'Numoftime2'),
-            'numoftime3' => Yii::t('app', 'Numoftime3'),
-            'num1' => Yii::t('app', 'Num1'),
-            'num2' => Yii::t('app', 'Num2'),
-            'num3' => Yii::t('app', 'Num3'),
+            'id' => 'ID',
+            'goodid' => 'Goodid',
+            'appointdate' => 'Appointdate',
+            'numoftime1' => 'Numoftime1',
+            'numoftime2' => 'Numoftime2',
+            'numoftime3' => 'Numoftime3',
+            'num1' => 'Num1',
+            'num2' => 'Num2',
+            'num3' => 'Num3',
         ];
     }
 }
