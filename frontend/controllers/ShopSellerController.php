@@ -28,7 +28,6 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use frontend\models\seller\LoginForm;
-use frontend\models\seller\SellerMenu;
 use frontend\models\seller\ShopMerchShipInfoSearch;
 use frontend\models\ShopOrderSearch;
 use frontend\models\seller\ExpertregForm;
@@ -118,7 +117,6 @@ class ShopSellerController extends Controller
         if($shopInfo->load(Yii::$app->request->post()) && $shopInfo->save()){
             return $this->redirect(['sellerhome']);
         }
-        //return $this->render("$shopView", ['menu'=>SellerMenu::getMenu(), "$shopView"=>$shopInfo]);
         return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt]);
     }
 
@@ -144,7 +142,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new ShopMerchShipInfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('merchship', ['menu'=>SellerMenu::getMenu(), 'dataProvider'=>$dataProvider]);
+        return $this->render('merchship', ['dataProvider'=>$dataProvider]);
     }
 
     public function actionShipinfo()
@@ -153,7 +151,7 @@ class ShopSellerController extends Controller
         if($shipinfo->load(Yii::$app->request->post()) && $shipinfo->saveShipInfo()){
             return $this->redirect(['merchship']);
         }
-        return $this->render('shipinfo', ['menu'=>SellerMenu::getMenu(), 'shipinfo'=>$shipinfo]);
+        return $this->render('shipinfo', ['shipinfo'=>$shipinfo]);
     }
 
     public function actionShipview($id)
@@ -166,7 +164,7 @@ class ShopSellerController extends Controller
             }
         }
         $shipinfo = ShopMerchShipInfo::findOne($id);
-        return $this->render('shipview', ['menu'=>SellerMenu::getMenu(), 'shipinfo'=>$shipinfo]);
+        return $this->render('shipview', ['shipinfo'=>$shipinfo]);
     }
 
     public function actionShipdel($id)
@@ -196,14 +194,14 @@ class ShopSellerController extends Controller
     {
         $searchModel = new ShopDeliverySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('delivery', ['menu'=>SellerMenu::getMenu(), 'dataProvider' => $dataProvider,]);
+        return $this->render('delivery', ['dataProvider' => $dataProvider,]);
     }
 
     public function actionOrder()
     {
         $searchModel = new ShopOrderSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('order', ['menu'=>SellerMenu::getMenu(), 'dataProvider'=>$dataProvider]);
+        return $this->render('order', ['dataProvider'=>$dataProvider]);
     }
 
     public function actionOrderinfo($id)
@@ -212,13 +210,13 @@ class ShopSellerController extends Controller
             $post = Yii::$app->request->post();
             $order = ShopOrder::findOne($post['ShopOrder']['id']);
             if($order->load($post) && $order->save()){
-                return $this->render('orderinfo', ['menu'=>SellerMenu::getMenu(), 'order'=>$order]);
+                return $this->render('orderinfo', ['order'=>$order]);
             } else {
                 $this->goBack();
             }
         }
         $order = ShopOrder::findOne($id);
-        return $this->render('orderinfo', ['menu'=>SellerMenu::getMenu(), 'order'=>$order]);
+        return $this->render('orderinfo', ['order'=>$order]);
     }
 
     public function actionOrderdiscount($id, $discount)
@@ -425,7 +423,7 @@ class ShopSellerController extends Controller
             $endDate = Yii::$app->request->post('endDate');
         }
         $countData = ShopOrderGoods::sellerAmount(Yii::$app->user->id, $startDate, $endDate);
-        return $this->render('account', ['menu'=>SellerMenu::getMenu(), 'countData'=>$countData]);
+        return $this->render('account', ['countData'=>$countData]);
     }
 
     public  function  actionUpload()

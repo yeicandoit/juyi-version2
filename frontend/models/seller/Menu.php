@@ -1,9 +1,7 @@
 <?php
 namespace frontend\models\seller;
 
-use yii\helpers\Url;
-
-class SellerMenu
+class Menu
 {
 //菜单的配制数据
     public static $menu = array(
