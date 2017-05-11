@@ -1,56 +1,60 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use backend\assets\AppAsset;
-use dosamigos\datepicker\DatePicker;
+use yii\grid\GridView;
+use \yii\helpers\Url;
 ?>
-<?= Html::jsFile('@web/assets/57c9d7e8/jquery.js') ?>
-<?php 
-AppAsset::register($this);
-AppAsset::addCss($this,Yii::$app->request->baseUrl."/fullcalendar.css");
-AppAsset::addScript($this,Yii::$app->request->baseUrl."/moment.min.js");
-AppAsset::addScript($this,Yii::$app->request->baseUrl."/fullcalendar.min.js");
-
-?>
-<style type="text/css">
-	#calendar {
-		width:500px;
-		float:right;
-			
-	}
-	h2, .h2 {
-	    font-size: 18px;
-	}
-</style>
-
-<script type="text/javascript">
-</script>
+<?=Html::cssFile('@web/css/reg.css')?>
 <div class="sellerinfo">
-     <?php $form = ActiveForm::begin(['id' => 'form-setappointment',
-			 'fieldConfig' => [
-					 'template' => "{label}<div style='width: 150px'>{input}</div>{error}",
-			 ],]); ?>
-         	<?= $form->field($model, 'goodid')->textInput(['autofocus' => true])->label("商品id") ?>
-         	<?= $form->field($model, 'appointdate')->widget(
-				 DatePicker::className(), [
-					'language' => 'zh-CN',
-					'addon' => false,
-					'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-					'clientOptions' => [
-					'autoclose' => true,
-					'format' => 'yyyy-mm-dd',
-					'todayHighlight' => true,
-					'pickButtonIcon' => 'glyphicon glyphicon-time',
-				]
-			])->label("日      期")?>
-         	<?= $form->field($model, 'numoftime1')->textInput(['maxlength' => 20])->label("设定预约数量") ?>
-         	<?= Html::submitButton('提交', ['class' => 'btn btn-primary', 'name' => 'setappointment-button']) ?>
-     <?php ActiveForm::end(); ?>
-     <p id="hint"><?= Html::encode($hintinfo); ?> </p>
-	<div id='calendar'> </div>
+    <div class="info_bar">
+        <b>选择商品设置预约</b>
+    </div>
+    <div class="blank"></div>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+            ],
+            [
+                'label'=>'商品名称',
+                'format'=>'raw',
+                'value'=> function($model){
+                    if($model->img){
+                        $src = $model->img;
+                    } else {
+                        $src = '/images/user_ico.gif';
+                    }
+                    return "<table>
+                                   <tr>
+                                   <td><a href=''><img class='user_fav_img' src=$src/></a></td>
+                                   <td>&nbsp;$model->name</td>
+                                   </tr>
+                                </table>";
+                }
+            ],
+            [
+                'label'=>'状态',
+                'format'=>'raw',
+                'value'=>function($model){
+                    if($model->hasSetAppoint()) {
+                        return Html::label("已设置预约");
+                    } else {
+                        return Html::label("未设置预约");
+                    }
+                }
+            ],
+            [
+                'label'=>'操作',
+                'format'=>'raw',
+                'value'=>function($model){
+                    $add = Html::a('添加', Url::to(['shop-seller/editappointment', 'id'=>$model->id, 'status'=>1]));
+                    $del = Html::a('删除', Url::to(['shop-seller/goodsstat', 'id'=>$model->id, 'status'=>3]));
+                    $edit = Html::a('修改',  Url::to(['shop-seller/editappointment', 'id'=>$model->id, 'status'=>2]));
+                    return "$add|$del|$edit";
+                }
+            ]
+        ],
+    ]); ?>
 </div>
+
+

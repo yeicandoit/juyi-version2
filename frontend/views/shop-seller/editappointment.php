@@ -19,7 +19,6 @@ AppAsset::addScript($this,Yii::$app->request->baseUrl."/fullcalendar.min.js");
 <style type="text/css">
 	#setappoint{
 		width:370px;
-		float:left;
 		padding:0;
 	}
 	#calendar {
@@ -101,30 +100,56 @@ $(document).ready(function() {
 
 </script>
 <div class="sellerinfo">
+	<div class="info_bar">
+		<b><?=$stat?></b>
+	</div>
+	<div class="blank"></div>
 <div id="setappoint">
-    <p>设定预约信息</p>
-        <?php $form = ActiveForm::begin(['id' => 'form-setappointment',
-			'fieldConfig' => [
-					'template' => "{label}<div style='width: 150px'>{input}</div>{error}",
-			],]); ?>
-            <?= $form->field($model, 'goodid')->textInput(['autofocus' => true])->label("商品 ID") ?>
-            <?= $form->field($model, 'appointdate')->widget(
-				DatePicker::className(), [
-				'language' => 'zh-CN',
-				'addon' => false,
-				// modify template for custom rendering
-				'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-					//	'template' => '{input}',
-				'clientOptions' => [
-					'autoclose' => true,
-					'format' => 'yyyy-mm-dd',
-					'pickButtonIcon' => 'glyphicon glyphicon-time',
-				]
-			])->label("日      期")?>
-            <?= $form->field($model, 'numoftime1')->textInput(['maxlength' => 20])->label("设定预约数量") ?>
-			<?= Html::submitButton('提交', ['class' => 'btn btn-primary', 'name' => 'setappointment-button']) ?>
-        <?php ActiveForm::end(); ?>
+	<table style="border: 1px solid #c4e3f3; min-width: 600px">
+		<tr style="border: 1px solid #c4e3f3;">
+			<th>商品信息</th>
+			<th>设定预约信息</th>
+		</tr>
+		<tr style="border: 1px solid #c4e3f3;">
+			<td style="border: 1px solid #c4e3f3;padding: 20px 10px 10px 10px">
+				<?=Html::img($good->img, ['style'=>'width:150px;height:150px;'])?>
+				<br>
+				<?=Html::a($good->name, '#')?>
+			</td>
+			<td style="padding: 20px 10px 10px 10px">
+    			<?php $form = ActiveForm::begin(['id' => 'form-setappointment',
+					'fieldConfig' => [
+							'template' => "{label}<div style='width: 150px'>{input}</div>{error}",
+					],]); ?>
+					<?php $model->goodid = $good->id; ?>
+    			    <?= $form->field($model, 'goodid', ['options'=>['style'=>'display:none'],])->textInput() ?>
+    			    <?= $form->field($model, 'appointdate')->widget(
+						DatePicker::className(), [
+						'language' => 'zh-CN',
+						'addon' => false,
+						// modify template for custom rendering
+						'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+							//	'template' => '{input}',
+						'clientOptions' => [
+							'autoclose' => true,
+							'format' => 'yyyy-mm-dd',
+							'todayHighlight' => true,
+							'pickButtonIcon' => 'glyphicon glyphicon-time',
+						]
+					])->label("日      期")?>
+    			    <?= $form->field($model, 'numoftime1')->textInput(['maxlength' => 20])->label("设定预约数量") ?>
+					<?= Html::submitButton('提交', ['class' => 'btn btn-primary', 'name' => 'setappointment-button']) ?>
+    			<?php ActiveForm::end(); ?>
+			</td>
+	</tr>
+	</table>
 </div>
- <p>该商品的预约设定信息：</p> 
-<div id='calendar'></div>
+<br>
+<?php
+	$display='';
+	if(count($datainfo) == 0){
+		$display='display:none';
+	}
+?>
+<div id='calendar' style="<?=$display?>"></div>
 </div>

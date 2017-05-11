@@ -17,6 +17,11 @@ class Menu
              "商品退款" => "shop-seller/refundment",
         ),
 
+        "预约模块" => array(
+            "预约列表"=>"#",
+            "设置预约"=>"shop-seller/setappointment",
+        ),
+
         "订单模块" => array(
             "订单列表" => "shop-seller/order" ,
         ),

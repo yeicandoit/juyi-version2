@@ -29,7 +29,16 @@ class SetappointmentForm extends Model
         ];
     }
 
-    /**
+	public function attributeLabels()
+	{
+		return [
+				'appointdate' => Yii::t('app', '预约日期'),
+				'numoftime1' => Yii::t('app', '预约数量'),
+		];
+	}
+
+
+	/**
      * Signs user up.
      *
      * @return User|null the saved model or null if saving fails
@@ -46,8 +55,6 @@ class SetappointmentForm extends Model
     	$num1=$this->numoftime1;
     	$num2=0;
     	$num3=0;
-    	$newdate=explode("/", $appointdate0);
-    	//$appointdate=$newdate[2]."-".$newdate[0]."-".$newdate[1];
 		$appointdate = $appointdate0;
     	$query=$appointment->find()->where(["goodid"=>$goodid])->andWhere(["appointdate"=>$appointdate])->one();
     	if($query)
@@ -60,6 +67,7 @@ class SetappointmentForm extends Model
     		}
        } else {
        		$appointment->goodid = $goodid;
+			$appointment->shopid = Yii::$app->user->id;
        		$appointment->appointdate = $appointdate;
        		$appointment->numoftime1=$num1;
        		$appointment->numoftime2=0;

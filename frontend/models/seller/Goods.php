@@ -172,4 +172,9 @@ class Goods extends \yii\db\ActiveRecord
             }
         }
     }
+
+    public function hasSetAppoint()
+    {
+        return Setappointment::find()->where(['goodid'=>$this->id])->count() > 0;
+    }
 }

@@ -542,25 +542,32 @@ class ShopSellerController extends Controller
 
     public function actionSetappointment()
     {
+        $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->user->id, 'is_del'=>0]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('setappointment', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionEditappointment($id, $status)
+    {
+        if(Yii::$app->user->isGuest){
+            return $this->redirect(['login']);
+        }
+
         $model = new SetappointmentForm();
-        $hintinfo = "";
         if ($model->load(Yii::$app->request->post())) {
             if ($id = $model->appoint()) {
-                $datainfo = Setappointment::find()->where(['goodid' => $id])->all();
-                $hintinfo = "预约设定成功，如需要请继续设定";
-                return $this->render('setappointment1', [
-                    'model' => $model,
-                    'hintinfo' => $hintinfo,
-                    'datainfo' => $datainfo,
-                ]);
+                return $this->redirect(['setappointment']);
             } else {
-                echo "there are some wrong";
+                echo 'there are some wrong';
             }
-        } else {
-            return $this->render('setappointment', [
-                'model' => $model,
-                'hintinfo' => $hintinfo,
-            ]);
         }
+
+        $datainfo = Setappointment::find()->where(['goodid' => $id])->all();
+        $stat = '添加预约';
+        if(2 == $status) {
+            $stat = '修改预约';
+        }
+        $good = Goods::findOne($id);
+        return $this->render('editappointment', ['stat'=>$stat, 'good'=>$good, 'model'=>$model, 'datainfo' => $datainfo]);
     }
 }
