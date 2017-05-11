@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\seller\Appointinfo;
 use frontend\models\seller\CategoryExtend;
 use frontend\models\seller\Expert;
 use frontend\models\seller\ExpertExt;
@@ -36,6 +37,7 @@ use yii\web\UploadedFile;
 use frontend\models\seller\Areas;
 use frontend\models\seller\SetappointmentForm;
 use frontend\models\seller\Setappointment;
+use frontend\models\seller\AppointinfoSearch;
 use yii\helpers\Html;
 
 /**
@@ -569,5 +571,12 @@ class ShopSellerController extends Controller
         }
         $good = Goods::findOne($id);
         return $this->render('editappointment', ['stat'=>$stat, 'good'=>$good, 'model'=>$model, 'datainfo' => $datainfo]);
+    }
+
+    public function actionAppointinfo()
+    {
+        $searchModel = new AppointinfoSearch(['shopid'=>Yii::$app->user->id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('appointinfo', ['dataProvider'=>$dataProvider]);
     }
 }

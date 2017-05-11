@@ -9,7 +9,6 @@ use Yii;
  *
  * @property integer $id
  * @property integer $goodid
- * @property integer $shopid
  * @property string $appointdate
  * @property integer $numoftime1
  * @property integer $numoftime2
@@ -34,8 +33,8 @@ class Setappointment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['goodid', 'shopid'], 'required'],
-            [['goodid', 'shopid', 'numoftime1', 'numoftime2', 'numoftime3', 'num1', 'num2', 'num3'], 'integer'],
+            ['goodid', 'required'],
+            [['goodid', 'numoftime1', 'numoftime2', 'numoftime3', 'num1', 'num2', 'num3'], 'integer'],
             [['appointdate'], 'safe'],
         ];
     }
@@ -48,7 +47,6 @@ class Setappointment extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'goodid' => Yii::t('app', 'Goodid'),
-            'shopid' => Yii::t('app', 'Shopid'),
             'appointdate' => Yii::t('app', 'Appointdate'),
             'numoftime1' => Yii::t('app', 'Numoftime1'),
             'numoftime2' => Yii::t('app', 'Numoftime2'),

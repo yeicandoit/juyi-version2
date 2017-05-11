@@ -18,7 +18,7 @@ class Menu
         ),
 
         "预约模块" => array(
-            "预约列表"=>"#",
+            "预约列表"=>"shop-seller/appointinfo",
             "设置预约"=>"shop-seller/setappointment",
         ),
 

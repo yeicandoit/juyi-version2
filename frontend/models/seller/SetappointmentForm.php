@@ -24,6 +24,7 @@ class SetappointmentForm extends Model
            	['goodid', 'required'],
             ['appointdate', 'trim'],
             ['appointdate', 'required'],
+			['numoftime1', 'integer'],
             ['numoftime1', 'trim'],
             ['numoftime1', 'required'],
         ];
@@ -67,7 +68,6 @@ class SetappointmentForm extends Model
     		}
        } else {
        		$appointment->goodid = $goodid;
-			$appointment->shopid = Yii::$app->user->id;
        		$appointment->appointdate = $appointdate;
        		$appointment->numoftime1=$num1;
        		$appointment->numoftime2=0;

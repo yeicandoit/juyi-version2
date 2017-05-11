@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $appointid
  * @property integer $goodid
+ * @property integer $shopid
  * @property string $username
  * @property string $appointdate
  * @property string $appointslot
@@ -34,7 +35,7 @@ class Appointinfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['goodid', 'appointnum', 'paymentstate'], 'integer'],
+            [['goodid', 'shopid', 'appointnum', 'paymentstate'], 'integer'],
             [['appointdate'], 'safe'],
             [['username'], 'string', 'max' => 255],
             [['appointslot', 'appointaddress'], 'string', 'max' => 20],
@@ -51,14 +52,20 @@ class Appointinfo extends \yii\db\ActiveRecord
         return [
             'appointid' => Yii::t('app', '预约号'),
             'goodid' => Yii::t('app', '商品id'),
+            'shopid' => Yii::t('app', '商家id'),
             'username' => Yii::t('app', '预约人'),
-            'appointdate' => Yii::t('app', 'Appointdate'),
+            'appointdate' => Yii::t('app', '预约日期'),
             'appointslot' => Yii::t('app', 'Appointslot'),
-            'appointnum' => Yii::t('app', 'Appointnum'),
+            'appointnum' => Yii::t('app', '预约数量'),
             'appointtime' => Yii::t('app', 'Appointtime'),
-            'appointaddress' => Yii::t('app', 'Appointaddress'),
+            'appointaddress' => Yii::t('app', '预约地址'),
             'appointwords' => Yii::t('app', 'Appointwords'),
             'paymentstate' => Yii::t('app', '是否付款'),
         ];
+    }
+
+    public function getGood()
+    {
+        return $this->hasOne(Goods::className(), ['id' => 'goodid']);
     }
 }

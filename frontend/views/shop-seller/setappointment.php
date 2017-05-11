@@ -48,9 +48,8 @@ use \yii\helpers\Url;
                 'format'=>'raw',
                 'value'=>function($model){
                     $add = Html::a('添加', Url::to(['shop-seller/editappointment', 'id'=>$model->id, 'status'=>1]));
-                    $del = Html::a('删除', Url::to(['shop-seller/goodsstat', 'id'=>$model->id, 'status'=>3]));
                     $edit = Html::a('修改',  Url::to(['shop-seller/editappointment', 'id'=>$model->id, 'status'=>2]));
-                    return "$add|$del|$edit";
+                    return "$add|$edit";
                 }
             ]
         ],
