@@ -49,12 +49,4 @@ class User extends \yii\db\ActiveRecord
             'head_ico' => Yii::t('app', '头像'),
         ];
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMember()
-    {
-        return $this->hasOne(Member::className(), ['user_id' => 'id']);
-    }
 }

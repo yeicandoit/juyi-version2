@@ -101,7 +101,7 @@ class Order extends \yii\db\ActiveRecord
             'pay_type' => Yii::t('app', '用户支付方式ID,当为0时表示货到付款'),
             'invoice' => Yii::t('app', '发票：0不索要1 普通发票 2 增值税发票'),
             'invoice_title' => Yii::t('app', '发票抬头'),
-            'status' => Yii::t('app', '订单状态 1生成订单,2支付订单,3取消订单(客户触发),4作废订单(管理员触发),5完成订单,6退款(订单完成后),7部分退款(订单完成后)'),
+            'status' => Yii::t('app', '1 订单生成 2 买家寄出样品 3 商家收到样品，测试进行 4 商家发送测试数据 5 商家回寄样品 6 买家收到回寄样品 7 交易完成'),
             'pay_status' => Yii::t('app', '支付状态 0：未支付; 1：已支付;'),
             'distribution_status' => Yii::t('app', '配送状态 0：未发送,1：已发送,2：部分发送'),
             'create_time' => Yii::t('app', '下单时间'),
@@ -143,5 +143,25 @@ class Order extends \yii\db\ActiveRecord
             'active_id' => Yii::t('app', '促销活动ID'),
             'is_checkout' => Yii::t('app', '是否给商家结算货款 0:未结算 1:已结算'),
         ];
+    }
+
+    public function getStat()
+    {
+        $status = array(
+            1=>'订单生成',
+            2=>'买家寄出样品',
+            3=>'收到样品',
+            4=>'发送测试数据',
+            5=>'回寄样品',
+            6=>'买家收到回寄样品',
+            7=>'交易完成'
+        );
+
+        return $status[$this->status];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id'=>'user_id']);
     }
 }

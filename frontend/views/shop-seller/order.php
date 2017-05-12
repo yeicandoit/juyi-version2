@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
@@ -11,38 +12,28 @@ use yii\grid\GridView;
         'dataProvider' => $dataProvider,
         'columns' => [
             'order_no',
-            ['label'=>'收货人', 'value'=>function($model){
-                return $model->accept_name;
-            }],
-            'mobile',
-            ['label'=>'配送状态','value'=> function($model){
-                if(1 == $model->distribution_status) {
-                    return '已发货';
-                } else if (0 == $model->distribution_status) {
-                    return '未发货';
-                }  else if (2 == $model->distribution_status) {
-                    return '部分发货';
-                } else if (5 == $model->distribution_status) {
-                    return '已收货';
+            [
+                'label'=>'订单状态',
+                'value'=>function($model){
+                    return $model->stat;
                 }
-            }],
-            ['label'=>'支付状态', 'value'=>function($model){
-                return $model->getOrderPayStatusText($model->pay_status);
-            }],
+            ],
+            [
+                'label'=>'下单用户名',
+                'value'=>function($model){
+                    return $model->user->username;
+                }
+            ],
             'create_time',
             [
                 'label'=>'操作',
                 'format' => 'raw',
                 'value' => function($model) {
-                    if($model->isGoDelivery()){
-                        return Html::a('发货', '/index.php?r=site/') . "|" . "查看详情";
-                    } else {
-                        return Html::a('查看详情', "/index.php?r=shop-seller/orderinfo&id=$model->id");
-                    }
+                    $orderDetail = Html::a('订单详情', Url::to(['shop-seller/orderinfo', 'id'=>$model->id]));
+                    $appointDetail = Html::a('预约详情', "#");
+                    return "$orderDetail|$appointDetail";
                 }
             ]
-
-            //['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>

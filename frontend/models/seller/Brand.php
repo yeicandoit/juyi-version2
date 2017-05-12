@@ -1,11 +1,11 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\seller;
 
 use Yii;
 
 /**
- * This is the model class for table "shop_brand".
+ * This is the model class for table "brand".
  *
  * @property string $id
  * @property string $name
@@ -15,7 +15,7 @@ use Yii;
  * @property integer $sort
  * @property string $category_ids
  */
-class ShopBrand extends \yii\db\ActiveRecord
+class Brand extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

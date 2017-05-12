@@ -162,7 +162,7 @@ JS;
     <br>
     <div class="goodInfoBox">
         <?=$form->field($goods, 'brandid')
-            ->dropDownList(ArrayHelper::map(frontend\models\ShopBrand::find()->asArray()->all(),'id','name'), ['style'=>'width:300px'])?>
+            ->dropDownList(ArrayHelper::map(frontend\models\seller\Brand::find()->asArray()->all(),'id','name'), ['style'=>'width:300px'])?>
         <?= $form->field($goods, 'brandversion')->textInput(['style'=>'width:200px'])->label("品牌型号")?>
     </div>
     <br>

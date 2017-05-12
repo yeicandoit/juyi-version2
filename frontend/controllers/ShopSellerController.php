@@ -19,7 +19,7 @@ use frontend\models\seller\Category;
 use frontend\models\seller\Comment;
 use frontend\models\seller\CommentSearch;
 use frontend\models\Seller\GoodsSearch;
-use frontend\models\ShopOrder;
+use frontend\models\seller\Order;
 use frontend\models\ShopOrderGoods;
 use frontend\models\seller\RefundmentDoc;
 use frontend\models\seller\RefundmentDocSearch;
@@ -30,7 +30,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use frontend\models\seller\LoginForm;
 use frontend\models\seller\ShopMerchShipInfoSearch;
-use frontend\models\ShopOrderSearch;
+use frontend\models\seller\OrderSearch;
 use frontend\models\seller\ExpertregForm;
 use frontend\models\seller\SellerregForm;
 use yii\web\UploadedFile;
@@ -201,7 +201,7 @@ class ShopSellerController extends Controller
 
     public function actionOrder()
     {
-        $searchModel = new ShopOrderSearch(['seller_id'=>Yii::$app->user->id]);
+        $searchModel = new OrderSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('order', ['dataProvider'=>$dataProvider]);
     }
@@ -210,14 +210,14 @@ class ShopSellerController extends Controller
     {
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
-            $order = ShopOrder::findOne($post['ShopOrder']['id']);
+            $order = Order::findOne($post['ShopOrder']['id']);
             if($order->load($post) && $order->save()){
                 return $this->render('orderinfo', ['order'=>$order]);
             } else {
                 $this->goBack();
             }
         }
-        $order = ShopOrder::findOne($id);
+        $order = Order::findOne($id);
         return $this->render('orderinfo', ['order'=>$order]);
     }
 
