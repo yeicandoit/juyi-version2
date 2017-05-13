@@ -2,19 +2,46 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use frontend\models\seller\Areas;
+use yii\bootstrap\ActiveForm;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
 <div class="sellerinfo">
     <div class="info_bar"><b>订单查看</b>
         <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;订单附言</b>', 'javascript:select_tab("6")')?></span>
-        <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;订单日志</b>', 'javascript:select_tab("5")')?></span>
         <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;订单备注</b>', 'javascript:select_tab("4")')?></span>
-        <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;发货记录</b>', 'javascript:select_tab("3")')?></span>
         <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;收退款记录</b>', 'javascript:select_tab("2")')?></span>
         <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;基本信息</b>', 'javascript:select_tab("1")')?></span>
     </div>
     <div class="module_content" id="tab-1">
+        <?php if(7 != $order->status &&
+            6 != $order->status &&
+            5 != $order->status &&
+            //Have sent test data and not need to send sample
+            !(4 == $order->status && (0 == $order->sendbackornot || null == $order->sendbackornot))) {?>
+            <div class="blank"></div>
+            <label style="color: #985f0d; padding-left: 10px">订单设置</label>
+            <div style="border: 1px groove #e8e8e8; padding-left: 10px">
+                <?php
+                    if(1 == $order->status || 2 == $order->status){
+                        $action = '收到买家样品？';
+                        $stat = 3;
+                    } else if(3 == $order->status) {
+                        $action = '已经发送给买家测试数据？';
+                        $stat = 4;
+                    } else if(4 == $order->status) {
+                        $action = '已向买家寄回样品？';
+                        $stat = 5;
+                    }
+                ?>
+                <?php $form = ActiveForm::begin([]); ?>
+                <div style="display: none"><?= $form->field($order, 'id')?></div>
+                <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>$stat])?></div>
+                <b><?=$action?></b>
+                <?= Html::submitButton('确定', ['style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
+                <?php ActiveForm::end(); ?>
+            </div>
+        <?php } ?>
         <div class="blank"></div>
         <label style="color: #985f0d; padding-left: 10px">订单信息</label>
         <?= DetailView::widget([
@@ -89,14 +116,28 @@ use frontend\models\seller\Areas;
             ]) ?>
         <?php }?>
     </div>
+
+    <div class="module_content" id = 'tab-4' style="display: none;">
+        <div class="blank"></div>
+        <?php $form = ActiveForm::begin([]); ?>
+        <div style="display: none"><?= $form->field($order, 'id')?></div>
+        <?= $form->field($order, 'note', [])->textarea(['rows'=>3, 'style'=>'width:350px'])->label('订单备注')?>
+        <?= Html::submitButton('保存', ['style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
+        <?= Html::resetButton('取消', ['style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
+        <?php ActiveForm::end(); ?>
+    </div>
+
+    <div class="module_content" id = 'tab-6' style="display: none;">
+        <div class="blank"></div>
+        <label>订单附言</label>
+        <div class="box"><?= $order->postscript ?></div>
+    </div>
 </div>
 <script>
     function select_tab(curr_tab)
     {
         $("div.module_content").hide();
         $("#tab-"+curr_tab).show();
-        //$("ul[name=menu1] > li").removeClass('active');
-        //$('#li_'+curr_tab).addClass('active');
     }
     //修改订单价格
     function updateDiscount()

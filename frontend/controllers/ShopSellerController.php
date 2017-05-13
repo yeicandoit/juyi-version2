@@ -209,11 +209,11 @@ class ShopSellerController extends Controller
     {
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
-            $order = Order::findOne($post['ShopOrder']['id']);
+            $order = Order::findOne($post['Order']['id']);
             if($order->load($post) && $order->save()){
                 return $this->render('orderinfo', ['order'=>$order]);
             } else {
-                $this->goBack();
+                return $this->redirect(['order']);
             }
         }
         $order = Order::findOne($id);
