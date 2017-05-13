@@ -177,6 +177,7 @@ class Order extends \yii\db\ActiveRecord
             1=>'已支付',
         );
         $refundmentStatus = array(
+            0=>'申请退款',
             1=>'同意退款，退款进行',
             2=>'不同意退款',
             3=>'系统仲裁退款',

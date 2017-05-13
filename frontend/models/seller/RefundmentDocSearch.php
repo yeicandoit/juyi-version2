@@ -5,7 +5,11 @@ namespace frontend\models\seller;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use frontend\models\seller\RefundmentDoc;
 
+/**
+ * RefundmentDocSearch represents the model behind the search form about `frontend\models\seller\RefundmentDoc`.
+ */
 class RefundmentDocSearch extends RefundmentDoc
 {
     /**
@@ -14,8 +18,8 @@ class RefundmentDocSearch extends RefundmentDoc
     public function rules()
     {
         return [
-            [['id', 'order_id', 'user_id', 'admin_id', 'pay_status', 'if_del', 'seller_id', 'refund_type'], 'integer'],
-            [['order_no', 'time', 'content', 'dispose_time', 'dispose_idea', 'order_goods_id'], 'safe'],
+            [['id', 'order_id', 'user_id', 'admin_id', 'pay_status', 'if_del', 'seller_id', 'reason'], 'integer'],
+            [['order_no', 'time', 'content', 'dispose_time', 'dispose_idea', 'order_goods_id', 'way'], 'safe'],
             [['amount'], 'number'],
         ];
     }
@@ -38,14 +42,18 @@ class RefundmentDocSearch extends RefundmentDoc
      */
     public function search($params)
     {
-        $query = RefundmentDoc::find()->orderBy(['time'=>SORT_DESC]);
+        $query = RefundmentDoc::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => ['pagesize' => '5'],
-            'sort' => false,
+            'sort'=>[
+                'defaultOrder' => [
+                    'time' => SORT_DESC,
+                ]
+            ],
+            'pagination' => ['pagesize' => '10'],
         ]);
 
         $this->load($params);
@@ -68,13 +76,14 @@ class RefundmentDocSearch extends RefundmentDoc
             'dispose_time' => $this->dispose_time,
             'if_del' => $this->if_del,
             'seller_id' => $this->seller_id,
-            'refund_type' => $this->refund_type,
+            'reason' => $this->reason,
         ]);
 
         $query->andFilterWhere(['like', 'order_no', $this->order_no])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'dispose_idea', $this->dispose_idea])
-            ->andFilterWhere(['like', 'order_goods_id', $this->order_goods_id]);
+            ->andFilterWhere(['like', 'order_goods_id', $this->order_goods_id])
+            ->andFilterWhere(['like', 'way', $this->way]);
 
         return $dataProvider;
     }

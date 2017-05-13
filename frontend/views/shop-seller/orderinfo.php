@@ -37,8 +37,8 @@ use yii\bootstrap\ActiveForm;
                 <?php $form = ActiveForm::begin([]); ?>
                 <div style="display: none"><?= $form->field($order, 'id')?></div>
                 <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>$stat])?></div>
-                <b><?=$action?></b>
-                <?= Html::submitButton('确定', ['style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
+                <b style="color: green;"><?=$action?></b>
+                <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
                 <?php ActiveForm::end(); ?>
             </div>
         <?php } ?>
@@ -138,21 +138,6 @@ use yii\bootstrap\ActiveForm;
     {
         $("div.module_content").hide();
         $("#tab-"+curr_tab).show();
-    }
-    //修改订单价格
-    function updateDiscount()
-    {
-        var order_id = <?=$order->id;?>;
-        var discount = $('input[name="discount"]').val();
-        $.getJSON("/index.php?r=shop-seller/orderdiscount",{'id':order_id,'discount':discount},function(json)
-        {
-            if(json.result == true)
-            {
-                $('#orderAmount').text("￥" + json.orderAmount);
-                $('#orderAmount').addClass("red");
-                return;
-            }
-        });
     }
 </script>
 

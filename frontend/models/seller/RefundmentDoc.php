@@ -84,4 +84,21 @@ class RefundmentDoc extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
     }
+
+    public function getStatus()
+    {
+        $statArr = array(
+            0=>'申请退款',
+            1=>'同意退款，退款进行',
+            2=>'不同意退款',
+            3=>'系统正在仲裁',
+            4=>'退款完成',
+        );
+        return $statArr[$this->pay_status];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id'=>'user_id']);
+    }
 }

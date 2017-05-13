@@ -14,7 +14,6 @@ class Menu
              "商品列表" => "shop-seller/goodslist",
              "添加商品" => "shop-seller/goodsadd",
              "商品评价" => "shop-seller/comment",
-             "商品退款" => "shop-seller/refundment",
         ),
 
         "预约模块" => array(
@@ -24,6 +23,7 @@ class Menu
 
         "订单模块" => array(
             "订单列表" => "shop-seller/order" ,
+            "退款记录" => "shop-seller/refundment",
         ),
 
         "配置模块" => array(

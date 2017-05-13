@@ -241,7 +241,18 @@ class ShopSellerController extends Controller
         return $this->render('refundment', [ 'dataProvider'=>$dataProvider]);
     }
 
-    public function actionRefundmentinfo($id){
+    public function actionRefundmentinfo($id)
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $refundment = RefundmentDoc::findOne($post['RefundmentDoc']['id']);
+            if($refundment->load($post) && $refundment->save()){
+                return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
+            } else {
+                return $this->redirect(['refundment']);
+            }
+        }
+
         $refundment = RefundmentDoc::findOne($id);
         return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
     }

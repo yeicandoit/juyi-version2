@@ -17,18 +17,15 @@ use yii\helpers\Url;
                 'label'=>'退款商品名称',
                 'format'=>'raw',
                 'value'=> function($model){
-                    $myHtml = '';
-                    foreach ($model->orderGoods as $key=>$item){
-                        $goods = $item->goods;
-                        $myHtml = $myHtml . '<p>'.Html::a("$goods->name", 'javascript:void(0)') .'</p>';
-                        return $myHtml;
-                    }
+                    $name = $model->order->appointinfo->good->name;
+                    return Html::a("$name", 'javascript:void(0)') ;
+
                 }
             ],
             [
                 'label'=>'状态',
                 'value'=>function($model){
-                    return $model->refundmentText();
+                    return $model->status;
                 }
             ],
             [
