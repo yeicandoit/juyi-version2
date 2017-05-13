@@ -1,8 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\grid\GridView;
-use yii\bootstrap\ActiveForm;
+use frontend\models\seller\Areas;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -23,204 +22,72 @@ use yii\bootstrap\ActiveForm;
             'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
             'attributes' => [
                 'order_no',
-                ['label'=>'当前状态', 'value'=>$order->orderStatusText($order->orderStatus)],
-                ['label'=>'支付状态', 'value'=>$order->getOrderPayStatusText($order->pay_status)],
+                ['label'=>'当前状态', 'value'=>$order->stat],
+                ['label'=>'支付状态', 'value'=>$order->payStatus],
                 ['label'=>'配送状态', 'value'=>$order->orderDistributionStatusText],
                 ['label'=>'订单类型', 'value'=>$order->orderTypeText],
-                ['label'=>'平台货款结算', 'value'=>1 == $order->is_checkout ? '已结算': '未结算'],
             ],
         ]) ?>
-
         <div style="border: 1px groove #e8e8e8; padding-left: 10px">
             <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border:10px; solid #123456;">
                 <tr>
                     <th>商品名称</th>
                     <th>商品价格</th>
-                    <th>实际价格</th>
                     <th>商品数量</th>
                     <th>小计</th>
-                    <th>配送方式</th>
                 </tr>
                 <tr>
-                    <td><a href=''><?=$order->shopOrderGoods->goods->name?></a></td>
-                    <td>￥<?= $order->shopOrderGoods->goods_price?></td>
-                    <td>￥<?= $order->shopOrderGoods->real_price?></td>
-                    <td>x<?= $order->shopOrderGoods->goods_nums?></td>
-                    <td>￥<?= $order->shopOrderGoods->goods_nums * $order->shopOrderGoods->real_price?></td>
-                    <td><?= $order->sendStatus?></td>
+                    <td><a href=''><?=$order->appointinfo->good->name?></a></td>
+                    <td>￥<?= $order->appointinfo->good->sell_price?></td>
+                    <td>x<?= $order->appointinfo->appointnum?></td>
+                    <td>￥<?= $order->appointinfo->appointnum * $order->appointinfo->good->sell_price?></td>
                 </tr>
             </table>
         </div>
         <div class="blank"></div>
-        <label style="color: #985f0d; padding-left: 10px">订单金额明细</label>
-        <?php
-            $discont = Html::label('&nbsp;&nbsp;折扣用" - ",涨价用" + "');
-            if($order->orderStatus < 3){
-                $discont = Html::input('text', 'discount', $order->discount, ['onchange'=>"updateDiscount();"]) . $discont;
-            } else {
-                $discont = "$order->discount" . $discont;
-            }
+        <label style="color: #985f0d; padding-left: 10px">买家配送信息</label>
+        <?= DetailView::widget([
+            'model' => $order,
+            'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
+            'attributes' => [
+                ['label'=>'快递公司名称', 'value'=>$order->delivery ? $order->delivery->name : ''],
+                ['label'=>'快递单号', 'value'=>$order->delivery ? $order->delivery->number : ''],
+                ['label'=>'快递补充说明', 'value'=>$order->delivery ? $order->delivery->description  : ''],
+            ],
+        ]) ?>
 
-            $collectionDocs = $order->shopCollectionDocs;
-            $payAmount = 0;
-            foreach($collectionDocs as $key => $item){
-                if(0 == $item->if_del){
-                    $payAmount = $payAmount + $item->amount;
-                }
-            }
-        ?>
-        <?= DetailView::widget([
-            'model' => $order,
-            'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
-            'attributes' => [
-                ['label'=>'商品总额', 'value'=>"￥$order->payable_amount"],
-                ['label'=>'配送费用', 'value'=>"￥$order->real_freight"],
-                ['label'=>'保价费用', 'value'=>"￥$order->insured"],
-                ['label'=>'税金', 'value'=>"￥$order->taxes"],
-                ['label'=>'优惠总额', 'value'=>"￥$order->promotions"],
-                [
-                    'label'=>'增加或减少金额',
-                    'format'=>'raw',
-                    'value'=>$discont,
-                ],
-                //['label'=>'订单总额', 'value'=>"￥$order->order_amount"],
-                ['label'=>'订单总额', 'format'=>'raw', 'value'=>Html::label("￥$order->order_amount",null,['id'=>'orderAmount'])],
-                ['label'=>'已支付金额', 'value'=>"￥$payAmount"],
-            ],
-        ]) ?>
-        <label style="color: #985f0d; padding-left: 10px">支付和配送信息</label>
-        <?= DetailView::widget([
-            'model' => $order,
-            'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
-            'attributes' => [
-                ['label'=>'配送方式', 'value'=>$order->shopDelivery->name],
-                ['label'=>'商品重量', 'value'=>$order->shopOrderGoods->goods_weight],
-                ['label'=>'支付方式', 'value'=>$order->shopPayment->name],
-                ['label'=>'是否开票', 'value'=>$order->invoice ? '是' : '否'],
-                ['label'=>'发票抬头', 'value'=>$order->invoice_title],
-                ['label'=>'可得积分', 'value'=>$order->point],
-            ],
-        ]) ?>
-        <label style="color: #985f0d; padding-left: 10px">收货人信息</label>
-        <?= DetailView::widget([
-            'model' => $order,
-            'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
-            'attributes' => [
-                ['label'=>'发票日期', 'value'=>$order->send_time],
-                ['label'=>'姓名', 'value'=>$order->accept_name],
-                'mobile',
-                'telphone',
-                ['label'=>'地区', 'value'=>$order->acceptAdr],
-                'address',
-                'postcode',
-                'accept_time',
-            ],
-        ]) ?>
-    </div>
-    <div class="module_content" id="tab-2" style="display: none;">
         <div class="blank"></div>
-        <label style="color: #985f0d; padding-left: 10px">收款单据</label>
-        <?php
-            $coldoc = $order->shopCollectionDocs;
-        ?>
-        <?php foreach($coldoc as $key => $item){?>
-            <?= DetailView::widget([
-                'model' => $item,
-                'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
-                'attributes' => [
-                    ['label'=>'付款时间', 'value'=>$item->time],
-                    'amount',
-                    ['label'=>'支付方式', 'value'=>$item->payment->name],
-                    'note',
-                    ['label'=>'状态', 'value'=>$item->pay_status ? '支付完成' : '准备中'],
-                ],
-            ]);?>
-        <?php }?>
-
-        <label style="color: #985f0d; padding-left: 10px">退款单据</label>
-        <?php
-            $refdoc = $order->shopRefundmentDocs;
-        ?>
-        <?php foreach($refdoc as $key => $item){?>
+        <?php if($order->sendbackornot) {?>
+            <label style="color: #985f0d; padding-left: 10px">买家收货信息</label>
             <?php
-                $orderGoods = $item->shopOrderGoods;
-                $goods = '';
-                foreach($orderGoods as $k => $i){
-                    //$url = Html::a("$i->name X $i->goods_nums", '', ['target'=>'_blank', 'title'=>"$i->name"]);
-                    $goods_array = json_decode($i->goods_array);
-                    $url = Html::a($goods_array['name'] . 'X' . $i->goods_nums, '');
-                    $goods = $goods . "<p>$url</p>";
+                //$location = $order->province? Areas::findOne($order->province)->area_name : '' . '-' .
+                //    $order->city ? Areas::findOne($order->city)->area_name : '' .  '-'  .
+                //    $order->area ? Areas::findOne($order->area)->area_name : '';
+                $location = false;
+                if($order->province) {
+                    $location .= Areas::findOne($order->province)->area_name . '-';
+                }
+                if($order->city) {
+                    $location .= Areas::findOne($order->city)->area_name . '-';
+                }
+                if($order->area) {
+                    $location .= Areas::findOne($order->area)->area_name;
                 }
             ?>
             <?= DetailView::widget([
-                'model' => $item,
+                'model' => $order,
                 'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
                 'attributes' => [
-                    ['label'=>'退款商品', 'format' => 'raw','value'=>$goods],
-                    'amount',
-                    'time',
-                    ['label'=>'状态', 'value'=>$item->refundmentText()],
-                    'content',
+                    'accept_name',
+                    'mobile',
+                    ['label'=>'地区', 'value'=>$location],
+                    'address',
+                    'postcode',
+                    'invoice_title',
+                    'send_time',
                 ],
-            ]);?>
+            ]) ?>
         <?php }?>
-    </div>
-    <div class="module_content" id = 'tab-3' style="display: none;">
-        <div class="blank"></div>
-        <?php
-            $dataProvider = $order->shopDeliveryDocSearch;
-        ?>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                'time',
-                ['label'=>'配送方式', 'value'=>function($model){
-                    return $model->shopDelivery->name;
-                }],
-                ['label'=>'物流公司', 'value'=>function($model){
-                    return isset($model->freight0->freight_name) ? $model->freight0->freight_name : '';
-                }],
-                'delivery_code',
-                'name',
-                ['label'=>'备注', 'value'=>'note'],
-            ],
-        ]); ?>
-    </div>
-    <div class="module_content" id = 'tab-4' style="display: none;">
-        <div class="blank"></div>
-        <?php $form = ActiveForm::begin([]); ?>
-        <div style="display: none"><?= $form->field($order, 'id')?></div>
-        <?= $form->field($order, 'note', [])->textarea(['rows'=>3, 'style'=>'width:350px'])->label('订单备注')?>
-        <?= Html::submitButton('保存', [ 'style' => 'width:50px']) ?>
-        <?= Html::resetButton('取消', [ 'style' => 'width:50px']) ?>
-        <?php ActiveForm::end(); ?>
-    </div>
-    <div class="module_content" id = 'tab-5' style="display: none;">
-        <div class="blank"></div>
-        <?php
-        $dataProvider = $order->shopOrderLogSearch;
-        ?>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                ['label'=>'时间', 'value'=>function($model){
-                    return $model->addtime;
-                }],
-                ['label'=>'操作人', 'value'=>function($model){
-                    return $model->user;
-                }],
-                'action',
-                ['label'=>'结果', 'value'=>function($model){
-                    return $model->result;
-                }],
-                'note',
-            ],
-        ]); ?>
-    </div>
-    <div class="module_content" id = 'tab-6' style="display: none;">
-        <div class="blank"></div>
-        <label>订单附言</label>
-        <div class="box"><?= $order->postscript ?></div>
     </div>
 </div>
 <script>

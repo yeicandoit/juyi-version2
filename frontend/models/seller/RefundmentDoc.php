@@ -5,7 +5,7 @@ namespace frontend\models\seller;
 use Yii;
 
 /**
- * This is the model class for table "refundment_doc".
+ * This is the model class for table "{{%refundment_doc}}".
  *
  * @property string $id
  * @property string $order_no
@@ -21,7 +21,8 @@ use Yii;
  * @property integer $if_del
  * @property string $order_goods_id
  * @property string $seller_id
- * @property integer $refund_type
+ * @property string $way
+ * @property integer $reason
  *
  * @property Order $order
  */
@@ -42,11 +43,11 @@ class RefundmentDoc extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'user_id'], 'required'],
-            [['order_id', 'user_id', 'admin_id', 'pay_status', 'if_del', 'seller_id', 'refund_type'], 'integer'],
+            [['order_id', 'user_id', 'admin_id', 'pay_status', 'if_del', 'seller_id', 'reason'], 'integer'],
             [['amount'], 'number'],
             [['time', 'dispose_time'], 'safe'],
             [['content', 'dispose_idea', 'order_goods_id'], 'string'],
-            [['order_no'], 'string', 'max' => 20],
+            [['order_no', 'way'], 'string', 'max' => 20],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::className(), 'targetAttribute' => ['order_id' => 'id']],
         ];
     }
@@ -64,14 +65,15 @@ class RefundmentDoc extends \yii\db\ActiveRecord
             'amount' => Yii::t('app', '退款金额'),
             'time' => Yii::t('app', '时间'),
             'admin_id' => Yii::t('app', '管理员id'),
-            'pay_status' => Yii::t('app', '退款状态，0:申请退款 1:退款失败 2:退款成功'),
-            'content' => Yii::t('app', '申请退款原因'),
+            'pay_status' => Yii::t('app', '退款状态,0:申请退款，等待商家处理 1：商家同意，退款进行 2:商家不同意 3. 系统正在仲裁 4:退款完成'),
+            'content' => Yii::t('app', '申请退款说明'),
             'dispose_time' => Yii::t('app', '处理时间'),
             'dispose_idea' => Yii::t('app', '处理意见'),
             'if_del' => Yii::t('app', '0:未删除 1:删除'),
             'order_goods_id' => Yii::t('app', '订单与商品关联ID集合'),
             'seller_id' => Yii::t('app', '商家ID'),
-            'refund_type' => Yii::t('app', '1退款退货 2只退款不退货 3退还保障金 '),
+            'way' => Yii::t('app', '退款方式,balance:用户余额 other:其他方式 origin:原路退回'),
+            'reason' => Yii::t('app', '退款原因'),
         ];
     }
 
@@ -81,30 +83,5 @@ class RefundmentDoc extends \yii\db\ActiveRecord
     public function getOrder()
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
-    }
-
-    public function getOrderGoods()
-    {
-        $orderGoods = OrderGoods::findBySql("select * from shop_order_goods where id in ($this->order_goods_id)")->all();
-        return $orderGoods;
-    }
-
-    public function refundmentText()
-    {
-        $result = array(0 => '申请退款', 1 => '退款失败', 2 => '退款成功');
-        return isset($result[$this->pay_status]) ? $result[$this->pay_status] : '';
-    }
-
-    public function isSellerRefund()
-    {
-        $order = $this->order;
-        if($order){
-            if(1 == $order->is_checkout){
-                return 1;
-            } else {
-                return 2;
-            }
-        }
-        return 0;
     }
 }

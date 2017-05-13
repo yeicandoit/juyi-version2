@@ -5,10 +5,11 @@ namespace frontend\models\seller;
 use Yii;
 
 /**
- * This is the model class for table "shop_delivery".
+ * This is the model class for table "{{%delivery}}".
  *
  * @property string $id
  * @property string $name
+ * @property string $number
  * @property string $description
  * @property string $area_groupid
  * @property string $firstprice
@@ -26,10 +27,8 @@ use Yii;
  * @property integer $price_type
  * @property integer $open_default
  * @property integer $is_delete
- *
- * @property ShopDeliveryExtend[] $shopDeliveryExtends
  */
-class ShopDelivery extends \yii\db\ActiveRecord
+class Delivery extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -45,11 +44,12 @@ class ShopDelivery extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['area_groupid', 'firstprice', 'secondprice'], 'string'],
+            [['name', 'number', 'description'], 'required'],
+            [['description', 'area_groupid', 'firstprice', 'secondprice'], 'string'],
             [['type', 'first_weight', 'second_weight', 'status', 'sort', 'is_save_price', 'price_type', 'open_default', 'is_delete'], 'integer'],
-            [['first_weight', 'second_weight'], 'required'],
             [['first_price', 'second_price', 'save_rate', 'low_price'], 'number'],
-            [['name', 'description'], 'string', 'max' => 50],
+            [['name'], 'string', 'max' => 50],
+            [['number'], 'string', 'max' => 255],
         ];
     }
 
@@ -60,8 +60,9 @@ class ShopDelivery extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', '快递名称'),
-            'description' => Yii::t('app', '快递描述'),
+            'name' => Yii::t('app', '快递公司名称'),
+            'number' => Yii::t('app', '快递单号'),
+            'description' => Yii::t('app', '快递补充说明'),
             'area_groupid' => Yii::t('app', '配送区域id'),
             'firstprice' => Yii::t('app', '配送地址对应的首重价格'),
             'secondprice' => Yii::t('app', '配送地区对应的续重价格'),
@@ -76,26 +77,8 @@ class ShopDelivery extends \yii\db\ActiveRecord
             'save_rate' => Yii::t('app', '保价费率'),
             'low_price' => Yii::t('app', '最低保价'),
             'price_type' => Yii::t('app', '费用类型 0统一设置 1指定地区费用'),
-            'open_default' => Yii::t('app', '启用默认费用 1启用 0 不启用'),
+            'open_default' => Yii::t('app', '其他地区是否启用默认费用 1启用 0 不启用'),
             'is_delete' => Yii::t('app', '是否删除 0:未删除 1:删除'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getShopDeliveryExtends()
-    {
-        return $this->hasMany(ShopDeliveryExtend::className(), ['delivery_id' => 'id']);
-    }
-
-    public function getSellerDeliveryExtend()
-    {
-        return $this->hasOne(ShopDeliveryExtend::className(), ['delivery_id' => 'id', 'seller_id'=>'sellerId']);
-    }
-
-    public function getSellerId()
-    {
-        return Yii::$app->user->id;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use frontend\models\seller\Appointinfo;
 use frontend\models\seller\CategoryExtend;
 use frontend\models\seller\Expert;
 use frontend\models\seller\ExpertExt;

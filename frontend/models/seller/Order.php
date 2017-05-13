@@ -164,4 +164,58 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id'=>'user_id']);
     }
+
+    public function getRefundment()
+    {
+        return $this->hasOne(RefundmentDoc::className(),['order_id'=>'id']);
+    }
+
+    public function getPayStatus()
+    {
+        $payStatus = array(
+            0=>'未支付',
+            1=>'已支付',
+        );
+        $refundmentStatus = array(
+            1=>'同意退款，退款进行',
+            2=>'不同意退款',
+            3=>'系统仲裁退款',
+            4=>'退款完成',
+        );
+
+        $stat = $payStatus[$this->pay_status];
+        if($this->refundment){
+            return $refundmentStatus[$this->refundment->pay_status];
+        }
+        return $stat;
+    }
+
+    public function getOrderTypeText()
+    {
+        $orderType = array(
+            0=>'普通订单',
+            1=>'团购订单',
+            2=>'限时抢购'
+        );
+        return $orderType[$this->type];
+    }
+
+    public function getOrderDistributionStatusText()
+    {
+        $status = array(
+            0=>'未发送',
+            1=>'已发送'
+        );
+        return $status[$this->distribution_status];
+    }
+
+    public function getAppointinfo()
+    {
+        return $this->hasOne(Appointinfo::className(), ['appointid'=>'appointid']);
+    }
+
+    public function getDelivery()
+    {
+        return $this->hasOne(Delivery::className(), ['id'=>'distribution']);
+    }
 }
