@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <div class="sellerinfo">
@@ -39,11 +40,7 @@ use yii\helpers\ArrayHelper;
         )->dropDownList(ArrayHelper::map(frontend\models\seller\Areas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
             [
                 'style'=>'width:180px',
-                'onchange'=>'$.post("index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
-                 $("#seller-city").html("<option value=0>请选择市</option>");
-                 $("#seller-area").html("<option value=0>请选择县</option>");
-                 $("#seller-city").append(data);
-            });',
+                'onchange'=>'setCityOption()',
             ])->label('所在地区:'); ?>
     </div>
     <div style="float:left; margin: 0 auto;width: 165px;">
@@ -51,9 +48,7 @@ use yii\helpers\ArrayHelper;
             ArrayHelper::map(frontend\models\seller\Areas::find()->where(['parent_id'=>$sellerinfo->province])->asArray()->all(),'area_id','area_name'),
             [
                 'style'=>'width:180px',
-                'onchange'=>'$.get("/index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
-                $("#seller-area").html("<option value=0>请选择县</option>");
-                $("#seller-area").append(data);});',
+                'onchange'=>'setAreaOption()',
             ]); ?>
     </div>
     <?=$form->field($sellerinfo, 'area', [ 'template' => "{input}", ])->dropDownList(
@@ -121,5 +116,22 @@ use yii\helpers\ArrayHelper;
     {
         $("#labInfo").show();
         $("#basicInfo").hide();
+    }
+
+    <?php $url = Url::to(['shop-seller/areas']); ?>
+    function setCityOption()
+    {
+        $.get("<?= $url?>&id="+$("#seller-province").val(),function(data){
+            $("#seller-city").html("<option value=0>请选择市</option>");
+            $("#seller-area").html("<option value=0>请选择县</option>");
+            $("#seller-city").append(data);
+        });
+    }
+
+    function setAreaOption()
+    {
+        $.get("<?= $url?>&id="+$("#seller-city").val(),function(data){
+            $("#seller-area").html("<option value=0>请选择县</option>");
+            $("#seller-area").append(data);});
     }
 </script>
