@@ -68,11 +68,7 @@ use yii\helpers\Url;
         [
             'style'=>'width:200px',
             'prompt'=>'请选择省',
-            'onchange'=>'$.post("index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
-                 $("#sellerregform-citys").html("<option value=0>请选择市</option>");
-                 $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
-                 $("#sellerregform-citys").append(data);
-            });',
+            'onchange'=>'setCityOption()',
         ])->label('地区:'); ?>
     </div>
     <div style="float:left; margin: 0 auto;width: 185px;">
@@ -80,10 +76,7 @@ use yii\helpers\Url;
         [
             'style'=>'width:200px',
             'prompt'=>'请选择市',
-            'onchange'=>'$.get("/index.php?r=shop-seller/areas&id='.'"+$(this).val(),function(data){
-             $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
-             $("#sellerregform-countrys").append(data);
-        });',
+            'onchange'=>'setAreaOption()',
         ]); ?>
     </div>
     <?=$form->field($model, 'countrys', [ 'template' => "{input}", ])->dropDownList([],
@@ -103,4 +96,21 @@ use yii\helpers\Url;
     function jumpUrl(){
         location.href = '/index.php?r=shop-seller/' + $("#sellerregform-regtype").val();
     };
+
+    <?php $url = Url::to(['shop-seller/areas']); ?>
+    function setCityOption()
+    {
+        $.get("<?= $url?>&id="+$("#sellerregform-provinces").val(),function(data){
+            $("#sellerregform-citys").html("<option value=0>请选择市</option>");
+            $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
+            $("#sellerregform-citys").append(data);
+        });
+    }
+
+    function setAreaOption()
+    {
+        $.get("<?= $url?>&id="+$("#sellerregform-citys").val(),function(data){
+            $("#sellerregform-countrys").html("<option value=0>请选择县</option>");
+            $("#sellerregform-countrys").append(data);});
+    }
 </script>
