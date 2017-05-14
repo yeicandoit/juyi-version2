@@ -92,6 +92,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
                 'data-toggle' => 'modal',
                 'data-target' => '#create-modal',
             ]); ?>
+            <?php $catUrl = Url::to(['shop-seller/goodscategory'])?>
             <?php
             Modal::begin([
                 'id' => 'create-modal',
@@ -99,7 +100,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
                 'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal" onclick="setCategory()">确定</a>',
             ]);
                 $js = <<<JS
-                    $.get('/index.php?r=shop-seller/goodscategory', {},
+                    $.get("$catUrl", {},
                         function (data) {
                             $('.modal-body').html(data);
                         }
