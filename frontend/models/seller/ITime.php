@@ -1,5 +1,5 @@
 <?php
-namespace frontend\models;
+namespace frontend\models\seller;
 /**
  * @copyright (c) 2011 aircheng.com
  * @file ITime.php

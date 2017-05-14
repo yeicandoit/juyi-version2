@@ -62,21 +62,6 @@ class ShopSellerController extends Controller
         ];
     }
 
-    /**
-     * Lists all ShopSeller models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new ShopSellerSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
     public function actionSellerhome()
     {
         if (Yii::$app->user->isGuest) {
@@ -139,65 +124,6 @@ class ShopSellerController extends Controller
         return $this->goBack();
     }
 
-    public function actionMerchship()
-    {
-        $searchModel = new ShopMerchShipInfoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('merchship', ['dataProvider'=>$dataProvider]);
-    }
-
-    public function actionShipinfo()
-    {
-        $shipinfo = new SellerDetailForm(SellerDetailForm::ViewAddr);
-        if($shipinfo->load(Yii::$app->request->post()) && $shipinfo->saveShipInfo()){
-            return $this->redirect(['merchship']);
-        }
-        return $this->render('shipinfo', ['shipinfo'=>$shipinfo]);
-    }
-
-    public function actionShipview($id)
-    {
-        if(Yii::$app->request->post()){
-            $post = Yii::$app->request->post();
-            $shipinfo = ShopMerchShipInfo::findOne($post['ShopMerchShipInfo']['id']);
-            if($shipinfo->load($post) && $shipinfo->save()){
-                return $this->redirect(['merchship']);
-            }
-        }
-        $shipinfo = ShopMerchShipInfo::findOne($id);
-        return $this->render('shipview', ['shipinfo'=>$shipinfo]);
-    }
-
-    public function actionShipdel($id)
-    {
-        $shipinfo = ShopMerchShipInfo::findOne($id);
-        if($shipinfo) {
-            $shipinfo->delete();
-        }
-        return $this->redirect(['merchship']);
-    }
-
-    public function actionShipdef($id)
-    {
-        $merchship = ShopMerchShipInfo::findOne($id);
-        if($merchship->is_default == 0) {
-            ShopMerchShipInfo::updateAll(['is_default' => 0], 'seller_id=:id', [':id' => Yii::$app->user->id]);
-            $merchship->is_default = 1;
-            $merchship->save();
-        } else {
-            $merchship->is_default = 0;
-            $merchship->save();
-        }
-        return $this->redirect(['merchship']);
-    }
-
-    public function actionDelivery()
-    {
-        $searchModel = new ShopDeliverySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('delivery', ['dataProvider' => $dataProvider,]);
-    }
-
     public function actionOrder()
     {
         $searchModel = new OrderSearch(['seller_id'=>Yii::$app->user->id]);
@@ -218,20 +144,6 @@ class ShopSellerController extends Controller
         }
         $order = Order::findOne($id);
         return $this->render('orderinfo', ['order'=>$order]);
-    }
-
-    public function actionOrderdiscount($id, $discount)
-    {
-        $order = ShopOrder::find()->where(['id'=>$id, 'status'=>1, 'distribution_status'=>0])->one();
-        if($order){
-            $newOrderAmount = $order->order_amount - $order->discount + $discount;
-            $order->discount = $discount;
-            $order->order_amount = $newOrderAmount;
-            if($order->save()){
-                die(json_encode(array('result' => true,'orderAmount' => $newOrderAmount)));
-            }
-        }
-        die(json_encode(array('result' => false)));
     }
 
     public function actionRefundment()
@@ -272,7 +184,7 @@ class ShopSellerController extends Controller
             if($comment->load($post) && $comment->saveRecontents()){
                 $this->redirect(['comment']);
             } else {
-                $this->goBack();
+                $this->redirect(['comment']);
             }
         }
         $comment = Comment::findOne($id);
@@ -424,19 +336,7 @@ class ShopSellerController extends Controller
             $goods->save();
         }
         return $this->redirect(['goodslist']);
-    }
-
-    public function actionAccount()
-    {
-        $startDate = '';
-        $endDate = '';
-        if(Yii::$app->request->isPost){
-            $startDate = Yii::$app->request->post('startDate');
-            $endDate = Yii::$app->request->post('endDate');
-        }
-        $countData = ShopOrderGoods::sellerAmount(Yii::$app->user->id, $startDate, $endDate);
-        return $this->render('account', ['countData'=>$countData]);
-    }
+    }   
 
     public  function  actionUpload()
     {
