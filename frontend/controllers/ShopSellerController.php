@@ -268,7 +268,7 @@ class ShopSellerController extends Controller
     {
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
-            $comment = Comment::findOne($post['ShopComment']['id']);
+            $comment = Comment::findOne($post['Comment']['id']);
             if($comment->load($post) && $comment->saveRecontents()){
                 $this->redirect(['comment']);
             } else {

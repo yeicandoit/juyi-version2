@@ -47,7 +47,12 @@ class CommentSearch extends Comment
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => false,
+            'sort'=>[
+                'defaultOrder' => [
+                    'comment_time' => SORT_DESC,
+                ]
+            ],
+            'pagination' => ['pagesize' => '10'],
         ]);
 
         $this->load($params);

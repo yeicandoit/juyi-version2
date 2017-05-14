@@ -27,8 +27,8 @@ use yii\bootstrap\ActiveForm;
     <?php $form = ActiveForm::begin([]); ?>
     <?= $form->field($comment, 'id', ['options'=>['style'=>'display:none']]);?>
     <?= $form->field($comment, 'recontents')->textarea(['style'=>'width:300px']);?>
-    <?= Html::submitButton('确定', [ 'style' => 'width:50px']) ?>
-    <?= Html::resetButton('重置', [ 'style' => 'width:50px']) ?>
+    <?= Html::submitButton('确定', [ 'style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
+    <?= Html::resetButton('重置', [ 'style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
     <?php ActiveForm::end(); ?>
 </div>
 

@@ -17,11 +17,9 @@ use yii\helpers\Url;
             ['label'=>'评价商品', 'format'=>'raw', 'value'=>function($model){
                 return Html::a($model->goods->name, '');
             }],
-            ['label'=>'评价时间', 'value'=>function($model){
-                return $model->time;
-            }],
+            'comment_time',
             ['label'=>'状态', 'value'=>function($model){
-                if($model->recomment_time > 0){
+                if(isset($model->recomment_time)){
                     return '已回复';
                 } else {
                     return '未回复';

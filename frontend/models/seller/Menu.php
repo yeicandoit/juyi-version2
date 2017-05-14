@@ -27,10 +27,9 @@ class Menu
         ),
 
         "配置模块" => array(
-            "物流配送" => "shop-seller/delivery",
-            "消息通知" => "shop-seller/userrecharge",
+            "消息通知" => "#",
             "资料修改" => "shop-seller/shopinfo",
-            "QQ客服" => "shop-seller/userrecharge",
+            "QQ客服" => "#",
         ),
     );
 
