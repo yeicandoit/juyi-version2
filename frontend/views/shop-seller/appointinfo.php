@@ -27,7 +27,7 @@ use \yii\helpers\Url;
                     $name = $model->good->name;
                     return "<table>
                                    <tr>
-                                   <td><a href=''><img class='user_fav_img' src=$src/></a></td>
+                                   <td><a href=''><img class='user_fav_img' src=$src /></a></td>
                                    <td>&nbsp;$name</td>
                                    </tr>
                                 </table>";
