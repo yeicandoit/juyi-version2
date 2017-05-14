@@ -94,7 +94,7 @@ use yii\helpers\Url;
 
 <script type="text/javascript">
     function jumpUrl(){
-        location.href = '/index.php?r=shop-seller/' + $("#sellerregform-regtype").val();
+        location.href = "<?=Url::to(['shop-seller/'])?>/" + $("#sellerregform-regtype").val();
     };
 
     <?php $url = Url::to(['shop-seller/areas']); ?>
