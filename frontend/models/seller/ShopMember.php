@@ -19,9 +19,7 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
      */
     public static function tableName()
     {
-        if('shop-seller' == Yii::$app->controller->id) {
-            return '{{%shop_member}}';
-        }
+        return '{{%shop_member}}';
     }
 
     /**
