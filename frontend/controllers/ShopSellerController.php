@@ -68,6 +68,9 @@ class ShopSellerController extends Controller
 
     public function actionLogin()
     {
+        if(!Yii::$app->user->isGuest) {
+            return $this->redirect(['sellerhome']);
+        }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->redirect(['sellerhome']);
@@ -242,6 +245,21 @@ class ShopSellerController extends Controller
             $goodsContent = new Goodscontent();
         }
         return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
+    }
+
+    public function actionGoodsseo()
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            if(isset($post['Goods']['id'])) {
+                $good = Goods::findOne($post['Goods']['id']);
+                if (null != $good) {
+                    $good->load($post);
+                    $good->save();
+                }
+            }
+            return $this->redirect(['goodslist']);
+        }
     }
 
     public function actionGoodscontent()

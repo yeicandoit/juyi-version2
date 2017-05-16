@@ -60,7 +60,8 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
     <div class="info_bar">
         <b>
             <?=Html::a('商品编辑', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
-            <?=Html::a('详细信息', '#', ['onclick'=>'showDetailInfo()'])?>
+            <?=Html::a('详细信息', '#', ['onclick'=>'showDetailInfo()'])?>&nbsp;&nbsp;
+            <?=Html::a('详细信息', '#', ['onclick'=>'showSeo()'])?>
         </b>
     </div>
     <div class="blank"></div>
@@ -234,6 +235,18 @@ JS;
     }
     ?>
     <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>
+    <?php ActiveForm::end(); ?>
+
+    <?php $form = ActiveForm::begin([
+        'action'=>['shop-seller/goodsseo'],
+        'id' => 'seo',
+        'options' => ['style'=>'padding-left: 20px; display:none'],
+    ]); ?>
+    <?= $form->field($goods, 'id', ['options'=>['style'=>"display:none"]])?>
+    <?= $form->field($goods, 'keywords')->textInput()?>
+    <?= $form->field($goods, 'description')->textarea()?>
+    <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>
+    <?= Html::resetButton('重置', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>
     <?php ActiveForm::end(); ?>
 </div>
 
@@ -427,11 +440,20 @@ JS;
     {
         $("#basicInfo").show();
         $("#detailInfo").hide();
+        $("#seo").hide();
     }
 
     function  showDetailInfo()
     {
         $("#detailInfo").show();
+        $("#basicInfo").hide();
+        $("#seo").hide();
+    }
+
+    function showSeo()
+    {
+        $("#seo").show();
+        $("#detailInfo").hide();
         $("#basicInfo").hide();
     }
 </script>
