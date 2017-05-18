@@ -499,7 +499,7 @@ class ShopSellerController extends Controller
 
     public function actionAppointinfo()
     {
-        $searchModel = new AppointinfoSearch(['shopid'=>Yii::$app->user->id]);
+        $searchModel = new AppointinfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('appointinfo', ['dataProvider'=>$dataProvider]);
     }

@@ -33,10 +33,16 @@ use \yii\helpers\Url;
                                 </table>";
                 }
             ],
-            'username',
+            [
+                'label'=>'预约人',
+                'format'=>'raw',
+                'value'=> function($model){
+                    return $model->user->username;
+                }
+            ],
             'appointdate',
             'appointnum',
-            'paymentstate',
+            'orderstate',
         ],
     ]); ?>
 </div>

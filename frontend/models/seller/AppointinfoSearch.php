@@ -5,7 +5,6 @@ namespace frontend\models\seller;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\seller\Appointinfo;
 
 /**
  * AppointinfoSearch represents the model behind the search form about `frontend\models\seller\Appointinfo`.
@@ -18,8 +17,8 @@ class AppointinfoSearch extends Appointinfo
     public function rules()
     {
         return [
-            [['appointid', 'goodid', 'shopid', 'appointnum', 'paymentstate'], 'integer'],
-            [['username', 'appointdate', 'appointslot', 'appointtime', 'appointaddress', 'appointwords'], 'safe'],
+            [['appointid', 'goodid', 'userid', 'appointnum', 'orderstate', 'specid'], 'integer'],
+            [['appointdate', 'appointslot', 'appointtime'], 'safe'],
         ];
     }
 
@@ -42,6 +41,7 @@ class AppointinfoSearch extends Appointinfo
     public function search($params)
     {
         $query = Appointinfo::find();
+        $query->joinWith(["good"]); // this will call Appointinfo::getGood()
 
         // add conditions that should always apply here
 
@@ -64,20 +64,20 @@ class AppointinfoSearch extends Appointinfo
         }
 
         // grid filtering conditions
+
         $query->andFilterWhere([
             'appointid' => $this->appointid,
             'goodid' => $this->goodid,
-            'shopid' => $this->shopid,
+            'userid' => $this->userid,
             'appointdate' => $this->appointdate,
             'appointnum' => $this->appointnum,
-            'paymentstate' => $this->paymentstate,
+            'orderstate' => $this->orderstate,
+            'specid' => $this->specid,
+            'jy_goods.seller_id' => Yii::$app->user->id,
         ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
-            ->andFilterWhere(['like', 'appointslot', $this->appointslot])
-            ->andFilterWhere(['like', 'appointtime', $this->appointtime])
-            ->andFilterWhere(['like', 'appointaddress', $this->appointaddress])
-            ->andFilterWhere(['like', 'appointwords', $this->appointwords]);
+        $query->andFilterWhere(['like', 'appointslot', $this->appointslot])
+            ->andFilterWhere(['like', 'appointtime', $this->appointtime]);
 
         return $dataProvider;
     }

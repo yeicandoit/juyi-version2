@@ -9,15 +9,13 @@ use Yii;
  *
  * @property integer $appointid
  * @property integer $goodid
- * @property integer $shopid
- * @property string $username
+ * @property integer $userid
  * @property string $appointdate
  * @property string $appointslot
  * @property integer $appointnum
  * @property string $appointtime
- * @property string $appointaddress
- * @property string $appointwords
- * @property integer $paymentstate
+ * @property integer $orderstate
+ * @property integer $specid
  */
 class Appointinfo extends \yii\db\ActiveRecord
 {
@@ -35,12 +33,10 @@ class Appointinfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['goodid', 'shopid', 'appointnum', 'paymentstate'], 'integer'],
+            [['goodid', 'userid', 'appointnum', 'orderstate', 'specid'], 'integer'],
             [['appointdate'], 'safe'],
-            [['username'], 'string', 'max' => 255],
-            [['appointslot', 'appointaddress'], 'string', 'max' => 20],
+            [['appointslot'], 'string', 'max' => 20],
             [['appointtime'], 'string', 'max' => 50],
-            [['appointwords'], 'string', 'max' => 30],
         ];
     }
 
@@ -52,20 +48,23 @@ class Appointinfo extends \yii\db\ActiveRecord
         return [
             'appointid' => Yii::t('app', '预约号'),
             'goodid' => Yii::t('app', '商品id'),
-            'shopid' => Yii::t('app', '商家id'),
-            'username' => Yii::t('app', '预约人'),
-            'appointdate' => Yii::t('app', '预约日期'),
-            'appointslot' => Yii::t('app', 'Appointslot'),
+            'userid' => Yii::t('app', '预约人id'),
+            'appointdate' => Yii::t('app', '预约时间'),
+            'appointslot' => Yii::t('app', '预留：预约时间段'),
             'appointnum' => Yii::t('app', '预约数量'),
-            'appointtime' => Yii::t('app', 'Appointtime'),
-            'appointaddress' => Yii::t('app', '预约地址'),
-            'appointwords' => Yii::t('app', 'Appointwords'),
-            'paymentstate' => Yii::t('app', '是否付款'),
+            'appointtime' => Yii::t('app', '预约下单时间'),
+            'orderstate' => Yii::t('app', '是否生成订单'),
+            'specid' => Yii::t('app', '预约设定的规格，0为没有规格'),
         ];
     }
 
     public function getGood()
     {
         return $this->hasOne(Goods::className(), ['id' => 'goodid']);
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'userid']);
     }
 }

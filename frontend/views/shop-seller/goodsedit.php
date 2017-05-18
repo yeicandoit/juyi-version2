@@ -61,7 +61,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['frontend\as
         <b>
             <?=Html::a('商品编辑', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
             <?=Html::a('详细信息', '#', ['onclick'=>'showDetailInfo()'])?>&nbsp;&nbsp;
-            <?=Html::a('详细信息', '#', ['onclick'=>'showSeo()'])?>
+            <?=Html::a('SEO优化', '#', ['onclick'=>'showSeo()'])?>
         </b>
     </div>
     <div class="blank"></div>
