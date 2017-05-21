@@ -103,7 +103,7 @@ use yii\bootstrap\ActiveForm;
             'attributes' => [
                 ['label'=>'快递公司名称', 'value'=>$order->delivery ? $order->delivery->name : ''],
                 ['label'=>'快递单号', 'value'=>$order->delivery ? $order->delivery->number : ''],
-                ['label'=>'快递补充说明', 'value'=>$order->delivery ? $order->delivery->description  : ''],
+                ['label'=>'快递说明', 'value'=>$order->delivery ? $order->delivery->description  : ''],
             ],
         ]) ?>
 
@@ -136,6 +136,9 @@ use yii\bootstrap\ActiveForm;
                     'postcode',
                     'invoice_title',
                     'send_time',
+                    ['label'=>'快递公司名称', 'value'=>$order->deliveryBack ? $order->deliveryBack->name : ''],
+                    ['label'=>'快递单号', 'value'=>$order->deliveryBack ? $order->deliveryBack->number : ''],
+                    ['label'=>'快递说明', 'value'=>$order->deliveryBack ? $order->deliveryBack->description  : ''],
                 ],
             ]) ?>
         <?php }?>

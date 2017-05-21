@@ -219,4 +219,10 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Delivery::className(), ['id'=>'distribution']);
     }
+
+    public function getDeliveryBack()
+    {
+        $orderDelivery = OrderDelivery::find()->where(['oderid'=>$this->id, 'userid'=>$this->seller_id, 'usertype'=>1])->one();
+        return Delivery::findOne($orderDelivery->deliveryid);
+    }
 }
