@@ -2,15 +2,15 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use frontend\models\seller\Areas;
+use frontend\models\seller\Delivery;
+use frontend\models\seller\OrderDelivery;
 use yii\bootstrap\ActiveForm;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
 <div class="sellerinfo">
     <div class="info_bar"><b>订单查看</b>
-        <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;订单附言</b>', 'javascript:select_tab("6")')?></span>
         <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;订单备注</b>', 'javascript:select_tab("4")')?></span>
-        <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;收退款记录</b>', 'javascript:select_tab("2")')?></span>
         <span style="float: right"><?=Html::a('<b>&nbsp;&nbsp;基本信息</b>', 'javascript:select_tab("1")')?></span>
     </div>
     <div class="module_content" id="tab-1">
@@ -30,16 +30,39 @@ use yii\bootstrap\ActiveForm;
                         $action = '已经发送给买家测试数据？';
                         $stat = 4;
                     } else if(4 == $order->status) {
-                        $action = '已向买家寄回样品？';
+                        $action = '已向买家寄回样品？ 请填写快递单';
                         $stat = 5;
                     }
                 ?>
-                <?php $form = ActiveForm::begin([]); ?>
-                <div style="display: none"><?= $form->field($order, 'id')?></div>
-                <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>$stat])?></div>
-                <b style="color: green;"><?=$action?></b>
-                <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
-                <?php ActiveForm::end(); ?>
+                <?php if(4 != $order->status) {?>
+                    <?php $form = ActiveForm::begin([]); ?>
+                    <div style="display: none"><?= $form->field($order, 'id')?></div>
+                    <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>$stat])?></div>
+                    <b style="color: green;"><?=$action?></b>
+                    <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
+                    <?php ActiveForm::end(); ?>
+                <?php } else {?>
+                    <?php $form = ActiveForm::begin(['action'=>['shop-seller/delivery'],
+                        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;'],
+                        'fieldConfig' => [
+                            'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style=\"float:left;min-width: 300px\">{input}</div><div>{error}</div>",
+                        ],
+                    ]);
+                        $delivery = new Delivery();
+                        $orderDelivery = new OrderDelivery();
+                    ?>
+                    <div style="display: none"><?= $form->field($orderDelivery, 'userid')->textInput(['value'=>$order->seller_id])?></div>
+                    <div style="display: none"><?= $form->field($orderDelivery, 'deliverystate')->textInput(['value'=>1])?></div>
+                    <?= $form->field($orderDelivery, 'oderid', ['options'=>['style'=>'display:none']])->textInput(['value'=>$order->id])?>
+                    <?= $form->field($orderDelivery, 'usertype', ['options'=>['style'=>'display:none']])->textInput(['value'=>1])?>
+                    <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>$stat])?></div>
+                    <b style="color: green;"><?=$action?></b>
+                    <?= $form->field($delivery, 'name')->textInput()?>
+                    <?= $form->field($delivery, 'number')->textInput()?>
+                    <?= $form->field($delivery, 'description')->textarea(['style'=>'min-width: 400px'])->label('快递说明')?>
+                    <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
+                    <?php ActiveForm::end(); ?>
+                <?php }?>
             </div>
         <?php } ?>
         <div class="blank"></div>
@@ -53,6 +76,7 @@ use yii\bootstrap\ActiveForm;
                 ['label'=>'支付状态', 'value'=>$order->payStatus],
                 ['label'=>'配送状态', 'value'=>$order->orderDistributionStatusText],
                 ['label'=>'订单类型', 'value'=>$order->orderTypeText],
+                'postscript',
             ],
         ]) ?>
         <div style="border: 1px groove #e8e8e8; padding-left: 10px">
@@ -125,12 +149,6 @@ use yii\bootstrap\ActiveForm;
         <?= Html::submitButton('保存', ['style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
         <?= Html::resetButton('取消', ['style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
         <?php ActiveForm::end(); ?>
-    </div>
-
-    <div class="module_content" id = 'tab-6' style="display: none;">
-        <div class="blank"></div>
-        <label>订单附言</label>
-        <div class="box"><?= $order->postscript ?></div>
     </div>
 </div>
 <script>

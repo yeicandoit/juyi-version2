@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\seller\CategoryExtend;
+use frontend\models\seller\Delivery;
 use frontend\models\seller\Expert;
 use frontend\models\seller\ExpertExt;
 use frontend\models\seller\Goods;
@@ -10,6 +11,7 @@ use frontend\models\seller\Goodscontent;
 use frontend\models\seller\GoodsPhoto;
 use frontend\models\seller\GoodsPhotoRelation;
 use frontend\models\seller\Goodsspec;
+use frontend\models\seller\OrderDelivery;
 use frontend\models\seller\Seller;
 use frontend\models\seller\SellerExt;
 use frontend\models\seller\ShopMember;
@@ -143,6 +145,25 @@ class ShopSellerController extends Controller
         }
         $order = Order::findOne($id);
         return $this->render('orderinfo', ['order'=>$order]);
+    }
+
+    public function actionDelivery()
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $delivery = new Delivery();
+            if($delivery->load($post) && $delivery->save()){
+                $orderDelivery = new OrderDelivery();
+                $orderDelivery->load($post);
+                $orderDelivery->deliveryid = $delivery->id;
+                $orderDelivery->save();
+                $order = Order::findOne($orderDelivery->oderid);
+                $order->load($post);
+                $order->save();
+                return $this->redirect(['orderinfo', 'id'=>$order->id]);
+            }
+        }
+        return $this->goBack();
     }
 
     public function actionRefundment()
