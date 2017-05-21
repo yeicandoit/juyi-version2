@@ -12,7 +12,7 @@ use yii\helpers\Url;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['label'=>'评论人', 'value'=>function($model){
-                return $model->user->username;
+                return $model->user? $model->user->username : '';
             }],
             ['label'=>'评价商品', 'format'=>'raw', 'value'=>function($model){
                 return Html::a($model->goods->name, '');

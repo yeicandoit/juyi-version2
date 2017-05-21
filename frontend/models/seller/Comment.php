@@ -5,7 +5,7 @@ namespace frontend\models\seller;
 use Yii;
 
 /**
- * This is the model class for table "shop_comment".
+ * This is the model class for table "{{%comment}}".
  *
  * @property string $id
  * @property string $goods_id
@@ -39,7 +39,7 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             [['goods_id', 'order_no', 'user_id', 'time', 'comment_time', 'recomment_time'], 'required'],
-            [['goods_id', 'user_id', 'point', 'status', 'seller_id'], 'integer'],
+            [['goods_id', 'user_id', 'point', 'status', 'seller_id', 'user_grade'], 'integer'],
             [['time', 'comment_time', 'recomment_time'], 'safe'],
             [['contents', 'recontents'], 'string'],
             [['order_no'], 'string', 'max' => 20],
@@ -65,6 +65,7 @@ class Comment extends \yii\db\ActiveRecord
             'point' => Yii::t('app', '评论的分数'),
             'status' => Yii::t('app', '评论状态：0：未评论 1:已评论'),
             'seller_id' => Yii::t('app', '商家ID'),
+            'user_grade' => Yii::t('app', '商家对用户评分'),
         ];
     }
 
@@ -84,6 +85,16 @@ class Comment extends \yii\db\ActiveRecord
     public function saveRecontents()
     {
         $this->recomment_time = date('Y-m-d H:i:s',time());
-        return $this->save();
+        if($this->save()){
+            $member = Member::findOne($this->user_id);
+            if(isset($member->grade)){
+                $member->grade += $this->user_grade;
+            } else {
+                $member->grade = $this->user_grade;
+            }
+            return $member->save();
+        }
+
+        return false;
     }
 }
