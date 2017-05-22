@@ -223,6 +223,10 @@ class Order extends \yii\db\ActiveRecord
     public function getDeliveryBack()
     {
         $orderDelivery = OrderDelivery::find()->where(['oderid'=>$this->id, 'userid'=>$this->seller_id, 'usertype'=>1])->one();
-        return Delivery::findOne($orderDelivery->deliveryid);
+        if($orderDelivery) {
+            return Delivery::findOne($orderDelivery->deliveryid);
+        } else {
+            return false;
+        }
     }
 }
