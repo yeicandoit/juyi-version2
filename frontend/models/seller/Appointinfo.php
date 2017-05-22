@@ -67,4 +67,9 @@ class Appointinfo extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'userid']);
     }
+
+    public function getSpec()
+    {
+        return $this->hasOne(Goodsspec::className(), ['id' => 'specid']);
+    }
 }

@@ -25,10 +25,13 @@ use \yii\helpers\Url;
                         $src = '/images/user_ico.gif';
                     }
                     $name = $model->good->name;
+                    $spec = isset($model->spec) ? $model->spec->specname : '';
                     return "<table>
                                    <tr>
                                    <td><a href=''><img class='user_fav_img' src=$src /></a></td>
-                                   <td>&nbsp;$name</td>
+                                   <td>
+                                    &nbsp;<a href=''>$name</a><br>&nbsp;$spec
+                                   </td>
                                    </tr>
                                 </table>";
                 }

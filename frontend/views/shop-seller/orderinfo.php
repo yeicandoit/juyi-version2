@@ -79,19 +79,29 @@ use yii\bootstrap\ActiveForm;
                 'postscript',
             ],
         ]) ?>
+        <?php
+            $spec = $order->appointinfo->spec;
+            $price = $spec ? $spec->sell_price : $order->appointinfo->good->sell_price;
+        ?>
         <div style="border: 1px groove #e8e8e8; padding-left: 10px">
             <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border:10px; solid #123456;">
                 <tr>
                     <th>商品名称</th>
+                    <?php if($spec) {?>
+                        <th>测试种类</th>
+                    <?php }?>
                     <th>商品价格</th>
                     <th>商品数量</th>
                     <th>小计</th>
                 </tr>
                 <tr>
                     <td><a href=''><?=$order->appointinfo->good->name?></a></td>
-                    <td>￥<?= $order->appointinfo->good->sell_price?></td>
+                    <?php if($spec) {?>
+                        <td><?=$spec->specname?></td>
+                    <?php }?>
+                    <td>￥<?= $price?></td>
                     <td>x<?= $order->appointinfo->appointnum?></td>
-                    <td>￥<?= $order->appointinfo->appointnum * $order->appointinfo->good->sell_price?></td>
+                    <td>￥<?= $order->appointinfo->appointnum * $price?></td>
                 </tr>
             </table>
         </div>
