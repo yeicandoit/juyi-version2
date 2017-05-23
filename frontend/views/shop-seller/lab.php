@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
 ?>
 <?=Html::cssFile('@web/css/sellerhome.css')?>
 
@@ -38,13 +39,14 @@ use yii\helpers\Html;
         </div>
         <div id="showlab_1" style="padding-top: 10px">
             <?php
-            foreach($lab->goods as $k=>$g) {
-                echo "<div style='float: left; padding-left: 20px'>".
-                Html::img($g->img,['style'=>'width:150px;height:150px']) ."<br>".
-                Html::label($g->name, null, ['style'=>'width:150px;text-align: center; margin:0 auto;']) .
-                "</div>";
-            }
+                foreach($model as $k=>$g) {
+                    echo "<div style='float: left; padding-left: 20px'>".
+                    Html::img($g->img,['style'=>'width:150px;height:150px']) ."<br>".
+                    Html::label($g->name, null, ['style'=>'width:150px;text-align: center; margin:0 auto;']) .
+                    "</div>";
+                }
             ?>
+            <div style="padding-top: 200px;"><?= LinkPager::widget(['pagination' => $pages]);?></div>
         </div>
         <div id="showlab_2" style="padding-top: 10px;display:none;">
             <?=$labInfo->description?>

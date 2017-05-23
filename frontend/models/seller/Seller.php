@@ -127,4 +127,9 @@ class Seller extends \yii\db\ActiveRecord
         return $this->hasMany(Goods::className(), ['seller_id'=>'id']);
     }
 
+    public function pageGoods()
+    {
+        return Goods::find()->andWhere(['seller_id'=>$this->id]);
+    }
+
 }

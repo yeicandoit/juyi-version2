@@ -36,6 +36,7 @@ use frontend\models\seller\SetappointmentForm;
 use frontend\models\seller\Setappointment;
 use frontend\models\seller\AppointinfoSearch;
 use yii\helpers\Html;
+use yii\data\Pagination;
 
 /**
  * ShopSellerController implements the CRUD actions for ShopSeller model.
@@ -446,7 +447,9 @@ class ShopSellerController extends Controller
     {
         $lab = Seller::findOne($id);
         $labInfo = $lab->ext;
-        return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo]);
+        $pages = new Pagination(['totalCount' =>$lab->pageGoods()->count(), 'pageSize' => '1']);
+        $model = $lab->pageGoods()->offset($pages->offset)->limit($pages->limit)->all();
+        return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo, 'model'=>$model, 'pages' => $pages]);
     }
 
     public function actionExpertreg()
