@@ -15,7 +15,7 @@ use yii\helpers\Url;
     <div class="blank"></div>
     <?php $form = ActiveForm::begin([
         'id' => 'basicInfo',
-        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;'],
+        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
             'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style=\"float:left;\">{input}</div>
             <div style='padding-left: 280px;'>{hint}</div><div>{error}</div>",
@@ -24,6 +24,8 @@ use yii\helpers\Url;
     <?= $form->field($sellerinfo, 'seller_name')->textInput(['readonly'=>"readonly"])
         ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
     <?= $form->field($sellerinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
+    <?= $form->field($sellerinfo, 'logo')->widget('maxmirazh33\image\Widget');?>
+    <?php echo Html::img($sellerinfo->getImageUrl('logo'));?>
     <?= $form->field($sellerinfo, 'affliation')->textInput()?>
     <?= $form->field($sellerinfo, 'affliationtype')->textInput()?>
     <?= $form->field($sellerinfo, 'phone')->textInput()?>
@@ -61,7 +63,6 @@ use yii\helpers\Url;
     <?= $form->field($sellerinfo, 'comments')->textInput(['readonly'=>"readonly"])?>
     <?= $form->field($sellerinfo, 'sale')->textInput(['readonly'=>"readonly"])?>
     <?= $form->field($sellerinfo, 'qualification')->textInput()?>
-    <?= $form->field($sellerinfo, 'logo')->textInput()?>
     <?= $form->field($sellerinfo, 'tax')->textInput()?>
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>

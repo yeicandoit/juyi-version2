@@ -63,10 +63,11 @@ class Seller extends \yii\db\ActiveRecord
             [['seller_message_ids'], 'string'],
             [['seller_name', 'true_name', 'affliation'], 'string', 'max' => 80],
             [['affliationtype', 'phone', 'mobile', 'server_num'], 'string', 'max' => 20],
-            [['email', 'paper_img', 'address', 'account', 'logo', 'home_url'], 'string', 'max' => 255],
+            [['email', 'paper_img', 'address', 'account', 'home_url'], 'string', 'max' => 255],
             [['password'], 'string', 'max' => 32],
             [['qualification'], 'string', 'max' => 10],
             [['seller_name'], 'unique'],
+            ['logo', 'file','checkExtensionByMimeType'=>false, 'extensions' => 'jpg, png', 'skipOnEmpty' => false],
         ];
     }
 
@@ -108,6 +109,28 @@ class Seller extends \yii\db\ActiveRecord
             'is_del' => Yii::t('app', '0:未删除,1:已删除'),
             'is_vip' => Yii::t('app', '是否是特级商家'),
             'home_url' => Yii::t('app', '企业URL网站'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \maxmirazh33\image\Behavior::className(),
+                'savePathAlias' => '@web/images/',
+                'urlPrefix' => '/images/',
+                'crop' => true,
+                'attributes' => [
+                    'logo' => [
+                        //Use full path, or image\Behavior could not find file path.
+                        'savePathAlias' => Yii::$app->basePath . '/web/images/avatars/',
+                        'urlPrefix' => '/images/avatars/',
+                        'width' => 100,
+                        'height' => 100,
+                    ],
+                ],
+            ],
+            //other behaviors
         ];
     }
 

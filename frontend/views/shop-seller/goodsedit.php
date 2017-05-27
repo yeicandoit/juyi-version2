@@ -123,7 +123,7 @@ JS;
     <label>基本数据</label>
         <?php $goodsNo = $goods->goods_no;
             if(!isset($goods->goods_no)){
-                $goodsNo = "JY" . time();
+                $goodsNo = "JY" . uniqid();
             }
         ?>
         <table>
