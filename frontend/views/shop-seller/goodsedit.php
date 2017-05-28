@@ -228,7 +228,7 @@ JS;
                 'lang' => 'zh_cn',
                 'plugins' => ['clips', 'fontcolor','imagemanager']
             ]
-        ]) ?>
+        ])->label('') ?>
     <?php
     if(isset($goods->id)) {
         echo $form->field($goodsContent, 'goodid', ['options' => ['style' => "display:none"]])->textInput(['value' => $goods->id]);

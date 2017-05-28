@@ -8,8 +8,7 @@ use yii\helpers\Url;
 <div class="sellerinfo">
     <div class="info_bar">
         <b>
-            <?=Html::a('基本信息', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
-            <?=Html::a('详细信息', '#', ['onclick'=>'showLabInfo()'])?>
+            <?=Html::a('基本信息', '#')?>
         </b>
     </div>
     <div class="blank"></div>
@@ -68,25 +67,6 @@ use yii\helpers\Url;
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?php ActiveForm::end(); ?>
-
-    <?php $form = ActiveForm::begin([
-        'action'=>['shop-seller/sellerext'],
-        'id' => 'labInfo',
-        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px; display:none'],
-        'fieldConfig' => [
-            'template' => "<div style=\"float:left; width:80px; margin: 0 auto;\">{label}</div><div style='float: left'>{input}</div>
-           <div style='padding-left: 380px;'>{hint}</div><div>{error}</div>",
-        ],
-    ]); ?>
-    <?= $form->field($sellerext, 'description')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('实验室概况:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerext, 'team')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('科研队伍:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= $form->field($sellerext, 'outwork')->textarea(['rows'=>3, 'style'=>'width:500px'])
-        ->label('科研成果:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-    <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
-    <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
-    <?php ActiveForm::end(); ?>
 </div>
 
 <script type="text/javascript">
@@ -107,18 +87,6 @@ use yii\helpers\Url;
     }
     /*用window.onload调用myfun()*/
     window.onload=setDropDownList;
-
-    function showBasicInfo()
-    {
-        $("#basicInfo").show();
-        $("#labInfo").hide();
-    }
-
-    function  showLabInfo()
-    {
-        $("#labInfo").show();
-        $("#basicInfo").hide();
-    }
 
     <?php $url = Url::to(['shop-seller/areas']); ?>
     function setCityOption()

@@ -108,22 +108,17 @@ class ShopSellerController extends Controller
         return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt]);
     }
 
-    public function actionExpertext()
+    public function actionShopdetail()
     {
-        $expertext = ExpertExt::find()->where(['expert_id'=> Yii::$app->user->id])->one();
-        if($expertext->load(Yii::$app->request->post()) && $expertext->save()){
+        if (Yii::$app->user->isGuest) {
+            return  $this->redirect(['login']);
+        }
+        $shopMember = ShopMember::findOne(Yii::$app->user->id);
+        $shopDetail = $shopMember->shopInfo->ext;
+        if($shopDetail->load(Yii::$app->request->post()) && $shopDetail->save()){
             return $this->redirect(['sellerhome']);
         }
-        return $this->goBack();
-    }
-
-    public function actionSellerext()
-    {
-        $sellerext = SellerExt::find()->where(['seller_id'=> Yii::$app->user->id])->one();
-        if($sellerext->load(Yii::$app->request->post()) && $sellerext->save()){
-            return $this->redirect(['sellerhome']);
-        }
-        return $this->goBack();
+        return $this->render("shopdetail", ["detail"=>$shopDetail, 'regtype'=>$shopMember->regtype]);
     }
 
     public function actionOrder()
