@@ -506,7 +506,6 @@ class ShopSellerController extends Controller
         $model = new SetappointmentForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($id = $model->appoint()) {
-                return $this->redirect(['setappointment']);
             } else {
                 echo 'there are some wrong';
             }
