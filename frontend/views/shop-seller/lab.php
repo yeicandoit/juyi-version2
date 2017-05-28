@@ -39,14 +39,26 @@ use yii\widgets\LinkPager;
         </div>
         <div id="showlab_1" style="padding-top: 10px">
             <?php
-                foreach($model as $k=>$g) {
-                    echo "<div style='float: left; padding-left: 20px'>".
-                    Html::img($g->img,['style'=>'width:150px;height:150px']) ."<br>".
-                    Html::label($g->name, null, ['style'=>'width:150px;text-align: center; margin:0 auto;']) .
-                    "</div>";
-                }
-            ?>
-            <div style="padding-top: 200px;"><?= LinkPager::widget(['pagination' => $pages]);?></div>
+                foreach($model as $k=>$g) { ?>
+                    <div style='float: left; padding-left: 20px'>
+                        <?=Html::img($g->img,['style'=>'width:150px;height:150px'])?> <br><br>
+                        <table style="width: 150px; border-top: solid 1px #7f8c8d">
+                            <tr style="height: 30px">
+                                <td><?=Html::label($g->name)?></td>
+                                <td><?=Html::label('测试价格', null, ['style'=>'color:#116fb5'])?></td>
+                            </tr>
+                            <tr style="height: 20px">
+                                <td>品牌:<?=isset($g->brandid)? $g->brand->name: '无'?></td>
+                                <td><?=Html::label("￥{$g->sell_price}元/样", null, ['style'=>'color:#116fb5'])?></td>
+                            </tr>
+                            <tr>
+                                <td>型号:<?=$g->brandversion?></td>
+                                <td><s>￥<?=$g->market_price?>元/样</s></td>
+                            </tr>
+                        </table>
+                    </div>
+            <?php }?>
+            <div style="clear: both;"><?= LinkPager::widget(['pagination' => $pages]);?></div>
         </div>
         <div id="showlab_2" style="padding-top: 10px;display:none;">
             <?=$labInfo->description?>

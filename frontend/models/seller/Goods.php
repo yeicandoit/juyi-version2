@@ -177,4 +177,9 @@ class Goods extends \yii\db\ActiveRecord
     {
         return Setappointment::find()->where(['goodid'=>$this->id])->count() > 0;
     }
+
+    public function getBrand()
+    {
+        return $this->hasOne(Brand::className(), ['id'=>'brandid']);
+    }
 }
