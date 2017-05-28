@@ -55,8 +55,9 @@ class Expert extends \yii\db\ActiveRecord
             [['name', 'true_name', 'degree', 'title'], 'string', 'max' => 60],
             [['password'], 'string', 'max' => 32],
             [['mobile', 'server_num', 'affliationtype'], 'string', 'max' => 20],
-            [['email', 'address', 'account', 'home_url', 'img'], 'string', 'max' => 255],
+            [['email', 'address', 'account', 'home_url'], 'string', 'max' => 255],
             [['affliation'], 'string', 'max' => 80],
+            ['img', 'file','checkExtensionByMimeType'=>false, 'extensions' => 'jpg, png, gif', 'skipOnEmpty' => true],
         ];
     }
 
@@ -91,6 +92,28 @@ class Expert extends \yii\db\ActiveRecord
             'affliationtype' => Yii::t('app', '单位性质'),
             'grade' => Yii::t('app', '评分'),
             'comments' => Yii::t('app', '评论次数'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \maxmirazh33\image\Behavior::className(),
+                'savePathAlias' => Yii::$app->basePath . '/web/images/',
+                'urlPrefix' => '/images/',
+                'crop' => true,
+                'attributes' => [
+                    'img' => [
+                        //Use full path, or image\Behavior could not find file path.
+                        'savePathAlias' => Yii::$app->basePath . '/web/images/',
+                        'urlPrefix' => '/images/',
+                        'width' => 100,
+                        'height' => 100,
+                    ],
+                ],
+            ],
+            //other behaviors
         ];
     }
 

@@ -15,12 +15,15 @@ use yii\helpers\Url;
     <div class="blank"></div>
     <?php $form = ActiveForm::begin([
         'id' => 'basicInfo',
-        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;'],
+        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
             'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style=\"float:left;\">{input}</div>
             <div style='padding-left: 280px;'>{hint}</div><div>{error}</div>",
         ],
     ]); ?>
+    <?php echo Html::img($expertinfo->getImageUrl('img'), ['style'=>'padding-left:70px']);?>
+    <div class="blank"></div>
+    <?= $form->field($expertinfo, 'img')->widget('maxmirazh33\image\Widget');?>
     <?= $form->field($expertinfo, 'name')->textInput(['readonly'=>"readonly"])
         ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
     <?= $form->field($expertinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
@@ -28,7 +31,6 @@ use yii\helpers\Url;
     <?= $form->field($expertinfo, 'sex')->radioList([1=>'男', 2=>'女'])?>
     <?= $form->field($expertinfo, 'degree')->textInput()?>
     <?= $form->field($expertinfo, 'title')->textInput()?>
-    <?= $form->field($expertinfo, 'img')->textInput()?>
     <?= $form->field($expertinfo, 'affliation')->textInput()?>
     <?= $form->field($expertinfo, 'affliationtype')->textInput()?>
     <?= $form->field($expertinfo, 'country')->textInput()?>

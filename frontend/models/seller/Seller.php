@@ -67,7 +67,7 @@ class Seller extends \yii\db\ActiveRecord
             [['password'], 'string', 'max' => 32],
             [['qualification'], 'string', 'max' => 10],
             [['seller_name'], 'unique'],
-            ['logo', 'file','checkExtensionByMimeType'=>false, 'extensions' => 'jpg, png', 'skipOnEmpty' => false],
+            ['logo', 'file','checkExtensionByMimeType'=>false, 'extensions' => 'jpg, png, gif', 'skipOnEmpty' => true],
         ];
     }
 
@@ -117,14 +117,14 @@ class Seller extends \yii\db\ActiveRecord
         return [
             [
                 'class' => \maxmirazh33\image\Behavior::className(),
-                'savePathAlias' => '@web/images/',
+                'savePathAlias' => Yii::$app->basePath . '/web/images/',
                 'urlPrefix' => '/images/',
                 'crop' => true,
                 'attributes' => [
                     'logo' => [
                         //Use full path, or image\Behavior could not find file path.
-                        'savePathAlias' => Yii::$app->basePath . '/web/images/avatars/',
-                        'urlPrefix' => '/images/avatars/',
+                        'savePathAlias' => Yii::$app->basePath . '/web/images/',
+                        'urlPrefix' => '/images/',
                         'width' => 100,
                         'height' => 100,
                     ],

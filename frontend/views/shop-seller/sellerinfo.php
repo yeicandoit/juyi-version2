@@ -21,11 +21,12 @@ use yii\helpers\Url;
             <div style='padding-left: 280px;'>{hint}</div><div>{error}</div>",
         ],
     ]); ?>
+    <?php echo Html::img($sellerinfo->getImageUrl('logo'), ['style'=>'padding-left:70px']);?>
+    <div class="blank"></div>
+    <?= $form->field($sellerinfo, 'logo')->widget('maxmirazh33\image\Widget');?>
     <?= $form->field($sellerinfo, 'seller_name')->textInput(['readonly'=>"readonly"])
         ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
     <?= $form->field($sellerinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
-    <?= $form->field($sellerinfo, 'logo')->widget('maxmirazh33\image\Widget');?>
-    <?php echo Html::img($sellerinfo->getImageUrl('logo'));?>
     <?= $form->field($sellerinfo, 'affliation')->textInput()?>
     <?= $form->field($sellerinfo, 'affliationtype')->textInput()?>
     <?= $form->field($sellerinfo, 'phone')->textInput()?>
