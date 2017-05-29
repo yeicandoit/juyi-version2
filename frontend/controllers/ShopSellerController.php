@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\seller\Appointinfo;
 use frontend\models\seller\CategoryExtend;
 use frontend\models\seller\Delivery;
 use frontend\models\seller\Expert;
@@ -66,7 +67,22 @@ class ShopSellerController extends Controller
         if (Yii::$app->user->isGuest) {
             return  $this->redirect(['login']);
         }
-        return $this->render('sellerhome');
+
+        $id = Yii::$app->user->id;
+        $goodsCnt = Goods::find()->where(['seller_id'=>$id])->count();
+        $commentCnt = Comment::find()->where(['seller_id'=>$id])->count();
+        $appointCnt = Appointinfo::find()->joinWith(["good"])->andFilterWhere([ 'jy_goods.seller_id' => Yii::$app->user->id])->count();
+        $orderCnt = Order::find()->where(['seller_id'=>$id])->count();
+        $refundCnt = RefundmentDoc::find()->where(['seller_id'=>$id])->count();
+
+        $summary = array(
+            'goodsCnt' => $goodsCnt,
+            'commentCnt' => $commentCnt,
+            'appointCnt' => $appointCnt,
+            'orderCnt' => $orderCnt,
+            'refundCnt' => $refundCnt
+        );
+        return $this->render('sellerhome', ['summary'=>$summary]);
     }
 
     public function actionLogin()
