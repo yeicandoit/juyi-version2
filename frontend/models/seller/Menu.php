@@ -14,6 +14,7 @@ class Menu
              "商品列表" => "shop-seller/goodslist",
              "添加商品" => "shop-seller/goodsadd",
              "商品评价" => "shop-seller/comment",
+             "商品咨询" => "shop-seller/consult",
         ),
 
         "预约模块" => array(

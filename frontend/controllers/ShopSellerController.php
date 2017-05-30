@@ -8,6 +8,8 @@ use frontend\models\seller\Delivery;
 use frontend\models\seller\Expert;
 use frontend\models\seller\ExpertExt;
 use frontend\models\seller\Goods;
+use frontend\models\seller\GoodsConsult;
+use frontend\models\seller\GoodsConsultSearch;
 use frontend\models\seller\Goodscontent;
 use frontend\models\seller\GoodsPhoto;
 use frontend\models\seller\GoodsPhotoRelation;
@@ -552,5 +554,28 @@ class ShopSellerController extends Controller
         }
         $countData = Order::sellerAmount(Yii::$app->user->id, $startDate, $endDate);
         return $this->render('account', [ 'countData'=>$countData]);
+    }
+
+    public function actionConsult()
+    {
+        $searchModel = new GoodsConsultSearch(['sell_id'=>Yii::$app->user->id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('consult', [ 'consult'=>$dataProvider]);
+    }
+
+    public function actionConsultinfo($id)
+    {
+        if(Yii::$app->request->post()){
+            $post = Yii::$app->request->post();
+            $consult = GoodsConsult::findOne($post['GoodsConsult']['id']);
+            if($consult->load($post) && $consult->save()){
+                $this->redirect(['consult']);
+            } else {
+                $this->redirect(['consult']);
+            }
+        }
+
+        $consult = GoodsConsult::findOne($id);
+        return $this->render('consultinfo', [ 'consult'=>$consult]);
     }
 }
