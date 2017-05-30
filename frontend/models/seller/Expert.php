@@ -108,8 +108,8 @@ class Expert extends \yii\db\ActiveRecord
                         //Use full path, or image\Behavior could not find file path.
                         'savePathAlias' => Yii::$app->basePath . '/web/images/',
                         'urlPrefix' => '/images/',
-                        'width' => 100,
-                        'height' => 100,
+                        'width' => 150,
+                        'height' => 200,
                     ],
                 ],
             ],
