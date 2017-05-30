@@ -3,6 +3,7 @@
 namespace frontend\models\seller;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "{{%order}}".
@@ -227,6 +228,140 @@ class Order extends \yii\db\ActiveRecord
             return Delivery::findOne($orderDelivery->deliveryid);
         } else {
             return false;
+        }
+    }
+
+    /**
+     * @brief 获取商家销售额统计数据
+     * @param int $seller_id 商家ID
+     * @param string $start 开始日期 Y-m-d
+     * @param string $end   结束日期 Y-m-d
+     * @return array key => 日期时间,value => 销售金额
+     */
+    public static function sellerAmount($seller_id, $start = '', $end = '')
+    {
+        $query = (new Query())->from('jy_order');
+        $query->select('sum(real_amount) as yValue, completion_time');
+        $query->where("seller_id=$seller_id AND status=7");
+        return self::ParseCondition($query,'completion_time',$start,$end);
+    }
+
+    /**
+     * @brief 处理条件
+     * @param IQuery $db 数据库IQuery对象
+     * @param string $timeCols 时间字段名称
+     * @param string $start 开始日期 Y-m-d
+     * @param string $end   结束日期 Y-m-d
+     */
+    private static function ParseCondition($query, $timeCols = 'time', $start = '', $end = '')
+    {
+        $result     = array();
+
+        //获取时间段
+        $date       = self::dateParse($start, $end);
+        $startArray = explode('-',$date[0]);
+        $endArray   = explode('-',$date[1]);
+        $diffSec    = ITime::getDiffSec($date[0],$date[1]);
+
+        switch(self::groupByCondition($diffSec))
+        {
+            //按照年
+            case "y":
+            {
+                $startCondition = $startArray[0];
+                $endCondition   = $endArray[0]+1;
+                $query->addSelect(['xValue'=>"DATE_FORMAT($timeCols,'%Y')"]);
+                $query->groupBy(['groupDate'=>"DATE_FORMAT($timeCols,'%Y')"]);
+                $query->having(['>=', $timeCols, $startCondition]);
+                $query->andHaving(['<', $timeCols, $endCondition]);
+            }
+                break;
+
+            //按照月
+            case "m":
+            {
+                $startCondition = $startArray[0].'-'.$startArray[1];
+                $endCondition   = $endArray[1] == 12 ? ($endArray[0]+1) : $endArray[0].'-'.($endArray[1]+1);
+                $query->addSelect(['xValue'=>"DATE_FORMAT($timeCols,'%Y-%m')"]);
+                $query->groupBy(['groupDate'=>"DATE_FORMAT($timeCols,'%Y-%m')"]);
+                $query->having(['>=', $timeCols, $startCondition]);
+                $query->andHaving(['<', $timeCols, $endCondition]);
+            }
+                break;
+
+            //按照日
+            case "d":
+            {
+                $startCondition = $startArray[0].'-'.$startArray[1].'-'.$startArray[2];
+                $endCondition   = $endArray[0].'-'.$endArray[1].'-'.$endArray[2].' 23:59:59';
+                $query->addSelect(['xValue'=>"DATE_FORMAT($timeCols,'%m-%d')"]);
+                $query->groupBy(['groupDate'=>"DATE_FORMAT($timeCols,'%Y-%m-%d')"]);
+                $query->having(['>=', $timeCols, $startCondition]);
+                $query->andHaving(['<', $timeCols, $endCondition]);
+            }
+                break;
+        }
+        $data = $query->all();
+        foreach($data as $key => $val)
+        {
+            $result[$val['xValue']] = intval($val['yValue']);
+        }
+        return $result;
+    }
+
+    /**
+     * @brief 日期的智能处理
+     * @param string $start 开始日期 Y-m-d
+     * @param string $end   结束日期 Y-m-d
+     */
+    public static function dateParse($start = '',$end = '')
+    {
+        $format = 'Y-m-d';
+        //默认没有时间条件,查询之前7天的数据
+        if(!$start && !$end)
+        {
+            $diffSec = 86400 * 6;
+            $beforeDate = ITime::pass(-$diffSec,$format);
+            return array($beforeDate,ITime::getNow($format));
+        }
+
+        //有时间条件
+        if($start && $end)
+        {
+            return array($start,$end);
+        }
+        else if($start)
+        {
+            return array($start,$start);
+        }
+        else if($end)
+        {
+            return array($end,$end);
+        }
+    }
+
+    /**
+     * @brief 根据条件分组
+     * @param int 相差的秒数
+     * @return string y年,m月,d日
+     */
+    private static function groupByCondition($diffSec)
+    {
+        $diffSec = abs($diffSec);
+        //按天分组，小于30个天
+        if($diffSec <= 86400 * 30)
+        {
+            return 'd';
+        }
+        //按月分组，小于24个月
+        else if($diffSec <= 86400 * 30 * 24)
+        {
+            return 'm';
+        }
+        //按年分组
+        else
+        {
+            return 'y';
         }
     }
 }

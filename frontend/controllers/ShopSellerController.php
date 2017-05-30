@@ -537,4 +537,16 @@ class ShopSellerController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('appointinfo', ['dataProvider'=>$dataProvider]);
     }
+
+    public function actionAccount()
+    {
+        $startDate = '';
+        $endDate = '';
+        if(Yii::$app->request->isPost){
+            $startDate = Yii::$app->request->post('startDate');
+            $endDate = Yii::$app->request->post('endDate');
+        }
+        $countData = Order::sellerAmount(Yii::$app->user->id, $startDate, $endDate);
+        return $this->render('account', [ 'countData'=>$countData]);
+    }
 }
