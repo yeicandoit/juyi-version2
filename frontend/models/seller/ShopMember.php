@@ -106,4 +106,13 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
 
         return false;
     }
+
+    public function getRegtime()
+    {
+        if('seller' == $this->regtype){
+            return Seller::findOne($this->id)->create_time;
+        }
+
+        return Expert::findOne($this->id)->regedittime;
+    }
 }

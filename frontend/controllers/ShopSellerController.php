@@ -82,7 +82,11 @@ class ShopSellerController extends Controller
             'orderCnt' => $orderCnt,
             'refundCnt' => $refundCnt
         );
-        return $this->render('sellerhome', ['summary'=>$summary]);
+
+        $startDate = ShopMember::findOne(Yii::$app->user->id)->regtime;
+        $endDate = date("Y-m-d");
+        $countData = Order::sellerAmount(Yii::$app->user->id, $startDate, $endDate);
+        return $this->render('sellerhome', ['summary'=>$summary, 'countData'=>$countData]);
     }
 
     public function actionLogin()
