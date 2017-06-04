@@ -400,6 +400,7 @@ class ShopSellerController extends Controller
         $goods = Goods::findOne($goodsId);
         //If delete default img, set goods->img to be null
         if($goods->img == $photo->img){
+            unlink(Yii::$app->basePath.'/web/'.$goods->img);
             $goods->img = null;
             $goods->save();
         }
@@ -495,7 +496,7 @@ class ShopSellerController extends Controller
                 'png'=>'imagepng', 'gif'=>'imagegif');
 
             $path="/goodsImg/";
-            $targ_w = $targ_h = 300;
+            $targ_w = $targ_h = Yii::$app->request->post('w');
             $imgSrc =Yii::$app->request->post('f');
             $imgSrc=Yii::$app->basePath.'/web'.$imgSrc;//真实的图片路径
             $suffix = substr(strrchr($imgSrc,"."),1);

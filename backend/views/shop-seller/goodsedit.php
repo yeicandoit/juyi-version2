@@ -131,7 +131,7 @@ JS;
                 <th>商品货号</th><th>市场价格</th><th>销售价格</th><th>成本价格</th>
             </tr>
             <tr>
-                <td style="width: 150px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:120px'])?></td>
+                <td style="width: 160px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:150px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
@@ -170,7 +170,7 @@ JS;
     <br>
     <div class="goodInfoBox">
         <p><label>产品相册</label></p>
-        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M</p>
+        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M; 点击上传的图像，可设置图像为商品主图</p>
         <div>
             <input type="hidden" id="x" name="x" />
             <input type="hidden" id="y" name="y" />
