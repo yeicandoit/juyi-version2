@@ -6,7 +6,6 @@ use backend\models\seller\Appointinfo;
 use backend\models\seller\CategoryExtend;
 use backend\models\seller\Delivery;
 use backend\models\seller\Expert;
-use backend\models\seller\ExpertExt;
 use backend\models\seller\Goods;
 use backend\models\seller\GoodsConsult;
 use backend\models\seller\GoodsConsultSearch;
@@ -16,7 +15,6 @@ use backend\models\seller\GoodsPhotoRelation;
 use backend\models\seller\Goodsspec;
 use backend\models\seller\OrderDelivery;
 use backend\models\seller\Seller;
-use backend\models\seller\SellerExt;
 use backend\models\seller\ShopMember;
 use backend\models\seller\Category;
 use backend\models\seller\Comment;
@@ -64,9 +62,25 @@ class ShopSellerController extends Controller
         ];
     }
 
+    //When have logged in as admin, redirect to shop backend view, will meetting some error.
+    //shouldLogin will resolve this issue.
+    public function shouldLogin()
+    {
+        if(Yii::$app->user->isGuest){
+            return true;
+        }
+        if(!isset(Yii::$app->params['regtype'])){
+            Yii::$app->params['regtype'] = ShopMember::findOne(Yii::$app->user->id)->regtype;
+        }
+        if((Yii::$app->params['regtype']) != 'seller' && (Yii::$app->params['regtype']) != 'expert'){
+            return true;
+        }
+        return false;
+    }
+
     public function actionSellerhome()
     {
-        if (Yii::$app->user->isGuest) {
+        if ($this->shouldLogin()) {
             return  $this->redirect(['login']);
         }
 
@@ -93,8 +107,11 @@ class ShopSellerController extends Controller
 
     public function actionLogin()
     {
-        if(!Yii::$app->user->isGuest) {
+        if(!$this->shouldLogin()) {
             return $this->redirect(['sellerhome']);
+        }
+        if(!Yii::$app->user->isGuest){ //When have logged in as admin, should log out firstly.
+            return $this->redirect(['logout']);
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -112,7 +129,7 @@ class ShopSellerController extends Controller
 
     public function actionShopinfo()
     {
-        if (Yii::$app->user->isGuest) {
+        if ($this->shouldLogin()) {
             return  $this->redirect(['login']);
         }
         $shopMember = ShopMember::findOne(Yii::$app->user->id);
@@ -132,7 +149,7 @@ class ShopSellerController extends Controller
 
     public function actionShopdetail()
     {
-        if (Yii::$app->user->isGuest) {
+        if ($this->shouldLogin()) {
             return  $this->redirect(['login']);
         }
         $shopMember = ShopMember::findOne(Yii::$app->user->id);
@@ -145,6 +162,10 @@ class ShopSellerController extends Controller
 
     public function actionOrder()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $searchModel = new OrderSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('order', ['dataProvider'=>$dataProvider]);
@@ -152,6 +173,10 @@ class ShopSellerController extends Controller
 
     public function actionOrderinfo($id)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
             $order = Order::findOne($post['Order']['id']);
@@ -167,6 +192,10 @@ class ShopSellerController extends Controller
 
     public function actionDelivery()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
             $delivery = new Delivery();
@@ -186,6 +215,10 @@ class ShopSellerController extends Controller
 
     public function actionRefundment()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $searchModel = new RefundmentDocSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('refundment', [ 'dataProvider'=>$dataProvider]);
@@ -193,6 +226,10 @@ class ShopSellerController extends Controller
 
     public function actionRefundmentinfo($id)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
             $refundment = RefundmentDoc::findOne($post['RefundmentDoc']['id']);
@@ -209,6 +246,10 @@ class ShopSellerController extends Controller
 
     public function actionComment()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $searchModel = new CommentSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('comment', [ 'dataProvider'=>$dataProvider]);
@@ -216,6 +257,10 @@ class ShopSellerController extends Controller
 
     public function actionCommentedit($id)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
             $comment = Comment::findOne($post['Comment']['id']);
@@ -231,9 +276,10 @@ class ShopSellerController extends Controller
 
     public function actionGoodsadd()
     {
-        if(Yii::$app->user->isGuest) {
-            return $this->redirect(['login']);
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
         }
+
         if(Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $goods = new Goods();
@@ -263,6 +309,10 @@ class ShopSellerController extends Controller
 
     public function actionGoodsedit($id)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
             $goods = Goods::findOne($post['Goods']['id']);
@@ -288,6 +338,10 @@ class ShopSellerController extends Controller
 
     public function actionGoodsseo()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
             if(isset($post['Goods']['id'])) {
@@ -303,6 +357,10 @@ class ShopSellerController extends Controller
 
     public function actionGoodscontent()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
             if(isset($post['Goodscontent']['goodid'])) {
@@ -319,6 +377,10 @@ class ShopSellerController extends Controller
 
     public function actionGoodscategory()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $data = Category::find()->asArray()->all();
         $idname = ArrayHelper::map($data, 'id', 'name');
         $idmap = ArrayHelper::map($data, 'id', 'parent_id');
@@ -327,6 +389,10 @@ class ShopSellerController extends Controller
 
     public function actionDelcat($goodsId, $catId)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $catExt = CategoryExtend::find()->where(['goods_id'=>$goodsId, 'category_id'=>$catId])->one();
         if($catExt->delete()){
             echo "OK";
@@ -337,6 +403,10 @@ class ShopSellerController extends Controller
 
     public function actionDelimg($goodsId, $photoId)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $photo = GoodsPhoto::findOne($photoId);
         $goodsPhotoRelation = GoodsPhotoRelation::find()->where(['goods_id'=>$goodsId, 'photo_id'=>$photoId])->one();
         $goods = Goods::findOne($goodsId);
@@ -354,6 +424,10 @@ class ShopSellerController extends Controller
 
     public function actionAddcat($goodsId, $catId)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $catExt = new CategoryExtend();
         $catExt->goods_id = $goodsId;
         $catExt->category_id = $catId;
@@ -366,6 +440,10 @@ class ShopSellerController extends Controller
 
     public function actionDelspec($goodsId, $specName)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $spec = Goodsspec::find()->where(['goodsid'=>$goodsId, 'specname'=>$specName])->one();
         if($spec->delete()){
             echo "OK";
@@ -376,6 +454,10 @@ class ShopSellerController extends Controller
 
     public function actionGoodslist()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('goodslist', ['dataProvider'=>$dataProvider]);
@@ -383,6 +465,10 @@ class ShopSellerController extends Controller
 
     public function actionGoodsstat($id, $status)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $goods = Goods::findOne($id);
         if($goods){
             $goods->is_del = $status;
@@ -393,6 +479,10 @@ class ShopSellerController extends Controller
 
     public  function  actionUpload()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $path = Yii::$app->basePath."/web/avatar/";
         $tmpath="/avatar/";
         if(!empty($_FILES)){
@@ -420,7 +510,12 @@ class ShopSellerController extends Controller
         }
     }
 
-    public function actionCutpic(){
+    public function actionCutpic()
+    {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->isAjax){
             $imgCrtMap = array('jpg'=>'imagecreatefromjpeg', 'jpeg'=>'imagecreatefromjpeg',
                 'png'=>'imagecreatefrompng', 'gif'=>'imagecreatefromgif');
@@ -509,6 +604,10 @@ class ShopSellerController extends Controller
 
     public function actionSetappointment()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->user->id, 'is_del'=>0]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('setappointment', ['dataProvider'=>$dataProvider]);
@@ -516,8 +615,8 @@ class ShopSellerController extends Controller
 
     public function actionEditappointment($id, $status)
     {
-        if(Yii::$app->user->isGuest){
-            return $this->redirect(['login']);
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
         }
 
         $model = new SetappointmentForm();
@@ -539,6 +638,10 @@ class ShopSellerController extends Controller
 
     public function actionAppointinfo()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $searchModel = new AppointinfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('appointinfo', ['dataProvider'=>$dataProvider]);
@@ -546,6 +649,10 @@ class ShopSellerController extends Controller
 
     public function actionAccount()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $startDate = '';
         $endDate = '';
         if(Yii::$app->request->isPost){
@@ -558,6 +665,10 @@ class ShopSellerController extends Controller
 
     public function actionConsult()
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         $searchModel = new GoodsConsultSearch(['sell_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('consult', [ 'consult'=>$dataProvider]);
@@ -565,6 +676,10 @@ class ShopSellerController extends Controller
 
     public function actionConsultinfo($id)
     {
+        if ($this->shouldLogin()) {
+            return  $this->redirect(['login']);
+        }
+
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
             $consult = GoodsConsult::findOne($post['GoodsConsult']['id']);
