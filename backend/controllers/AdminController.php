@@ -6,6 +6,8 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use backend\models\admin\LoginForm;
+use backend\models\seller\GoodsSearch;
+use backend\models\seller\Goods;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -33,7 +35,9 @@ class AdminController extends Controller
 
     public function actionAdminhome()
     {
-        echo "Hello world!!!";
+        $searchModel = new GoodsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('goodslist', ['dataProvider'=>$dataProvider]);
     }
 
     public function actionLogin()
@@ -53,5 +57,22 @@ class AdminController extends Controller
         Yii::$app->user->logout();
 
         return $this->redirect(['login']);
+    }
+
+
+    public function actionGoodslist()
+    {
+        $searchModel = new GoodsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('goodslist', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionGoodsstat($id, $status)
+    {
+        $goods = Goods::findOne($id);
+        if($goods){
+            $goods->is_del = $status;
+            $goods->save();
+        }
     }
 }

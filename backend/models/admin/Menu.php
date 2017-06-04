@@ -1,18 +1,13 @@
 <?php
-namespace backend\models\seller;
+namespace backend\models\admin;
 
 class Menu
 {
 //菜单的配制数据
     public static $ArrGoods = array(
         "商品管理" => array(
-             "商品列表" => "shop-seller/sellerhome",
-             "商品添加" => "shop-seller/account",
-        ),
-
-        "商品分类" => array(
-             "分类列表" => "shop-seller/goodslist",
-             "添加分类" => "shop-seller/goodsadd",
+             "商品列表" => "admin/goodslist",
+             "商品添加" => "admin/goodsadd",
         ),
     );
 
@@ -24,6 +19,6 @@ class Menu
     public static function getMenu($roleId = "")
     {
         //菜单创建事件触发
-        return self::$menu;
+        return self::$ArrGoods;
     }
 }

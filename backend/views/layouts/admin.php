@@ -8,6 +8,7 @@ use backend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
+ use backend\models\admin\Menu;
 
 ?>
 <?php $this->beginPage() ?>
@@ -162,8 +163,20 @@ AppAsset::register($this);
 	<?= Html::img('@web/images/logo.png')?>
 <div id="mynavright">
 <ul class="mynav-ul">
-</ul> 
-
+	<li><a href="<?=Url::to(["site/index"])?>">网站首页</a></li>
+	<?php
+	$curuser = isset(Yii::$app->user->identity) ? Yii::$app->user->identity->username : "guest";
+	if (Yii::$app->user->isGuest) {
+	} else {
+		echo "<li>欢迎您</li><li> $curuser </li>".
+				'<li>'
+				. Html::beginForm(['/admin/logout'], 'post')
+				. Html::submitButton('[注销] ',['class' => 'btn-link logout'])
+				. Html::endForm()
+				. '</li>';
+	}
+	?>
+</ul>
 </div><!--mynavright-->
 
 </div><!--mynavcontent-->
@@ -175,6 +188,23 @@ AppAsset::register($this);
      ]) ?>
      <?= Alert::widget() ?>
 	 <?=Html::cssFile('@web/css/sellerhome.css')?>
+	 <?php $actionId = Yii::$app->controller->action->id;
+	 if($actionId != 'login') {?>
+		 <div class="menuInfo">
+			 <?php foreach(Menu::getMenu() as $item=>$subMenu){?>
+				 <div class="box">
+					 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
+					 <div class="cont">
+						 <ul class="list">
+							 <?php foreach($subMenu as $moreKey => $moreValue){?>
+								 <li><a target="_blank"  href="<?php echo Url::to([$moreValue]);?>"><?php echo isset($moreKey)?$moreKey:"";?></a></li>
+							 <?php }?>
+						 </ul>
+					 </div>
+				 </div>
+			 <?php }?>
+		 </div>
+	 <?php }?>
      <?= $content ?>
  </div>  <!-- container -->
 
