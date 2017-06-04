@@ -215,7 +215,7 @@ JS;
     <?php ActiveForm::end(); ?>
 
     <?php $form = ActiveForm::begin([
-        'action'=>['shop-seller/goodscontent'],
+        'action'=>['admin/goodscontent'],
         'id' => 'detailInfo',
         'options' => ['style'=>'padding-left: 20px; display:none'],
     ]); ?>
@@ -238,7 +238,7 @@ JS;
     <?php ActiveForm::end(); ?>
 
     <?php $form = ActiveForm::begin([
-        'action'=>['shop-seller/goodsseo'],
+        'action'=>['admin/goodsseo'],
         'id' => 'seo',
         'options' => ['style'=>'padding-left: 20px; display:none'],
     ]); ?>

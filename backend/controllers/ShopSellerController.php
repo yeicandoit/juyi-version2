@@ -377,10 +377,6 @@ class ShopSellerController extends Controller
 
     public function actionGoodscategory()
     {
-        if ($this->shouldLogin()) {
-            return  $this->redirect(['login']);
-        }
-
         $data = Category::find()->asArray()->all();
         $idname = ArrayHelper::map($data, 'id', 'name');
         $idmap = ArrayHelper::map($data, 'id', 'parent_id');
@@ -389,10 +385,6 @@ class ShopSellerController extends Controller
 
     public function actionDelcat($goodsId, $catId)
     {
-        if ($this->shouldLogin()) {
-            return  $this->redirect(['login']);
-        }
-
         $catExt = CategoryExtend::find()->where(['goods_id'=>$goodsId, 'category_id'=>$catId])->one();
         if($catExt->delete()){
             echo "OK";
@@ -403,10 +395,6 @@ class ShopSellerController extends Controller
 
     public function actionDelimg($goodsId, $photoId)
     {
-        if ($this->shouldLogin()) {
-            return  $this->redirect(['login']);
-        }
-
         $photo = GoodsPhoto::findOne($photoId);
         $goodsPhotoRelation = GoodsPhotoRelation::find()->where(['goods_id'=>$goodsId, 'photo_id'=>$photoId])->one();
         $goods = Goods::findOne($goodsId);
@@ -424,10 +412,6 @@ class ShopSellerController extends Controller
 
     public function actionAddcat($goodsId, $catId)
     {
-        if ($this->shouldLogin()) {
-            return  $this->redirect(['login']);
-        }
-
         $catExt = new CategoryExtend();
         $catExt->goods_id = $goodsId;
         $catExt->category_id = $catId;
@@ -440,10 +424,6 @@ class ShopSellerController extends Controller
 
     public function actionDelspec($goodsId, $specName)
     {
-        if ($this->shouldLogin()) {
-            return  $this->redirect(['login']);
-        }
-
         $spec = Goodsspec::find()->where(['goodsid'=>$goodsId, 'specname'=>$specName])->one();
         if($spec->delete()){
             echo "OK";
@@ -479,10 +459,6 @@ class ShopSellerController extends Controller
 
     public  function  actionUpload()
     {
-        if ($this->shouldLogin()) {
-            return  $this->redirect(['login']);
-        }
-
         $path = Yii::$app->basePath."/web/avatar/";
         $tmpath="/avatar/";
         if(!empty($_FILES)){
@@ -512,10 +488,6 @@ class ShopSellerController extends Controller
 
     public function actionCutpic()
     {
-        if ($this->shouldLogin()) {
-            return  $this->redirect(['login']);
-        }
-
         if(Yii::$app->request->isAjax){
             $imgCrtMap = array('jpg'=>'imagecreatefromjpeg', 'jpeg'=>'imagecreatefromjpeg',
                 'png'=>'imagecreatefrompng', 'gif'=>'imagecreatefromgif');

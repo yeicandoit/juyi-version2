@@ -101,4 +101,64 @@ class AdminController extends Controller
         }
         return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
     }
+
+    public function actionGoodscontent()
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            if(isset($post['Goodscontent']['goodid'])) {
+                $goodsContent = Goodscontent::find()->where(['goodid' => $post['Goodscontent']['goodid']])->one();
+                if (null == $goodsContent) {
+                    $goodsContent = new Goodscontent();
+                }
+                $goodsContent->load($post);
+                $goodsContent->save();
+            }
+            return $this->redirect(['goodsedit', 'id'=>$post['Goodscontent']['goodid']]);
+        }
+    }
+
+    public function actionGoodsseo()
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            if(isset($post['Goods']['id'])) {
+                $good = Goods::findOne($post['Goods']['id']);
+                if (null != $good) {
+                    $good->load($post);
+                    $good->save();
+                }
+            }
+            return $this->redirect(['goodsedit', 'id'=>$post['Goods']['id']]);
+        }
+    }
+
+    public function actionGoodsadd()
+    {
+        if(Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            $goods = new Goods();
+            $goods->load($post);
+            $goods->seller_id = Yii::$app->user->id;
+            $goods->create_time = date('Y-m-d H:i:s',time());
+            $goods->sort = isset($goods->sort) ? $goods->sort : 10;
+            $goods->is_del = 3;
+            if($goods->save()){
+                if(isset($post['specName'])){
+                    $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
+                }
+                if(isset($post['goodsCategory'])){
+                    $goods->saveCat($post['goodsCategory']);
+                }
+                if(isset($post['goodsImgs'])){
+                    $goods->saveImgs($post['goodsImgs']);
+                }
+                return $this->redirect(['goodslist']);
+            }
+            return $this->goHome();
+        }
+        $goods = new Goods();
+        $goodsContent = new Goodscontent();
+        return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
+    }
 }
