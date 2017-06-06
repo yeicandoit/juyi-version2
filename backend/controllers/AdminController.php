@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\admin\SellerSearch;
+use backend\models\seller\Seller;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -159,5 +161,39 @@ class AdminController extends Controller
         $goods = new Goods();
         $goodsContent = new Goodscontent();
         return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
+    }
+
+    public function actionSellerlist()
+    {
+        $searchModel = new SellerSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('sellerlist', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionSellerstat($id, $status)
+    {
+        $seller = Seller::findOne($id);
+        if($seller){
+            $seller->is_del = $status;
+            $seller->save();
+        }
+    }
+
+    public function actionSellerinfo($id)
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $id = $post['Seller']['id'];
+            $shopInfo = Seller::findOne($id);
+            if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
+                return $this->redirect(['sellerlist']);
+            }
+        } else {
+            $shopInfo = Seller::findOne($id);
+        }
+        if(!$shopInfo) {
+            return false;
+        }
+        return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo,]);
     }
 }
