@@ -139,7 +139,6 @@ class AdminController extends Controller
             $post = Yii::$app->request->post();
             $goods = new Goods();
             $goods->load($post);
-            $goods->seller_id = Yii::$app->user->id;
             $goods->create_time = date('Y-m-d H:i:s',time());
             $goods->sort = isset($goods->sort) ? $goods->sort : 10;
             $goods->is_del = 3;

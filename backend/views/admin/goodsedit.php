@@ -4,6 +4,8 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use \yii\helpers\Url;
+use backend\models\seller\Seller;
+use backend\models\seller\Expert;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <?=Html::cssFile('@web/css/jquery.Jcrop.css')?>
@@ -71,6 +73,8 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
     <?= $form->field($goods, 'img', ['options'=>['style'=>"display:none"]])?>
     <?= $form->field($goods, 'search_words')->textInput(['style'=>'width:60%'])->label('关键词')
     ->hint('每个关键词最长为15个字符，超过后系统不予存储，每个词以逗号分隔')?>
+    <?= $form->field($goods, 'seller_id')->dropDownList(ArrayHelper::map(Expert::find()->asArray()->all(), 'id', 'true_name') +
+        ArrayHelper::map(Seller::find()->asArray()->all(), 'id', 'true_name'), ['style'=>'width:60%'])->label('所属商户:');?>
     <div class="goodInfoBox">
     <div>
         <?=Html::label('所属分类');?>
@@ -115,7 +119,7 @@ JS;
     <br>
     <?php if (isset($goods->is_del)) {?>
         <div class="goodInfoBox">
-            <?= $form->field($goods, 'is_del')->radioList([3=>'申请上架', 2=>'下架'])->label('商品状态')?>
+            <?= $form->field($goods, 'is_del')->dropDownList([3=>'申请上架', 2=>'下架', 1=>'删除', 0=>'上架'], ['style'=>'width:30%'])->label('商品状态')?>
         </div>
     <?php }?>
     <br>
@@ -131,7 +135,7 @@ JS;
                 <th>商品货号</th><th>市场价格</th><th>销售价格</th><th>成本价格</th>
             </tr>
             <tr>
-                <td style="width: 150px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:120px'])?></td>
+                <td style="width: 160px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:150px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
@@ -170,7 +174,7 @@ JS;
     <br>
     <div class="goodInfoBox">
         <p><label>产品相册</label></p>
-        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M</p>
+        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M;点击上传的图像，可设置图像为商品主图</p>
         <div>
             <input type="hidden" id="x" name="x" />
             <input type="hidden" id="y" name="y" />
