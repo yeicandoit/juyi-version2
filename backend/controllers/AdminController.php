@@ -229,4 +229,21 @@ class AdminController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('expertlist', ['dataProvider'=>$dataProvider]);
     }
+
+    public function actionExpertinfo($id)
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $shopInfo = Expert::findOne($id);
+            if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
+                return $this->redirect(['expertlist']);
+            }
+        } else {
+            $shopInfo = Expert::findOne($id);
+        }
+        if(!$shopInfo) {
+            return false;
+        }
+        return $this->render("expertinfo", ["expertinfo"=>$shopInfo,]);
+    }
 }

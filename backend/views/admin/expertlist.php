@@ -26,7 +26,7 @@ use \yii\helpers\Url;
                 'label'=>'操作',
                 'format'=>'raw',
                 'value'=>function($model){
-                    $edit = Html::a('概况', Url::to(['admin/shopinfo', 'id'=>$model->id]));
+                    $edit = Html::a('概况', Url::to(['admin/expertinfo', 'id'=>$model->id]));
                     $detail = Html::a('详情', Url::to(['admin/shopdetail', 'id'=>$model->id, 'type'=>'expert']));
                     return "$edit|$detail";
                 }
