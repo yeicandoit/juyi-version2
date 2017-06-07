@@ -3,9 +3,11 @@
 namespace backend\controllers;
 
 use backend\models\admin\ExpertSearch;
+use backend\models\admin\MemberSearch;
 use backend\models\admin\SellerSearch;
 use backend\models\seller\Expert;
 use backend\models\seller\ExpertExt;
+use backend\models\seller\Member;
 use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
 use Yii;
@@ -245,5 +247,26 @@ class AdminController extends Controller
             return false;
         }
         return $this->render("expertinfo", ["expertinfo"=>$shopInfo,]);
+    }
+
+    public function actionMemberlist()
+    {
+        $searchModel = new MemberSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('memberlist', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionMemberinfo($id)
+    {
+        $memberInfo = Member::findOne($id);
+        if(Yii::$app->request->isPost){
+            if($memberInfo && $memberInfo->load(Yii::$app->request->post()) && $memberInfo->save()){
+                return $this->redirect(['memberlist']);
+            }
+        }
+        if(!$memberInfo) {
+            return false;
+        }
+        return $this->render("memberinfo", ["memberinfo"=>$memberInfo,]);
     }
 }

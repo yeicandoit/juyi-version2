@@ -10,7 +10,7 @@ class Menu
              "商品添加" => "admin/goodsadd",
         ),
         "会员管理" => array(
-            "会员列表" => "admin/userlist",
+            "会员列表" => "admin/memberlist",
             "商家列表" => "admin/sellerlist",
             "专家列表" => "admin/expertlist",
         ),

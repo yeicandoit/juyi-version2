@@ -99,4 +99,9 @@ class Member extends \yii\db\ActiveRecord
             'area' => Yii::t('app', '区ID'),
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id'=>'user_id']);
+    }
 }
