@@ -40,7 +40,8 @@ use \yii\helpers\Url;
                 'format'=>'raw',
                 'value'=>function($model){
                     $edit = Html::a('概况', Url::to(['admin/sellerinfo', 'id'=>$model->id]));
-                    return "$edit|";
+                    $detail = Html::a('详情', Url::to(['admin/shopdetail', 'id'=>$model->id, 'type'=>'seller']));
+                    return "$edit|$detail";
                 }
             ]
         ],

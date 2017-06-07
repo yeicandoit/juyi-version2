@@ -125,7 +125,7 @@ class Seller extends \yii\db\ActiveRecord
                         //Use full path, or image\Behavior could not find file path.
                         'savePathAlias' => Yii::$app->basePath . '/web/images/',
                         'urlPrefix' => '/images/',
-                        'width' => 300,
+                        'width' => 200,
                         'height' => 200,
                     ],
                 ],

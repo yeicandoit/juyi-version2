@@ -3,7 +3,9 @@
 namespace backend\controllers;
 
 use backend\models\admin\SellerSearch;
+use backend\models\seller\ExpertExt;
 use backend\models\seller\Seller;
+use backend\models\seller\SellerExt;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -195,5 +197,23 @@ class AdminController extends Controller
             return false;
         }
         return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo,]);
+    }
+
+    public function actionShopdetail($id, $type)
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $id = $post['id'];
+            $type = $post['type'];
+        }
+        if('seller' == $type) {
+            $shopDetail = SellerExt::find()->where(['seller_id'=>$id])->one();
+        } else {
+            $shopDetail = ExpertExt::find()->where(['expert_id'=>$id])->one();
+        }
+        if($shopDetail->load(Yii::$app->request->post()) && $shopDetail->save()){
+            return $this->redirect(['sellerlist']);
+        }
+        return $this->render("shopdetail", ["detail"=>$shopDetail, 'regtype'=>$type]);
     }
 }
