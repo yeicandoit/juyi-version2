@@ -38,8 +38,7 @@ use yii\helpers\Url;
             ])?>
         <?= $form->field($detail, 'outwork')->textarea()
             ->label('科研成果:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-        <input type="hidden" name="id" value="<?=$detail->seller_id?>" />
-        <input type="hidden" name="type" value="seller">
+        <?=$form ->field($detail, 'seller_id', ['options'=>['style'=>'display:none']])?>
     <?php } else {?>
         <?= $form->field($detail, 'description')->textarea()->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
         <?= $form->field($detail, 'direction')->textarea()->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
@@ -66,6 +65,7 @@ use yii\helpers\Url;
                     'plugins' => ['clips', 'fontcolor','imagemanager']
                 ]
             ])?>
+        <?=$form ->field($detail, 'expert_id', ['options'=>['style'=>'display:none']])?>
     <?php }?>
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
