@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use dosamigos\datepicker\DatePicker;
+use yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/userhome.css')?>
 <!--Show user info-->
@@ -55,7 +56,7 @@ use dosamigos\datepicker\DatePicker;
                 'onchange'=>'setAreaOption()',
             ]); ?>
     </div>
-    <?=$form->field($memberinfo, 'country', [ 'template' => "{input}", ]
+    <?=$form->field($memberinfo, 'area', [ 'template' => "{input}", ]
     )->dropDownList(ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>$memberinfo->city])->asArray()->all(),'area_id','area_name'),
         [
             'style'=>'width:180px',
@@ -81,38 +82,39 @@ use dosamigos\datepicker\DatePicker;
 <script type="text/javascript">
     function setDropDownList()
     {
-        if (0 == <?=$memberinfo->province?>) {
-            $("#memeber-province").append("<option value=0>请选择省</option>");
-            $("#memeber-province").val(0);
+        // If $memberinfo->province is null, 0 + $memberinfo->province will be 0,then it will be correct js code.
+        if (0 == <?=0 + $memberinfo->province?>) {
+            $("#member-province").append("<option value=0>请选择省</option>");
+            $("#member-province").val(0);
         }
-        if (0 == <?=$memberinfo->city?>) {
-            $("#memeber-city").append("<option value=0>请选择市</option>");
-            $("#memeber-city").val(0);
+        if (0 == <?=0 + $memberinfo->city?>) {
+            $("#member-city").append("<option value=0>请选择市</option>");
+            $("#member-city").val(0);
         }
-        if (0 == <?=$memberinfo->country?>) {
-            $("#memeber-country").append("<option value=0>请选择县</option>");
-            $("#memeber-country").val(0);
+        if (0 == <?=0 + $memberinfo->area?>) {
+            $("#member-area").append("<option value=0>请选择县</option>");
+            $("#member-area").val(0);
         }
     }
     /*用window.onload调用myfun()*/
     window.onload=setDropDownList;
-    <?php $url = \yii\helpers\Url::to(['shop-seller/areas']); ?>
+
+    <?php $url = Url::to(['shop-seller/areas']); ?>
     function setCityOption()
     {
-        alert('debug');
-        $.get("<?= $url?>&id="+$("#memeber-province").val(),function(data){
-            $("#memeber-city").html("<option value=0>请选择市</option>");
-            $("#memeber-area").html("<option value=0>请选择县</option>");
-            $("#memeber-city").append(data);
+        $.get("<?= $url?>&id="+$("#member-province").val(),function(data){
+            $("#member-city").html("<option value=0>请选择市</option>");
+            $("#member-area").html("<option value=0>请选择县</option>");
+            $("#member-city").append(data);
         });
     }
 
     function setAreaOption()
     {
-        alert('debug 1');
         $.get("<?= $url?>&id="+$("#member-city").val(),function(data){
-            $("#memeber-area").html("<option value=0>请选择县</option>");
-            $("#memeber-area").append(data);});
+            $("#member-area").html("<option value=0>请选择县</option>");
+            $("#member-area").append(data);
+        });
     }
 </script>
 
