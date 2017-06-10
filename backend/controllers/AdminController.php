@@ -26,6 +26,7 @@ use backend\models\seller\RefundmentDoc;
 use backend\models\seller\RefundmentDocSearch;
 use backend\models\seller\Setappointment;
 use backend\models\seller\SetappointmentForm;
+use backend\models\seller\CommentSearch;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -371,5 +372,12 @@ class AdminController extends Controller
         }
         $good = Goods::findOne($id);
         return $this->render('editappointment', ['stat'=>$stat, 'good'=>$good, 'model'=>$model, 'datainfo' => $datainfo]);
+    }
+
+    public function actionCommentlist()
+    {
+        $searchModel = new CommentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('commentlist', [ 'dataProvider'=>$dataProvider]);
     }
 }

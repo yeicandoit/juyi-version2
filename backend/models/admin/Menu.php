@@ -8,6 +8,7 @@ class Menu
         "商品管理" => array(
              "商品列表" => "admin/goodslist",
              "商品添加" => "admin/goodsadd",
+             "评论列表" => "admin/commentlist",
         ),
         "会员管理" => array(
             "会员列表" => "admin/memberlist",
