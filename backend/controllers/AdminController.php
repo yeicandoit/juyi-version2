@@ -395,4 +395,16 @@ class AdminController extends Controller
         $comment = Comment::findOne($id);
         return $this->render('commentedit', [ 'comment'=>$comment]);
     }
+
+    public function actionAccount()
+    {
+        $startDate = '';
+        $endDate = '';
+        if(Yii::$app->request->isPost){
+            $startDate = Yii::$app->request->post('startDate');
+            $endDate = Yii::$app->request->post('endDate');
+        }
+        $countData = Order::sellerAmount(null, $startDate, $endDate);
+        return $this->render('account', [ 'countData'=>$countData]);
+    }
 }

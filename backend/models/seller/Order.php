@@ -242,7 +242,11 @@ class Order extends \yii\db\ActiveRecord
     {
         $query = (new Query())->from('jy_order');
         $query->select('sum(real_amount) as yValue, completion_time');
-        $query->where("seller_id=$seller_id AND status=7");
+        if($seller_id) {
+            $query->where("seller_id=$seller_id AND status=7");
+        } else {
+            $query->where("status = 7");
+        }
         return self::ParseCondition($query,'completion_time',$start,$end);
     }
 

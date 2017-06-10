@@ -16,6 +16,7 @@ class Menu
             "专家列表" => "admin/expertlist",
         ),
         "订单管理" => array(
+            "销售统计" => "admin/account",
             "订单列表" => "admin/orderlist",
             "退款列表" => "admin/refundmentlist",
         ),
