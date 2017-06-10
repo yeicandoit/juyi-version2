@@ -112,7 +112,7 @@ $(document).ready(function() {
 		</tr>
 		<tr style="border: 1px solid #c4e3f3;">
 			<td style="border: 1px solid #c4e3f3;padding: 20px 10px 10px 10px">
-				<?=Html::img($good->img, ['style'=>'width:150px;height:150px;'])?>
+				<?=Html::img(Yii::$app->params['imgGlobalPath'] . $good->img, ['style'=>'width:150px;height:150px;'])?>
 				<br>
 				<?=Html::a($good->name, '#')?>
 			</td>

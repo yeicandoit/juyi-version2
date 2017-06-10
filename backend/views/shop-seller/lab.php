@@ -41,7 +41,7 @@ use yii\widgets\LinkPager;
             <?php
                 foreach($model as $k=>$g) { ?>
                     <div style='float: left; padding-left: 20px'>
-                        <?=Html::img($g->img,['style'=>'width:150px;height:150px'])?> <br><br>
+                        <?=Html::img(Yii::$app->params['imgGlobalPath'] . $g->img,['style'=>'width:150px;height:150px'])?> <br><br>
                         <table style="width: 150px; border-top: solid 1px #7f8c8d">
                             <tr style="height: 30px">
                                 <td><?=Html::label($g->name)?></td>

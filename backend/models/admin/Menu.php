@@ -14,6 +14,14 @@ class Menu
             "商家列表" => "admin/sellerlist",
             "专家列表" => "admin/expertlist",
         ),
+        "订单管理" => array(
+            "订单列表" => "admin/orderlist",
+            "退款列表" => "admin/refundmentlist",
+        ),
+        "预约管理" => array(
+            "预约列表" => "admin/appointlist",
+            "设置预约" => "admin/setappointment",
+        ),
     );
 
     /**

@@ -124,8 +124,8 @@ class Seller extends \yii\db\ActiveRecord
                     'logo' => [
                         //Use full path, or image\Behavior could not find file path.
                         'savePathAlias' => Yii::$app->basePath . '/web/images/',
-                        'urlPrefix' => '/images/',
                         'width' => 200,
+                        'urlPrefix' => Yii::$app->params['imgGlobalPath'] . '/images/',
                         'height' => 200,
                     ],
                 ],

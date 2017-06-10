@@ -364,4 +364,10 @@ class Order extends \yii\db\ActiveRecord
             return 'y';
         }
     }
+
+    public function getShop()
+    {
+        $shopMember = ShopMember::findOne($this->seller_id);          
+        return $shopMember->shopInfo;
+    }
 }

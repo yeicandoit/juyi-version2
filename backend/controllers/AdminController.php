@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\seller\Delivery;
 use backend\models\admin\ExpertSearch;
 use backend\models\admin\MemberSearch;
 use backend\models\admin\SellerSearch;
@@ -17,6 +18,9 @@ use backend\models\admin\LoginForm;
 use backend\models\seller\GoodsSearch;
 use backend\models\seller\Goods;
 use backend\models\seller\Goodscontent;
+use backend\models\seller\Order;
+use backend\models\seller\OrderSearch;
+use backend\models\seller\OrderDelivery;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -268,5 +272,44 @@ class AdminController extends Controller
             return false;
         }
         return $this->render("memberinfo", ["memberinfo"=>$memberInfo,]);
+    }
+    public function actionOrderlist()
+    {   
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionOrderinfo($id)
+    {
+        if(Yii::$app->request->isPost){
+            $order = Order::findOne($id);
+            if($order->load(Yii::$app->request->post()) && $order->save()){
+                return $this->render('orderinfo', ['order'=>$order]);
+            } else {
+                return $this->redirect(['orderlist']);
+            }
+        }
+        $order = Order::findOne($id);
+        return $this->render('orderinfo', ['order'=>$order]);
+    }
+
+    public function actionDelivery()
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $delivery = new Delivery();
+            if($delivery->load($post) && $delivery->save()){
+                $orderDelivery = new OrderDelivery();
+                $orderDelivery->load($post);
+                $orderDelivery->deliveryid = $delivery->id;
+                $orderDelivery->save();
+                $order = Order::findOne($orderDelivery->oderid);
+                $order->load($post);
+                $order->save();
+                return $this->redirect(['orderinfo', 'id'=>$order->id]);
+            }
+        }
+        return $this->goBack();
     }
 }
