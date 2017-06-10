@@ -21,6 +21,8 @@ use backend\models\seller\Goodscontent;
 use backend\models\seller\Order;
 use backend\models\seller\OrderSearch;
 use backend\models\seller\OrderDelivery;
+use backend\models\seller\RefundmentDoc;
+use backend\models\seller\RefundmentDocSearch;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -311,5 +313,27 @@ class AdminController extends Controller
             }
         }
         return $this->goBack();
+    }
+
+    public function actionRefundmentlist()
+    {
+        $searchModel = new RefundmentDocSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('refundment', [ 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionRefundmentinfo($id)
+    {
+        if(Yii::$app->request->isPost){
+            $refundment = RefundmentDoc::findOne($id);
+            if($refundment->load(Yii::$app->request->post()) && $refundment->save()){
+                return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
+            } else {
+                return $this->redirect(['refundment']);
+            }
+        }
+
+        $refundment = RefundmentDoc::findOne($id);
+        return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
     }
 }
