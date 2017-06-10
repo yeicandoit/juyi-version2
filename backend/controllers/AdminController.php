@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\admin\AppointinfoSearch;
+use backend\models\seller\Comment;
 use backend\models\seller\Delivery;
 use backend\models\admin\ExpertSearch;
 use backend\models\admin\MemberSearch;
@@ -379,5 +380,19 @@ class AdminController extends Controller
         $searchModel = new CommentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('commentlist', [ 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionCommentedit($id)
+    {
+        if(Yii::$app->request->post()){
+            $comment = Comment::findOne($id);
+            if($comment->load(Yii::$app->request->post()) && $comment->saveRecontents()){
+                $this->redirect(['commentlist']);
+            } else {
+                $this->redirect(['commentlist']);
+            }
+        }
+        $comment = Comment::findOne($id);
+        return $this->render('commentedit', [ 'comment'=>$comment]);
     }
 }
