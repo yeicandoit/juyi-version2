@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\admin\AppointinfoSearch;
 use backend\models\seller\Delivery;
 use backend\models\admin\ExpertSearch;
 use backend\models\admin\MemberSearch;
@@ -23,6 +24,8 @@ use backend\models\seller\OrderSearch;
 use backend\models\seller\OrderDelivery;
 use backend\models\seller\RefundmentDoc;
 use backend\models\seller\RefundmentDocSearch;
+use backend\models\seller\Setappointment;
+use backend\models\seller\SetappointmentForm;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -335,5 +338,38 @@ class AdminController extends Controller
 
         $refundment = RefundmentDoc::findOne($id);
         return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
+    }
+
+    public function actionAppointlist()
+    {
+        $searchModel = new AppointinfoSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('appointlist', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionSetappointment()
+    {
+        $searchModel = new GoodsSearch(['is_del'=>0]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('setappointment', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionEditappointment($id, $status)
+    {
+        $model = new SetappointmentForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($id = $model->appoint()) {
+            } else {
+                echo 'there are some wrong';
+            }
+        }
+
+        $datainfo = Setappointment::find()->where(['goodid' => $id])->all();
+        $stat = '添加预约';
+        if(2 == $status) {
+            $stat = '修改预约';
+        }
+        $good = Goods::findOne($id);
+        return $this->render('editappointment', ['stat'=>$stat, 'good'=>$good, 'model'=>$model, 'datainfo' => $datainfo]);
     }
 }
