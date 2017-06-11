@@ -40,7 +40,7 @@ use yii\helpers\Html;
         <div>
             <table>
                 <tr>
-                    <td valign="top"><?= Html::img($expert->getImageUrl('img'))?></td>
+                    <td valign="top"><?= Html::img(Yii::$app->params['imgGlobalPath'] . $expert->getImageUrl('img'))?></td>
                     <td style="padding-left: 20px; valign="top"">
                         <div style="border-bottom:1px inset;">
                             <p><strong style="font-size: large">解码专家:<?=$expert->true_name?></strong>&nbsp;<span><?=$expert->title?></span></p>
@@ -120,7 +120,7 @@ use yii\helpers\Html;
         </div>
         <table>
             <tr>
-                <td><?= Html::img('/images/expert.png',['style'=>'width:40px;height:40px', 'class'=>'img-circle'])?></td>
+                <td><?= Html::img(Yii::$app->params['imgGlobalPath'] . '/images/expert.png',['style'=>'width:40px;height:40px', 'class'=>'img-circle'])?></td>
                 <td style="padding-left: 3px">
                     <span style="font-size: 13px">肖学良</span><br>
                     <span style="font-size: 10px">博士,副教授</span>

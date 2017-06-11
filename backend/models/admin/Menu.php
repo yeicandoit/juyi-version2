@@ -24,6 +24,9 @@ class Menu
             "预约列表" => "admin/appointlist",
             "设置预约" => "admin/setappointment",
         ),
+        "网站管理" => array(
+            "关于聚仪" => "xyf/updateaboutjuyi",
+        ),
     );
 
     /**
