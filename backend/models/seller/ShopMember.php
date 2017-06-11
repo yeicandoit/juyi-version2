@@ -98,9 +98,9 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
 
     public function getShopInfo()
     {
-        if('seller' == $this->regtype){
+        if('expert' != $this->regtype){
             return Seller::findOne($this->id);
-        } else if ('expert' == $this->regtype){
+        } else {
             return Expert::findOne($this->id);
         }
 
@@ -109,7 +109,7 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
 
     public function getRegtime()
     {
-        if('seller' == $this->regtype){
+        if('expert' != $this->regtype){
             return Seller::findOne($this->id)->create_time;
         }
 

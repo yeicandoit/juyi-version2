@@ -22,7 +22,7 @@ use yii\helpers\Url;
     ]); ?>
 
     <?= $form->field($model, 'regType',[])->dropDownList(
-        [ 'expertreg'=>'专家入驻', 'sellerreg'=>'商家入驻'],
+        [ 'expert'=>'专家解码', 'seller'=>'检测中心', 'research'=>'科研辅助', 'simulate'=>'数值模拟'],
         ['onchange'=>'jumpUrl()']
     )->label("选择入驻类型:"); ?>
     <?= $form->field($model, 'name', [])->textInput()
@@ -70,7 +70,7 @@ use yii\helpers\Url;
 
 <script type="text/javascript">
     function jumpUrl(){
-        location.href = "<?=Url::to(['shop-seller/'])?>/" + $("#expertregform-regtype").val();
+        location.href = "<?=Url::to(['shop-seller/'])?>/sellerreg&regtype=" + $("#expertregform-regtype").val();
     };
 
     <?php $url = Url::to(['shop-seller/areas']); ?>

@@ -114,7 +114,7 @@ class SellerregForm extends Model
                 $shopMember->id = $seller->id;
                 $shopMember->username = $seller->seller_name;
                 $shopMember->password = $seller->password;
-                $shopMember->regtype = 'seller';
+                $shopMember->regtype = $this->regType;
                 return $shopMember->save();
             }
         }

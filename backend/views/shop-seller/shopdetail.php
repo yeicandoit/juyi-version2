@@ -15,7 +15,7 @@ use yii\helpers\Url;
     <?php $form = ActiveForm::begin([
         'options' => ['style'=>'padding-left: 20px;'],
     ]); ?>
-    <?php if('seller' == $regtype) {?>
+    <?php if('expert' != $regtype) {?>
         <?= $form->field($detail, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
             [
                 'clientOptions' => [

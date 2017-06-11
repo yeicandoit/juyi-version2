@@ -72,7 +72,10 @@ class ShopSellerController extends Controller
         if(!isset(Yii::$app->params['regtype'])){
             Yii::$app->params['regtype'] = ShopMember::findOne(Yii::$app->user->id)->regtype;
         }
-        if((Yii::$app->params['regtype']) != 'seller' && (Yii::$app->params['regtype']) != 'expert'){
+        if((Yii::$app->params['regtype']) != 'seller'
+            && (Yii::$app->params['regtype']) != 'expert'
+            && (Yii::$app->params['regtype']) != 'research'
+            && (Yii::$app->params['regtype']) != 'simulate'){
             return true;
         }
         return false;
@@ -134,7 +137,8 @@ class ShopSellerController extends Controller
         }
         $shopMember = ShopMember::findOne(Yii::$app->user->id);
         $shopInfo = $shopMember->shopInfo;
-        $shopView = $shopMember->regtype . "info";
+        $type = $shopMember->regtype;
+        $shopView = $type == 'expert'? 'expert' . "info" : 'seller' . 'info';
         $shopExt = $shopInfo->ext;
         $shopExtView = $shopMember->regtype . "ext";
         if(!$shopInfo) {
@@ -550,9 +554,10 @@ class ShopSellerController extends Controller
         ]);
     }
 
-    public function actionSellerreg()
+    public function actionSellerreg($regtype = 'seller')
     {
         $model = new SellerregForm();
+        $model->regType = $regtype;
         if($model->load(Yii::$app->request->post())){
             $model->file = UploadedFile::getInstance($model, 'file');
             $upSec = $model->file->saveAs('uploads/' . $model->file->baseName . '.' . $model->file->extension);
