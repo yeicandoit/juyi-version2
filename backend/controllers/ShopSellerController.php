@@ -532,7 +532,7 @@ class ShopSellerController extends Controller
     {
         $lab = Seller::findOne($id);
         $labInfo = $lab->ext;
-        $pages = new Pagination(['totalCount' =>$lab->pageGoods()->count(), 'pageSize' => '1']);
+        $pages = new Pagination(['totalCount' =>$lab->pageGoods()->count(), 'pageSize' => '12']);
         $model = $lab->pageGoods()->offset($pages->offset)->limit($pages->limit)->all();
         return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo, 'model'=>$model, 'pages' => $pages]);
     }

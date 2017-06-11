@@ -25,7 +25,7 @@ use yii\widgets\LinkPager;
             <?=Html::img('images/lab.png', ['style'=>'width:80px;height:60px;padding-top:5px'])?> 交大生物质能<br>
         </div>
     </td>
-    <td style="padding-left: 20px;min-width: 650px; max-width: 800px" valign="top">
+    <td style="padding-left: 20px;min-width: 850px; max-width: 1000px" valign="top">
         <div style="height: 100px;" align="center" >
             <?=Html::label('这里填写标语');?>
         </div>
@@ -40,22 +40,14 @@ use yii\widgets\LinkPager;
         <div id="showlab_1" style="padding-top: 10px">
             <?php
                 foreach($model as $k=>$g) { ?>
-                    <div style='float: left; padding-left: 20px'>
-                        <?=Html::img(Yii::$app->params['imgGlobalPath'] . $g->img,['style'=>'width:150px;height:150px'])?> <br><br>
-                        <table style="width: 150px; border-top: solid 1px #7f8c8d">
-                            <tr style="height: 30px">
-                                <td><?=Html::label($g->name)?></td>
-                                <td><?=Html::label('测试价格', null, ['style'=>'color:#116fb5'])?></td>
-                            </tr>
-                            <tr style="height: 20px">
-                                <td>品牌:<?=isset($g->brandid)? $g->brand->name: '无'?></td>
-                                <td><?=Html::label("￥{$g->sell_price}元/样", null, ['style'=>'color:#116fb5'])?></td>
-                            </tr>
-                            <tr>
-                                <td>型号:<?=$g->brandversion?></td>
-                                <td><s>￥<?=$g->market_price?>元/样</s></td>
-                            </tr>
-                        </table>
+                    <div style='float: left; padding-left: 5px; padding-top:10px'>
+                        <?=Html::img(Yii::$app->params['imgGlobalPath'] . $g->img,['style'=>'width:200px;height:200px'])?> <br><br>
+                        <div style="height:100px">
+                            <?=Html::label($g->name, null, ['style'=>'width:200px'])?>
+                            <div style="width:200px"><font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
+                            <div><font size='2'>测试价:<?=$g->sell_price?>元/样</font></div>
+                            <div><font size='1px'><s>市场价:<?=$g->market_price?>元/样</s></font></div>
+                        </div>
                     </div>
             <?php }?>
             <div style="clear: both;"><?= LinkPager::widget(['pagination' => $pages]);?></div>
