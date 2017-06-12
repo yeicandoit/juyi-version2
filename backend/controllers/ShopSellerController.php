@@ -292,6 +292,7 @@ class ShopSellerController extends Controller
             $goods->create_time = date('Y-m-d H:i:s',time());
             $goods->sort = isset($goods->sort) ? $goods->sort : 10;
             $goods->is_del = 3;
+            $goods->goodtype = $goods->getGoodType2Int(Yii::$app->params['regtype']);
             if($goods->save()){
                 if(isset($post['specName'])){
                     $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);

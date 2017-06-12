@@ -75,6 +75,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
     ->hint('每个关键词最长为15个字符，超过后系统不予存储，每个词以逗号分隔')?>
     <?= $form->field($goods, 'seller_id')->dropDownList(ArrayHelper::map(Expert::find()->asArray()->all(), 'id', 'true_name') +
         ArrayHelper::map(Seller::find()->asArray()->all(), 'id', 'true_name'), ['style'=>'width:60%'])->label('所属商户:');?>
+    <?= $form->field($goods, 'goodtype')->dropDownList([1=>'检测中心', 2=>'专家解码', 3=>'科研辅助', 4=>'数值模拟'], ['style'=>'width:60%'])->label('所属商户类型:');?>
     <div class="goodInfoBox">
     <div>
         <?=Html::label('所属分类');?>

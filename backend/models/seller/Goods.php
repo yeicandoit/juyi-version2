@@ -59,7 +59,7 @@ class Goods extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'goods_no', 'sell_price', 'market_price', 'cost_price',], 'required'],
-            [['seller_id', 'brandid', 'is_del', 'point', 'visit', 'favorite', 'comments', 'exp', 'is_share', 'sale', 'grade', 'store_nums', 'model_id', 'sort'], 'integer'],
+            [['seller_id', 'brandid', 'is_del', 'point', 'visit', 'favorite', 'comments', 'exp', 'is_share', 'sale', 'grade', 'store_nums', 'model_id', 'sort', 'goodtype'], 'integer'],
             [['sell_price', 'market_price', 'cost_price', 'weight'], 'number'],
             [['up_time', 'down_time', 'create_time'], 'safe'],
             [['spec_array', 'content'], 'string'],
@@ -110,6 +110,7 @@ class Goods extends \yii\db\ActiveRecord
             'content' => Yii::t('app', '商品描述,已新建表'),
             'weight' => Yii::t('app', '重量'),
             'sort' => Yii::t('app', '排序'),
+            'goodtype' => Yii::t('app', '1:检测类商品 2:专家 3:科研辅助类 4:数值模拟类'),
         ];
     }
 
@@ -181,5 +182,11 @@ class Goods extends \yii\db\ActiveRecord
     public function getBrand()
     {
         return $this->hasOne(Brand::className(), ['id'=>'brandid']);
+    }
+
+    public static function getGoodType2Int($type)
+    {
+        $arr = array('seller'=>1, 'expert'=>2, 'research'=>3, 'simulate'=>4);
+        return $arr[$type];
     }
 }
