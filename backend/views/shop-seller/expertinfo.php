@@ -26,18 +26,16 @@ use yii\helpers\Url;
     <?= $form->field($expertinfo, 'name')->textInput(['readonly'=>"readonly"])
         ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
     <?= $form->field($expertinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
-    <?= $form->field($expertinfo, 'age')->textInput()?>
-    <?= $form->field($expertinfo, 'sex')->radioList([1=>'男', 2=>'女'])?>
+    <?= $form->field($expertinfo, 'age')->textInput()->label('年龄')?>
+    <?= $form->field($expertinfo, 'sex')->radioList([1=>'男', 2=>'女'])->label('性别')?>
     <?= $form->field($expertinfo, 'degree')->textInput()?>
     <?= $form->field($expertinfo, 'title')->textInput()?>
     <?= $form->field($expertinfo, 'affliation')->textInput()?>
     <?= $form->field($expertinfo, 'affliationtype')->textInput()?>
-    <?= $form->field($expertinfo, 'country')->textInput()?>
     <?= $form->field($expertinfo, 'account')->textInput()->hint('标明开户行，卡号，账户名称等',['style'=>'padding-left:30px',])?>
-    <?= $form->field($expertinfo, 'mobile')->textInput()?>
+    <?= $form->field($expertinfo, 'mobile')->textInput()->label('手机')?>
     <?= $form->field($expertinfo, 'email')->textInput()?>
     <?= $form->field($expertinfo, 'server_num')->textInput()?>
-    <?= $form->field($expertinfo, 'country')->textInput()?>
     <div style="float:left; margin: 0 auto;width: 280px;">
         <?=$form->field($expertinfo, 'province', [ 'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div>
         <div style=\"float:left; margin: 0 auto;\">{input}</div>", ]
@@ -60,7 +58,7 @@ use yii\helpers\Url;
         [
             'style'=>'width:180px',
         ]); ?>
-    <?= $form->field($expertinfo, 'address')->textInput()?>
+    <?= $form->field($expertinfo, 'address')->textInput()->label('详细地址')?>
     <?= $form->field($expertinfo, 'home_url')->textInput()?>
     <?= $form->field($expertinfo, 'grade')->textInput(['readonly'=>"readonly"])?>
     <?= $form->field($expertinfo, 'comments')->textInput(['readonly'=>"readonly"])?>

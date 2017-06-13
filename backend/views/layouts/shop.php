@@ -187,7 +187,7 @@ AppAsset::register($this);
 		$action = 'shop-seller/login';
 	} else{
 		$shop = \backend\models\seller\ShopMember::findOne(Yii::$app->user->id);
-		if ('seller' == $shop->regtype) {
+		if ('expert' != $shop->regtype) {
 			$action = 'shop-seller/lab';
 		} else {
 			$action = 'shop-seller/expert';
