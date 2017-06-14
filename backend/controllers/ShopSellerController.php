@@ -23,6 +23,7 @@ use backend\models\seller\GoodsSearch;
 use backend\models\seller\Order;
 use backend\models\seller\RefundmentDoc;
 use backend\models\seller\RefundmentDocSearch;
+use backend\models\seller\ShopService;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -671,5 +672,28 @@ class ShopSellerController extends Controller
 
         $consult = GoodsConsult::findOne($id);
         return $this->render('consultinfo', [ 'consult'=>$consult]);
+    }
+
+    public function actionAddservice($shopId, $service)
+    {
+        $shopServ = new ShopService();
+        $shopServ->shopid = $shopId;
+        $shopServ->service = $service;
+        $shopServ->type = Goods::getGoodType2Int(ShopMember::findOne($shopId)->regtype);
+        if($shopServ->save()){
+            echo $shopServ->id;
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionDelservice($id)
+    {
+        $shopServ = ShopService::findOne($id);
+        if($shopServ->delete()){
+            echo "OK";
+        } else {
+            echo "Failed";
+        }
     }
 }

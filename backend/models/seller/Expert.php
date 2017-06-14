@@ -139,4 +139,20 @@ class Expert extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Goods::className(), ['seller_id'=>'id']);
     }
+
+    public function getServices()
+    {
+        return $this->hasMany(ShopService::className(), ['shopid'=>'id']);
+    }
+
+    public static function getOptServs()
+    {
+        return array(
+            '图谱/数据解析'=>'图谱/数据解析',
+            '技术服务'=>'技术服务',
+            '专利/技术转让'=>'专利/技术转让',
+            '技术入股'=>'技术入股',
+            '委托开发'=>'委托开发',
+        );
+    }
 }
