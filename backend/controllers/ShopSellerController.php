@@ -149,7 +149,7 @@ class ShopSellerController extends Controller
         if($shopInfo->load(Yii::$app->request->post()) && $shopInfo->save()){
             return $this->redirect(['sellerhome']);
         }
-        return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt]);
+        return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt, 'shopType'=>Yii::$app->params['regtype']]);
     }
 
     public function actionShopdetail()

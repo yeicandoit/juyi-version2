@@ -13,6 +13,7 @@ use backend\models\seller\ExpertExt;
 use backend\models\seller\Member;
 use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
+use backend\models\seller\ShopMember;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -211,7 +212,9 @@ class AdminController extends Controller
         if(!$shopInfo) {
             return false;
         }
-        return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo,]);
+
+        $shopType = ShopMember::findOne($id)->regtype;
+        return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopType]);
     }
 
     public function actionShopdetail($id, $type)

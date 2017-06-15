@@ -155,4 +155,20 @@ class Seller extends \yii\db\ActiveRecord
         return Goods::find()->andWhere(['seller_id'=>$this->id]);
     }
 
+    public function getServices()
+    {
+        return $this->hasMany(ShopService::className(), ['shopid'=>'id']);
+    }
+
+    // 获取科研辅助服务类型
+    public static function getOptServs()
+    {
+        return array(
+            '试验台加工'=>'试验台加工',
+            '仪器维修'=>'仪器维修',
+            '仪器租赁'=>'仪器租赁',
+            '仪器销售'=>'仪器销售',
+            '实验耗材'=>'实验耗材',
+        );
+    }
 }
