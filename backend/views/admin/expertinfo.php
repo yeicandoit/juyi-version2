@@ -28,6 +28,28 @@ use yii\helpers\Url;
     <?= $form->field($expertinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
     <?= $form->field($expertinfo, 'age')->textInput()->label('年龄')?>
     <?= $form->field($expertinfo, 'sex')->radioList([1=>'男', 2=>'女'])->label('性别')?>
+
+    <div class="form-group field-expert-service">
+        <div style="float:left; width:100px; margin: 0 auto;"><label class="control-label" for="expert-degree">特长</label></div>
+        <div id="container" style="float:left;">
+            <?php
+            foreach($expertinfo->services as $key=>$service){
+                $sId = $service->id;
+                $serv = $service->service;
+                ?>
+                <ctrlarea id=<?='ctrl'.$sId?>>
+                    <?=Html::a($serv, '#', ['onclick'=>"rmService($sId)"])?>
+                    &nbsp;&nbsp;</ctrlarea>
+            <?php }
+            ?>
+            <?= Html::button('添加特长', ['onclick'=>'$("#service").show()']); ?>
+            <?= Html::dropDownList('test', null, $expertinfo->optServs, [
+                'id'=>'service', 'onchange'=>'addService()', 'style'=>'display:none', 'prompt'=>'请选择'
+            ]);?>
+        </div>
+        <div style='padding-left: 280px;'></div><div><p class="help-block help-block-error"></p></div>
+    </div>
+
     <?= $form->field($expertinfo, 'degree')->textInput()?>
     <?= $form->field($expertinfo, 'title')->textInput()?>
     <?= $form->field($expertinfo, 'affliation')->textInput()?>
@@ -101,5 +123,31 @@ use yii\helpers\Url;
         $.get("<?= $url?>&id="+$("#expert-city").val(),function(data){
             $("#expert-area").html("<option value=0>请选择县</option>");
             $("#expert-area").append(data);});
+    }
+
+    function addService()
+    {
+        var service = $("#service").val();
+        $.get("<?=Url::to(['shop-seller/addservice'])?>" + "&shopId=" + <?=$expertinfo->id?> + "&service=" + service, function (data) {
+            if('Failed' != data){
+                var str = '<ctrlarea id=' + 'ctrl' + data + '>' +
+                    '<a href="#" onclick="rmService(' + data + ')">' +
+                    service + '</a>&nbsp;&nbsp;</ctrlarea>';
+                $("#container").prepend(str);
+            }
+        });
+
+    }
+
+    function rmService(id)
+    {
+        if(confirm('确定删除此分类？')) {
+            var node = '#ctrl' + id;
+            $.get("<?=Url::to(['shop-seller/delservice'])?>" + "&id=" + id, function (data) {
+                if('OK' == data){
+                    $(node).remove();
+                }
+            });
+        }
     }
 </script>
