@@ -9,6 +9,7 @@ class Menu
              "商品列表" => "admin/goodslist",
              "商品添加" => "admin/goodsadd",
              "评论列表" => "admin/commentlist",
+             "咨询列表" => 'admin/consultlist',
         ),
         "会员管理" => array(
             "会员列表" => "admin/memberlist",
@@ -18,6 +19,7 @@ class Menu
         "订单管理" => array(
             "销售统计" => "admin/account",
             "订单列表" => "admin/orderlist",
+            "完成订单" => "admin/orderok",
             "退款列表" => "admin/refundmentlist",
         ),
         "预约管理" => array(

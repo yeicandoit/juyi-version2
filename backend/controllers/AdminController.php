@@ -10,6 +10,8 @@ use backend\models\admin\MemberSearch;
 use backend\models\admin\SellerSearch;
 use backend\models\seller\Expert;
 use backend\models\seller\ExpertExt;
+use backend\models\seller\GoodsConsult;
+use backend\models\seller\GoodsConsultSearch;
 use backend\models\seller\Member;
 use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
@@ -290,6 +292,13 @@ class AdminController extends Controller
         return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
     }
 
+    public function actionOrderok()
+    {
+        $searchModel = new OrderSearch(['status' => 1]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
+    }
+
     public function actionOrderinfo($id)
     {
         if(Yii::$app->request->isPost){
@@ -409,5 +418,37 @@ class AdminController extends Controller
         }
         $countData = Order::sellerAmount(null, $startDate, $endDate);
         return $this->render('account', [ 'countData'=>$countData]);
+    }
+
+    public function actionConsultlist()
+    {
+        $searchModel = new GoodsConsultSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('consult', [ 'consult'=>$dataProvider]);
+    }
+
+    public function actionConsultinfo($id, $type)
+    {
+        if(Yii::$app->request->isPost){
+            $consult = GoodsConsult::findOne($id);
+            if($consult->load(Yii::$app->request->post()) && $consult->save()){
+                $this->redirect(['consultlist']);
+            } else {
+                $this->redirect(['consultlist']);
+            }
+        }
+
+        $consult = GoodsConsult::findOne($id);
+        if('check' == $type) {
+            return $this->render('consultinfo', ['consult' => $consult]);
+        } elseif('delete' == $type) {
+            $consult->del = 1;
+            $consult->save();
+            $this->redirect(['consultlist']);
+        } elseif('restore' == $type) {
+            $consult->del = 0;
+            $consult->save();
+            $this->redirect(['consultlist']);
+        }
     }
 }
