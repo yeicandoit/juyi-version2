@@ -45,14 +45,12 @@ class ExpertregForm extends Model
             ['password', 'required', 'message'=>'密码不能为空'],
             ['confirmPwd', 'required', 'message'=>"确认密码不能为空"],
             ['confirmPwd', 'validatePassword'],
-            ['mobile', 'required', 'message'=>"手机号码不能为空"],
             ['email', 'required', 'message'=>"邮箱不能为空"],
             ['email', 'filter', 'filter'=>'trim'],
             ['email', 'email'],
-            ['serverNum', 'required', 'message'=>'QQ不能为空'],
             [['country', 'province', 'city', 'area'], 'safe'], //TODO if set to be 'required', $this->validate() will return false!!!
             ['address', 'required', 'message'=>"详细地址不能为空"],
-            [[ 'regType'], 'safe'],
+            [['mobile', 'serverNum', 'regType'], 'safe'],
 
             ['verifyCode', 'required', 'message'=>'请填写验证码'],
             ['verifyCode', 'captcha', 'message' => '验证码错误'],
@@ -97,8 +95,8 @@ class ExpertregForm extends Model
                 $expert->regedittime = date('Y-m-d H:i:s', time());
                 $expert->logintime = date('Y-m-d H:i:s', 0);
                 $expert->degree = "";
-                $expert->mobile = $this->mobile;
-                $expert->server_num = $this->serverNum;
+                $expert->mobile = isset($this->mobile) ? $this->mobile : "";
+                $expert->server_num = isset($this->serverNum) ? $this->serverNum : "";
                 $expert->email = $this->email;
                 $expert->country = isset($this->country) ? $this->country : 0;
                 $expert->province = isset($this->province) ? $this->province : 0;

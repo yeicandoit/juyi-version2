@@ -54,7 +54,6 @@ use yii\helpers\Url;
     <?= $form->field($expertinfo, 'title')->textInput()?>
     <?= $form->field($expertinfo, 'affliation')->textInput()?>
     <?= $form->field($expertinfo, 'affliationtype')->textInput()?>
-    <?= $form->field($expertinfo, 'account')->textInput()->hint('标明开户行，卡号，账户名称等',['style'=>'padding-left:30px',])?>
     <?= $form->field($expertinfo, 'mobile')->textInput()->label('手机')?>
     <?= $form->field($expertinfo, 'email')->textInput()?>
     <?= $form->field($expertinfo, 'server_num')->textInput()?>
