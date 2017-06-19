@@ -467,7 +467,7 @@ class ShopSellerController extends Controller
     public  function  actionUpload()
     {
         $path = Yii::$app->basePath."/web/avatar/";
-        $tmpath="/avatar/";
+        $tmpath="avatar/";
         if(!empty($_FILES)){
             //得到上传的临时文件流
             $tempFile = $_FILES['myfile']['tmp_name'];
@@ -501,10 +501,10 @@ class ShopSellerController extends Controller
             $imgSaveMap = array('jpg'=>'imagejpeg', 'jpeg'=>'imagejpeg',
                 'png'=>'imagepng', 'gif'=>'imagegif');
 
-            $path="/goodsImg/";
+            $path="goodsImg/";
             $targ_w = $targ_h = Yii::$app->request->post('w');
             $imgSrc =Yii::$app->request->post('f');
-            $imgSrc=Yii::$app->basePath.'/web'.$imgSrc;//真实的图片路径
+            $imgSrc=Yii::$app->basePath.'/web/'.$imgSrc;//真实的图片路径
             $suffix = substr(strrchr($imgSrc,"."),1);
             $img_r = $imgCrtMap[$suffix]($imgSrc);
             $ext=$path.Yii::$app->user->getId().'_'.time().".$suffix";//生成的引用路径
