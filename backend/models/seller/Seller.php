@@ -171,4 +171,25 @@ class Seller extends \yii\db\ActiveRecord
             '实验耗材'=>'实验耗材',
         );
     }
+
+    public function saveImg()
+    {
+        if(isset($this->logo) && strpos($this->logo, '/') == false){
+            $this->logo = "images/" . $this->logo; 
+        }
+        $connection = Yii::$app->db;
+        $sql = "update jy_seller set logo = \"$this->logo\" where id = $this->id"; 
+        $command=$connection->createCommand($sql);
+        $command->execute();
+
+    }
+
+    public function setImage()
+    {
+        if(isset($this->logo) && strpos($this->logo, '/')){
+            // images/<img_name>.jpg, remove 'images/'
+            $this->logo = substr($this->logo, 7); 
+        } 
+    }
+
 }

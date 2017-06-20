@@ -147,8 +147,10 @@ class ShopSellerController extends Controller
         }
 
         if($shopInfo->load(Yii::$app->request->post()) && $shopInfo->save()){
+            $shopInfo->saveImg();
             return $this->redirect(['sellerhome']);
         }
+        $shopInfo->setImage();
         return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt, 'shopType'=>Yii::$app->params['regtype']]);
     }
 

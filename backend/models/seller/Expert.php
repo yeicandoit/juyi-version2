@@ -155,4 +155,23 @@ class Expert extends \yii\db\ActiveRecord
             '委托开发'=>'委托开发',
         );
     }
+
+    public function saveImg()
+    {
+        if(isset($this->img) && strpos($this->img, '/') == false){
+            $this->img = "images/" . $this->img; 
+        }
+        $connection = Yii::$app->db;
+        $sql = "update jy_expert set img = \"$this->img\" where id = $this->id"; 
+        $command=$connection->createCommand($sql);
+        $command->execute();
+    }
+
+    public function setImage()
+    {
+        if(isset($this->img) && strpos($this->img, '/')){
+            // images/<img_name>.jpg, remove 'images/'
+            $this->img = substr($this->img, 7); 
+        } 
+    }
 }

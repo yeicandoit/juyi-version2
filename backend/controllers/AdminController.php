@@ -206,6 +206,7 @@ class AdminController extends Controller
             $id = $post['Seller']['id'];
             $shopInfo = Seller::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
+                $shopInfo->saveImg();
                 return $this->redirect(['sellerlist']);
             }
         } else {
@@ -216,6 +217,7 @@ class AdminController extends Controller
         }
 
         $shopType = ShopMember::findOne($id)->regtype;
+        $shopInfo->setImage();
         return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopType]);
     }
 
@@ -254,6 +256,7 @@ class AdminController extends Controller
             $post = Yii::$app->request->post();
             $shopInfo = Expert::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
+                $shopInfo->saveImg();
                 return $this->redirect(['expertlist']);
             }
         } else {
@@ -262,6 +265,7 @@ class AdminController extends Controller
         if(!$shopInfo) {
             return false;
         }
+        $shopInfo->setImage();
         return $this->render("expertinfo", ["expertinfo"=>$shopInfo,]);
     }
 
