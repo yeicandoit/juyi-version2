@@ -192,4 +192,10 @@ class Seller extends \yii\db\ActiveRecord
         } 
     }
 
+    public function getLocation($separator)
+    {
+        return Areas::findOne($this->province)->area_name . $separator .
+        Areas::findOne($this->city)->area_name . $separator .
+        Areas::findOne($this->area)->area_name;
+    }
 }

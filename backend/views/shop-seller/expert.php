@@ -40,7 +40,7 @@ use yii\helpers\Html;
         <div>
             <table>
                 <tr>
-                    <td valign="top"><?= Html::img(Yii::$app->params['imgGlobalPath'] . $expert->getImageUrl('img'))?></td>
+                    <td valign="top"><?= Html::img($expert->img)?></td>
                     <td style="padding-left: 20px; valign="top"">
                         <div style="border-bottom:1px inset;">
                             <p><strong style="font-size: large">解码专家:<?=$expert->true_name?></strong>&nbsp;<span><?=$expert->title?></span></p>

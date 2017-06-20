@@ -11,10 +11,10 @@ use yii\widgets\LinkPager;
             <li style="width:95%;background-color: #116fb5;border-radius:0 0 0 15px;color: #fdfdfd;font-size: 15px;padding-left: 30px">
                 实验室信息
             </li>
-            <?=Html::img('images/lab.png', ['style'=>'width:200px;height:150px;padding-top:5px'])?><br>
-            <?=Html::label('名称:')?> 上海交大生物质能研究中心<br>
+            <?=Html::img("$lab->logo", ['style'=>'width:200px;height:150px;padding-top:5px'])?><br>
+            <?=Html::label('名称:').$lab->true_name?> <br>
             <?=Html::label('评分:')?><span class="grade"><i style="width: 70px;"></i></span><br>
-            <?=Html::label('所在地:')?> 上海闵行
+            <?=Html::label('所在地:').$lab->getLocation("/")?> 
         </div>
         <div style="border-right:1px inset; width: 210px">
             <li style="width:95%;background-color: #116fb5;border-radius:0 0 0 15px;color: #fdfdfd;font-size: 15px;padding-left: 30px">
@@ -41,7 +41,7 @@ use yii\widgets\LinkPager;
             <?php
                 foreach($model as $k=>$g) { ?>
                     <div style='float: left; padding-left: 5px; padding-top:10px'>
-                        <?=Html::img(Yii::$app->params['imgGlobalPath'] . $g->img,['style'=>'width:200px;height:200px'])?> <br><br>
+                        <?=Html::img($g->img,['style'=>'width:200px;height:200px'])?> <br><br>
                         <div style="height:100px">
                             <?=Html::label($g->name, null, ['style'=>'width:200px'])?>
                             <div style="width:200px"><font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
