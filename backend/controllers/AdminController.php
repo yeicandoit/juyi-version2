@@ -112,6 +112,9 @@ class AdminController extends Controller
                 if(isset($post['goodsImgs'])){
                     $goods->saveImgs($post['goodsImgs']);
                 }
+                if(isset($post['newBrand']) && '' != $post['newBrand']){
+                    $goods->saveBrand($post['newBrand']); 
+                }
                 return $this->redirect(['goodslist']);
             }
             return $this->goBack();
@@ -173,6 +176,9 @@ class AdminController extends Controller
                 }
                 if(isset($post['goodsImgs'])){
                     $goods->saveImgs($post['goodsImgs']);
+                }
+                if(isset($post['newBrand']) && '' != $post['newBrand']){
+                    $goods->saveBrand($post['newBrand']); 
                 }
                 return $this->redirect(['goodslist']);
             }

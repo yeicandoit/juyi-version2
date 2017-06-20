@@ -189,4 +189,17 @@ class Goods extends \yii\db\ActiveRecord
         $arr = array('seller'=>1, 'expert'=>2, 'research'=>3, 'simulate'=>4);
         return $arr[$type];
     }
+
+    public function saveBrand($brandName)
+    {
+        $brandName = trim($brandName);
+        $brand = Brand::find()->where(['name'=>$brandName])->one();  
+        if($brand == null) {
+            $brand = New Brand();
+            $brand->name = $brandName;
+            $brand->save();
+        }
+        $this->brandid = $brand->id; 
+        $this->save();
+    }
 }
