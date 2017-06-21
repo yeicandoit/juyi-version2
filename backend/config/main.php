@@ -48,5 +48,12 @@ return [
        'params' => $params,
        'language'=>'zh_cn',
 
-
+    'modules' => [
+        'redactor' => [
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => '@webroot/shopdetail',
+            'uploadUrl' => 'shopdetail',
+            'imageAllowExtensions'=>['jpg','png','gif']
+        ],
+    ],
 ];

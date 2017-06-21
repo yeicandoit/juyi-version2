@@ -25,9 +25,9 @@ use yii\widgets\LinkPager;
             <?=Html::img('images/lab.png', ['style'=>'width:80px;height:60px;padding-top:5px'])?> 交大生物质能<br>
         </div>
     </td>
-    <td style="padding-left: 20px;min-width: 850px; max-width: 1000px" valign="top">
-        <div style="height: 100px;" align="center" >
-            <?=Html::label('这里填写标语');?>
+    <td style="padding-left: 20px;min-width: 850px; max-width: 1000px;" valign="top">
+        <div style="height: 100px; background-image: url(images/labAd.jpg);" align="center" >
+            <?=Html::label('淏博检测暑期测试特惠！', null, ['style'=>'margin-top:40px;color:red;font-size:25px']);?>
         </div>
         <div align="center" style="height: 36px;background-color: #116fb5">
             <ul id="menu">

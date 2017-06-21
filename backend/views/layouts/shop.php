@@ -188,13 +188,13 @@ AppAsset::register($this);
 	} else{
 		$shop = \backend\models\seller\ShopMember::findOne(Yii::$app->user->id);
 		if ('expert' != $shop->regtype) {
-			$action = 'shop-seller/lab';
+			$action = Yii::$app->params['fUrl'] . 'shop-seller/lab&id=';
 		} else {
-			$action = 'shop-seller/expert';
+			$action = Yii::$app->params['fUrl'] . 'shop-seller/expert&id=';
 		}
 	}
 ?>
-<li><a href="<?=Url::to(["$action", 'id'=>Yii::$app->user->id])?>">商家主页</a></li>
+<li><a href="<?=$action . Yii::$app->user->id?>">商家主页</a></li>
 
 </ul> 
 

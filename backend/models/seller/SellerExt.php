@@ -33,7 +33,7 @@ class SellerExt extends \yii\db\ActiveRecord
         return [
             [['seller_id'], 'required'],
             [['seller_id'], 'integer'],
-            [['outwork', 'reserve1', 'reserve2'], 'string', 'max' => 512],
+            [['outwork', 'reserve1', 'reserve2'], 'string'],
             [['seller_id'], 'unique'],
             [['description', 'team'], 'string'],
         ];

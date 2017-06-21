@@ -37,7 +37,7 @@ class ExpertExt extends \yii\db\ActiveRecord
         return [
             [['expert_id'], 'required'],
             [['expert_id'], 'integer'],
-            [['description', 'direction', 'education', 'work', 'project', 'reserve1', 'reserve2'], 'string', 'max' => 512],
+            [['description', 'direction', 'education', 'work', 'project', 'reserve1', 'reserve2'], 'string'],
             [['expert_id'], 'unique'],
             [['research', 'award'], 'string'],
         ];

@@ -15,55 +15,27 @@ use yii\helpers\Url;
     <?php $form = ActiveForm::begin([
         'options' => ['style'=>'padding-left: 20px;'],
     ]); ?>
+    <?php $option = [
+        'clientOptions' => [
+            'imageManagerJson' => ['/redactor/upload/image-json'],
+            'imageUpload' => ['/redactor/upload/image'],
+            'fileUpload' => ['/redactor/upload/file'],
+            'lang' => 'zh_cn',
+            'plugins' => ['clips', 'fontcolor','imagemanager']
+        ]
+    ];?>
     <?php if('expert' != $regtype) {?>
-        <?= $form->field($detail, 'description')->widget(\yii\redactor\widgets\Redactor::className(),
-            [
-                'clientOptions' => [
-                    'imageManagerJson' => ['/redactor/upload/image-json'],
-                    'imageUpload' => ['/redactor/upload/image'],
-                    'fileUpload' => ['/redactor/upload/file'],
-                    'lang' => 'zh_cn',
-                    'plugins' => ['clips', 'fontcolor','imagemanager']
-                ]
-            ])?>
-        <?= $form->field($detail, 'team')->widget(\yii\redactor\widgets\Redactor::className(),
-            [
-                'clientOptions' => [
-                    'imageManagerJson' => ['/redactor/upload/image-json'],
-                    'imageUpload' => ['/redactor/upload/image'],
-                    'fileUpload' => ['/redactor/upload/file'],
-                    'lang' => 'zh_cn',
-                    'plugins' => ['clips', 'fontcolor','imagemanager']
-                ]
-            ])?>
-        <?= $form->field($detail, 'outwork')->textarea()
-            ->label('科研成果:')->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
+        <?= $form->field($detail, 'description')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'team')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'outwork')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
     <?php } else {?>
-        <?= $form->field($detail, 'description')->textarea()->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-        <?= $form->field($detail, 'direction')->textarea()->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-        <?= $form->field($detail, 'education')->textarea()->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-        <?= $form->field($detail, 'work')->textarea()->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-        <?= $form->field($detail, 'project')->textarea()->hint('&nbsp;&nbsp;&nbsp;最多不超过200字')?>
-        <?= $form->field($detail, 'research')->widget(\yii\redactor\widgets\Redactor::className(),
-            [
-                'clientOptions' => [
-                    'imageManagerJson' => ['/redactor/upload/image-json'],
-                    'imageUpload' => ['/redactor/upload/image'],
-                    'fileUpload' => ['/redactor/upload/file'],
-                    'lang' => 'zh_cn',
-                    'plugins' => ['clips', 'fontcolor','imagemanager']
-                ]
-            ])?>
-        <?= $form->field($detail, 'award')->widget(\yii\redactor\widgets\Redactor::className(),
-            [
-                'clientOptions' => [
-                    'imageManagerJson' => ['/redactor/upload/image-json'],
-                    'imageUpload' => ['/redactor/upload/image'],
-                    'fileUpload' => ['/redactor/upload/file'],
-                    'lang' => 'zh_cn',
-                    'plugins' => ['clips', 'fontcolor','imagemanager']
-                ]
-            ])?>
+        <?= $form->field($detail, 'description')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'direction')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'education')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'work')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'project')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'research')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
+        <?= $form->field($detail, 'award')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
     <?php }?>
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
