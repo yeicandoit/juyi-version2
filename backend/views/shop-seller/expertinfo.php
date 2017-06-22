@@ -51,6 +51,7 @@ use yii\helpers\Url;
     </div>
 
     <?= $form->field($expertinfo, 'degree')->textInput()?>
+    <?= $form->field($expertinfo, 'major')->textInput()?>
     <?= $form->field($expertinfo, 'title')->textInput()?>
     <?= $form->field($expertinfo, 'affliation')->textInput()?>
     <?= $form->field($expertinfo, 'affliationtype')->textInput()?>

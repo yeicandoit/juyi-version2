@@ -43,10 +43,13 @@ use yii\helpers\Html;
                     <td valign="top"><?= Html::img($expert->img)?></td>
                     <td style="padding-left: 20px; valign="top"">
                         <div style="border-bottom:1px inset;">
-                            <p><strong style="font-size: large">解码专家:<?=$expert->true_name?></strong>&nbsp;<span><?=$expert->title?></span></p>
+                            <p><strong style="font-size: large">解码专家:&nbsp;&nbsp;<?=$expert->true_name?></strong>&nbsp;<span><?=$expert->title?></span></p>
                         </div>
                         <div style="padding-top: 5px">
-                            <?=Html::label('学历:')?><?=$expert->degree?>
+                            <?=Html::label('学历:')?>&nbsp;&nbsp;<?=$expert->degree?>
+                        </div>
+                        <div style="padding-top: 5px">
+                            <?=Html::label('专业:')?>&nbsp;&nbsp;<?=isset($expert->major) ? $expert->major : ''?>
                         </div>
                         <div style="padding-top: 5px">
                             <?=Html::img('@web/images/map.png', ['style'=>'width:12px;height:18px'])?>
@@ -55,8 +58,8 @@ use yii\helpers\Html;
                             ?>
                             <span><?=$location?></span>
                         </div>
-                        <div style="padding-top: 5px"><?=Html::label('邮箱:')?><?=$expert->email?></div>
-                        <div style="padding-top: 5px"><?=Html::label('个人主页:')?><?=$expert->home_url?></div>
+                        <div style="padding-top: 5px"><?=Html::label('邮箱:')?>&nbsp;&nbsp;<?=$expert->email?></div>
+                        <div style="padding-top: 5px"><?=Html::label('个人主页:')?>&nbsp;&nbsp;<?=$expert->home_url?></div>
                         <!--<button class="expert-concern">关注此专家</button>  The button image is too big to be in!!-->
                         <button style="background-color: #116fb5;color: #fdfdfd;border-radius:5px 5px 5px 5px">关注此专家</button>
                     </td>

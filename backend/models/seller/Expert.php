@@ -49,10 +49,11 @@ class Expert extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'true_name', 'password', 'regedittime', 'logintime', 'degree', 'mobile', 'server_num', 'email', 'country', 'province', 'city', 'area', 'address', 'account', 'affliation', 'affliationtype'], 'safe'],
+            [['name', 'true_name', 'password', 'regedittime', 'logintime', 'degree', 'mobile', 'server_num', 'email',
+                'country', 'province', 'city', 'area', 'address', 'account', 'affliation', 'affliationtype', 'major'], 'safe'],
             [['regedittime', 'logintime'], 'safe'],
             [['age', 'sex', 'country', 'province', 'city', 'area', 'grade', 'comments'], 'integer'],
-            [['name', 'true_name', 'degree', 'title'], 'string', 'max' => 60],
+            [['name', 'true_name', 'degree', 'title', 'major'], 'string', 'max' => 60],
             [['password'], 'string', 'max' => 32],
             [['mobile', 'server_num', 'affliationtype'], 'string', 'max' => 20],
             [['email', 'address', 'account', 'home_url'], 'string', 'max' => 255],
@@ -77,6 +78,7 @@ class Expert extends \yii\db\ActiveRecord
             'sex' => Yii::t('app', 'Sex'),
             'degree' => Yii::t('app', '学历'),
             'title' => Yii::t('app', '职称'),
+            'major' => Yii::t('app', '专业'),
             'mobile' => Yii::t('app', 'Mobile'),
             'server_num' => Yii::t('app', 'qq号码'),
             'email' => Yii::t('app', 'Email'),
