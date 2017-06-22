@@ -36,7 +36,7 @@ use yii\helpers\Html;
         </div>
     </td>
 
-    <td style="padding-left: 20px; width: 70%;" valign="top" >
+    <td style="padding-left: 30px; width:70%" valign="top" >
         <div>
             <table>
                 <tr>
@@ -64,57 +64,57 @@ use yii\helpers\Html;
             </table>
         </div>
         <div id="service" style="padding-top: 20px;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;技术服务</div>
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;技术服务</div>
             <?php
                 foreach($expert->goods as $k=>$g){
                     echo Html::a($g->name, ['site/goodinfo', 'id'=>$g->id], ['style'=>'width:115px; btn btn-primary;padding-top:20px; padding-left:25px;padding-right:25px;']);
                 }
             ?>
         </div>
-        <div id="description" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;专家介绍</div>
+        <div id="description" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;专家介绍</div>
             <div>
                 <?=$expertInfo->description?>
             </div>
         </div>
-        <div id="direction" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;研究方向</div>
+        <div id="direction" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;研究方向</div>
             <div>
                 <?=$expertInfo->direction?>
             </div>
         </div>
-        <div id="education" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;教育背景</div>
+        <div id="education" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;教育背景</div>
             <div>
                 <?=$expertInfo->education?>
             </div>
         </div>
-        <div id="work" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;工作经历</div>
+        <div id="work" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;工作经历</div>
             <div>
                 <?=$expertInfo->work?>
             </div>
         </div>
-        <div id="research" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;科研成果</div>
+        <div id="research" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;科研成果</div>
             <div>
                 <?=$expertInfo->research?>
             </div>
         </div>
-        <div id="project" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;科研项目</div>
+        <div id="project" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;科研项目</div>
             <div>
                 <?=$expertInfo->project?>
             </div>
         </div>
-        <div id="award" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;">
-            <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;荣誉奖励</div>
+        <div id="award" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;荣誉奖励</div>
             <div>
                 <?=$expertInfo->award?>
             </div>
         </div>
     </td>
-    <td style="padding-left: 20px;padding-top: 10px; width: 15%" valign="top">
+    <td style="padding-left: 20px;padding-top: 10px; width:15%" valign="top">
         <div style="background-color: #116fb5;border-radius:0 0 0 15px;min-width: 70px;color: #fdfdfd;font-size: 15px">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相关专家
         </div>
