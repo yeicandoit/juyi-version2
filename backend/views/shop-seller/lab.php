@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
+use yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/sellerhome.css')?>
 
@@ -41,9 +42,9 @@ use yii\widgets\LinkPager;
             <?php
                 foreach($model as $k=>$g) { ?>
                     <div style='float: left; padding-left: 5px; padding-top:10px'>
-                        <?=Html::img($g->img,['style'=>'width:200px;height:200px'])?> <br><br>
+                        <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::img($g->img,['style'=>'width:200px;height:200px'])?></a> <br><br>
                         <div style="height:100px">
-                            <?=Html::label($g->name, null, ['style'=>'width:200px'])?>
+                            <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::label($g->name, null, ['style'=>'width:200px'])?></a>
                             <div style="width:200px"><font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
                             <div><font size='2'>测试价:<?=$g->sell_price?>元/样</font></div>
                             <div><font size='1px'><s>市场价:<?=$g->market_price?>元/样</s></font></div>

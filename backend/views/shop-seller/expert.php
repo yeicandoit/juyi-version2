@@ -67,7 +67,7 @@ use yii\helpers\Html;
             <div style="background-color:#0e5e98;color: #fdfdfd">&nbsp;&nbsp;&nbsp;技术服务</div>
             <?php
                 foreach($expert->goods as $k=>$g){
-                    echo Html::a($g->name, '#', ['style'=>'width:115px; btn btn-primary;padding-top:20px; padding-left:25px;padding-right:25px;']);
+                    echo Html::a($g->name, ['site/goodinfo', 'id'=>$g->id], ['style'=>'width:115px; btn btn-primary;padding-top:20px; padding-left:25px;padding-right:25px;']);
                 }
             ?>
         </div>
