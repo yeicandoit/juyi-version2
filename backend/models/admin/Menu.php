@@ -29,6 +29,12 @@ class Menu
         "网站管理" => array(
             "关于聚仪" => "xyf/updateaboutjuyi",
         ),
+        "新闻资讯" => array(
+            "新闻发布" => "admin/announcenews",
+            "新闻管理" => "admin/managenews",
+            "资讯发布" => "admin/setinformation",
+            "资讯管理" => "admin/manageinformation",
+        ),
     );
 
     /**

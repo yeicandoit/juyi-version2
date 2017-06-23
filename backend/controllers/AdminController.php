@@ -2,7 +2,11 @@
 
 namespace backend\controllers;
 
+use backend\models\admin\AnnounceNewsForm;
 use backend\models\admin\AppointinfoSearch;
+use backend\models\admin\JyAnnouncement;
+use backend\models\admin\JyInformation;
+use backend\models\admin\SetInformationForm;
 use backend\models\seller\Comment;
 use backend\models\seller\Delivery;
 use backend\models\admin\ExpertSearch;
@@ -17,6 +21,7 @@ use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
 use backend\models\seller\ShopMember;
 use Yii;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use backend\models\admin\LoginForm;
@@ -460,5 +465,108 @@ class AdminController extends Controller
             $consult->save();
             $this->redirect(['consultlist']);
         }
+    }
+
+    public function actionAnnouncenews()
+    {
+        $model = new AnnounceNewsForm();
+        $info="";
+        if ($model->load(Yii::$app->request->post()))
+        {
+            if($model->savenews())
+            {
+                $info="发布成功，继续发布";
+            }
+        }
+        return $this->render('announcenews', ['model' => $model, 'info' => $info]);
+    }
+
+    public function actionManagenews()
+    {
+        $request = Yii::$app->request;
+        $newsid=0;
+        $newsid=$request->post("newsid");
+        if($newsid)
+        {
+            $con1=Yii::$app->db->createCommand("DELETE FROM jy_announcement WHERE id = '{$newsid}'")->execute();
+        }
+        $news=JyAnnouncement::find();
+        // var_dump($allnews);
+        $pagination = new Pagination(['defaultPageSize' => 20, 'totalCount' => $news->count(),]);
+        $allnews = $news->offset($pagination->offset)->limit($pagination->limit)->all();
+        return $this->render('managenews', ["allnews" => $allnews, 'pagination' => $pagination,]);
+    }
+    public function actionChangenews()
+    {
+        $model = new AnnounceNewsForm();
+        $info = "";
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->changenews()) {
+                $info = "修改成功，继续修改";
+            }
+        }
+        if (Yii::$app->request->post('postnewsid')) {
+            $newsid = Yii::$app->request->post("postnewsid");
+            $news = JyAnnouncement::findone($newsid);
+            $model->title = $news->title;
+            $model->content = $news->content;
+        }
+        return $this->render('changenews', ['model' => $model, 'info' => $info, 'news' => $news,]);
+    }
+
+    public function actionSetinformation()
+    {
+        $model=new SetInformationForm();
+        $info="";
+        if ($model->load(Yii::$app->request->post()))
+        {
+            if($model->savenews())
+            {
+                $info="发布成功，继续发布";
+            }
+        }
+        return $this->render('setinformation', ['model' => $model, 'info' => $info]);
+    }
+
+    public function actionManageinformation()
+    {
+        $request = Yii::$app->request;
+        $newsid=0;
+        $newsid=$request->post("newsid");
+        if($newsid)
+        {
+            $con1=Yii::$app->db->createCommand("DELETE FROM jy_information WHERE id = '{$newsid}'")->execute();
+        }
+        $news=JyInformation::find();
+        // var_dump($allnews);
+        $pagination = new Pagination([
+            'defaultPageSize' => 20,
+            'totalCount' => $news->count(),
+        ]);
+        $allnews = $news->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+        return $this->render('manageinformation', ["allnews" => $allnews, 'pagination' => $pagination,]);
+    }
+
+    public function actionChangeinformation()
+    {
+        $model=new SetInformationForm();
+        $info="";
+        if ($model->load(Yii::$app->request->post()))
+        {
+            if($model->changenews())
+            {
+                $info="修改成功，继续修改";
+            }
+        }
+        if(Yii::$app->request->post())
+        {
+            $newsid=Yii::$app->request->post("newsid");
+            $news=JyInformation::findone($newsid);
+            $model->title = $news->title;
+            $model->content = $news->content;
+        }
+        return $this->render('changeinformation', ['model' => $model, 'info' => $info, 'news' => $news,]);
     }
 }
