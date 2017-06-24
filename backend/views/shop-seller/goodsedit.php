@@ -93,7 +93,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
                 'data-toggle' => 'modal',
                 'data-target' => '#create-modal',
             ]); ?>
-            <?php $catUrl = Url::to(['shop-seller/goodscategory'])?>
+            <?php $catUrl = Url::to(['shop-seller/goodscategory', 'type'=>$goods->getGoodType2Int(Yii::$app->params['regtype'])])?>
             <?php
             Modal::begin([
                 'id' => 'create-modal',

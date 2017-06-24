@@ -389,9 +389,9 @@ class ShopSellerController extends Controller
         }
     }
 
-    public function actionGoodscategory()
+    public function actionGoodscategory($type)
     {
-        $data = Category::find()->asArray()->all();
+        $data = Category::find()->where(['type'=>$type])->asArray()->all();
         $idname = ArrayHelper::map($data, 'id', 'name');
         $idmap = ArrayHelper::map($data, 'id', 'parent_id');
         return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap]);

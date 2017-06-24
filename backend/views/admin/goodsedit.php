@@ -93,12 +93,17 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
             ?>
         </div>
         <div>
-            <?= Html::button('设置分类', [
+            <?php echo Html::button('设置分类', [
                 'id' => 'create',
                 'data-toggle' => 'modal',
                 'data-target' => '#create-modal',
-            ]); ?>
-            <?php $catUrl = Url::to(['shop-seller/goodscategory'])?>
+            ]);
+                if(!isset($goods->id)){
+                    echo Html::label('&nbsp;&nbsp;添加完商品保存后才能设置分类', null, ['style'=>'color:red']);
+                }
+            ?>
+
+            <?php $catUrl = Url::to(['shop-seller/goodscategory', 'type'=>$goods->goodtype])?>
             <?php
             Modal::begin([
                 'id' => 'create-modal',

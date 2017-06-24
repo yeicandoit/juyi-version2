@@ -35,8 +35,8 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'parent_id'], 'required'],
-            [['parent_id', 'sort', 'visibility', 'seller_id'], 'integer'],
+            [['name', 'parent_id', 'type'], 'required'],
+            [['parent_id', 'sort', 'visibility', 'seller_id','type'], 'integer'],
             [['name'], 'string', 'max' => 50],
             [['keywords', 'descript', 'title'], 'string', 'max' => 255],
         ];
@@ -51,6 +51,7 @@ class Category extends \yii\db\ActiveRecord
             'id' => Yii::t('app', '分类ID'),
             'name' => Yii::t('app', '分类名称'),
             'parent_id' => Yii::t('app', '父分类ID'),
+            'type' => Yii::t('app', '1:检测中心 2:解码专家 3:科研辅助 4:数值模拟 5:需求大厅;与goods表对应goodtype保持一致'),
             'sort' => Yii::t('app', '排序'),
             'visibility' => Yii::t('app', '首页是否显示 1显示 0 不显示'),
             'keywords' => Yii::t('app', 'SEO关键词和检索关键词'),
