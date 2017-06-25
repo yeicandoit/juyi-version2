@@ -9,13 +9,12 @@ use yii\helpers\Url;
 .goodshow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: #f6f6f6;
-    cursor: pointer;
 }
 .goodbox {
     float: left;
     padding-top:15px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
 }
 </style>
 
