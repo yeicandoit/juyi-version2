@@ -5,6 +5,20 @@ use yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/sellerhome.css')?>
 
+<style type="text/css">
+.goodshow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #f6f6f6;
+    cursor: pointer;
+}
+.goodbox {
+    float: left;
+    padding-top:15px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+</style>
+
 <table>
     <tr>
     <td valign="top" >
@@ -41,14 +55,16 @@ use yii\helpers\Url;
         <div id="showlab_1" style="padding-top: 10px">
             <?php
                 foreach($model as $k=>$g) { ?>
-                    <div style='float: left; padding-left: 5px; padding-top:10px'>
+                    <div class='goodbox'>
+                    <div class='goodshow'>
                         <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::img($g->img,['style'=>'width:200px;height:200px'])?></a> <br><br>
-                        <div style="height:100px">
-                            <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::label($g->name, null, ['style'=>'width:200px'])?></a>
-                            <div style="width:200px"><font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
-                            <div><font size='2'>测试价:<?=$g->sell_price?>元/样</font></div>
-                            <div><font size='1px'><s>市场价:<?=$g->market_price?>元/样</s></font></div>
+                        <div style="height:120px">
+                            <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::label("&nbsp;&nbsp;$g->name", null, ['style'=>'width:200px'])?></a>
+                            <div style="width:200px">&nbsp;&nbsp;<font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
+                            <div><font size='2'>&nbsp;&nbsp;测试价:<?=$g->sell_price?>元/样</font></div>
+                            <div><font size='1px'>&nbsp;&nbsp;<s>市场价:<?=$g->market_price?>元/样</s></font></div>
                         </div>
+                    </div>
                     </div>
             <?php }?>
             <div style="clear: both;"><?= LinkPager::widget(['pagination' => $pages]);?></div>
