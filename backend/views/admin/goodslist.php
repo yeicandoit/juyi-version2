@@ -33,6 +33,7 @@ use \yii\helpers\Url;
                                 </table>";
                 }
             ],
+            'goods_no',
             [
                 'label'=>'分类',
                 'format'=>'raw',
@@ -46,14 +47,6 @@ use \yii\helpers\Url;
                 }
             ],
             'sell_price',
-            [
-                'label'=>'状态',
-                'format'=>'raw',
-                'value'=>function($model){
-                    $color = $model->is_del==0 ? 'grenn':'red';
-                    return Html::label($model->statusText(), '', ['style'=>"color:$color"]);
-                }
-            ],
             [
                 'label'=>'状态',
                 'format'=>'raw',

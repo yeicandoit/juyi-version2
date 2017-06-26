@@ -2,6 +2,7 @@
 
 namespace backend\models\seller;
 
+use backend\models\admin\CommendGoods;
 use Yii;
 
 /**
@@ -114,5 +115,14 @@ class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterf
         }
 
         return Expert::findOne($this->id)->regedittime;
+    }
+
+    public static function commendType2RegType($type)
+    {
+        //注册类型：expert, seller, simulate, research
+        //推荐类型：1. 热门仪器 2. 热门机构 3. 聚仪专家 4. 热门辅助 5. 热门模拟
+        //$type 值不应为2，若为2，当作1 热门仪器处理
+        $arr = array(CommendGoods::HotOrganization=>'seller', CommendGoods::HotExpert=>'expert');
+        return $arr[$type];
     }
 }

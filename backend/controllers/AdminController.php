@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use backend\models\admin\AnnounceNewsForm;
 use backend\models\admin\AppointinfoSearch;
+use backend\models\admin\CommendGoods;
+use backend\models\admin\CommendGoodsSearch;
 use backend\models\admin\JyAnnouncement;
 use backend\models\admin\JyInformation;
 use backend\models\admin\SetInformationForm;
@@ -568,5 +570,56 @@ class AdminController extends Controller
             $model->content = $news->content;
         }
         return $this->render('changeinformation', ['model' => $model, 'info' => $info, 'news' => $news,]);
+    }
+
+    public function actionHot($type = CommendGoods::HotDevice, $info = '')
+    {
+        $searchModel = new CommendGoodsSearch(['type' => $type]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('hot', ['hot' => $dataProvider, 'type' => $type, 'info'=>$info]);
+    }
+
+    public function actionAddhot($type, $hot)
+    {
+        $info = '';
+        if(CommendGoods::HotDevice == $type || CommendGoods::HotHelp == $type || CommendGoods::HotSimulate == $type){
+            $good = Goods::find()->where(['goodtype'=>Goods::commendType2GoodType($type), 'goods_no'=>$hot])->one();
+            if(null != $good) {
+                $cg = new CommendGoods();
+                $cg->type = $type;
+                $cg->commend_id = $good->id;
+                if ($cg->save()){
+                    $info = '添加成功';
+                } else {
+                    $info = '添加失败！！';
+                }
+            } else {
+                $info = '添加失败！！';
+            }
+        } else if(CommendGoods::HotOrganization == $type || CommendGoods::HotExpert == $type){
+            $it = ShopMember::find()->where(['regtype'=>ShopMember::commendType2RegType($type), 'username'=>$hot])->one();
+            if(null != $it) {
+                $cg = new CommendGoods();
+                $cg->type = $type;
+                $cg->commend_id = $it->id;
+                if ($cg->save()){
+                    $info = '添加成功';
+                } else {
+                    $info = '添加失败！！';
+                }
+            } else {
+                $info = '添加失败！！';
+            }
+        }
+        return $this->redirect(['hot', 'type'=>$type, 'info'=>$info]);
+    }
+
+    public function actionDelhot($id, $type)
+    {
+        $commend = CommendGoods::findOne($id);
+        if(null != $commend) {
+            $commend->delete();
+        }
+        return $this->redirect(['hot', 'type'=>$type]);
     }
 }

@@ -190,6 +190,15 @@ class Goods extends \yii\db\ActiveRecord
         return $arr[$type];
     }
 
+    public static function commendType2GoodType($type)
+    {
+        //商品类型：1:检测类商品 2:专家 3:科研辅助类 4:数值模拟类
+        //推荐类型：1. 热门仪器 2. 热门机构 3. 聚仪专家 4. 热门辅助 5. 热门模拟
+        //$type 值不应为2，若为2，当作1 热门仪器处理
+        $arr = array(1=>1, 2=>1, 3=>2, 4=>3, 5=>4);
+        return $arr[$type];
+    }
+
     public function saveBrand($brandName)
     {
         $brandName = trim($brandName);

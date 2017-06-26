@@ -35,6 +35,9 @@ class Menu
             "资讯发布" => "admin/setinformation",
             "资讯管理" => "admin/manageinformation",
         ),
+        "广告设置" => array(
+            "热门设置" => "admin/hot",
+        ),
     );
 
     /**
