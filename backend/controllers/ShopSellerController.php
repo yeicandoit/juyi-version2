@@ -539,7 +539,8 @@ class ShopSellerController extends Controller
     {
         $expert = Expert::findOne($id);
         $expertInfo = $expert->ext;
-        return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo]);
+        $relatedExperts = $expert->relatedExperts;
+        return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo, 'relatedExperts'=>$relatedExperts]);
     }
 
     public function actionLab($id)
@@ -548,7 +549,8 @@ class ShopSellerController extends Controller
         $labInfo = $lab->ext;
         $pages = new Pagination(['totalCount' =>$lab->pageGoods()->count(), 'pageSize' => '12']);
         $model = $lab->pageGoods()->offset($pages->offset)->limit($pages->limit)->all();
-        return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo, 'model'=>$model, 'pages' => $pages]);
+        $relatedLabs = $lab->relatedLabs;
+        return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo, 'model'=>$model, 'pages' => $pages, 'relatedLabs'=>$relatedLabs]);
     }
 
     public function actionExpertreg()

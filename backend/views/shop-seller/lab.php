@@ -34,9 +34,14 @@ use yii\helpers\Url;
             <li style="width:95%;background-color: #116fb5;border-radius:0 0 0 15px;color: #fdfdfd;font-size: 15px;padding-left: 30px">
                 同类实验室
             </li>
-            <?=Html::img('images/lab.png', ['style'=>'width:80px;height:60px;padding-top:5px'])?> 交大生物质能<br>
-            <?=Html::img('images/lab.png', ['style'=>'width:80px;height:60px;padding-top:5px'])?> 交大生物质能<br>
-            <?=Html::img('images/lab.png', ['style'=>'width:80px;height:60px;padding-top:5px'])?> 交大生物质能<br>
+            <?php
+            if(null != $relatedLabs) {
+                foreach ($relatedLabs as $k => $v) {
+                    ?>
+                    <?= Html::img($v->logo, ['style' => 'width:80px;height:60px;padding-top:5px']) ?><?=$v->true_name?><br>
+                    <?php
+                }
+            }?>
         </div>
     </td>
     <td style="padding-left: 20px;min-width: 850px; max-width: 1000px;" valign="top">

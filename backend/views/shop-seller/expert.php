@@ -122,19 +122,28 @@ use yii\helpers\Html;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相关专家
         </div>
         <table>
-            <tr>
-                <td><?= Html::img(Yii::$app->params['imgGlobalPath'] . '/images/expert.png',['style'=>'width:40px;height:40px', 'class'=>'img-circle'])?></td>
-                <td style="padding-left: 3px">
-                    <span style="font-size: 13px">肖学良</span><br>
-                    <span style="font-size: 10px">博士,副教授</span>
-                </td>
-                <td style="padding-left: 3px">
-                    &nbsp;
-                    <button style="font-size: 10px;background-color: #116fb5;color: #fdfdfd;border-radius:5px 5px 5px 5px">
-                        关注<br>专家
-                    </button>
-                </td>
-            </tr>
+            <?php
+            if(null != $relatedExperts) {
+                foreach($relatedExperts as $k=>$v) {
+                    ?>
+                    <tr>
+                        <td><?= Html::img($v->img, ['style' => 'width:40px;height:40px', 'class' => 'img-circle']) ?></td>
+                        <td style="padding-left: 3px">
+                            <span style="font-size: 13px"><?=$v->true_name?></span><br>
+                            <span style="font-size: 10px"><?=$v->degree?></span>
+                        </td>
+                        <td style="padding-left: 3px">
+                            &nbsp;
+                            <button
+                                style="font-size: 10px;background-color: #116fb5;color: #fdfdfd;border-radius:5px 5px 5px 5px">
+                                关注<br>专家
+                            </button>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
         </table>
     </td>
     </tr>

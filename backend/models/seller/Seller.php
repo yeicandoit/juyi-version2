@@ -198,4 +198,25 @@ class Seller extends \yii\db\ActiveRecord
         Areas::findOne($this->city)->area_name . $separator .
         Areas::findOne($this->area)->area_name;
     }
+
+    public function getRelatedLabs()
+    {
+        $sql = "select id from jy_shop_member where regtype = (select regtype from jy_shop_member where id = $this->id) and id != $this->id";
+        $idArr = Yii::$app->db->createCommand($sql)->queryAll();
+        if($idArr) {
+            $labArr = array();
+            if(count($idArr) > 3) {
+                $idRandArr = array_rand($idArr, 3);
+                foreach ($idRandArr as $k=>$v){
+                    $labArr[] = Expert::findOne($idArr[$v]['id']);
+                }
+            } else {
+                foreach ($idArr as $k=>$v){
+                    $labArr[] = Seller::findOne($v['id']);
+                }
+            }
+            return $labArr;
+        }
+        return null;
+    }
 }

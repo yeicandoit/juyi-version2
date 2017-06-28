@@ -176,4 +176,25 @@ class Expert extends \yii\db\ActiveRecord
             $this->img = substr($this->img, 7); 
         } 
     }
+
+    public function getRelatedExperts()
+    {
+        $sql = "select id from jy_expert where id != $this->id";
+        $idArr = Yii::$app->db->createCommand($sql)->queryAll();
+        if($idArr) {
+            $expertArr = array();
+            if(count($idArr) > 3) {
+                $idRandArr = array_rand($idArr, 3);
+                foreach ($idRandArr as $k=>$v){
+                    $expertArr[] = Expert::findOne($idArr[$v]['id']);
+                }
+            } else {
+                foreach ($idArr as $k=>$v){
+                    $expertArr[] = Expert::findOne($v['id']);
+                }
+            }
+            return $expertArr;
+        }
+        return null;
+    }
 }
