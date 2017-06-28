@@ -121,7 +121,7 @@ use yii\helpers\Html;
         <div style="background-color: #116fb5;border-radius:0 0 0 15px;min-width: 70px;color: #fdfdfd;font-size: 15px">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相关专家
         </div>
-        <table>
+        <table style="border-collapse:separate; border-spacing:3px;">
             <?php
             if(null != $relatedExperts) {
                 foreach($relatedExperts as $k=>$v) {
@@ -129,7 +129,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><?= Html::img($v->img, ['style' => 'width:40px;height:40px', 'class' => 'img-circle']) ?></td>
                         <td style="padding-left: 3px">
-                            <span style="font-size: 13px"><?=$v->true_name?></span><br>
+                            <span style="font-size: 11px"><?=$v->true_name?></span><br>
                             <span style="font-size: 10px"><?=$v->degree?></span>
                         </td>
                         <td style="padding-left: 3px">

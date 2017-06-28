@@ -25,7 +25,7 @@ use yii\helpers\Url;
     <?= $form->field($expertinfo, 'img')->widget('maxmirazh33\image\Widget');?>
     <?= $form->field($expertinfo, 'name')->textInput(['readonly'=>"readonly"])
         ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
-    <?= $form->field($expertinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
+    <?= $form->field($expertinfo, 'true_name')->textInput(['style'=>'width:250px'])->label('真实名称')?>
     <?= $form->field($expertinfo, 'age')->textInput()->label('年龄')?>
     <?= $form->field($expertinfo, 'sex')->radioList([1=>'男', 2=>'女'])->label('性别')?>
 

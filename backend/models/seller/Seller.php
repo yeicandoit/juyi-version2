@@ -208,7 +208,7 @@ class Seller extends \yii\db\ActiveRecord
             if(count($idArr) > 3) {
                 $idRandArr = array_rand($idArr, 3);
                 foreach ($idRandArr as $k=>$v){
-                    $labArr[] = Expert::findOne($idArr[$v]['id']);
+                    $labArr[] = Seller::findOne($idArr[$v]['id']);
                 }
             } else {
                 foreach ($idArr as $k=>$v){
