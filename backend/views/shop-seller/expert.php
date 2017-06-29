@@ -145,7 +145,8 @@ use yii\helpers\Html;
                     $concernId = "concern".$v->id;
                     ?>
                     <tr>
-                        <td><?= Html::img($v->img, ['style' => 'width:40px;height:40px', 'class' => 'img-circle']) ?></td>
+                        <td><a href=<?=\yii\helpers\Url::to(['shop-seller/expert', 'id'=>$v->id])?>>
+                                <?= Html::img($v->img, ['style' => 'width:40px;height:40px', 'class' => 'img-circle']) ?></a></td>
                         <td style="padding-left: 3px">
                             <span style="font-size: 11px"><?=$v->true_name?></span><br>
                             <span style="font-size: 10px"><?=$v->degree?></span>

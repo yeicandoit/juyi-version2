@@ -40,7 +40,12 @@ use yii\helpers\Url;
                 foreach ($relatedLabs as $k => $v) {
                     ?>
                     <tr>
-                    <td><?= Html::img($v->logo, ['style' => 'width:80px;height:60px;padding-top:5px']) ?></td><td><?=$v->true_name?></td>
+                    <td>
+                        <a href=<?=Url::to(['shop-seller/lab', 'id'=>$v->id])?>><?= Html::img($v->logo, ['style' => 'width:80px;height:60px;padding-top:5px']) ?></a>
+                    </td>
+                    <td>
+                        <a href=<?=Url::to(['shop-seller/lab', 'id'=>$v->id])?>><?=$v->true_name?></a>
+                    </td>
                     </tr>
                     <?php
                 }

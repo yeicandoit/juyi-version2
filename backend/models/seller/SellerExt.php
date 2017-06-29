@@ -51,7 +51,7 @@ class SellerExt extends \yii\db\ActiveRecord
             'description' => Yii::t('app', '实验室概况'),
             'team' => Yii::t('app', '科研队伍'),
             'outwork' => Yii::t('app', '科研成果'),
-            'reserve1' => Yii::t('app', '推荐语'),
+            'reserve1' => Yii::t('app', '顶部宣传语'),
             'reserve2' => Yii::t('app', 'Reserve2'),
         ];
     }
