@@ -25,6 +25,7 @@ use yii\helpers\Url;
         ]
     ];?>
     <?php if('expert' != $regtype) {?>
+        <?= $form->field($detail, 'reserve1')->textarea()?>
         <?= $form->field($detail, 'description')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
         <?= $form->field($detail, 'team')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
         <?= $form->field($detail, 'outwork')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
