@@ -197,4 +197,16 @@ class Expert extends \yii\db\ActiveRecord
         }
         return null;
     }
+
+    public function hasConcened()
+    {
+        if(Yii::$app->user->isGuest){
+            return false;
+        }
+        if(Favorite::find()->where(['user_id'=>Yii::$app->user->id, 'rid'=>$this->id, 'cat_id'=>Favorite::CatExpert])->one()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

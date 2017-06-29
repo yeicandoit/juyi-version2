@@ -60,8 +60,18 @@ use yii\helpers\Html;
                         </div>
                         <div style="padding-top: 5px"><?=Html::label('邮箱:')?>&nbsp;&nbsp;<?=$expert->email?></div>
                         <div style="padding-top: 5px"><?=Html::label('个人主页:')?>&nbsp;&nbsp;<?=$expert->home_url?></div>
-                        <!--<button class="expert-concern">关注此专家</button>  The button image is too big to be in!!-->
-                        <button style="background-color: #116fb5;color: #fdfdfd;border-radius:5px 5px 5px 5px">关注此专家</button>
+                        <?php
+                            if($expert->hasConcened()){
+                                $type = 0;
+                                $text = "取消关注";
+                            } else {
+                                $type = 1;
+                                $text = "关注此专家";
+                            }
+                            $concern_id = "concern".$expert->id;
+                        ?>
+                        <button style="background-color: #116fb5;color: #fdfdfd;border-radius:5px 5px 5px 5px"
+                                onclick='concern("<?=$concern_id?>", <?=$expert->id?>, <?=$type?>, 1)' id="<?=$concern_id?>"><?=$text?></button>
                     </td>
                 </tr>
             </table>
@@ -125,6 +135,14 @@ use yii\helpers\Html;
             <?php
             if(null != $relatedExperts) {
                 foreach($relatedExperts as $k=>$v) {
+                    if($v->hasConcened()){
+                        $type_ = 0;
+                        $text_ = "取消<br>关注";
+                    } else {
+                        $type_ = 1;
+                        $text_ = "关注<br>专家";
+                    }
+                    $concernId = "concern".$v->id;
                     ?>
                     <tr>
                         <td><?= Html::img($v->img, ['style' => 'width:40px;height:40px', 'class' => 'img-circle']) ?></td>
@@ -134,9 +152,9 @@ use yii\helpers\Html;
                         </td>
                         <td style="padding-left: 3px">
                             &nbsp;
-                            <button
+                            <button id="<?=$concernId?>" onclick='concern("<?=$concernId?>", <?=$v->id?>, <?=$type_?>, 0)'
                                 style="font-size: 10px;background-color: #116fb5;color: #fdfdfd;border-radius:5px 5px 5px 5px">
-                                关注<br>专家
+                                <?=$text_?>
                             </button>
                         </td>
                     </tr>
@@ -164,6 +182,29 @@ use yii\helpers\Html;
             $("#"+g_scrollid).css({"height": "30px","min-width": "35px","text-align":"center","border-right":"1px inset"});
         }
         g_scrollid = scrollid;
+    }
+
+    function concern(concernid, id, type, pos)
+    {
+        $.get("<?=\yii\helpers\Url::to(['shop-seller/favoriteexpert'])?>" + "&id=" + id + "&type=" + type, function (data) {
+            if (data == "OK") {
+                if(1 == type) {
+                    var tNoConcern = pos == 1 ? '取消关注' : "取消<br>关注";
+                    $("#" + concernid).html(tNoConcern);
+                    $("#" + concernid).attr('onclick','concern('+ '\"' + concernid + '\"' + ',' + id + ', 0,' + pos + ')');
+                } else {
+                    var tConcern = pos == 1 ? '关注此专家' : "关注<br>专家";
+                    $("#" + concernid).html(tConcern);
+                    $("#" + concernid).attr('onclick','concern('+ '\"' + concernid + '\"' + ',' + id + ', 1,' + pos + ')');
+                }
+            } else {
+                if(1 == type){
+                    alert("添加关注失败");
+                } else {
+                    alert("取消关注失败");
+                }
+            }
+        });
     }
 </script>
 

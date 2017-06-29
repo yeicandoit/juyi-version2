@@ -6,6 +6,7 @@ use backend\models\seller\Appointinfo;
 use backend\models\seller\CategoryExtend;
 use backend\models\seller\Delivery;
 use backend\models\seller\Expert;
+use backend\models\seller\Favorite;
 use backend\models\seller\Goods;
 use backend\models\seller\GoodsConsult;
 use backend\models\seller\GoodsConsultSearch;
@@ -701,6 +702,19 @@ class ShopSellerController extends Controller
     {
         $shopServ = ShopService::findOne($id);
         if($shopServ->delete()){
+            echo "OK";
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionFavoriteexpert($id, $type)
+    {
+        //$type = 0, will not concern; $type = 1, will concern
+        if(Yii::$app->user->isGuest){
+            return $this->redirect(['logout']);
+        }
+        if(Favorite::favorite($id, $type, Favorite::CatExpert)){
             echo "OK";
         } else {
             echo "Failed";
