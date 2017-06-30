@@ -67,7 +67,7 @@ class AdminController extends Controller
     {
         $searchModel = new GoodsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('goodslist', ['dataProvider'=>$dataProvider]);
+        return $this->render('goodslist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionLogin()
@@ -94,7 +94,7 @@ class AdminController extends Controller
     {
         $searchModel = new GoodsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('goodslist', ['dataProvider'=>$dataProvider]);
+        return $this->render('goodslist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionGoodsstat($id, $status)

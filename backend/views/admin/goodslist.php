@@ -12,11 +12,10 @@ use \yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'yii\grid\CheckboxColumn',
-            ],
-            [
+                'attribute' => 'name',
                 'label'=>'商品名称',
                 'format'=>'raw',
                 'value'=> function($model){
@@ -46,19 +45,18 @@ use \yii\helpers\Url;
                     return "<div style='max-width: 250px;white-space: normal;'>$strCats</div>";
                 }
             ],
-            'sell_price',
             [
+                'attribute' => 'sell_price',
+                "headerOptions" => ["width" => "80"],
+            ],
+            [
+                'attribute' => 'is_del',
                 'label'=>'状态',
                 'format'=>'raw',
+                "headerOptions" => ["width" => "100"],
+                'filter' => \backend\models\seller\Goods::getStat(),
                 'value'=>function($model){
-                    $arr = array(
-                        0 => '上架',
-                        1=> '删除',
-                        2=> '下架',
-                        3=> '待审',
-                    );
-
-                    return Html::dropDownList('', null, $arr,
+                    return Html::dropDownList('', null, $model->stat,
                         ['options'=>[$model->is_del=>['selected'=>1]], 'onchange'=>"updateStatus($model->id, this.value)"]
                     );
                 }

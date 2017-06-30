@@ -211,4 +211,14 @@ class Goods extends \yii\db\ActiveRecord
         $this->brandid = $brand->id; 
         $this->save();
     }
+
+    public static function getStat()
+    {
+        return $arr = array(
+            0 => '上架',
+            1=> '删除',
+            2=> '下架',
+            3=> '待审',
+        );
+    }
 }
