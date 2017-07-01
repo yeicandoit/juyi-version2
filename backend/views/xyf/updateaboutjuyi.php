@@ -7,14 +7,20 @@
  */
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use backend\assets\AppAsset;
-use dosamigos\datepicker\DatePicker;
-use yii\helpers\Url;
 ?>
-
+<script type="text/javascript">
+    function showItem(id)
+    {
+        $(".jyabout").hide();
+        $("#" + id).show();
+    }
+</script>
 <div class="sellerinfo">
+<?=
+    Html::dropDownList('',null,$model->item, ['onchange'=>"showItem(this.value)"]);
+?>
 <?php $form = ActiveForm::begin(); ?>
-<?= $form->field($model, 'jyjj')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'jyjj', ['options'=>['id'=>'jyjj', 'class'=>'jyabout']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -24,7 +30,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'tsfw')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'tsfw', ['options'=>['id'=>'tsfw', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -34,7 +40,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'hzgy')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'hzgy', ['options'=>['id'=>'hzgy', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -44,7 +50,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'cpyc')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'cpyc', ['options'=>['id'=>'cpyc', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -54,7 +60,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'hyzc')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'hyzc', ['options'=>['id'=>'hyzc', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -64,7 +70,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'cslc')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'cslc', ['options'=>['id'=>'cslc', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -74,7 +80,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'zffs')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'zffs', ['options'=>['id'=>'zffs', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -84,7 +90,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'lxkf')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'lxkf', ['options'=>['id'=>'lxkf', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -94,7 +100,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'sjzc')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'sjzc', ['options'=>['id'=>'sjzc', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -104,7 +110,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'rzlc')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'rzlc', ['options'=>['id'=>'rzlc', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -114,7 +120,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'fggf')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'fggf', ['options'=>['id'=>'fggf', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -124,7 +130,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'shtk')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'shtk', ['options'=>['id'=>'shtk', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -134,7 +140,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'tklc')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'tklc', ['options'=>['id'=>'tklc', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -144,7 +150,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'qxdd')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'qxdd', ['options'=>['id'=>'qxdd', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -154,7 +160,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'shkf')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'shkf', ['options'=>['id'=>'shkf', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -164,7 +170,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'lxjy')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'lxjy', ['options'=>['id'=>'lxjy', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -174,7 +180,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ]) ?>
-<?= $form->field($model, 'yjjy')->widget(\yii\redactor\widgets\Redactor::className(),
+<?= $form->field($model, 'yjjy', ['options'=>['id'=>'yjjy', 'class'=>'jyabout', 'style'=>'display:none']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
             'imageManagerJson' => ['/redactor/upload/image-json'],
