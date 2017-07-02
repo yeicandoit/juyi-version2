@@ -5,6 +5,10 @@ class Menu
 {
 //菜单的配制数据
     public static $ArrGoods = array(
+        "网站管理" => array(
+            "后台首页" => "admin/adminhome",
+            "关于聚仪" => "xyf/updateaboutjuyi",
+        ),
         "商品管理" => array(
              "商品列表" => "admin/goodslist",
              "商品添加" => "admin/goodsadd",
@@ -25,9 +29,6 @@ class Menu
         "预约管理" => array(
             "预约列表" => "admin/appointlist",
             "设置预约" => "admin/setappointment",
-        ),
-        "网站管理" => array(
-            "关于聚仪" => "xyf/updateaboutjuyi",
         ),
         "新闻资讯" => array(
             "新闻发布" => "admin/announcenews",

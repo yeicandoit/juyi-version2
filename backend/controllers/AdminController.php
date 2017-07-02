@@ -9,6 +9,7 @@ use backend\models\admin\CommendGoodsSearch;
 use backend\models\admin\JyAnnouncement;
 use backend\models\admin\JyInformation;
 use backend\models\admin\SetInformationForm;
+use backend\models\seller\Appointinfo;
 use backend\models\seller\Comment;
 use backend\models\seller\Delivery;
 use backend\models\admin\ExpertSearch;
@@ -22,6 +23,7 @@ use backend\models\seller\Member;
 use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
 use backend\models\seller\ShopMember;
+use backend\models\seller\User;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -65,9 +67,39 @@ class AdminController extends Controller
 
     public function actionAdminhome()
     {
-        $searchModel = new GoodsSearch();
+        $shopCnt = Seller::find()->count();
+        $expertCnt = Expert::find()->count();
+        $account = Order::getSale(null);
+        $userCnt = User::find()->count();
+        $goodsCnt = Goods::find()->count();
+        $orderCnt = Order::find()->count();
+        $appointCnt = Appointinfo::find()->count();
+        $shopCnt_ = Seller::find()->where(['is_del'=>1])->count();
+        $goodsCnt_ = Goods::find()->where(['is_del'=>3])->count();
+        $orderCnt_ = $orderCnt - Order::find()->where(['status'=>7])->count();
+        $consultCnt_ = GoodsConsult::find()->where(['answer'=>null])->count();
+        $refundmentCnt_ = RefundmentDoc::find()->count();
+
+        $summary = array(
+            'shopCnt' => $shopCnt,
+            'expertCnt' => $expertCnt,
+            'account' => $account,
+            'userCnt' => $userCnt,
+            'goodsCnt' => $goodsCnt,
+            'orderCnt' => $orderCnt,
+            'appointCnt' => $appointCnt,
+            'shopCnt_' => $shopCnt_,
+            'goodsCnt_' => $goodsCnt_,
+            'orderCnt_' => $orderCnt_,
+            'consultCnt_' => $consultCnt_,
+            'refundmentCnt_' => $refundmentCnt_,
+        );
+
+        $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('goodslist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+        $dataProvider->query->andFilterWhere(['not in', 'status', [7]])->limit(10);
+
+        return $this->render('adminhome', ['summary'=>$summary, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionLogin()
@@ -311,8 +343,16 @@ class AdminController extends Controller
 
     public function actionOrderok()
     {
-        $searchModel = new OrderSearch(['status' => 1]);
+        $searchModel = new OrderSearch(['status'=>7]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
+    }
+
+    public function actionOrderstay()
+    {
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['not in', 'status', [7]]);
         return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
     }
 
@@ -427,8 +467,8 @@ class AdminController extends Controller
 
     public function actionAccount()
     {
-        $startDate = '';
-        $endDate = '';
+        $startDate = '2017-05-02';
+        $endDate = date("Y-m-d");
         if(Yii::$app->request->isPost){
             $startDate = Yii::$app->request->post('startDate');
             $endDate = Yii::$app->request->post('endDate');
@@ -441,6 +481,15 @@ class AdminController extends Controller
     {
         $searchModel = new GoodsConsultSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('consult', [ 'consult'=>$dataProvider]);
+    }
+
+    public function actionConsultstay()
+    {
+        $searchModel = new GoodsConsultSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //TODO This method may be not good, should update it later.
+        $dataProvider->query->Where(['answer'=>null]);
         return $this->render('consult', [ 'consult'=>$dataProvider]);
     }
 

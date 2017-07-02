@@ -231,6 +231,21 @@ class Order extends \yii\db\ActiveRecord
         }
     }
 
+    public static function getSale($seller_id)
+    {
+        $query = (new Query())->from('jy_order');
+        $query->select('sum(real_amount) as sale');
+        if($seller_id) {
+            $query->where("seller_id=$seller_id AND status=7");
+        } else {
+            $query->where("status = 7");
+        }
+        $result = $query->all();
+        if(count($result) > 0){
+            return $result[0]['sale'];
+        }
+    }
+
     /**
      * @brief 获取商家销售额统计数据
      * @param int $seller_id 商家ID

@@ -19,7 +19,7 @@ use yii\bootstrap\ActiveForm;
 <?=
     Html::dropDownList('',null,$model->item, ['onchange'=>"showItem(this.value)"]);
 ?>
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['fieldConfig' => ['template'=>'{input}{hint}{error}']]); ?>
 <?= $form->field($model, 'jyjj', ['options'=>['id'=>'jyjj', 'class'=>'jyabout']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
         'clientOptions' => [
