@@ -190,7 +190,6 @@ JS;
             <input type="hidden" id="h" name="h" />
             <input type="hidden" id="f" name="f" />
             <input id="upload" name="file_upload" type="button" value='上传' class='btn btn-large btn-primary'>
-            <input type="button" name="btn" value="确认裁剪" class="btn" />
             <div class="info"></div>
             <div class="text-info" >
                 <br>
@@ -219,6 +218,7 @@ JS;
             </div>
             <?= $form->field($goods, 'img', ['options'=>['style'=>"display:none"]])->textInput()?>
             <div class="pic-display"></div>
+            <input type="button" name="btn" value="确认裁剪" class="btn btn-primary" />
         </div>
     </div>
     <br>
