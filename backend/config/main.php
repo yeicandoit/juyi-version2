@@ -55,5 +55,17 @@ return [
             'uploadUrl' => 'shopdetail',
             'imageAllowExtensions'=>['jpg','png','gif']
         ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',//yii2-admin的导航菜单
+        ],
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'admin/*',//允许所有人访问admin节点及其子节点
+            'shop-seller/*',//允许访问的节点，可自行添加
+            'site/*',
+        ]
     ],
 ];
