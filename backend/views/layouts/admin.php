@@ -163,7 +163,7 @@ AppAsset::register($this);
 	<?= Html::img('@web/images/logo.png')?>
 <div id="mynavright">
 <ul class="mynav-ul">
-	<li><a href="<?=Url::to(["site/index"])?>">网站首页</a></li>
+	<li><a href="<?=Yii::$app->params['fUrl'].'site/index'?>">网站首页</a></li>
 	<?php
 	$curuser = isset(Yii::$app->user->identity) ? Yii::$app->user->identity->username : "guest";
 	if (Yii::$app->user->isGuest) {
