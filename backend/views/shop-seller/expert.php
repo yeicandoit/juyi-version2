@@ -43,23 +43,24 @@ use yii\helpers\Html;
                     <td valign="top"><?= Html::img($expert->img)?></td>
                     <td style="padding-left: 20px; valign="top"">
                         <div style="border-bottom:1px inset;">
-                            <p><strong style="font-size: large">解码专家:&nbsp;&nbsp;<?=$expert->true_name?></strong>&nbsp;<span><?=$expert->title?></span></p>
+                            <strong style="font-size: large">解码专家:&nbsp;&nbsp;<?=$expert->true_name?></strong>&nbsp;<span><?=$expert->title?></span>
                         </div>
-                        <div style="padding-top: 5px">
+                        <div style="padding-top: 3px">
                             <?=Html::label('学历:')?>&nbsp;&nbsp;<?=$expert->degree?>
                         </div>
-                        <div style="padding-top: 5px">
+                        <div style="padding-top: 3px">
                             <?=Html::label('专业:')?>&nbsp;&nbsp;<?=isset($expert->major) ? $expert->major : ''?>
                         </div>
-                        <div style="padding-top: 5px">
+                        <div style="padding-top: 3px">
                             <?=Html::img('@web/images/map.png', ['style'=>'width:12px;height:18px'])?>
                             <?php
                                 $location = $expert->getLocation("/");
                             ?>
                             <span><?=$location?></span>
                         </div>
-                        <div style="padding-top: 5px"><?=Html::label('邮箱:')?>&nbsp;&nbsp;<?=$expert->email?></div>
-                        <div style="padding-top: 5px"><?=Html::label('个人主页:')?>&nbsp;&nbsp;<?=$expert->home_url?></div>
+                        <div style="padding-top: 5px"><?=Html::label('单位:')?>&nbsp;&nbsp;<?=$expert->affliation?></div>
+                        <div style="padding-top: 3px"><?=Html::label('邮箱:')?>&nbsp;&nbsp;<?=$expert->email?></div>
+                        <div style="padding-top: 3px"><?=Html::label('个人主页:')?>&nbsp;&nbsp;<?=$expert->home_url?></div>
                         <?php
                             if($expert->hasConcened()){
                                 $type = 0;
