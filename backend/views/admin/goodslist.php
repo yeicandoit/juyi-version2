@@ -27,7 +27,7 @@ use \yii\helpers\Url;
                     return "<table>
                                    <tr>
                                    <td><a href=''><img class='user_fav_img' src=$src /></a></td>
-                                   <td>$model->name</td>
+                                   <td><div style='max-width: 250px;white-space: normal;'>$model->name</div></td>
                                    </tr>
                                 </table>";
                 }
