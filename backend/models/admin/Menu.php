@@ -8,6 +8,7 @@ class Menu
         "网站管理" => array(
             "后台首页" => "admin/adminhome",
             "关于聚仪" => "xyf/updateaboutjuyi",
+            "权限管理" => "sysadmin/",
         ),
         "商品管理" => array(
              "商品列表" => "admin/goodslist",
