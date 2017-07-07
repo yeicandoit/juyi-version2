@@ -12,11 +12,10 @@ use \yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'yii\grid\CheckboxColumn',
-            ],
-            [
+                'attribute'=>'name',
                 'label'=>'商品名称',
                 'format'=>'raw',
                 'value'=> function($model){
@@ -48,8 +47,11 @@ use \yii\helpers\Url;
             ],
             'sell_price',
             [
+                'attribute' => 'is_del',
                 'label'=>'状态',
                 'format'=>'raw',
+                "headerOptions" => ["width" => "100"],
+                'filter' => \backend\models\seller\Goods::getStat(),
                 'value'=>function($model){
                     $color = $model->is_del==0 ? 'grenn':'red';
                     return Html::label($model->statusText(), '', ['style'=>"color:$color"]);

@@ -12,6 +12,7 @@ use backend\models\seller\GoodsConsult;
  */
 class GoodsConsultSearch extends GoodsConsult
 {
+    public $good_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class GoodsConsultSearch extends GoodsConsult
     {
         return [
             [['id', 'goodid', 'sell_id', 'del'], 'integer'],
-            [['question', 'answer'], 'safe'],
+            [['question', 'answer', 'good_name'], 'safe'],
         ];
     }
 
@@ -42,6 +43,7 @@ class GoodsConsultSearch extends GoodsConsult
     public function search($params)
     {
         $query = GoodsConsult::find();
+        $query->joinWith(['good']);
 
         // add conditions that should always apply here
 
@@ -49,6 +51,12 @@ class GoodsConsultSearch extends GoodsConsult
             'query' => $query,
             'pagination' => ['pagesize' => '10'],
         ]);
+        $sort = $dataProvider->getSort();
+        $sort->attributes['good_name'] = [
+            'asc' => ['{{%goods}}.name'=>SORT_ASC],
+            'desc' => ['{{%goods}}.name'=>SORT_DESC],
+        ];
+        $dataProvider->setSort($sort);
 
         $this->load($params);
 
@@ -67,7 +75,8 @@ class GoodsConsultSearch extends GoodsConsult
         ]);
 
         $query->andFilterWhere(['like', 'question', $this->question])
-            ->andFilterWhere(['like', 'answer', $this->answer]);
+            ->andFilterWhere(['like', 'answer', $this->answer])
+            ->andFilterWhere(['like', '{{%goods}}.name', $this->good_name]);
 
         return $dataProvider;
     }

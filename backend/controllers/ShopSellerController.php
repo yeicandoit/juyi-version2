@@ -220,7 +220,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new CommentSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('comment', [ 'dataProvider'=>$dataProvider]);
+        return $this->render('comment', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionCommentedit($id)
@@ -392,7 +392,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('goodslist', ['dataProvider'=>$dataProvider]);
+        return $this->render('goodslist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionGoodsstat($id, $status)
@@ -574,7 +574,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new GoodsConsultSearch(['sell_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('consult', [ 'consult'=>$dataProvider]);
+        return $this->render('consult', [ 'searchModel'=>$searchModel, 'consult'=>$dataProvider]);
     }
 
     public function actionConsultinfo($id)

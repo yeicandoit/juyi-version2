@@ -12,6 +12,8 @@ use backend\models\ShopComment;
  */
 class CommentSearch extends Comment
 {
+    public $user_name;
+    public $goods_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class CommentSearch extends Comment
     {
         return [
             [['id', 'goods_id', 'user_id', 'point', 'status', 'seller_id'], 'integer'],
-            [['order_no', 'time', 'comment_time', 'contents', 'recontents', 'recomment_time'], 'safe'],
+            [['order_no', 'time', 'comment_time', 'contents', 'recontents', 'recomment_time', 'user_name', 'goods_name'], 'safe'],
         ];
     }
 
@@ -42,6 +44,7 @@ class CommentSearch extends Comment
     public function search($params)
     {
         $query = Comment::find();
+        $query->joinWith(['user', 'goods']);
 
         // add conditions that should always apply here
 
@@ -54,6 +57,16 @@ class CommentSearch extends Comment
             ],
             'pagination' => ['pagesize' => '10'],
         ]);
+        $sort = $dataProvider->getSort();
+        $sort->attributes['user_name'] = [
+            'asc' => ['{{%user}}.username'=>SORT_ASC],
+            'desc' => ['{{%user}}.username'=>SORT_DESC],
+        ];
+        $sort->attributes['goods_name'] = [
+            'asc' => ['{{%goods}}.name'=>SORT_ASC],
+            'desc' => ['{{%goods}}.name'=>SORT_DESC],
+        ];
+        $dataProvider->setSort($sort);
 
         $this->load($params);
 
@@ -73,12 +86,14 @@ class CommentSearch extends Comment
             'recomment_time' => $this->recomment_time,
             'point' => $this->point,
             'status' => $this->status,
-            'seller_id' => $this->seller_id,
+            '{{%comment}}.seller_id' => $this->seller_id,
         ]);
 
         $query->andFilterWhere(['like', 'order_no', $this->order_no])
             ->andFilterWhere(['like', 'contents', $this->contents])
-            ->andFilterWhere(['like', 'recontents', $this->recontents]);
+            ->andFilterWhere(['like', 'recontents', $this->recontents])
+            ->andFilterWhere(['like', '{{%user}}.username', $this->user_name])
+            ->andFilterWhere(['like', '{{%goods}}.name', $this->goods_name]);
 
         return $dataProvider;
     }
