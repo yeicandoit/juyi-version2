@@ -80,7 +80,7 @@ class LoginForm extends Model
     public function getAdmin()
     {
         if ($this->_admin === false) {
-            $this->_admin = ShopMember::find()->where(['username'=>$this->username])->one();
+            $this->_admin = ShopMember::find()->where(['username'=>$this->username, 'regtype'=>'admin'])->one();
         }
 
         return $this->_admin;

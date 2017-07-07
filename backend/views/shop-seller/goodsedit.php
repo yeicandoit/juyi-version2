@@ -4,6 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use \yii\helpers\Url;
+use backend\models\seller\ShopMember;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <?=Html::cssFile('@web/css/jquery.Jcrop.css')?>
@@ -93,7 +94,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
                 'data-toggle' => 'modal',
                 'data-target' => '#create-modal',
             ]); ?>
-            <?php $catUrl = Url::to(['shop-seller/goodscategory', 'type'=>$goods->getGoodType2Int(Yii::$app->params['regtype'])])?>
+            <?php $catUrl = Url::to(['shop-seller/goodscategory', 'type'=>$goods->getGoodType2Int(ShopMember::findOne(Yii::$app->user->id)->regtype)])?>
             <?php
             Modal::begin([
                 'id' => 'create-modal',

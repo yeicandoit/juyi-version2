@@ -73,7 +73,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-
+        $this->redirect(['shop-seller/login']);
     }
 
     public function actionRegister()
