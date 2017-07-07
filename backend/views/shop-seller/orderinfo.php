@@ -82,6 +82,7 @@ use yii\bootstrap\ActiveForm;
         <?php
             $spec = $order->appointinfo->spec;
             $price = $spec ? $spec->sell_price : $order->appointinfo->good->sell_price;
+            $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $order->appointinfo->good->id;
         ?>
         <div style="border: 1px groove #e8e8e8; padding-left: 10px">
             <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border:10px; solid #123456;">
@@ -95,7 +96,7 @@ use yii\bootstrap\ActiveForm;
                     <th>小计</th>
                 </tr>
                 <tr>
-                    <td><a href=''><?=$order->appointinfo->good->name?></a></td>
+                    <td><a href=<?=$href?>><?=$order->appointinfo->good->name?></a></td>
                     <?php if($spec) {?>
                         <td><?=$spec->specname?></td>
                     <?php }?>

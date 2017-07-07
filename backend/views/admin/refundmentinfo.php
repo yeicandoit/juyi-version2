@@ -24,7 +24,8 @@ use yii\bootstrap\ActiveForm;
     </div>
     <?php
         $appointInfo = $refundment->order->appointinfo;
-        $good = Html::a($appointInfo->good->name, '#', []) . ' X ' . $appointInfo->appointnum;
+        $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $appointInfo->good->id;
+        $good = Html::a($appointInfo->good->name, $href, []) . ' X ' . $appointInfo->appointnum;
     ?>
     <?= DetailView::widget([
         'model' => $refundment,

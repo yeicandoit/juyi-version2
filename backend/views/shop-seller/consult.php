@@ -12,7 +12,8 @@ use yii\helpers\Url;
         'dataProvider' => $consult,
         'columns' => [
             ['label'=>'咨询商品', 'format'=>'raw', 'value'=>function($model){
-                return Html::a($model->good->name, '');
+                $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $model->good->id;
+                return Html::a($model->good->name, $href);
             }],
             ['label'=>'状态', 'value'=>function($model){
                 if(isset($model->answer)){

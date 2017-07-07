@@ -25,10 +25,11 @@ use \yii\helpers\Url;
                     } else {
                         $src = '/images/user_ico.gif';
                     }
+                    $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=$model->id";
                     return "<table>
                                    <tr>
-                                   <td><a href=''><img class='user_fav_img' src=$src /></a></td>
-                                   <td><div style='max-width: 250px;white-space: normal;'>$model->name</div></td>
+                                   <td><a href=$href><img class='user_fav_img' src=$src /></a></td>
+                                   <td><div style='max-width: 250px;white-space: normal;'><a href=$href>$model->name</a></div></td>
                                    </tr>
                                 </table>";
                 }

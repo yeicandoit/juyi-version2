@@ -20,7 +20,8 @@ use yii\bootstrap\ActiveForm;
     <?php
         $user = $comment->user;
         $goods = $comment->goods;
-        $cgood = Html::a($goods->name, '');
+        $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $goods->id;
+        $cgood = Html::a($goods->name, $href);
     ?>
     <?= DetailView::widget([
         'model' => $comment,

@@ -105,6 +105,9 @@ $(document).ready(function() {
 	</div>
 	<div class="blank"></div>
 <div id="setappoint">
+    <?php
+        $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $good->id;
+    ?>
 	<table style="border: 1px solid #c4e3f3; min-width: 600px">
 		<tr style="border: 1px solid #c4e3f3;">
 			<th>商品信息</th>
@@ -112,9 +115,9 @@ $(document).ready(function() {
 		</tr>
 		<tr style="border: 1px solid #c4e3f3;">
 			<td style="border: 1px solid #c4e3f3;padding: 20px 10px 10px 10px">
-				<?=Html::img(Yii::$app->params['imgGlobalPath'] . $good->img, ['style'=>'width:150px;height:150px;'])?>
+                <a href=<?=$href?>><?=Html::img(Yii::$app->params['imgGlobalPath'] . $good->img, ['style'=>'width:150px;height:150px;'])?></a>
 				<br>
-				<?=Html::a($good->name, '#')?>
+				<?=Html::a($good->name, $href)?>
 			</td>
 			<td style="padding: 20px 10px 10px 10px">
     			<?php $form = ActiveForm::begin(['id' => 'form-setappointment',

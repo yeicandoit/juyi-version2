@@ -18,8 +18,8 @@ use yii\helpers\Url;
                 'format'=>'raw',
                 'value'=> function($model){
                     $name = $model->order->appointinfo->good->name;
-                    return Html::a("$name", 'javascript:void(0)') ;
-
+                    $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $model->order->appointinfo->good->id;
+                    return Html::a("$name", $href) ;
                 }
             ],
             [

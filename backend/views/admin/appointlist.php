@@ -24,13 +24,14 @@ use \yii\helpers\Url;
                     } else {
                         $src = '/images/user_ico.gif';
                     }
+                    $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $model->good->id;
                     $name = $model->good->name;
                     $spec = isset($model->spec) ? $model->spec->specname : '';
                     return "<table>
                                    <tr>
-                                   <td><a href=''><img class='user_fav_img' src=$src /></a></td>
+                                   <td><a href=$href><img class='user_fav_img' src=$src /></a></td>
                                    <td>
-                                    &nbsp;<a href=''>$name</a><br>&nbsp;$spec
+                                    &nbsp;<a href=$href>$name</a><br>&nbsp;$spec
                                    </td>
                                    </tr>
                                 </table>";

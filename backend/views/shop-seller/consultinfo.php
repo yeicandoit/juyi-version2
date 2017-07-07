@@ -10,7 +10,8 @@ use yii\bootstrap\ActiveForm;
     <div class="blank"></div>
     <?php
         $good = $consult->good;
-        $cgood = Html::a($good->name, '');
+        $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $good->id;
+        $cgood = Html::a($good->name, $href);
     ?>
     <?= DetailView::widget([
         'model' => $consult,

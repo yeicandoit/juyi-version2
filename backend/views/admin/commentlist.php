@@ -15,7 +15,8 @@ use yii\helpers\Url;
                 return $model->user? $model->user->username : '';
             }],
             ['label'=>'评价商品', 'format'=>'raw', 'value'=>function($model){
-                return Html::a($model->goods->name, '');
+                $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $model->goods->id;
+                return Html::a($model->goods->name, $href);
             }],
             'comment_time',
             ['label'=>'状态', 'value'=>function($model){
