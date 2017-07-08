@@ -97,6 +97,17 @@ class RefundmentDoc extends \yii\db\ActiveRecord
         return $statArr[$this->pay_status];
     }
 
+    public static function getStatArr()
+    {
+        return array(
+            0=>'申请退款',
+            1=>'同意退款，退款进行',
+            2=>'不同意退款',
+            3=>'系统正在仲裁',
+            4=>'退款完成',
+        );
+    }
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id'=>'user_id']);

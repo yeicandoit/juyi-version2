@@ -156,7 +156,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new OrderSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('order', ['dataProvider'=>$dataProvider]);
+        return $this->render('order', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionOrderinfo($id)
@@ -197,7 +197,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new RefundmentDocSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('refundment', [ 'dataProvider'=>$dataProvider]);
+        return $this->render('refundment', ['searchModel'=>$searchModel,  'dataProvider'=>$dataProvider]);
     }
 
     public function actionRefundmentinfo($id)
@@ -529,7 +529,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->user->id, 'is_del'=>0]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('setappointment', ['dataProvider'=>$dataProvider]);
+        return $this->render('setappointment', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionEditappointment($id, $status)
@@ -555,7 +555,7 @@ class ShopSellerController extends Controller
     {
         $searchModel = new AppointinfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('appointinfo', ['dataProvider'=>$dataProvider]);
+        return $this->render('appointinfo', ['searchModel' => $searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionAccount()

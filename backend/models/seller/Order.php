@@ -161,6 +161,19 @@ class Order extends \yii\db\ActiveRecord
         return $status[$this->status];
     }
 
+    public static function getStatArr()
+    {
+        return array(
+            1=>'订单生成',
+            2=>'买家寄出样品',
+            3=>'收到样品',
+            4=>'寄回测试数据',
+            5=>'回寄样品',
+            6=>'买家收到回寄样品',
+            7=>'交易完成'
+        );
+    }
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id'=>'user_id']);

@@ -12,6 +12,7 @@ use backend\models\seller\Order;
  */
 class OrderSearch extends Order
 {
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class OrderSearch extends Order
     {
         return [
             [['id', 'user_id', 'seller_id', 'appointid', 'pay_type', 'invoice', 'status', 'pay_status', 'distribution_status', 'sendbackornot', 'country', 'province', 'city', 'area', 'distribution', 'if_del', 'exp', 'point', 'type', 'takeself', 'active_id', 'is_checkout'], 'integer'],
-            [['order_no', 'invoice_title', 'create_time', 'postscript', 'accept_name', 'telphone', 'postcode', 'address', 'completion_time', 'mobile', 'pay_time', 'send_time', 'note', 'prop', 'accept_time', 'trade_no', 'checkcode'], 'safe'],
+            [['order_no', 'invoice_title', 'create_time', 'postscript', 'accept_name', 'telphone', 'postcode', 'address', 'completion_time', 'mobile', 'pay_time', 'send_time', 'note', 'prop', 'accept_time', 'trade_no', 'checkcode', 'user_name'], 'safe'],
             [['payable_amount', 'payable_freight', 'real_amount', 'real_freight', 'insured', 'pay_fee', 'taxes', 'promotions', 'discount', 'order_amount'], 'number'],
         ];
     }
@@ -43,6 +44,7 @@ class OrderSearch extends Order
     public function search($params)
     {
         $query = Order::find();
+        $query->joinWith(['user']);
 
         // add conditions that should always apply here
 
@@ -55,6 +57,12 @@ class OrderSearch extends Order
             ],
             'pagination' => ['pagesize' => '10'],
         ]);
+        $sort = $dataProvider->getSort();
+        $sort->attributes['user_name'] = [
+            'asc' => ['{{%user}}.username'=>SORT_ASC],
+            'desc' => ['{{%user}}.username'=>SORT_DESC],
+        ];
+        $dataProvider->setSort($sort);
 
         $this->load($params);
 
@@ -72,7 +80,7 @@ class OrderSearch extends Order
             'appointid' => $this->appointid,
             'pay_type' => $this->pay_type,
             'invoice' => $this->invoice,
-            'status' => $this->status,
+            '{{%order}}.status' => $this->status,
             'pay_status' => $this->pay_status,
             'distribution_status' => $this->distribution_status,
             'create_time' => $this->create_time,
@@ -116,7 +124,8 @@ class OrderSearch extends Order
             ->andFilterWhere(['like', 'prop', $this->prop])
             ->andFilterWhere(['like', 'accept_time', $this->accept_time])
             ->andFilterWhere(['like', 'trade_no', $this->trade_no])
-            ->andFilterWhere(['like', 'checkcode', $this->checkcode]);
+            ->andFilterWhere(['like', 'checkcode', $this->checkcode])
+            ->andFilterWhere(['like', '{{%user}}.username', $this->user_name]);
 
         return $dataProvider;
     }

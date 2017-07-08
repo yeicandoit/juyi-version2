@@ -11,6 +11,8 @@ use yii\data\ActiveDataProvider;
  */
 class AppointinfoSearch extends Appointinfo
 {
+    public $good_name;
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -18,7 +20,7 @@ class AppointinfoSearch extends Appointinfo
     {
         return [
             [['appointid', 'goodid', 'userid', 'appointnum', 'orderstate', 'specid'], 'integer'],
-            [['appointdate', 'appointslot', 'appointtime'], 'safe'],
+            [['appointdate', 'appointslot', 'appointtime', 'good_name', 'user_name'], 'safe'],
         ];
     }
 
@@ -41,7 +43,7 @@ class AppointinfoSearch extends Appointinfo
     public function search($params)
     {
         $query = Appointinfo::find();
-        $query->joinWith(["good"]); // this will call Appointinfo::getGood()
+        $query->joinWith(["good", 'user']);
 
         // add conditions that should always apply here
 
@@ -54,6 +56,16 @@ class AppointinfoSearch extends Appointinfo
             ],
             'pagination' => ['pagesize' => '10'],
         ]);
+        $sort = $dataProvider->getSort();
+        $sort->attributes['good_name'] = [
+            'asc' => ['{{%goods}}.name'=>SORT_ASC],
+            'desc' => ['{{%goods}}.name'=>SORT_DESC],
+        ];
+        $sort->attributes['user_name'] = [
+            'asc' => ['{{%user}}.username'=>SORT_ASC],
+            'desc' => ['{{%user}}.username'=>SORT_DESC],
+        ];
+        $dataProvider->setSort($sort);
 
         $this->load($params);
 
@@ -73,11 +85,13 @@ class AppointinfoSearch extends Appointinfo
             'appointnum' => $this->appointnum,
             'orderstate' => $this->orderstate,
             'specid' => $this->specid,
-            'jy_goods.seller_id' => Yii::$app->user->id,
+            '{{%goods}}.seller_id' => Yii::$app->user->id,
         ]);
 
         $query->andFilterWhere(['like', 'appointslot', $this->appointslot])
-            ->andFilterWhere(['like', 'appointtime', $this->appointtime]);
+            ->andFilterWhere(['like', 'appointtime', $this->appointtime])
+            ->andFilterWhere(['like', '{{%goods}}.name', $this->good_name])
+            ->andFilterWhere(['like', '{{%user}}.username', $this->user_name]);
 
         return $dataProvider;
     }
