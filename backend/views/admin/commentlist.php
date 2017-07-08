@@ -10,15 +10,28 @@ use yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
-            ['label'=>'评论人', 'value'=>function($model){
-                return $model->user? $model->user->username : '';
-            }],
-            ['label'=>'评价商品', 'format'=>'raw', 'value'=>function($model){
-                $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $model->goods->id;
-                return Html::a($model->goods->name, $href);
-            }],
-            'comment_time',
+            [
+                'label'=>'评论人',
+                'attribute' => 'user_name',
+                'value' => 'user.username',
+                "headerOptions" => ["width" => "150"],
+            ],
+            [
+                'label'=>'评价商品',
+                'attribute' => 'goods_name',
+                "headerOptions" => ["width" => "200"],
+                'format'=>'raw',
+                'value'=>function($model){
+                    $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $model->goods->id;
+                    return Html::a($model->goods->name, $href);
+                }
+            ],
+            [
+                'attribute' => 'comment_time',
+                "headerOptions" => ["width" => "150"],
+            ],
             ['label'=>'状态', 'value'=>function($model){
                 if(isset($model->recomment_time)){
                     return '已回复';

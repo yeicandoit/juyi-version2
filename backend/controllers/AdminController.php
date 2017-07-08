@@ -97,7 +97,7 @@ class AdminController extends Controller
 
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['not in', 'status', [7]])->limit(10);
+        $dataProvider->query->andFilterWhere(['not in', '{{%order}}.status', [7]])->limit(10);
 
         return $this->render('adminhome', ['summary'=>$summary, 'dataProvider'=>$dataProvider]);
     }
@@ -448,7 +448,7 @@ class AdminController extends Controller
     {
         $searchModel = new CommentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('commentlist', [ 'dataProvider'=>$dataProvider]);
+        return $this->render('commentlist', [ 'searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionCommentedit($id)
@@ -481,7 +481,7 @@ class AdminController extends Controller
     {
         $searchModel = new GoodsConsultSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('consult', [ 'consult'=>$dataProvider]);
+        return $this->render('consult', [ 'searchModel'=>$searchModel, 'consult'=>$dataProvider]);
     }
 
     public function actionConsultstay()
