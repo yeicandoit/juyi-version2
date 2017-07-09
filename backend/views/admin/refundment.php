@@ -10,6 +10,7 @@ use yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel'=>$searchModel,
         'columns' => [
             'order_no',
             'time',
@@ -24,7 +25,9 @@ use yii\helpers\Url;
                 }
             ],
             [
+                'attribute'=>'pay_status',
                 'label'=>'状态',
+                'filter'=>\backend\models\seller\RefundmentDoc::getStatArr(),
                 'value'=>function($model){
                     return $model->status;
                 }

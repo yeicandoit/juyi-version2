@@ -10,19 +10,21 @@ use yii\grid\GridView;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel'=>$searchModel,
         'columns' => [
             'order_no',
             [
+                'attribute'=>'status',
                 'label'=>'订单状态',
+                'filter'=>\backend\models\seller\Order::getStatArr(),
                 'value'=>function($model){
                     return $model->stat;
                 }
             ],
             [
+                'attribute'=>'user_name',
                 'label'=>'下单用户名',
-                'value'=>function($model){
-                    return $model->user->username;
-                }
+                'value'=>'user.username',
             ],
             [
                 'label'=>'商户名称',

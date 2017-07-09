@@ -12,6 +12,7 @@ use backend\models\seller\Member;
  */
 class MemberSearch extends Member
 {
+    public $user_name;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,8 @@ class MemberSearch extends Member
     {
         return [
             [['user_id', 'sex', 'group_id', 'exp', 'point', 'grade', 'status', 'country', 'province', 'city', 'area'], 'integer'],
-            [['true_name', 'telephone', 'mobile', 'contact_addr', 'qq', 'birthday', 'message_ids', 'time', 'zip', 'prop', 'last_login', 'custom', 'email', 'affliation'], 'safe'],
+            [['true_name', 'telephone', 'mobile', 'contact_addr', 'qq', 'birthday', 'message_ids', 'time', 'zip',
+                'prop', 'last_login', 'custom', 'email', 'affliation', 'user_name'], 'safe'],
             [['balance'], 'number'],
         ];
     }
@@ -43,6 +45,7 @@ class MemberSearch extends Member
     public function search($params)
     {
         $query = Member::find();
+        $query->joinWith(['user']);
 
         // add conditions that should always apply here
 
@@ -50,6 +53,12 @@ class MemberSearch extends Member
             'query' => $query,
             'pagination' => ['pagesize' => '10'],
         ]);
+        $sort = $dataProvider->getSort();
+        $sort->attributes['user_name'] = [
+            'asc' => ['{{%user}}.username'=>SORT_ASC],
+            'desc' => ['{{%user}}.username'=>SORT_DESC],
+        ];
+        $dataProvider->setSort($sort);
 
         $this->load($params);
 
@@ -88,7 +97,8 @@ class MemberSearch extends Member
             ->andFilterWhere(['like', 'prop', $this->prop])
             ->andFilterWhere(['like', 'custom', $this->custom])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'affliation', $this->affliation]);
+            ->andFilterWhere(['like', 'affliation', $this->affliation])
+            ->andFilterWhere(['like', '{{%user}}.username', $this->user_name]);
 
         return $dataProvider;
     }

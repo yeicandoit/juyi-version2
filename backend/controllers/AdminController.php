@@ -232,7 +232,7 @@ class AdminController extends Controller
     {
         $searchModel = new SellerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('sellerlist', ['dataProvider'=>$dataProvider]);
+        return $this->render('sellerlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionSellerstat($id, $status)
@@ -292,7 +292,7 @@ class AdminController extends Controller
     {
         $searchModel = new ExpertSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('expertlist', ['dataProvider'=>$dataProvider]);
+        return $this->render('expertlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionExpertinfo($id)
@@ -318,7 +318,7 @@ class AdminController extends Controller
     {
         $searchModel = new MemberSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('memberlist', ['dataProvider'=>$dataProvider]);
+        return $this->render('memberlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionMemberinfo($id)
@@ -338,14 +338,14 @@ class AdminController extends Controller
     {   
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
+        return $this->render('orderlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionOrderok()
     {
         $searchModel = new OrderSearch(['status'=>7]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
+        return $this->render('orderlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionOrderstay()
@@ -393,7 +393,7 @@ class AdminController extends Controller
     {
         $searchModel = new RefundmentDocSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('refundment', [ 'dataProvider'=>$dataProvider]);
+        return $this->render('refundment', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionRefundmentinfo($id)
@@ -415,14 +415,14 @@ class AdminController extends Controller
     {
         $searchModel = new AppointinfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('appointlist', ['dataProvider'=>$dataProvider]);
+        return $this->render('appointlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionSetappointment()
     {
         $searchModel = new GoodsSearch(['is_del'=>0]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('setappointment', ['dataProvider'=>$dataProvider]);
+        return $this->render('setappointment', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 
     public function actionEditappointment($id, $status)

@@ -11,11 +11,10 @@ use \yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             [
-                'class' => 'yii\grid\CheckboxColumn',
-            ],
-            [
+                'attribute'=>'good_name',
                 'label'=>'商品名称',
                 'format'=>'raw',
                 'value'=> function($model){
@@ -38,6 +37,7 @@ use \yii\helpers\Url;
                 }
             ],
             [
+                'attribute'=>'user_name',
                 'label'=>'预约人',
                 'format'=>'raw',
                 'value'=> function($model){

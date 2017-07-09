@@ -12,10 +12,8 @@ use \yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel'=>$searchModel,
         'columns' => [
-            [
-                'class' => 'yii\grid\CheckboxColumn',
-            ],
             'id',
             'seller_name',
             'true_name',
@@ -24,6 +22,8 @@ use \yii\helpers\Url;
             'create_time',
             [
                 'label'=>'状态',
+                'attribute'=>'is_del',
+                'filter'=>array(0=>'正常', 1=>'待审'),
                 'format'=>'raw',
                 'value'=>function($model){
                     $arr = array(

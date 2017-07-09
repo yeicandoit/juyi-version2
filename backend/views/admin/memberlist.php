@@ -12,19 +12,18 @@ use \yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel'=>$searchModel,
         'columns' => [
             [
-                'class' => 'yii\grid\CheckboxColumn',
-            ],
-            [
                 'label'=>'用户名',
-                'value'=>function($model){
-                    return $model->user->username;
-                }
+                'attribute'=>'user_name',
+                'value'=>'user.username',
             ],
             'true_name',
             [
                 'label'=>'性别',
+                'filter'=> array(1=>'男', 2=>'女'),
+                'attribute'=>'sex',
                 'value'=>function($model){
                     if(isset($model->sex)) {
                         return $model->sex == 1 ? '男' : '女';

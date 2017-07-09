@@ -12,10 +12,8 @@ use \yii\helpers\Url;
     <div class="blank"></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel'=>$searchModel,
         'columns' => [
-            [
-                'class' => 'yii\grid\CheckboxColumn',
-            ],
             'id',
             'name',
             'true_name',
