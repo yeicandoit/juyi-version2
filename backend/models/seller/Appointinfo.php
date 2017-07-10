@@ -72,4 +72,12 @@ class Appointinfo extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Goodsspec::className(), ['id' => 'specid']);
     }
+
+    public static function getCreatedOrderArr()
+    {
+        return array(
+            0=>'未生成',
+            1=>'已生成',
+        );
+    }
 }

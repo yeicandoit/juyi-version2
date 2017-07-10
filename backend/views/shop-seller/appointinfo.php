@@ -46,7 +46,13 @@ use \yii\helpers\Url;
             ],
             'appointdate',
             'appointnum',
-            'orderstate',
+            [
+                'attribute'=>'orderstate',
+                'filter'=>\backend\models\seller\Appointinfo::getCreatedOrderArr(),
+                'value'=> function($model){
+                    return $model->createdOrderArr[$model->orderstate];
+                }
+            ],
         ],
     ]); ?>
 </div>
