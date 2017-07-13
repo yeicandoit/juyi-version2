@@ -90,7 +90,7 @@ use yii\bootstrap\ActiveForm;
                     <?php }?>
                     <th>商品价格</th>
                     <th>商品数量</th>
-                    <th>小计</th>
+                    <th><?=$order->pay_status != 0 ? "小计" : "小计(单击金额修改总价)"?></th>
                 </tr>
                 <tr>
                     <td><a href=<?=$href?>><?=$order->appointinfo->good->name?></a></td>
@@ -99,7 +99,12 @@ use yii\bootstrap\ActiveForm;
                     <?php }?>
                     <td>￥<?= $price?></td>
                     <td>x<?= $order->appointinfo->appointnum?></td>
-                    <td>￥<?= $order->appointinfo->appointnum * $price?></td>
+                    <td>￥
+                        <?php if(0 == $order->pay_status) {
+                            echo Html::a("$order->real_amount", '#', ['id'=>'realAmount', 'onclick'=>"setRealAmount()"]);
+                        } else {
+                            echo $order->real_amount;
+                        }?></td>
                 </tr>
             </table>
         </div>
@@ -162,3 +167,21 @@ use yii\bootstrap\ActiveForm;
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+
+<script>
+    function setRealAmount() {
+        var valueStr = prompt("请输入总价", "");
+        //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+        if (valueStr)//如果返回的有内容
+        {
+            var value = parseFloat(valueStr);
+            $.get("<?=\yii\helpers\Url::to(['shop-seller/setrealamount'])?>" + "&id=" + <?=$order->id?> + "&value=" + value, function (data) {
+                if ('Failed' != data) {
+                    $("#realAmount").html(value);
+                } else {
+                    alert('设置失败');
+                }
+            });
+        }
+    }
+</script>

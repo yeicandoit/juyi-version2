@@ -628,4 +628,19 @@ class ShopSellerController extends Controller
             echo "Failed";
         }
     }
+
+    public function actionSetrealamount($id, $value)
+    {
+        $order = Order::findOne($id);
+        if($order){
+            $order->real_amount = $value;
+            if($order->save()){
+                echo 'OK';
+            } else {
+                echo 'Failed';
+            }
+        } else {
+            echo "Failed";
+        }
+    }
 }
