@@ -11,14 +11,18 @@ use yii\helpers\Url;
 use backend\models\seller\Menu;
 
 ?>
-<?php $this->beginPage() ?>
+<?php
+$actionId = Yii::$app->controller->action->id;
+$controllerId = Yii::$app->controller->id;
+$this->beginPage()
+?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode(Menu::getRoute2name("$controllerId/$actionId")) ?></title>
     <?php $this->head() ?>
     <link rel="shortcut icon" href="mybootstrap/flatui/img/favicon.ico">
   <?php
@@ -209,7 +213,7 @@ AppAsset::register($this);
      ]) ?>
      <?= Alert::widget() ?>
 	 <?=Html::cssFile('@web/css/sellerhome.css')?>
-	 <?php $actionId = Yii::$app->controller->action->id;
+	 <?php
 	 if($actionId != 'expertreg'
 			 && $actionId != 'sellerreg'
 	 		 && $actionId != 'login'

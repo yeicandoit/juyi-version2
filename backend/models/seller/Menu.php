@@ -35,6 +35,20 @@ class Menu
         ),
     );
 
+    public static $route2name = array(
+        "shop-seller/sellerhome"            =>      "管理首页",
+        "shop-seller/account"               =>      "销售额统计",
+        "shop-seller/goodslist"             =>      "商品列表",
+        "shop-seller/goodsadd"              =>      "添加商品",
+        "shop-seller/comment"               =>      "商品评价",
+        "shop-seller/consult"               =>      "商品咨询",
+        "shop-seller/appointinfo"           =>      "预约列表",
+        "shop-seller/setappointment"        =>      "设置预约",
+        "shop-seller/order"                 =>      "订单列表",
+        "shop-seller/refundment"            =>      "退款记录",
+        "shop-seller/shopinfo"              =>      "基本信息",
+        "shop-seller/shopdetail"            =>      "详细信息",
+    );
     /**
      * @brief 根据权限初始化菜单
      * @param int $roleId 角色ID
@@ -44,5 +58,10 @@ class Menu
     {
         //菜单创建事件触发
         return self::$menu;
+    }
+
+    public static function getRoute2name($route){
+        $name = isset(self::$route2name[$route]) ? self::$route2name[$route] : '后台';
+        return $name;
     }
 }
