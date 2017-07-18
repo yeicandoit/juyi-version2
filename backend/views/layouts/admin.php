@@ -8,12 +8,13 @@ use backend\assets\AppAsset;
 use common\widgets\Alert;
 use yii\widgets\Breadcrumbs;
 use yii\helpers\Url;
- use backend\models\admin\Menu;
+use backend\models\admin\Menu;
 
 ?>
 <?php
 $actionId = Yii::$app->controller->action->id;
 $controllerId = Yii::$app->controller->id;
+Yii::$app->params['cate'] = Menu::getUrl2Cate("$controllerId/$actionId");
 $this->beginPage()
 ?>
 <!DOCTYPE html>
@@ -54,11 +55,28 @@ AppAsset::register($this);
 }
 
 #mynavright{
-	width:640px;
+	width:750px;
     float:right;
 }
 
+.mynav-ul {
+	float: right;
+	width: 450px;
+}
+
 .mynav-ul li {
+	 float:left;
+	 list-style:none;
+	 margin:0px;
+	 padding-top:2px;
+	 padding-left: 5px;
+	 padding-right: 5px;
+	 border-left:solid;
+	 text-align:center;
+	 border-color:#BDC3C7;
+ }
+
+.mynav-cate li {
 	float:left;
 	list-style:none;
 	margin:0px;
@@ -67,7 +85,7 @@ AppAsset::register($this);
 	padding-right: 5px;
 	border-left:solid;
 	text-align:center;
-    border-color:#BDC3C7;
+	border-color:#BDC3C7;
 }
 
 .contentul li {
@@ -132,7 +150,7 @@ AppAsset::register($this);
 }
 
 #footernav ul li{
-		height:26px;
+	height:26px;
 	float:left;
 	width:180px;
 	list-style:none;
@@ -165,24 +183,30 @@ AppAsset::register($this);
 <div id="mynav">
 <div id="mynavcontent">
 	<?= Html::img('@web/images/logo.png')?>
-<div id="mynavright">
-<ul class="mynav-ul">
-	<li><a href="<?=Yii::$app->params['fUrl'].'site/index'?>">网站首页</a></li>
-	<?php
-	$curuser = isset(Yii::$app->user->identity) ? Yii::$app->user->identity->username : "guest";
-	if (Yii::$app->user->isGuest) {
-	} else {
-		echo "<li>欢迎您</li><li> $curuser </li>".
-				'<li>'
-				. Html::beginForm(['/admin/logout'], 'post')
-				. Html::submitButton('[注销] ',['class' => 'btn-link logout'])
-				. Html::endForm()
-				. '</li>';
-	}
-	?>
-</ul>
-</div><!--mynavright-->
-
+	<div id="mynavright">
+		<ul class="mynav-ul">
+			<li><a href="<?=Yii::$app->params['fUrl'].'site/index'?>">网站首页</a></li>
+			<?php
+			$curuser = isset(Yii::$app->user->identity) ? Yii::$app->user->identity->username : "guest";
+			if (Yii::$app->user->isGuest) {
+			} else {
+				echo "<li>欢迎您</li><li> $curuser </li>".
+						'<li>'
+						. Html::beginForm(['/admin/logout'], 'post')
+						. Html::submitButton('[注销] ',['class' => 'btn-link logout'])
+						. Html::endForm()
+						. '</li>';
+			}
+			?>
+		</ul>
+		<font style="line-height:250%;"></font><!--Set LineSpacing -->
+		<br>
+		<ul class="mynav-cate">
+			<?php foreach(Menu::getCate2Url() as $item=>$value){?>
+				<li><a href="<?=Url::to([Menu::getCate2Url($item)])?>"><?=$item?></a></li>
+			<?php }?>
+		</ul>
+	</div><!--mynavright-->
 </div><!--mynavcontent-->
 </div> <!--mynav -->
  <div class="container">
@@ -195,7 +219,7 @@ AppAsset::register($this);
 	 <?php
 	 if($actionId != 'login') {?>
 		 <div class="menuInfo">
-			 <?php foreach(Menu::getMenu() as $item=>$subMenu){?>
+			 <?php foreach(Menu::getMenu(Yii::$app->params['cate']) as $item=>$subMenu){?>
 				 <div class="box">
 					 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
 					 <div class="cont">
