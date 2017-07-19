@@ -115,7 +115,7 @@ class Menu
     }
 
     public static function getUrl2Cate($route){
-        $cate = isset(self::$Url2Cate[$route]) ? self::$Url2Cate[$route] : '系统';
+        $cate = isset(self::$Url2Cate[$route]) ? self::$Url2Cate[$route] : null;
         return $cate;
     }
 }

@@ -14,7 +14,14 @@ use backend\models\admin\Menu;
 <?php
 $actionId = Yii::$app->controller->action->id;
 $controllerId = Yii::$app->controller->id;
-Yii::$app->params['cate'] = Menu::getUrl2Cate("$controllerId/$actionId");
+$cate = Menu::getUrl2Cate("$controllerId/$actionId");
+$session = Yii::$app->session;
+if($cate){
+	$session['cate'] = $cate;
+}
+if(!isset($session['cate'])){
+	$session['cate'] = '系统';
+}
 $this->beginPage()
 ?>
 <!DOCTYPE html>
@@ -219,7 +226,7 @@ AppAsset::register($this);
 	 <?php
 	 if($actionId != 'login') {?>
 		 <div class="menuInfo">
-			 <?php foreach(Menu::getMenu(Yii::$app->params['cate']) as $item=>$subMenu){?>
+			 <?php foreach(Menu::getMenu($session['cate']) as $item=>$subMenu){?>
 				 <div class="box">
 					 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
 					 <div class="cont">
