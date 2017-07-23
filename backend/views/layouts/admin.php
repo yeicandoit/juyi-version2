@@ -32,7 +32,7 @@ $this->beginPage()
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode(Menu::getRoute2name("$controllerId/$actionId")) ?></title>
     <?php $this->head() ?>
-    <link rel="shortcut icon" href="img/title.ico">
+    <link rel="shortcut icon" href=<?=Yii::$app->params['imgGlobalPath']."img/title.ico"?>>
   <?php
 AppAsset::register($this);
 ?>
