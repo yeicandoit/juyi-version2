@@ -52,7 +52,7 @@ class AlipayFundTransferContentBuilder
     public function setOutBizNo($outBizNo)
     {
         $this->outBizNo = $outBizNo;
-        $this->bizContentarr['outBizNo'] = $outBizNo;
+        $this->bizContentarr['out_biz_no'] = $outBizNo;
     }
 
     public function getPayeeType()
@@ -63,7 +63,7 @@ class AlipayFundTransferContentBuilder
     public function setPayeeType($payeeType)
     {
         $this->payeeType = $payeeType;
-        $this->bizContentarr['payeeType'] = $payeeType;
+        $this->bizContentarr['payee_type'] = $payeeType;
     }
 
     public function getPayeeAccount()
@@ -74,7 +74,7 @@ class AlipayFundTransferContentBuilder
     public function setPayeeAccount($payeeAccount)
     {
         $this->payeeAccount = $payeeAccount;
-        $this->bizContentarr['payeeAccount'] = $payeeAccount;
+        $this->bizContentarr['payee_account'] = $payeeAccount;
     }
 
     public function getAmount()
@@ -96,7 +96,7 @@ class AlipayFundTransferContentBuilder
     public function setPayerShowName($payerShowName)
     {
         $this->payerShowName = $payerShowName;
-        $this->bizContentarr['payerShowName'] = $payerShowName;
+        $this->bizContentarr['payer_show_name'] = $payerShowName;
     }
 
     public function getPayeeRealName()
@@ -107,7 +107,7 @@ class AlipayFundTransferContentBuilder
     public function setPayeeRealName($payeeRealName)
     {
         $this->payeeRealName = $payeeRealName;
-        $this->bizContentarr['payeeRealName'] = $payeeRealName;
+        $this->bizContentarr['payee_real_name'] = $payeeRealName;
     }
 
     public function getRemark()

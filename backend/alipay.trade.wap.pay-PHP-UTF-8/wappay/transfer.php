@@ -27,7 +27,7 @@ if (!empty($_POST['out_biz_no'])&& trim($_POST['out_biz_no'])!=""){
     $payRequestBuilder->setAmount($amount);
 
     $payResponse = new AlipayTradeService($config);
-    $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+    $result=$payResponse->fundTransfer($payRequestBuilder,$config['return_url'],$config['notify_url']);
 
     return ;
 }
@@ -231,9 +231,9 @@ if (!empty($_POST['out_biz_no'])&& trim($_POST['out_biz_no'])!=""){
 		sNow += String(vNow.getSeconds());
 		sNow += String(vNow.getMilliseconds());
 		document.getElementById("out_biz_no").value =  sNow;
-		document.getElementById("payee_type").value = "925994294@qq.com";
+		document.getElementById("payee_type").value = "ALIPAY_LOGONID";
 		document.getElementById("payee_account").value = "925994294@qq.com";
-        document.getElementById("amount").value = "0.01元";
+        document.getElementById("amount").value = "0.01";
 	}
 	GetDateNow();
 </script>
