@@ -77,7 +77,7 @@ class AlipayTradeService {
 		$request->setBizContent ( $biz_content );
 
 		// 首先调用支付api
-		$response = $this->aopclientRequestExecute ($request,true);
+		$response = $this->aopclientRequestExecute ($request,false);
 		// $response = $response->alipay_trade_wap_pay_response;
 		return $response;
 	}
