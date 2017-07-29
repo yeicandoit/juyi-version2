@@ -3,6 +3,7 @@
 namespace backend\models\seller;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%seller}}".
@@ -125,7 +126,7 @@ class Seller extends \yii\db\ActiveRecord
                         //Use full path, or image\Behavior could not find file path.
                         'savePathAlias' => Yii::$app->basePath . '/web/images/',
                         'width' => 200,
-                        'urlPrefix' => Yii::$app->params['imgGlobalPath'] . '/images/',
+                        'urlPrefix' => Url::to("@web/images/"),
                         'height' => 200,
                     ],
                 ],

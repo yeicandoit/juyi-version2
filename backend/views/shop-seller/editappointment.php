@@ -115,7 +115,7 @@ $(document).ready(function() {
 		</tr>
 		<tr style="border: 1px solid #c4e3f3;">
 			<td style="border: 1px solid #c4e3f3;padding: 20px 10px 10px 10px">
-                <a href=<?=$href?>><?=Html::img(Yii::$app->params['imgGlobalPath'] . $good->img, ['style'=>'width:150px;height:150px;'])?></a>
+                <a href=<?=$href?>><?=Html::img(\yii\helpers\Url::to("@web/" . $good->img), ['style'=>'width:150px;height:150px;'])?></a>
 				<br>
 				<?=Html::a($good->name, $href)?>
 			</td>

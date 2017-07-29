@@ -19,7 +19,7 @@ use \yii\helpers\Url;
                 'format'=>'raw',
                 'value'=> function($model){
                     if($model->img){
-                        $src = Yii::$app->params['imgGlobalPath'].$model->img;
+                        $src = Url::to("@web/" . $model->img);
                     } else {
                         $src = '/images/user_ico.gif';
                     }

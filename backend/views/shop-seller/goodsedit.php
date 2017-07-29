@@ -198,7 +198,7 @@ JS;
                                 }
                             ?>
                             <td style="padding-left: 10px">
-                                <img src='<?=$photo?>' style="width: 100px;height: 100px;" onclick="defaultImg('<?=$photo?>', <?=$photoId?>)">
+                                <img src='<?=Url::to("@web/$photo")?>' style="width: 100px;height: 100px;" onclick="defaultImg('<?=$photo?>', <?=$photoId?>)">
                                 <br>
                                 <a href="#" onclick="delImg(<?=$photoId?>);">&nbsp;&nbsp;删除</a>
                                 <label class="defaultImg" style="<?=$display?>" id='<?=$imgId?>'>&nbsp;&nbsp;主图</label>
@@ -257,6 +257,7 @@ JS;
     var g_oJCrop = null;
     var actionId = "<?= Yii::$app->controller->action->id;?>";
     var goodsId = "<?=$goods->id?>";
+    var imgUrlBase = '<?=Url::to("@web/")?>';
     //异步上传文件
     <?php $actionUrl = Url::to(['shop-seller/upload'])?>
     <?php $postUrl = Url::to(['shop-seller/cutpic'])?>
@@ -274,7 +275,7 @@ JS;
         },
         onComplete: function(file, response) {
             if(g_oJCrop!=null){g_oJCrop.destroy();}
-                $(".pic-display").html("<div class='thum'><img id='target' src='"+response+"'/></div>");
+                $(".pic-display").html("<div class='thum'><img id='target' src='"+ imgUrlBase + response +"'/></div>");
             $('#target').Jcrop({
                 onChange: updatePreview,
                 onSelect: updatePreview,
@@ -303,7 +304,7 @@ JS;
                 g_oJCrop.setSelect([x1,y1,x2,y2]);
 
                 //顺便插入略缩图
-                $(".jcrop-holder").append("<div id='preview-pane'><div class='preview-container'><img  class='jcrop-preview' src='"+response+"' /></div></div>");
+                $(".jcrop-holder").append("<div id='preview-pane'><div class='preview-container'><img  class='jcrop-preview' src='"+ imgUrlBase + response +"' /></div></div>");
             });
             //传递参数上传
             $("#f").val(response);
@@ -348,7 +349,7 @@ JS;
                     var imgId = 'defaultImg_' + mtime;
                     var inputId = 'inputDefault_' + mtime;
                     var info = '<td style="padding-left: 10px">' +
-                        '<img src="' + data.data + '" style="width: 100px;height: 100px;" onclick="defaultThis('+ mtime + ')">'
+                        '<img src="' + imgUrlBase + data.data + '" style="width: 100px;height: 100px;" onclick="defaultThis('+ mtime + ')">'
                             + '<br>'
                             + '<a href="#" onclick="delImg(' + mtime + ')">&nbsp;&nbsp;删除</a>'
                             + '<input id=' + inputId + ' type="hidden" name="goodsImgs[]" value="' + data.data + '">'
