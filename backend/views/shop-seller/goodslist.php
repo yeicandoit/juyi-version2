@@ -22,7 +22,7 @@ use \yii\helpers\Url;
                     if($model->img){
                         $src = Url::to("@web/" . $model->img);
                     } else {
-                        $src = '/images/user_ico.gif';
+                        $src = Url::to("@web/images/user_ico.gif");
                     }
                     $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=$model->id";
                     return "<table>

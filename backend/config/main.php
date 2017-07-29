@@ -50,7 +50,7 @@ return [
         'redactor' => [
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => '@webroot/shopdetail',
-            'uploadUrl' => 'shopdetail',
+            'uploadUrl' => '@web/shopdetail',
             'imageAllowExtensions'=>['jpg','png','gif']
         ],
         'sysadmin' => [
@@ -63,6 +63,7 @@ return [
         'allowActions' => [
             //'admin/*',//允许所有人访问admin节点及其子节点
             //'sysadmin/*',//允许所有人访问sysadmin节点及其子节点
+            'redactor/*',
             'admin/login',
             'shop-seller/*',
             'site/*',

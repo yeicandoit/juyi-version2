@@ -3,6 +3,7 @@
 namespace backend\models\seller;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%expert}}".
@@ -109,7 +110,7 @@ class Expert extends \yii\db\ActiveRecord
                     'img' => [
                         //Use full path, or image\Behavior could not find file path.
                         'savePathAlias' => Yii::$app->basePath . '/web/images/',
-                        'urlPrefix' => Yii::$app->params['imgGlobalPath'] . '/images/',
+                        'urlPrefix' => Url::to("@web/images/"),
                         'width' => 150,
                         'height' => 200,
                     ],

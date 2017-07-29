@@ -383,7 +383,7 @@ JS;
             $("input[name='Goods[img]']").val(null);
         }
         if('goodsedit' == actionId){
-            $.get("<?=Url::to(['shop-seller/delimg'])?>" + "&goodsId=" + goodsId + "&photoId=" + photoId, function (data) {});
+            $.get("<?=Url::to(['shop-seller/delimg'])?>" + "?goodsId=" + goodsId + "&photoId=" + photoId, function (data) {});
         }
         $("#defaultImg_" + photoId).parent().remove();
     }
@@ -393,7 +393,7 @@ JS;
         $("input[name='category']:checked").each(function() {
             if ('goodsedit' == actionId) {
                 //TODO could not edit str in $.get function. To find why.
-                $.get("<?=Url::to(['shop-seller/addcat'])?>" + "&goodsId=" + goodsId + "&catId=" + $(this).val(), function (data) {});
+                $.get("<?=Url::to(['shop-seller/addcat'])?>" + "?goodsId=" + goodsId + "&catId=" + $(this).val(), function (data) {});
             }
             str += '<ctrlarea id=' + 'ctrl' + $(this).val() + '>' +
                 '<input name="goodsCategory[]" type="hidden" value=' + $(this).val() + '>' +
@@ -408,7 +408,7 @@ JS;
         if(confirm('确定删除此分类？')) {
             var node = '#ctrl' + catId;
             if ('goodsedit' == actionId) {
-                $.get("<?=Url::to(['shop-seller/delcat'])?>" + "&goodsId=" + goodsId + "&catId=" + catId, function (data) {
+                $.get("<?=Url::to(['shop-seller/delcat'])?>" + "?goodsId=" + goodsId + "&catId=" + catId, function (data) {
                     if (data == "OK") {
                         $(node).remove();
                     } else {
@@ -436,7 +436,7 @@ JS;
     function delSpec(specName)
     {
         if('goodsedit' == actionId){
-            $.get("<?=Url::to(['shop-seller/delspec'])?>" + "&goodsId=" + goodsId + "&specName=" + specName, function (data) {});
+            $.get("<?=Url::to(['shop-seller/delspec'])?>" + "?goodsId=" + goodsId + "&specName=" + specName, function (data) {});
         }
     }
 

@@ -20,9 +20,9 @@ use \yii\helpers\Url;
                 'format'=>'raw',
                 'value'=> function($model){
                     if($model->img){
-                        $src = Yii::$app->params['imgGlobalPath'].$model->img;
+                        $src = Url::to("@web/" . $model->img);
                     } else {
-                        $src = Yii::$app->params['imgGlobalPath'].'/images/user_ico.gif';
+                        $src = Url::to("@web/images/user_ico.gif");
                     }
                     $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=$model->id";
                     return "<table>
