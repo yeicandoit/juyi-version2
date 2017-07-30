@@ -119,7 +119,7 @@ use yii\helpers\Url;
     <?php $url = Url::to(['shop-seller/areas']); ?>
     function setCityOption()
     {
-        $.get("<?= $url?>&id="+$("#seller-province").val(),function(data){
+        $.get("<?= $url?>?id="+$("#seller-province").val(),function(data){
             $("#seller-city").html("<option value=0>请选择市</option>");
             $("#seller-area").html("<option value=0>请选择县</option>");
             $("#seller-city").append(data);
@@ -128,7 +128,7 @@ use yii\helpers\Url;
 
     function setAreaOption()
     {
-        $.get("<?= $url?>&id="+$("#seller-city").val(),function(data){
+        $.get("<?= $url?>?id="+$("#seller-city").val(),function(data){
             $("#seller-area").html("<option value=0>请选择县</option>");
             $("#seller-area").append(data);});
     }

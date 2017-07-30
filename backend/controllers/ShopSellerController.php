@@ -62,7 +62,7 @@ class ShopSellerController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login'], 
+                        'actions' => ['login', 'sellerreg', 'expertreg'], 
                         'roles' => ['?'],
                     ],
                     [

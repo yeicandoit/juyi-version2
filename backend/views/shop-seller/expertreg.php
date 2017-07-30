@@ -76,7 +76,7 @@ use yii\helpers\Url;
     <?php $url = Url::to(['shop-seller/areas']); ?>
     function setCityOption()
     {
-        $.get("<?= $url?>&id="+$("#expertregform-province").val(),function(data){
+        $.get("<?= $url?>?id="+$("#expertregform-province").val(),function(data){
             $("#expertregform-city").html("<option value=0>请选择市</option>");
             $("#expertregform-area").html("<option value=0>请选择县</option>");
             $("#expertregform-city").append(data);
@@ -85,7 +85,7 @@ use yii\helpers\Url;
 
     function setAreaOption()
     {
-        $.get("<?= $url?>&id="+$("#expertregform-city").val(),function(data){
+        $.get("<?= $url?>?id="+$("#expertregform-city").val(),function(data){
             $("#expertregform-area").html("<option value=0>请选择县</option>");
             $("#expertregform-area").append(data);});
     }
