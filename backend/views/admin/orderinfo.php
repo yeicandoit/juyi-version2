@@ -64,6 +64,7 @@ use yii\bootstrap\ActiveForm;
         <?php } ?>
         <div class="blank"></div>
         <label style="color: #985f0d; padding-left: 10px">订单信息</label>
+        <?php $userOrderDelivery = $order->getDelivery($order->user_id)?>
         <?= DetailView::widget([
             'model' => $order,
             'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
@@ -71,7 +72,7 @@ use yii\bootstrap\ActiveForm;
                 'order_no',
                 ['label'=>'当前状态', 'value'=>$order->stat],
                 ['label'=>'支付状态', 'value'=>$order->payStatus],
-                ['label'=>'配送状态', 'value'=>$order->orderDistributionStatusText],
+                ['label'=>'配送状态', 'value'=>$userOrderDelivery? "已发送" : "未发送"],
                 ['label'=>'订单类型', 'value'=>$order->orderTypeText],
                 'postscript',
             ],
@@ -114,9 +115,9 @@ use yii\bootstrap\ActiveForm;
             'model' => $order,
             'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
             'attributes' => [
-                ['label'=>'快递公司名称', 'value'=>$order->delivery ? $order->delivery->name : ''],
-                ['label'=>'快递单号', 'value'=>$order->delivery ? $order->delivery->number : ''],
-                ['label'=>'快递说明', 'value'=>$order->delivery ? $order->delivery->description  : ''],
+                ['label'=>'快递公司名称', 'value'=>$userOrderDelivery ? $userOrderDelivery->name : ''],
+                ['label'=>'快递单号', 'value'=>$userOrderDelivery ? $userOrderDelivery->number : ''],
+                ['label'=>'快递说明', 'value'=>$userOrderDelivery ? $userOrderDelivery->description  : ''],
             ],
         ]) ?>
 

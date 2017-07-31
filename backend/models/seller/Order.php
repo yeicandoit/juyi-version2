@@ -229,9 +229,15 @@ class Order extends \yii\db\ActiveRecord
         return $this->hasOne(Appointinfo::className(), ['appointid'=>'appointid']);
     }
 
-    public function getDelivery()
+    public function getDelivery($userid)
     {
-        return $this->hasOne(Delivery::className(), ['id'=>'distribution']);
+        //return $this->hasOne(Delivery::className(), ['id'=>'distribution']);
+        $orderDelivery = OrderDelivery::find()->where(['oderid'=>$this->id, 'userid'=>$userid, 'usertype'=>0])->one();
+        if($orderDelivery) {
+            return Delivery::findOne($orderDelivery->deliveryid);
+        } else {
+            return false;
+        }
     }
 
     public function getDeliveryBack()

@@ -237,12 +237,24 @@ AppAsset::register($this);
      <?= $content ?>
  </div>  <!-- container -->
 
-
-<footer class="footer">
+<footer class="footer" style="clear:both">
+	<div style="text-align: center;font-size:12px;background-color:#CCCCCC">
+		Copyright © 2005-2018 沪ICP备16029138号-1<br>
+		上海市闵行区剑川路951号，零号湾创业科技园；服务热线：15221328568<br>
+		上海聚仪检测科技有限公司   版权所有
+	</div>
 </footer>
-
 
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
+<script>
+    window.onload =function() {
+        hMenu = $(".menuInfo").height(); 
+        hContainer = $(".sellerinfo").height();
+        if(hMenu > hContainer) {
+            $(".sellerinfo").height(hMenu);
+        }
+    }    
+</script>

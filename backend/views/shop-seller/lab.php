@@ -21,7 +21,7 @@ use yii\helpers\Url;
 <table>
     <tr>
     <td valign="top" >
-        <div style="border-right:1px inset; width: 210px">
+        <div style="width: 210px">
             <li style="width:95%;background-color: #116fb5;border-radius:0 0 0 15px;color: #fdfdfd;font-size: 15px;padding-left: 30px">
                 实验室信息
             </li>
@@ -30,7 +30,7 @@ use yii\helpers\Url;
             <?=Html::label('评分:')?><span class="grade"><i style="width: 70px;"></i></span><br>
             <?=Html::label('所在地:').$lab->getLocation("/")?> 
         </div>
-        <div style="border-right:1px inset; width: 210px">
+        <div style="width: 210px">
             <li style="width:95%;background-color: #116fb5;border-radius:0 0 0 15px;color: #fdfdfd;font-size: 15px;padding-left: 30px">
                 同类实验室
             </li>
@@ -41,7 +41,7 @@ use yii\helpers\Url;
                     ?>
                     <tr>
                     <td>
-                        <a href=<?=Url::to(['shop-seller/lab', 'id'=>$v->id])?>><?= Html::img($v->logo, ['style' => 'width:80px;height:60px;padding-top:5px']) ?></a>
+                        <a href=<?=Url::to(['shop-seller/lab', 'id'=>$v->id])?>><?= Html::img("@web/$v->logo", ['style' => 'width:80px;height:60px;padding-top:5px']) ?></a>
                     </td>
                     <td>
                         <a href=<?=Url::to(['shop-seller/lab', 'id'=>$v->id])?>><?=$v->true_name?></a>
