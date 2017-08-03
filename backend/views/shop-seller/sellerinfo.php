@@ -136,7 +136,7 @@ use yii\helpers\Url;
     function addService()
     {
         var service = $("#service").val();
-        $.get("<?=Url::to(['shop-seller/addservice'])?>" + "&shopId=" + <?=$sellerinfo->id?> + "&service=" + service, function (data) {
+        $.get("<?=Url::to(['shop-seller/addservice'])?>" + "?shopId=" + <?=$sellerinfo->id?> + "&service=" + service, function (data) {
             if('Failed' != data){
                 var str = '<ctrlarea id=' + 'ctrl' + data + '>' +
                     '<a href="#" onclick="rmService(' + data + ')">' +
@@ -177,7 +177,7 @@ use yii\helpers\Url;
         if(confirm('确定添加？')){
             var soft = $.trim($('#inputSoft_'+id).val());
             if('' != soft) {
-                $.get("<?=Url::to(['shop-seller/addservice'])?>" + "&shopId=" + <?=$sellerinfo->id?> +"&service=" + soft, function (data) {
+                $.get("<?=Url::to(['shop-seller/addservice'])?>" + "?shopId=" + <?=$sellerinfo->id?> +"&service=" + soft, function (data) {
                     if ('Failed' != data) {
                         var str = '<ctrlarea id=' + 'ctrl' + data + '>' +
                             '<a href="#" onclick="rmService(' + data + ')">' +

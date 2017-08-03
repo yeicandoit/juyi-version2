@@ -36,7 +36,6 @@ use yii\bootstrap\ActiveForm;
             ['label'=>'下单时间', 'value'=>$refundment->order->create_time],
             ['label'=>'订单应付金额', 'value'=>$refundment->order->payable_amount],
             ['label'=>'订单实付金额', 'value'=>$refundment->order->real_amount],
-            ['label'=>'订单总额', 'value'=>$refundment->order->order_amount],
             ['label'=>'退款商品', 'format'=>'raw', 'value'=>$good],
             ['label'=>'已退款金额', 'value'=>$refundment->amount],
             ['label'=>'退款原因', 'value'=>$refundment->content],
