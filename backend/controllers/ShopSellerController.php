@@ -486,6 +486,26 @@ class ShopSellerController extends Controller
         return $this->render('lab', ['lab'=>$lab, 'labInfo'=>$labInfo, 'model'=>$model, 'pages' => $pages, 'relatedLabs'=>$relatedLabs]);
     }
 
+    public function actionResearch($id)
+    {
+        $research = Seller::findOne($id);
+        $researchInfo = $research->ext;
+        $pages = new Pagination(['totalCount' =>$research->pageGoods()->count(), 'pageSize' => '12']);
+        $model = $research->pageGoods()->offset($pages->offset)->limit($pages->limit)->all();
+        $relatedLabs = $research->relatedLabs;
+        return $this->render('research', ['lab'=>$research, 'labInfo'=>$researchInfo, 'model'=>$model, 'pages' => $pages, 'relatedLabs'=>$relatedLabs]);
+    }
+
+    public function actionSimulate($id)
+    {
+        $simulate = Seller::findOne($id);
+        $simulateInfo = $simulate->ext;
+        $pages = new Pagination(['totalCount' =>$simulate->pageGoods()->count(), 'pageSize' => '12']);
+        $model = $simulate->pageGoods()->offset($pages->offset)->limit($pages->limit)->all();
+        $relatedLabs = $simulate->relatedLabs;
+        return $this->render('simulate', ['lab'=>$simulate, 'labInfo'=>$simulateInfo, 'model'=>$model, 'pages' => $pages, 'relatedLabs'=>$relatedLabs]);
+    }
+
     public function actionExpertreg()
     {
         $model = new ExpertregForm();
