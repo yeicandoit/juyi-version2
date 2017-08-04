@@ -16,6 +16,13 @@ use yii\helpers\Url;
     padding-left: 6px;
     padding-right: 6px;
 }
+.singleline {
+    width:200px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+}
+
 </style>
 
 <table>
@@ -59,10 +66,10 @@ use yii\helpers\Url;
         </div>
         <div align="center" style="height: 36px;background-color: #116fb5">
             <ul id="menu">
-                <li><a href="#" onclick="showlab(1)">科研测试服务</a></li>
-                <li><a href="#" onclick="showlab(2)">实验室概况</a></li>
-                <li><a href="#" onclick="showlab(3)">科研队伍</a></li>
-                <li><a href="#" class="last" onclick="showlab(4)">科研成果</a></li>
+                <li><a href="#" onclick="showlab(this, 1)">科研测试服务</a></li>
+                <li><a href="#" onclick="showlab(this, 2)">实验室概况</a></li>
+                <li><a href="#" onclick="showlab(this, 3)">科研队伍</a></li>
+                <li><a href="#" class="last" onclick="showlab(this, 4)">科研成果</a></li>
             </ul>
         </div>
         <div id="showlab_1" style="padding-top: 10px">
@@ -73,7 +80,7 @@ use yii\helpers\Url;
                         <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::img($g->img,['style'=>'width:200px;height:200px'])?></a> <br><br>
                         <div style="height:120px">
                             <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::label("&nbsp;&nbsp;$g->name", null, ['style'=>'width:200px'])?></a>
-                            <div style="width:200px">&nbsp;&nbsp;<font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
+                            <div class='singleline'>&nbsp;&nbsp;<font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
                             <div><font size='2'>&nbsp;&nbsp;测试价:<?=$g->sell_price?>元/样</font></div>
                             <div><font size='1px'>&nbsp;&nbsp;<s>市场价:<?=$g->market_price?>元/样</s></font></div>
                         </div>
@@ -96,8 +103,10 @@ use yii\helpers\Url;
 </table>
 
 <script type="text/javascript">
-    function showlab(id)
+    function showlab(self, id)
     {
+        $("#menu li a").css("background-color", '#116fb5')
+        $(self).css("background-color", '#bf800c');
         for(var i = 1; i <= 4; i++ ){
             $("#showlab_"+i).hide();
         }

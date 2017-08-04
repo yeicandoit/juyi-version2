@@ -65,10 +65,10 @@ use yii\helpers\Url;
         </div>
         <div align="center" style="height: 36px;background-color: #116fb5">
             <ul id="menu">
-                <li><a href="#" onclick="showlab(1)">科研商品</a></li>
-                <li><a href="#" onclick="showlab(2)">公司简介</a></li>
-                <li><a href="#" onclick="showlab(3)">科研队伍</a></li>
-                <li><a href="#" class="last" onclick="showlab(4)">科研成果</a></li>
+                <li><a href="#" onclick="showlab(this, 1)">科研商品</a></li>
+                <li><a href="#" onclick="showlab(this, 2)">公司简介</a></li>
+                <li><a href="#" onclick="showlab(this, 3)">科研队伍</a></li>
+                <li><a href="#" class="last" onclick="showlab(this, 4)">科研成果</a></li>
             </ul>
         </div>
         <div id="showlab_1" style="padding-top: 10px">
@@ -80,7 +80,7 @@ use yii\helpers\Url;
                         <div style="height:130px">
                             <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::label("&nbsp;&nbsp;$g->name", null, ['style'=>'width:200px', 'class'=>'goodName'])?></a>
                             <div class='singleline'>&nbsp;&nbsp;<font size='2'>品牌:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;</font></div>
-                            <div class='singleline'>&nbsp;&nbsp;<font size='2'>型号:<?=$g->brandversion?></div>
+                            <div class='singleline'>&nbsp;&nbsp;<font size='2'>型号:<?=$g->brandversion?></font></div>
                             <div><font size='2'>&nbsp;&nbsp;销售价格:<?=$g->sell_price?>元/个</font></div>
                             <div><font size='1px'>&nbsp;&nbsp;<s>市场价格:<?=$g->market_price?>元/个</s></font></div>
                         </div>
@@ -103,8 +103,10 @@ use yii\helpers\Url;
 </table>
 
 <script type="text/javascript">
-    function showlab(id)
+    function showlab(self, id)
     {
+        $("#menu li a").css("background-color", '#116fb5')
+        $(self).css("background-color", '#bf800c');
         for(var i = 1; i <= 4; i++ ){
             $("#showlab_"+i).hide();
         }
