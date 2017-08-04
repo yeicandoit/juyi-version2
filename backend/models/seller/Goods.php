@@ -44,6 +44,11 @@ use backend\models\ShopCategoryExtend;
  */
 class Goods extends \yii\db\ActiveRecord
 {
+    const TYPE_TEST = 1;
+    const TYPE_EXPERT = 2;
+    const TYPE_RESEARCH = 3;
+    const TYPE_SIMULATE = 4;
+
     /**
      * @inheritdoc
      */

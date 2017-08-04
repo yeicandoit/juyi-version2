@@ -248,7 +248,6 @@ class ShopSellerController extends Controller
             $goods->create_time = date('Y-m-d H:i:s',time());
             $goods->sort = isset($goods->sort) ? $goods->sort : 10;
             $goods->is_del = 3;
-            $goods->goodtype = $goods->getGoodType2Int(ShopMember::findOne(Yii::$app->user->id)->regtype);
             if($goods->save()){
                 if(isset($post['specName'])){
                     $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
@@ -267,6 +266,7 @@ class ShopSellerController extends Controller
             return $this->goHome();
         }
         $goods = new Goods();
+        $goods->goodtype = $goods->getGoodType2Int(ShopMember::findOne(Yii::$app->user->id)->regtype);
         $goodsContent = new Goodscontent();
         return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
     }

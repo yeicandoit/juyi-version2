@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use \yii\helpers\Url;
 use backend\models\seller\Seller;
 use backend\models\seller\Expert;
+use backend\models\seller\Goods;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <?=Html::cssFile('@web/css/jquery.Jcrop.css')?>
@@ -139,12 +140,18 @@ JS;
         <table>
             <tr>
                 <th>商品货号</th><th>市场价格</th><th>销售价格</th><th>成本价格</th>
+                <?php if(Goods::TYPE_RESEARCH ==$goods->goodtype || Goods::TYPE_SIMULATE == $goods->goodtype){?>
+                    <th>库存</th>
+                <?php }?>
             </tr>
             <tr>
                 <td style="width: 160px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:150px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+                <?php if(Goods::TYPE_RESEARCH ==$goods->goodtype || Goods::TYPE_SIMULATE == $goods->goodtype){?>
+                    <td style="width: 150px;"><?= $form->field($goods, 'store_nums', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+                <?php }?>
             </tr>
         </table>
         <div style="display: none"><?= $form->field($goods, 'model_id')->textInput(['style'=>'width:25%', 'value'=>'1'])?></div>
