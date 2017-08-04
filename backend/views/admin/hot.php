@@ -103,7 +103,7 @@ use backend\models\admin\CommendGoods;
         if('' == val) {
             alert('编号/账号不能为空');
         } else {
-            location.href= "<?= Url::to(['admin/addhot'])?>&type=" + type + "&hot=" + val;
+            location.href= "<?= Url::to(['admin/addhot'])?>?type=" + type + "&hot=" + val;
         }
     }
 </script>

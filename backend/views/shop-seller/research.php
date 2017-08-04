@@ -16,6 +16,12 @@ use yii\helpers\Url;
     padding-left: 6px;
     padding-right: 6px;
 }
+.singleline {
+    width:200px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+}
 </style>
 
 <table>
@@ -71,11 +77,12 @@ use yii\helpers\Url;
                     <div class='goodbox'>
                     <div class='goodshow'>
                         <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::img($g->img,['style'=>'width:200px;height:200px'])?></a> <br><br>
-                        <div style="height:120px">
-                            <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::label("&nbsp;&nbsp;$g->name", null, ['style'=>'width:200px'])?></a>
-                            <div style="width:200px">&nbsp;&nbsp;<font size='2'>品牌/型号:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;<font size='2'><?=$g->brandversion?></font></font></div>
-                            <div><font size='2'>&nbsp;&nbsp;测试价:<?=$g->sell_price?>元/样</font></div>
-                            <div><font size='1px'>&nbsp;&nbsp;<s>市场价:<?=$g->market_price?>元/样</s></font></div>
+                        <div style="height:130px">
+                            <a href=<?=Url::to(['site/goodinfo', 'id'=>$g->id])?>><?=Html::label("&nbsp;&nbsp;$g->name", null, ['style'=>'width:200px', 'class'=>'goodName'])?></a>
+                            <div class='singleline'>&nbsp;&nbsp;<font size='2'>品牌:<?=isset($g->brandid)? $g->brand->name: ''?>&nbsp;&nbsp;</font></div>
+                            <div class='singleline'>&nbsp;&nbsp;<font size='2'>型号:<?=$g->brandversion?></div>
+                            <div><font size='2'>&nbsp;&nbsp;销售价格:<?=$g->sell_price?>元/个</font></div>
+                            <div><font size='1px'>&nbsp;&nbsp;<s>市场价格:<?=$g->market_price?>元/个</s></font></div>
                         </div>
                     </div>
                     </div>
@@ -102,6 +109,15 @@ use yii\helpers\Url;
             $("#showlab_"+i).hide();
         }
         $("#showlab_"+id).show();
+    }
+    window.onload = function(){
+        $('.goodName').each(function(key,value){
+            str = $(value).text();
+            textLeng = 40;
+            if(str.length > textLeng){
+                $(this).html(str.substring(0,textLeng )+"...");
+            }
+        }); 
     }
 </script>
 
