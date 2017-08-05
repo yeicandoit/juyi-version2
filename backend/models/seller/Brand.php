@@ -56,6 +56,6 @@ class Brand extends \yii\db\ActiveRecord
 
     public static function getTypetextArr()
     {
-        return array(Goods::TYPE_TEST=>'检测', Goods::TYPE_EXPERT=>'专家', Goods::TYPE_RESEARCH=>"科研辅助", Goods::TYPE_SIMULATE=>'数值模拟');
+        return array(null=>'请选择', Goods::TYPE_TEST=>'检测', Goods::TYPE_EXPERT=>'专家', Goods::TYPE_RESEARCH=>"科研辅助", Goods::TYPE_SIMULATE=>'数值模拟');
     }
 }
