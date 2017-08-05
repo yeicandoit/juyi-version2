@@ -204,13 +204,14 @@ class Goods extends \yii\db\ActiveRecord
         return $arr[$type];
     }
 
-    public function saveBrand($brandName)
+    public function saveBrand($brandName, $type)
     {
         $brandName = trim($brandName);
         $brand = Brand::find()->where(['name'=>$brandName])->one();  
         if($brand == null) {
             $brand = New Brand();
             $brand->name = $brandName;
+            $brand->type = $type;
             $brand->save();
         }
         $this->brandid = $brand->id; 

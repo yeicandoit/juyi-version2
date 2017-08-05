@@ -254,7 +254,7 @@ AppAsset::register($this);
         hMenu = $(".menuInfo").height(); 
         hContainer = $(".sellerinfo").height();
         if(hMenu > hContainer) {
-            $(".sellerinfo").height(hMenu);
+            $(".sellerinfo").height(hMenu+30);
         }
     }    
 </script>

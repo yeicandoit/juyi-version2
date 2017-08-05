@@ -33,8 +33,8 @@ class Brand extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['description'], 'string'],
-            [['sort'], 'integer'],
-            [['name', 'logo', 'url', 'category_ids'], 'string', 'max' => 255],
+            [['sort', 'type'], 'integer'],
+            [['name', 'logo', 'url'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,7 +50,7 @@ class Brand extends \yii\db\ActiveRecord
             'url' => Yii::t('app', '网址'),
             'description' => Yii::t('app', '描述'),
             'sort' => Yii::t('app', '排序'),
-            'category_ids' => Yii::t('app', '品牌分类,逗号分割id'),
+            'type' => Yii::t('app', '品牌分类'),
         ];
     }
 }

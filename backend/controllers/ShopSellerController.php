@@ -259,7 +259,7 @@ class ShopSellerController extends Controller
                     $goods->saveImgs($post['goodsImgs']);
                 }
                 if(isset($post['newBrand']) && '' != $post['newBrand']){
-                    $goods->saveBrand($post['newBrand']); 
+                    $goods->saveBrand($post['newBrand'], $goods->goodtype);
                 }
                 return $this->redirect(['goodslist']);
             }
@@ -285,7 +285,7 @@ class ShopSellerController extends Controller
                     $goods->saveImgs($post['goodsImgs']);
                 }
                 if(isset($post['newBrand']) && '' != $post['newBrand']){
-                    $goods->saveBrand($post['newBrand']); 
+                    $goods->saveBrand($post['newBrand'], $goods->goodtype);
                 }
                 return $this->redirect(['goodslist']);
             }

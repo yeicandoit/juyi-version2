@@ -180,8 +180,13 @@ JS;
     </div>
     <br>
     <div class="goodInfoBox">
+        <?php if(isset($goods->goodtype)) {
+            $arr = ArrayHelper::map(backend\models\seller\Brand::find()->where(['type' => $goods->goodtype])->asArray()->all(), 'id', 'name');
+        } else {
+            $arr = ArrayHelper::map(backend\models\seller\Brand::find()->asArray()->all(),'id','name');
+        }?>
         <?=$form->field($goods, 'brandid')
-            ->dropDownList(ArrayHelper::map(backend\models\seller\Brand::find()->asArray()->all(),'id','name'), ['style'=>'width:300px', 'prompt'=>'请选择'])?>
+            ->dropDownList($arr, ['style'=>'width:300px', 'prompt'=>'请选择'])?>
         <?= Html::label('若品牌列表不含所需品牌，请');?><?=Html::a('添加', '#', ['onclick'=>'$("#newBrand").show()'])?>
         <div id="newBrand" style="display:none"><input type="text" name="newBrand" style='width:200px'/></div>
         <?= $form->field($goods, 'brandversion')->textInput(['style'=>'width:200px'])->label("品牌型号")?>
