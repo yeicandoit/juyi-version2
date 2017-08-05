@@ -10,6 +10,7 @@ class Menu
                 "后台首页" => "admin/adminhome",
                 "关于聚仪" => "xyf/updateaboutjuyi",
                 "权限管理" => "sysadmin/",
+                "品牌管理" => "admin/brandlist",
             ),
             "广告设置" => array(
                 "热门设置" => "admin/hot",
@@ -72,6 +73,7 @@ class Menu
         "admin/manageinformation"   =>      "资讯管理",
         "admin/hot"                 =>      "热门设置",
         "admin/goodsedit"           =>      "商品编辑",
+        "admin/brandlist"           =>      "品牌管理",
     );
 
     public static $Cate2Url = array(

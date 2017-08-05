@@ -4,12 +4,14 @@ namespace backend\controllers;
 
 use backend\models\admin\AnnounceNewsForm;
 use backend\models\admin\AppointinfoSearch;
+use backend\models\admin\BrandSearch;
 use backend\models\admin\CommendGoods;
 use backend\models\admin\CommendGoodsSearch;
 use backend\models\admin\JyAnnouncement;
 use backend\models\admin\JyInformation;
 use backend\models\admin\SetInformationForm;
 use backend\models\seller\Appointinfo;
+use backend\models\seller\Brand;
 use backend\models\seller\Comment;
 use backend\models\seller\Delivery;
 use backend\models\admin\ExpertSearch;
@@ -670,5 +672,39 @@ class AdminController extends Controller
             $commend->delete();
         }
         return $this->redirect(['hot', 'type'=>$type]);
+    }
+    public function actionBrandlist()
+    {
+        $searchModel = new BrandSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('brandlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionDelbrand($id)
+    {
+        $brand = Brand::findOne($id);
+        if($brand) {
+            $brand->delete();
+        }
+        return $this->redirect(['brandlist']);
+    }
+
+    public function actionEditbrand($id)
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $id = $post['Brand']['id'];
+            $brandInfo = Brand::findOne($id);
+            if($brandInfo && $brandInfo->load($post) && $brandInfo->save()){
+                return $this->redirect(['brandlist']);
+            }
+        } else {
+            $brandInfo = Brand::findOne($id);
+        }
+        if(!$brandInfo) {
+            return false;
+        }
+
+        return $this->render("brand", ["brand"=>$brandInfo]);
     }
 }
