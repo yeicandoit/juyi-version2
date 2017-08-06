@@ -227,4 +227,37 @@ class Goods extends \yii\db\ActiveRecord
             3=> '待审',
         );
     }
+
+    public function getGoodService()
+    {
+        return $this->hasMany(GoodService::className(), ['goodid' => 'id']);
+    }
+
+    public function saveGoodService($services)
+    {
+        foreach($services as $key=>$val){
+            $gs = GoodService::find()->where(['goodid'=>$this->id, 'type'=>$this->goodtype, 'service'=>$val])->one();
+            if(isset($gs)) {
+                continue;
+            } 
+            $goodService = new GoodService();
+            $goodService->goodid = $this->id;
+            $goodService->type = $this->goodtype;
+            $goodService->service = $val;
+            $goodService->save();
+        }
+        return true;
+    }
+
+    // 获取科研辅助服务类型
+    public static function getOptServs()
+    {
+        return array(
+            '试验台加工'=>'试验台加工',
+            '仪器维修'=>'仪器维修',
+            '仪器租赁'=>'仪器租赁',
+            '仪器销售'=>'仪器销售',
+            '实验耗材'=>'实验耗材',
+        );
+    }
 }

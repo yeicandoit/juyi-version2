@@ -192,6 +192,28 @@ JS;
         <?= $form->field($goods, 'brandversion')->textInput(['style'=>'width:200px'])->label("品牌型号")?>
     </div>
     <br>
+    <?php if(Goods::TYPE_RESEARCH ==$goods->goodtype){?>
+    <div class='goodInfoBox'>
+       <p>商品类型</p> 
+       <div id="container" style="float:left;">
+               <?php
+               foreach($goods->goodService as $key=>$service){
+                   $sId = $service->id;
+                   $serv = $service->service;
+                   ?>
+                   <ctrlarea id=<?='ctrl'.$sId?>>
+                       <?=Html::a($serv, '#', ['onclick'=>"rmService($sId)"])?>
+                       &nbsp;&nbsp;</ctrlarea>
+               <?php }?>
+               <?= Html::button('添加', ['onclick'=>'$("#service").show()']); ?>
+               <?= Html::dropDownList('', null, $goods->optServs, [
+                   'id'=>'service', 'onchange'=>'addService()', 'style'=>'display:none', 'prompt'=>'请选择'
+               ]);?>
+        </div>
+        <br><br>
+    </div>
+    <br>     
+    <?php }?>
     <div class="goodInfoBox">
         <p><label>产品相册</label></p>
         <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M;点击上传的图像，可设置图像为商品主图</p>
@@ -480,6 +502,45 @@ JS;
         $("#seo").show();
         $("#detailInfo").hide();
         $("#basicInfo").hide();
+    }
+
+    function addService()
+    {
+        var service = $("#service").val();
+        if('goodsedit' == actionId){
+            $.get("<?=Url::to(['shop-seller/addgoodservice'])?>" + "?goodId=" + <?=$goods->id?> + "&service=" + service, function (data) {
+                if('Failed' != data){
+                    var str = '<ctrlarea id=' + 'ctrl' + data + '>' +
+                        '<a href="#" onclick="rmService(' + data + ')">' +
+                        service + '</a>&nbsp;&nbsp;</ctrlarea>';
+                    $("#container").prepend(str);
+                }
+            });
+        } else {
+            ctrlId = (new Date()).getTime();
+            var str = '<ctrlarea id=' + 'ctrl' + ctrlId + '>' +
+                '<input name="goodService[]" type="hidden" value=' + service + '>' +
+                '<a href="#" onclick="rmService(' + ctrlId + ')">' +
+                service + '</a>&nbsp;&nbsp;</ctrlarea>';
+            $("#container").prepend(str);
+        }
+
+    }
+
+    function rmService(id)
+    {
+        if(confirm('确定删除此分类？')) {
+            var node = '#ctrl' + id;
+            if('goodsedit' == actionId) {
+                $.get("<?=Url::to(['shop-seller/delgoodservice'])?>" + "?id=" + id, function (data) {
+                    if('OK' == data){
+                        $(node).remove();
+                    }
+                });
+            } else {
+                $(node).remove();
+            }
+        }
     }
 </script>
 

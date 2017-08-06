@@ -38,6 +38,7 @@ use backend\models\seller\Areas;
 use backend\models\seller\SetappointmentForm;
 use backend\models\seller\Setappointment;
 use backend\models\seller\AppointinfoSearch;
+use backend\models\seller\GoodService;
 use yii\helpers\Html;
 use yii\data\Pagination;
 
@@ -254,6 +255,9 @@ class ShopSellerController extends Controller
                 }
                 if(isset($post['goodsCategory'])){
                     $goods->saveCat($post['goodsCategory']);
+                }
+                if(isset($post['goodService'])){
+                    $goods->saveGoodService($post['goodService']);
                 }
                 if(isset($post['goodsImgs'])){
                     $goods->saveImgs($post['goodsImgs']);
@@ -630,6 +634,29 @@ class ShopSellerController extends Controller
     {
         $shopServ = ShopService::findOne($id);
         if($shopServ->delete()){
+            echo "OK";
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionAddgoodservice($goodId, $service)
+    {
+        $goodServ = new GoodService();
+        $goodServ->goodid = $goodId;
+        $goodServ->service = $service;
+        $goodServ->type = Goods::findOne($goodId)->goodtype;
+        if($goodServ->save()){
+            echo $goodServ->id;
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionDelgoodservice($id)
+    {
+        $goodServ = GoodService::findOne($id);
+        if($goodServ->delete()){
             echo "OK";
         } else {
             echo "Failed";

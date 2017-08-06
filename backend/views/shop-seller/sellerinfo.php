@@ -28,34 +28,6 @@ use yii\helpers\Url;
     <?= $form->field($sellerinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
     <?= $form->field($sellerinfo, 'affliation')->textInput()?>
     <?= $form->field($sellerinfo, 'affliationtype')->textInput()?>
-
-    <?php if($shopType != 'seller') {?>
-        <div class="form-group field-seller-service">
-            <div style="float:left; width:100px; margin: 0 auto;"><label class="control-label" for="seller-degree"><?=$shopType == 'research' ? '服务类型' : '模拟软件'?></label></div>
-            <div id="container" style="float:left;">
-                <?php
-                foreach($sellerinfo->services as $key=>$service){
-                    $sId = $service->id;
-                    $serv = $service->service;
-                    ?>
-                    <ctrlarea id=<?='ctrl'.$sId?>>
-                        <?=Html::a($serv, '#', ['onclick'=>"rmService($sId)"])?>
-                        &nbsp;&nbsp;</ctrlarea>
-                <?php }
-                ?>
-                <?php if('research' == $shopType) {?>
-                    <?= Html::button('添加', ['onclick'=>'$("#service").show()']); ?>
-                    <?= Html::dropDownList('', null, $sellerinfo->optServs, [
-                        'id'=>'service', 'onchange'=>'addService()', 'style'=>'display:none', 'prompt'=>'请选择'
-                    ]);?>
-                <?php } else {?>
-                    <?= Html::button('添加', ['onclick'=>'addSoft()', 'id' => 'bSoft']); ?>
-                <?php }?>
-            </div>
-            <div style='padding-left: 280px;'></div><div><p class="help-block help-block-error"></p></div>
-        </div>
-    <?php  }?>
-
     <?= $form->field($sellerinfo, 'phone')->textInput()?>
     <?= $form->field($sellerinfo, 'country')->textInput()?>
     <?= $form->field($sellerinfo, 'paper_img')->textInput(['readonly'=>"readonly"])?>
@@ -131,65 +103,5 @@ use yii\helpers\Url;
         $.get("<?= $url?>?id="+$("#seller-city").val(),function(data){
             $("#seller-area").html("<option value=0>请选择县</option>");
             $("#seller-area").append(data);});
-    }
-
-    function addService()
-    {
-        var service = $("#service").val();
-        $.get("<?=Url::to(['shop-seller/addservice'])?>" + "?shopId=" + <?=$sellerinfo->id?> + "&service=" + service, function (data) {
-            if('Failed' != data){
-                var str = '<ctrlarea id=' + 'ctrl' + data + '>' +
-                    '<a href="#" onclick="rmService(' + data + ')">' +
-                    service + '</a>&nbsp;&nbsp;</ctrlarea>';
-                $("#container").prepend(str);
-            }
-        });
-
-    }
-
-    function rmService(id)
-    {
-        if(confirm('确定删除此分类？')) {
-            var node = '#ctrl' + id;
-            $.get("<?=Url::to(['shop-seller/delservice'])?>" + "&id=" + id, function (data) {
-                if('OK' == data){
-                    $(node).remove();
-                }
-            });
-        }
-    }
-
-    function addSoft()
-    {
-        $('#bSoft').remove();
-        var mtime = (new Date()).valueOf();
-        var str = '';
-        var ctrlId = 'soft_' + mtime;
-        str += '<ctrlarea id=' + ctrlId + '>' +
-            '<input type="text" id='+ 'inputSoft_' + mtime + '>' +
-            '<a href="#" class="btn btn-xs" onclick="cfmSoft(' + mtime + ')">'+
-            '确定' + '</a>&nbsp;&nbsp;</ctrlarea>';
-        $('#container').append(str);
-    }
-
-    function cfmSoft(id)
-    {
-        if(confirm('确定添加？')){
-            var soft = $.trim($('#inputSoft_'+id).val());
-            if('' != soft) {
-                $.get("<?=Url::to(['shop-seller/addservice'])?>" + "?shopId=" + <?=$sellerinfo->id?> +"&service=" + soft, function (data) {
-                    if ('Failed' != data) {
-                        var str = '<ctrlarea id=' + 'ctrl' + data + '>' +
-                            '<a href="#" onclick="rmService(' + data + ')">' +
-                            soft + '</a>&nbsp;&nbsp;</ctrlarea>';
-                        $("#container").prepend(str);
-                    }
-                });
-            }
-        }
-        $('#soft_'+id).remove();
-        var str = '<button type="button" id="bSoft" onclick="addSoft()">添加</button>';
-        $('#container').append(str);
-
     }
 </script>

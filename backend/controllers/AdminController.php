@@ -38,6 +38,7 @@ use backend\models\seller\Order;
 use backend\models\seller\OrderSearch;
 use backend\models\seller\OrderDelivery;
 use backend\models\seller\RefundmentDoc;
+use backend\models\seller\GoodService;
 use backend\models\seller\RefundmentDocSearch;
 use backend\models\seller\Setappointment;
 use backend\models\seller\SetappointmentForm;
@@ -214,6 +215,9 @@ class AdminController extends Controller
                 }
                 if(isset($post['goodsCategory'])){
                     $goods->saveCat($post['goodsCategory']);
+                }
+                if(isset($post['goodService'])){
+                    $goods->saveGoodService($post['goodService']);
                 }
                 if(isset($post['goodsImgs'])){
                     $goods->saveImgs($post['goodsImgs']);
@@ -706,5 +710,28 @@ class AdminController extends Controller
         }
 
         return $this->render("brand", ["brand"=>$brandInfo]);
+    }
+
+    public function actionAddgoodservice($goodId, $service)
+    {
+        $goodServ = new GoodService();
+        $goodServ->goodid = $goodId;
+        $goodServ->service = $service;
+        $goodServ->type = Goods::findOne($goodId)->goodtype;
+        if($goodServ->save()){
+            echo $goodServ->id;
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionDelgoodservice($id)
+    {
+        $goodServ = GoodService::findOne($id);
+        if($goodServ->delete()){
+            echo "OK";
+        } else {
+            echo "Failed";
+        }
     }
 }
