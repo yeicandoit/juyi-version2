@@ -54,9 +54,14 @@ class Menu
      * @param int $roleId 角色ID
      * @return array 菜单数组
      */
-    public static function getMenu($roleId = "")
+    public static function getMenu($shopType = "seller")
     {
         //菜单创建事件触发
+        if($shopType != 'seller') {
+            $arr = self::$menu;
+            unset($arr['预约模块']);  
+            return $arr;
+        } 
         return self::$menu;
     }
 

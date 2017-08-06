@@ -220,7 +220,7 @@ AppAsset::register($this);
 	 		 && $actionId != 'expert'
 			 && $actionId != 'lab') {?>
 		 <div class="menuInfo">
-			 <?php foreach(Menu::getMenu() as $item=>$subMenu){?>
+			 <?php foreach(Menu::getMenu($shop->regtype) as $item=>$subMenu){?>
 				 <div class="box">
 					 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
 					 <div class="cont">

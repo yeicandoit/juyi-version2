@@ -128,7 +128,7 @@ use yii\helpers\Url;
     function addService()
     {
         var service = $("#service").val();
-        $.get("<?=Url::to(['shop-seller/addservice'])?>" + "&shopId=" + <?=$expertinfo->id?> + "&service=" + service, function (data) {
+        $.get("<?=Url::to(['shop-seller/addservice'])?>" + "?shopId=" + <?=$expertinfo->id?> + "&service=" + service, function (data) {
             if('Failed' != data){
                 var str = '<ctrlarea id=' + 'ctrl' + data + '>' +
                     '<a href="#" onclick="rmService(' + data + ')">' +
@@ -143,7 +143,7 @@ use yii\helpers\Url;
     {
         if(confirm('确定删除此分类？')) {
             var node = '#ctrl' + id;
-            $.get("<?=Url::to(['shop-seller/delservice'])?>" + "&id=" + id, function (data) {
+            $.get("<?=Url::to(['shop-seller/delservice'])?>" + "?id=" + id, function (data) {
                 if('OK' == data){
                     $(node).remove();
                 }
