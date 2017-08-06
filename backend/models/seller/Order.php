@@ -169,7 +169,7 @@ class Order extends \yii\db\ActiveRecord
             3=>'收到样品',
             4=>'寄回测试数据',
             5=>'回寄样品',
-            6=>'买家收到回寄样品',
+            6=>'买家收到回寄样品、数据，交易完成',
             7=>'交易完成'
         );
     }
@@ -255,9 +255,9 @@ class Order extends \yii\db\ActiveRecord
         $query = (new Query())->from('jy_order');
         $query->select('sum(real_amount) as sale');
         if($seller_id) {
-            $query->where("seller_id=$seller_id AND status=7");
+            $query->where("seller_id=$seller_id AND status>=6");
         } else {
-            $query->where("status = 7");
+            $query->where("status >= 6");
         }
         $result = $query->all();
         if(count($result) > 0){
@@ -277,9 +277,9 @@ class Order extends \yii\db\ActiveRecord
         $query = (new Query())->from('jy_order');
         $query->select('sum(real_amount) as yValue, completion_time');
         if($seller_id) {
-            $query->where("seller_id=$seller_id AND status=7");
+            $query->where("seller_id=$seller_id AND status>=6");
         } else {
-            $query->where("status = 7");
+            $query->where("status >= 6");
         }
         return self::ParseCondition($query,'completion_time',$start,$end);
     }
