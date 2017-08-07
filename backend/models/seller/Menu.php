@@ -31,7 +31,7 @@ class Menu
             "消息通知" => "#",
             "基本信息" => "shop-seller/shopinfo",
             "详细信息" => "shop-seller/shopdetail",
-            "QQ客服" => "#",
+            "QQ客服" => "shop-seller/onlineservice",
         ),
     );
 
@@ -48,6 +48,7 @@ class Menu
         "shop-seller/refundment"            =>      "退款记录",
         "shop-seller/shopinfo"              =>      "基本信息",
         "shop-seller/shopdetail"            =>      "详细信息",
+        "shop-seller/onlineservice"         =>      "QQ客服",
     );
     /**
      * @brief 根据权限初始化菜单

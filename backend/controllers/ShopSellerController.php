@@ -14,6 +14,7 @@ use backend\models\seller\Goodscontent;
 use backend\models\seller\GoodsPhoto;
 use backend\models\seller\GoodsPhotoRelation;
 use backend\models\seller\Goodsspec;
+use backend\models\seller\OnlineService;
 use backend\models\seller\OrderDelivery;
 use backend\models\seller\Seller;
 use backend\models\seller\ShopMember;
@@ -686,6 +687,32 @@ class ShopSellerController extends Controller
             } else {
                 echo 'Failed';
             }
+        } else {
+            echo "Failed";
+        }
+    }
+
+    public function actionOnlineservice()
+    {
+        $info = '';
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $ret = OnlineService::addQQ(Yii::$app->user->id, $post['name'], $post['qq']);
+            if($ret){
+                $info = '添加成功';
+            } else {
+                $info = '添加失败，请重试';
+            }
+        }
+        $serv = OnlineService::findAll(['seller_id'=>Yii::$app->user->id]);
+        return $this->render('onlineservice', [ 'onlineService'=>$serv, 'info'=>$info]);
+    }
+
+    public function actionDelonlineservice($id)
+    {
+        $serv = OnlineService::findOne($id);
+        if(isset($serv) && $serv->delete()){
+            echo "OK";
         } else {
             echo "Failed";
         }
