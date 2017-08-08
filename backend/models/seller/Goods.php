@@ -138,9 +138,12 @@ class Goods extends \yii\db\ActiveRecord
     {
         foreach($specName as $k => $v){
             if (isset($v)) {
-                $spec = new Goodsspec();
+                $spec = Goodsspec::find()->where(['goodsid'=>$this->id, 'specname'=>trim($v)])->one();
+                if(!isset($spec)){
+                    $spec = new Goodsspec();;
+                }
                 $spec->goodsid = $this->id;
-                $spec->specname = $v;
+                $spec->specname = trim($v);
                 $spec->market_price = $specMktPrice[$k];
                 $spec->sell_price = $specSellPrice[$k];
                 $spec->save();

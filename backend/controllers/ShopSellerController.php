@@ -386,7 +386,7 @@ class ShopSellerController extends Controller
     public function actionDelspec($goodsId, $specName)
     {
         $spec = Goodsspec::find()->where(['goodsid'=>$goodsId, 'specname'=>$specName])->one();
-        if($spec->delete()){
+        if($spec && $spec->delete()){
             echo "OK";
         } else {
             echo "Failed";

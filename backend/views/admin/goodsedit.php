@@ -169,9 +169,9 @@ JS;
             </tr>
             <?php foreach($goods->goodsSpec as $k => $spec) { ?>
             <tr>
-                <td><input type="text" style="width: 120px;" readonly="readonly" value="<?=$spec->specname?>"></td>
-                <td><input type="text" style="width: 120px;" readonly="readonly" value="<?=$spec->market_price?>"></td>
-                <td><input type="text" style="width: 120px;" readonly="readonly" value="<?=$spec->sell_price?>"></td>
+                <td><input name="specName[]" type="text" style="width: 120px;" value="<?=$spec->specname?>"></td>
+                <td><input name="specMktPrice[]" type="text" style="width: 120px;" value="<?=$spec->market_price?>"></td>
+                <td><input name="specSellPrice[]" type="text" style="width: 120px;" value="<?=$spec->sell_price?>"></td>
                 <td><a href="#" onclick="$(this).parent().parent().remove();delSpec('<?=$spec->specname?>')">&nbsp;&nbsp;删除</a></td>
             </tr>
             <?php } ?>
