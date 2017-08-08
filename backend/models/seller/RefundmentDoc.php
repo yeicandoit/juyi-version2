@@ -28,6 +28,11 @@ use Yii;
  */
 class RefundmentDoc extends \yii\db\ActiveRecord
 {
+    const REFUND_APPLY = 0;
+    const REFUND_AGREE = 1;
+    const REFUND_DISAGREE = 2;
+    const REFUND_SYSTEM = 3;
+    const REFUND_OK = 4;
     /**
      * @inheritdoc
      */

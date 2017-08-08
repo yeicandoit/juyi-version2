@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use \backend\models\seller\RefundmentDoc;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -27,7 +28,7 @@ use yii\helpers\Url;
             [
                 'attribute'=>'pay_status',
                 'label'=>'状态',
-                'filter'=>\backend\models\seller\RefundmentDoc::getStatArr(),
+                'filter'=>RefundmentDoc::getStatArr(),
                 'value'=>function($model){
                     return $model->status;
                 }
@@ -36,7 +37,13 @@ use yii\helpers\Url;
                 'label'=>'操作',
                 'format'=>'raw',
                 'value'=>function($model){
-                    return Html::a('查看', Url::to(['admin/refundmentinfo', 'id'=>$model->id]));
+                    $check =  Html::a('查看', Url::to(['admin/refundmentinfo', 'id'=>$model->id]));
+                    if($model->pay_status == RefundmentDoc::REFUND_AGREE) {
+                        $refund = Html::a('退款', Url::to(['admin/refundment', 'id'=>$model->id]));
+                        return "$check|$refund";
+                    }
+
+                    return $check;
                 }
             ],
         ],
