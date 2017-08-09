@@ -6,6 +6,10 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
+Yii::$classMap['AlipayConfig'] ='@app/alipaynew/config.php';
+Yii::$classMap['AlipayTradeService'] ='@app/alipaynew/pagepay/service/AlipayTradeService.php';
+Yii::$classMap['AlipayTradeRefundContentBuilder'] ='@app/alipaynew/pagepay/buildermodel/AlipayTradeRefundContentBuilder.php';
+
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),

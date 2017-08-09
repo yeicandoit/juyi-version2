@@ -47,7 +47,7 @@ class RefundmentDoc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'user_id'], 'required'],
+            [['order_id'], 'required'],
             [['order_id', 'user_id', 'admin_id', 'pay_status', 'if_del', 'seller_id', 'reason'], 'integer'],
             [['amount'], 'number'],
             [['time', 'dispose_time'], 'safe'],

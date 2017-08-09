@@ -43,6 +43,9 @@ use backend\models\seller\RefundmentDocSearch;
 use backend\models\seller\Setappointment;
 use backend\models\seller\SetappointmentForm;
 use backend\models\seller\CommentSearch;
+use AlipayConfig;
+use AlipayTradeService;
+use AlipayTradeRefundContentBuilder;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -409,7 +412,7 @@ class AdminController extends Controller
             if($refundment->load(Yii::$app->request->post()) && $refundment->save()){
                 return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
             } else {
-                return $this->redirect(['refundment']);
+                return $this->redirect(['refundmentlist']);
             }
         }
 
@@ -420,31 +423,23 @@ class AdminController extends Controller
     public function actionRefundment($id)
     {
         $refundment = RefundmentDoc::findOne($id);
-        //初始化
-        $curl = curl_init();
-        //设置抓取的url
-        curl_setopt($curl, CURLOPT_URL, 'http://www.juyitest.com/alipaynew/pagepay/refund.php');
-        //设置头文件的信息作为数据流输出
-        curl_setopt($curl, CURLOPT_HEADER, 1);
-        //设置获取的信息以文件流的形式返回，而不是直接输出。
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        //设置post方式提交
-        curl_setopt($curl, CURLOPT_POST, 1);
-        //设置post数据
-        $post_data = array(
-            "WIDTRout_trade_no" => $refundment->order_no,
-            "WIDTRtrade_no" => "",
-            "WIDTRrefund_amount" => $refundment->order->real_amount,
-            "WIDTRrefund_reason" => $refundment->reason,
-            "WIDTRout_request_no" => $refundment->id,
-        );
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
-        //执行命令
-        $data = curl_exec($curl);
-        //关闭URL请求
-        curl_close($curl);
-        //显示获得的数据
-        print_r($data);
+
+        $RequestBuilder=new AlipayTradeRefundContentBuilder();
+        $RequestBuilder->setOutTradeNo($refundment->order_no);
+        $RequestBuilder->setTradeNo('');
+        $RequestBuilder->setRefundAmount($refundment->order->real_amount);
+        $RequestBuilder->setOutRequestNo($refundment->order_id);
+        $RequestBuilder->setRefundReason($refundment->reason);
+
+        $aop = new AlipayTradeService(AlipayConfig::$config);
+        $response = $aop->Refund($RequestBuilder);
+        if(10000 == $response->code){
+            $refundment->pay_status = RefundmentDoc::REFUND_OK;
+            $refundment->dispose_time = $response->gmt_refund_pay;
+            $refundment->save();
+        }
+        return $this->redirect(['refundmentlist']);
+        //var_dump($response);
         //$refundment = RefundmentDoc::findOne($id);
         //return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
     }
