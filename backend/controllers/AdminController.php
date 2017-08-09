@@ -22,6 +22,7 @@ use backend\models\seller\ExpertExt;
 use backend\models\seller\GoodsConsult;
 use backend\models\seller\GoodsConsultSearch;
 use backend\models\seller\Member;
+use backend\models\seller\Message;
 use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
 use backend\models\seller\ShopMember;
@@ -760,5 +761,32 @@ class AdminController extends Controller
         } else {
             echo "Failed";
         }
+    }
+
+    public function actionMessage($id)
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $mg = Message::findOne($post['Message']['id']);
+            if($mg->load($post) && $mg->save()){
+
+            }
+        }
+        $mg = Message::findOne($id);
+        return $this->render('message', ['message' => $mg]);
+    }
+
+    public function actionAddmessage()
+    {
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            $mg = new Message();
+            $mg->time = date("Y-m-d H:i:s");
+            if($mg->load($post) && $mg->save()){
+                return $this->redirect(['message', 'id'=>$mg->id]);
+            }
+        }
+        $mg = new Message();
+        return $this->render('message', ['message' => $mg]);
     }
 }

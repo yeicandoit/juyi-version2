@@ -21,6 +21,10 @@ class Menu
                 "资讯发布" => "admin/setinformation",
                 "资讯管理" => "admin/manageinformation",
             ),
+            "消息管理" => array(
+                "消息发布" => "admin/addmessage",
+                "消息管理" => "admin/managemessage",
+            ),
         ),
         "商品" => array(
             "商品管理" => array(
@@ -74,6 +78,9 @@ class Menu
         "admin/hot"                 =>      "热门设置",
         "admin/goodsedit"           =>      "商品编辑",
         "admin/brandlist"           =>      "品牌管理",
+        "admin/addmessage"          =>      "消息发布",
+        "admin/managemessage"       =>      "消息管理",
+
     );
 
     public static $Cate2Url = array(
