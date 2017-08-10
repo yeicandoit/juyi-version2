@@ -17,7 +17,7 @@ class GoodsSearch extends Goods
     public function rules()
     {
         return [
-            [['id', 'seller_id', 'brandid', 'is_del', 'point', 'visit', 'favorite', 'comments', 'exp', 'is_share', 'sale', 'grade', 'store_nums', 'model_id', 'sort'], 'integer'],
+            [['id', 'seller_id', 'brandid', 'is_del', 'point', 'visit', 'favorite', 'comments', 'exp', 'is_share', 'sale', 'grade', 'store_nums', 'model_id', 'sort', 'goodtype'], 'integer'],
             [['name', 'goods_no', 'brandversion', 'up_time', 'down_time', 'create_time', 'img', 'keywords', 'description', 'search_words', 'unit', 'spec_array', 'ad_img', 'content'], 'safe'],
             [['sell_price', 'market_price', 'cost_price', 'weight'], 'number'],
         ];
@@ -87,6 +87,7 @@ class GoodsSearch extends Goods
             'model_id' => $this->model_id,
             'weight' => $this->weight,
             'sort' => $this->sort,
+            'goodtype' => $this->goodtype,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

@@ -263,4 +263,14 @@ class Goods extends \yii\db\ActiveRecord
             '实验耗材'=>'实验耗材',
         );
     }
+
+    public static function getTypes()
+    {
+        return array(
+            Goods::TYPE_TEST =>'检测中心',
+            Goods::TYPE_EXPERT => '专家',
+            Goods::TYPE_RESEARCH =>'科研辅助',
+            Goods::TYPE_SIMULATE =>'数值模拟',
+        );
+    }
 }

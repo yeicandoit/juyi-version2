@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use \yii\helpers\Url;
+use backend\models\seller\Goods;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -51,11 +52,19 @@ use \yii\helpers\Url;
                 "headerOptions" => ["width" => "80"],
             ],
             [
+                'attribute' => 'goodtype',
+                'label' => '类型',
+                'filter' => Goods::getTypes(),
+                'value' => function($model){
+                    return isset(Goods::getTypes()[$model->goodtype]) ? Goods::getTypes()[$model->goodtype] : null;
+                }
+            ],
+            [
                 'attribute' => 'is_del',
                 'label'=>'状态',
                 'format'=>'raw',
                 "headerOptions" => ["width" => "100"],
-                'filter' => \backend\models\seller\Goods::getStat(),
+                'filter' => Goods::getStat(),
                 'value'=>function($model){
                     return Html::dropDownList('', null, $model->stat,
                         ['options'=>[$model->is_del=>['selected'=>1]], 'onchange'=>"updateStatus($model->id, this.value)"]
