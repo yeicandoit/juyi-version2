@@ -1,8 +1,5 @@
 <?php
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <div class="sellerinfo">
