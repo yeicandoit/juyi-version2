@@ -47,6 +47,13 @@ class MessageSearch extends Message
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'defaultOrder' => [
+                    'time' => SORT_DESC,
+                ]
+            ],
+            'pagination' => ['pagesize' => '10'],
+
         ]);
 
         $this->load($params);

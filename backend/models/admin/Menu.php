@@ -23,7 +23,7 @@ class Menu
             ),
             "消息管理" => array(
                 "消息发布" => "admin/addmessage",
-                "消息管理" => "admin/managemessage",
+                "消息管理" => "admin/messagelist",
             ),
         ),
         "商品" => array(
@@ -79,7 +79,7 @@ class Menu
         "admin/goodsedit"           =>      "商品编辑",
         "admin/brandlist"           =>      "品牌管理",
         "admin/addmessage"          =>      "消息发布",
-        "admin/managemessage"       =>      "消息管理",
+        "admin/messagelist"         =>      "消息管理",
 
     );
 

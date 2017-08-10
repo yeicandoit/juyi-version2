@@ -23,6 +23,7 @@ use backend\models\seller\GoodsConsult;
 use backend\models\seller\GoodsConsultSearch;
 use backend\models\seller\Member;
 use backend\models\seller\Message;
+use backend\models\seller\MessageSearch;
 use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
 use backend\models\seller\ShopMember;
@@ -769,7 +770,7 @@ class AdminController extends Controller
             $post = Yii::$app->request->post();
             $mg = Message::findOne($post['Message']['id']);
             if($mg->load($post) && $mg->save()){
-
+                return $this->redirect(['messagelist']);
             }
         }
         $mg = Message::findOne($id);
@@ -783,10 +784,26 @@ class AdminController extends Controller
             $mg = new Message();
             $mg->time = date("Y-m-d H:i:s");
             if($mg->load($post) && $mg->save()){
-                return $this->redirect(['message', 'id'=>$mg->id]);
+                return $this->redirect(['messagelist']);
             }
         }
         $mg = new Message();
         return $this->render('message', ['message' => $mg]);
+    }
+
+    public function actionDelmessage($id)
+    {
+        $mg = Message::findOne($id);
+        if($mg){
+            $mg->delete();
+        }
+        return $this->redirect(['messagelist']);
+    }
+
+    public function actionMessagelist()
+    {
+        $searchModel = new MessageSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('messagelist', [ 'searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 }

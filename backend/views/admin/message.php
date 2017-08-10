@@ -24,6 +24,7 @@ use yii\helpers\Url;
             'plugins' => ['clips', 'fontcolor','imagemanager']
         ]
     ];?>
+    <?= $form->field($message, 'id', ['options'=>['style'=>'display:none']])?>
     <?= $form->field($message, 'title')->textInput()?>
     <?= $form->field($message, 'content')->widget(\yii\redactor\widgets\Redactor::className(), $option)?>
     <?= $form->field($message, 'type')->dropDownList($message->types, ['style'=>'width:150px'])->label('消息类型')?>
