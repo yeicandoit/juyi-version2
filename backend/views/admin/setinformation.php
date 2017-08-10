@@ -7,35 +7,15 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\redactor\widgets\Redactor;
 ?>
-
-
-<style type="text/css">
-#whole {
-	
-	width:1100px;
-	margin:auto;
-}
-#left
-{
-	width:120px;
-	float:left;
-	border-right-style : double;
-	border-right-width : 4px;
-}
-
-#right
-{
-	width:970px;
-	float:right;
-}
-</style>
-
-<script type="text/javascript">
-
-</script>
-<div id="whole">
+<?=Html::cssFile('@web/css/reg.css')?>
+<div class="sellerinfo">
+	<div class="info_bar">
+		<b>
+			<?=Html::a('新闻发布', '#')?>
+		</b>
+	</div>
 <div style="height:60px;color:red;text-align:center"> <?= Html::encode($info)?> </div>
-    <?php $form = ActiveForm::begin(['id' => 'form-signup','layout' => 'horizontal',  ]); ?>
+    <?php $form = ActiveForm::begin(['options' => ['style'=>'padding-left: 20px;'],]); ?>
     <?= $form->field($model, 'title')->textInput(['autofocus' => true])->label('标题') ?>
     <?= $form->field($model, 'content')->widget(Redactor::className(),
         [
