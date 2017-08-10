@@ -28,7 +28,7 @@ class Menu
         ),
 
         "配置模块" => array(
-            "消息通知" => "#",
+            "消息通知" => "shop-seller/messagelist",
             "基本信息" => "shop-seller/shopinfo",
             "详细信息" => "shop-seller/shopdetail",
             "QQ客服" => "shop-seller/onlineservice",

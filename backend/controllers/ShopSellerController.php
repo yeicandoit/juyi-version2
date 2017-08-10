@@ -14,6 +14,8 @@ use backend\models\seller\Goodscontent;
 use backend\models\seller\GoodsPhoto;
 use backend\models\seller\GoodsPhotoRelation;
 use backend\models\seller\Goodsspec;
+use backend\models\seller\Message;
+use backend\models\seller\MessageSearch;
 use backend\models\seller\OnlineService;
 use backend\models\seller\OrderDelivery;
 use backend\models\seller\Seller;
@@ -716,5 +718,19 @@ class ShopSellerController extends Controller
         } else {
             echo "Failed";
         }
+    }
+
+    public function actionMessagelist()
+    {
+        $type = ShopMember::findOne(Yii::$app->user->id)->regtype;
+        $searchModel = new MessageSearch(['type'=>Message::shopType2Type($type)]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('messagelist', [ 'searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionMessage($id)
+    {
+        $mg = Message::findOne($id);
+        return $this->render('message', ['message' => $mg]);
     }
 }

@@ -68,4 +68,18 @@ class Message extends \yii\db\ActiveRecord
             Message::TYPE_ALL => '全部',
         );
     }
+
+    public static function shopType2Type($shopType)
+    {
+        $arr = array(
+            'seller'=>Message::TYPE_TEST,
+            'expert'=>Message::TYPE_EXPERT,
+            'research'=>Message::TYPE_RESEARCH,
+            'simulate'=>Message::TYPE_SIMULATE,
+        );
+        if(isset($arr[$shopType])){
+            return $arr[$shopType];
+        }
+        return 0;
+    }
 }
