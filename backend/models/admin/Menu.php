@@ -11,6 +11,7 @@ class Menu
                 "关于聚仪" => "xyf/updateaboutjuyi",
                 "权限管理" => "sysadmin/",
                 "品牌管理" => "admin/brandlist",
+                "论坛管理" => "admin/forum",
             ),
             "广告设置" => array(
                 "热门设置" => "admin/hot",
@@ -84,6 +85,7 @@ class Menu
         "admin/messagelist"         =>      "消息管理",
         "admin/researchlist"        =>      "科研辅助",
         "admin/simulatelist"        =>      "数值模拟",
+        "admin/forum"               =>      "论坛管理",
 
     );
 

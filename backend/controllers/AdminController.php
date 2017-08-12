@@ -7,6 +7,10 @@ use backend\models\admin\AppointinfoSearch;
 use backend\models\admin\BrandSearch;
 use backend\models\admin\CommendGoods;
 use backend\models\admin\CommendGoodsSearch;
+use backend\models\admin\ForumNote;
+use backend\models\admin\ForumNoteSearch;
+use backend\models\admin\ForumReply;
+use backend\models\admin\ForumReplySearch;
 use backend\models\admin\JyAnnouncement;
 use backend\models\admin\JyInformation;
 use backend\models\admin\SetInformationForm;
@@ -827,5 +831,29 @@ class AdminController extends Controller
         $searchModel = new MessageSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('messagelist', [ 'searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionForum()
+    {
+        $searchModel = new ForumNoteSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('forum', [ 'searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionForumnoteinfo($id)
+    {
+        $forumnote = ForumNote::findOne($id);
+        $replys = new ForumReplySearch(['topic_id'=>$id]);
+        $replylist = $replys->search(Yii::$app->request->queryParams);
+        return $this->render('forumnoteinfo', ['forumnote'=>$forumnote, 'replylist'=>$replylist]);
+    }
+
+    public function actionDelforumnote($id)
+    {
+        $forumnote = ForumNote::findOne($id);
+        if($forumnote && $forumnote->delete()){
+            ForumReply::deleteAll(['topic_id'=>$id]);
+        }
+        return $this->redirect(['forum']);
     }
 }
