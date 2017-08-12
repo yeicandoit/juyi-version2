@@ -425,17 +425,25 @@ class AdminController extends Controller
     public function actionRefundment($id)
     {
         $refundment = RefundmentDoc::findOne($id);
+        $refundOk = false;
 
-        $RequestBuilder=new AlipayTradeRefundContentBuilder();
-        $RequestBuilder->setOutTradeNo($refundment->order_no);
-        $RequestBuilder->setTradeNo('');
-        $RequestBuilder->setRefundAmount($refundment->order->real_amount);
-        $RequestBuilder->setOutRequestNo($refundment->order_id);
-        $RequestBuilder->setRefundReason($refundment->reason);
+        if($refundment->way == 'origin'){
+            $RequestBuilder=new AlipayTradeRefundContentBuilder();
+            $RequestBuilder->setOutTradeNo($refundment->order_no);
+            $RequestBuilder->setTradeNo('');
+            $RequestBuilder->setRefundAmount($refundment->order->real_amount);
+            $RequestBuilder->setOutRequestNo($refundment->order_id);
+            $RequestBuilder->setRefundReason($refundment->reason);
 
-        $aop = new AlipayTradeService(AlipayConfig::$config);
-        $response = $aop->Refund($RequestBuilder);
-        if(10000 == $response->code){
+            $aop = new AlipayTradeService(AlipayConfig::$config);
+            $response = $aop->Refund($RequestBuilder);
+            if(10000 == $response->code){
+                $refundOk = true;
+            }
+        } else if($refundment->way == 'balance') {
+            $refundment->refundBalance();
+        }
+        if($refundOk){
             $refundment->pay_status = RefundmentDoc::REFUND_OK;
             $refundment->dispose_time = $response->gmt_refund_pay;
             $refundment->save();

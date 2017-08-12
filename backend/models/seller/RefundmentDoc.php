@@ -2,6 +2,8 @@
 
 namespace backend\models\seller;
 
+use backend\models\admin\Acc;
+use backend\models\admin\AccountOrder;
 use Yii;
 
 /**
@@ -116,5 +118,33 @@ class RefundmentDoc extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id'=>'user_id']);
+    }
+
+    public function refundBalance()
+    {
+        $acc = Acc::findOne($this->user_id);
+        $acc->balance = $acc->balance + $this->order->real_amount;
+        $acc->lasttime = date("Y-m-d H:i:s");
+        $acc->lastnum = $this->order->real_amount;
+        $acc->lastorderno = $this->order_no;
+        $acc->type = 0;
+        $acc->operatorid = Yii::$app->user->id;
+        if($acc->save()){
+            $accOrder = new AccountOrder();
+            $accOrder->userid = $this->user_id;
+            $accOrder->account_no = 'shouldinputwhat';
+            $accOrder->number = $acc->lastnum;
+            $accOrder->name = '0';
+            $accOrder->order_no = $this->order_no;
+            $accOrder->time = $acc->lasttime;
+            $accOrder->type = 3;
+            $accOrder->state = 1;
+            $accOrder->adminid = Yii::$app->user->id;
+            $accOrder->save();
+
+            $this->pay_status = RefundmentDoc::REFUND_OK;
+            $this->dispose_time = $acc->lasttime;
+            $this->save();
+        }
     }
 }
