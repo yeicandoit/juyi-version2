@@ -47,6 +47,11 @@ class ForumNoteSearch extends ForumNote
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $this->load($params);
