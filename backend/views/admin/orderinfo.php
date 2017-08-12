@@ -11,11 +11,16 @@ use yii\bootstrap\ActiveForm;
 <div class="sellerinfo">
     <div class="info_bar"><b>订单查看</b></div>
     <div class="module_content" id="tab-1">
-        <?php if(7 != $order->status &&
-            6 != $order->status &&
-            5 != $order->status &&
+        <?php
+        $refundment = $order->refundment;
+        if(7 != $order->status && //Order has finished
+            6 != $order->status && // The demander has received sample
+            5 != $order->status && // Shop has sent sample
             //Have sent test data and not need to send sample
-            !(4 == $order->status && (0 == $order->sendbackornot || null == $order->sendbackornot))) {?>
+            !(4 == $order->status && (0 == $order->sendbackornot || null == $order->sendbackornot)) &&
+            !$refundment && // The demander want to refund
+            $order->isSeller // test center order
+            ) {?>
             <div class="blank"></div>
             <label style="color: #985f0d; padding-left: 10px">订单设置</label>
             <div style="border: 1px groove #e8e8e8; padding-left: 10px">
@@ -62,6 +67,28 @@ use yii\bootstrap\ActiveForm;
                 <?php }?>
             </div>
         <?php } ?>
+        <?php if(!$order->isSeller) {?> //
+            <?php $form = ActiveForm::begin(['action'=>['shop-seller/delivery'],
+                'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;'],
+                'fieldConfig' => [
+                    'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style=\"float:left;min-width: 300px\">{input}</div><div>{error}</div>",
+                ],
+            ]);
+            $delivery = new Delivery();
+            $orderDelivery = new OrderDelivery();
+            ?>
+            <div style="display: none"><?= $form->field($orderDelivery, 'userid')->textInput(['value'=>$order->seller_id])?></div>
+            <div style="display: none"><?= $form->field($orderDelivery, 'deliverystate')->textInput(['value'=>1])?></div>
+            <?= $form->field($orderDelivery, 'oderid', ['options'=>['style'=>'display:none']])->textInput(['value'=>$order->id])?>
+            <?= $form->field($orderDelivery, 'usertype', ['options'=>['style'=>'display:none']])->textInput(['value'=>1])?>
+            <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>$stat])?></div>
+            <b style="color: green;">请填写快递信息</b>
+            <?= $form->field($delivery, 'name')->textInput()?>
+            <?= $form->field($delivery, 'number')->textInput()?>
+            <?= $form->field($delivery, 'description')->textarea(['style'=>'min-width: 400px'])->label('快递说明')?>
+            <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
+            <?php ActiveForm::end(); ?>
+        <?php }?>
         <div class="blank"></div>
         <label style="color: #985f0d; padding-left: 10px">订单信息</label>
         <?php $userOrderDelivery = $order->getDelivery($order->user_id)?>
@@ -110,6 +137,7 @@ use yii\bootstrap\ActiveForm;
             </table>
         </div>
         <div class="blank"></div>
+        <?php if($order->isSeller) {?>
         <label style="color: #985f0d; padding-left: 10px">买家配送信息</label>
         <?= DetailView::widget([
             'model' => $order,
@@ -120,6 +148,7 @@ use yii\bootstrap\ActiveForm;
                 ['label'=>'快递说明', 'value'=>$userOrderDelivery ? $userOrderDelivery->description  : ''],
             ],
         ]) ?>
+        <?php }?>
 
         <div class="blank"></div>
         <?php if($order->sendbackornot) {?>
