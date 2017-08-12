@@ -408,4 +408,9 @@ class Order extends \yii\db\ActiveRecord
         $shopMember = ShopMember::findOne($this->seller_id);          
         return $shopMember->shopInfo;
     }
+
+    public function getIsSeller()
+    {
+        return ShopMember::findOne($this->seller_id)->regtype == 'seller';
+    }
 }
