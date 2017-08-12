@@ -241,7 +241,21 @@ class AdminController extends Controller
 
     public function actionSellerlist()
     {
-        $searchModel = new SellerSearch();
+        $searchModel = new SellerSearch(['type'=>'seller']);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('sellerlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionResearchlist()
+    {
+        $searchModel = new SellerSearch(['type'=>'research']);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('sellerlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionSimulatelist()
+    {
+        $searchModel = new SellerSearch(['type'=>'simulate']);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('sellerlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }

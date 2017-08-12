@@ -37,8 +37,10 @@ class Menu
         "会员" => array(
             "会员管理" => array(
                 "会员列表" => "admin/memberlist",
-                "商家列表" => "admin/sellerlist",
+                "检测中心" => "admin/sellerlist",
                 "专家列表" => "admin/expertlist",
+                "科研辅助" => "admin/researchlist",
+                "数值模拟" => "admin/simulatelist",
             ),
         ),
         "订单" => array(
@@ -63,7 +65,7 @@ class Menu
         "admin/commentlist"         =>      "评论列表",
         'admin/consultlist'         =>      "咨询列表",
         "admin/memberlist"          =>      "会员列表",
-        "admin/sellerlist"          =>      "商家列表",
+        "admin/sellerlist"          =>      "检测中心",
         "admin/expertlist"          =>      "专家列表",
         "admin/account"             =>      "销售统计",
         "admin/orderlist"           =>      "订单列表",
@@ -80,6 +82,8 @@ class Menu
         "admin/brandlist"           =>      "品牌管理",
         "admin/addmessage"          =>      "消息发布",
         "admin/messagelist"         =>      "消息管理",
+        "admin/researchlist"        =>      "科研辅助",
+        "admin/simulatelist"        =>      "数值模拟",
 
     );
 

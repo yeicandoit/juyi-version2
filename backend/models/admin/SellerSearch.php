@@ -12,6 +12,7 @@ use backend\models\seller\Seller;
  */
 class SellerSearch extends Seller
 {
+    public $type;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,9 @@ class SellerSearch extends Seller
     {
         return [
             [['id', 'country', 'province', 'city', 'area', 'grade', 'comments', 'sale', 'sort', 'is_lock', 'is_del', 'is_vip'], 'integer'],
-            [['seller_name', 'true_name', 'affliation', 'affliationtype', 'login_time', 'phone', 'email', 'mobile', 'server_num', 'password', 'paper_img', 'create_time', 'address', 'account', 'qualification', 'logo', 'seller_message_ids', 'home_url'], 'safe'],
+            [['seller_name', 'true_name', 'affliation', 'affliationtype', 'login_time', 'phone', 'email', 'mobile',
+                'server_num', 'password', 'paper_img', 'create_time', 'address', 'account', 'qualification', 'logo',
+                'seller_message_ids', 'home_url', 'type'], 'safe'],
             [['cash', 'tax'], 'number'],
         ];
     }
@@ -43,6 +46,7 @@ class SellerSearch extends Seller
     public function search($params)
     {
         $query = Seller::find();
+        $query->joinWith(['shopMember']);
 
         // add conditions that should always apply here
 
@@ -99,7 +103,8 @@ class SellerSearch extends Seller
             ->andFilterWhere(['like', 'qualification', $this->qualification])
             ->andFilterWhere(['like', 'logo', $this->logo])
             ->andFilterWhere(['like', 'seller_message_ids', $this->seller_message_ids])
-            ->andFilterWhere(['like', 'home_url', $this->home_url]);
+            ->andFilterWhere(['like', 'home_url', $this->home_url])
+            ->andFilterWhere(['like', '{{%shop_member}}.regtype', $this->type]);
 
         return $dataProvider;
     }

@@ -220,4 +220,9 @@ class Seller extends \yii\db\ActiveRecord
         }
         return null;
     }
+
+    public function getShopMember()
+    {
+        return $this->hasOne(ShopMember::className(), ['id'=>'id']);
+    }
 }
