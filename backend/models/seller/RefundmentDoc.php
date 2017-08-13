@@ -122,29 +122,38 @@ class RefundmentDoc extends \yii\db\ActiveRecord
 
     public function refundBalance()
     {
-        $acc = Acc::findOne($this->user_id);
-        $acc->balance = $acc->balance + $this->order->real_amount;
-        $acc->lasttime = date("Y-m-d H:i:s");
-        $acc->lastnum = $this->order->real_amount;
-        $acc->lastorderno = $this->order_no;
-        $acc->type = 0;
-        $acc->operatorid = Yii::$app->user->id;
-        if($acc->save()){
-            $accOrder = new AccountOrder();
-            $accOrder->userid = $this->user_id;
-            $accOrder->account_no = 'shouldinputwhat';
-            $accOrder->number = $acc->lastnum;
-            $accOrder->name = '0';
-            $accOrder->order_no = $this->order_no;
-            $accOrder->time = $acc->lasttime;
-            $accOrder->type = 3;
-            $accOrder->state = 1;
-            $accOrder->adminid = Yii::$app->user->id;
-            $accOrder->save();
+        $accOrder = new AccountOrder();
+        $accOrder->userid = $this->user_id;
+        $accOrder->account_no = "JYC" . date(YmdHis).rand(1,99);
+        $accOrder->number = $this->amount;
+        $accOrder->name = '0';
+        $accOrder->order_no = $this->order_no;
+        $accOrder->time = date("Y-m-d H:i:s");
+        $accOrder->type = 3;
+        $accOrder->state = 1;
+        $accOrder->adminid = Yii::$app->user->id;
+        if($accOrder->save()){
+            $acc = Acc::findOne($this->user_id);
+            $acc->balance = $acc->balance + $this->amount;
+            $acc->lasttime = $accOrder->time;
+            $acc->lastnum = $this->amount;
+            $acc->lastorderno = $accOrder->id;
+            $acc->type = 0;
+            $acc->operatorid = Yii::$app->user->id;
+            if($acc->save()){
+                $this->pay_status = RefundmentDoc::REFUND_OK;
+                $this->dispose_time = $acc->lasttime;
+                $this->save();
 
-            $this->pay_status = RefundmentDoc::REFUND_OK;
-            $this->dispose_time = $acc->lasttime;
-            $this->save();
+                if($this->amount > 0 && $this->amount < $this->order->real_amount) {
+                    $this->order->real_amount -= $this->amount;
+                }
+                $this->order->status = 7;
+                $this->order->completion_time = $this->dispose_time;
+                $this->order->save();
+            } else {
+                $accOrder->delete();
+            }
         }
     }
 }

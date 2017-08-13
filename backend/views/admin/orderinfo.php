@@ -67,7 +67,7 @@ use yii\bootstrap\ActiveForm;
                 <?php }?>
             </div>
         <?php } ?>
-        <?php if(!$order->isSeller) {?> //
+        <?php if(!$order->isSeller && $order->status == 1) {?> 
             <?php $form = ActiveForm::begin(['action'=>['shop-seller/delivery'],
                 'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;'],
                 'fieldConfig' => [
@@ -81,7 +81,7 @@ use yii\bootstrap\ActiveForm;
             <div style="display: none"><?= $form->field($orderDelivery, 'deliverystate')->textInput(['value'=>1])?></div>
             <?= $form->field($orderDelivery, 'oderid', ['options'=>['style'=>'display:none']])->textInput(['value'=>$order->id])?>
             <?= $form->field($orderDelivery, 'usertype', ['options'=>['style'=>'display:none']])->textInput(['value'=>1])?>
-            <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>$stat])?></div>
+            <div style="display: none"><?= $form->field($order, 'status')->textInput(['value'=>5])?></div>
             <b style="color: green;">请填写快递信息</b>
             <?= $form->field($delivery, 'name')->textInput()?>
             <?= $form->field($delivery, 'number')->textInput()?>
@@ -109,6 +109,13 @@ use yii\bootstrap\ActiveForm;
             $price = $spec ? $spec->sell_price : $order->appointinfo->good->sell_price;
             $href = Yii::$app->params['fUrl'] . "site/goodinfo&id=" . $order->appointinfo->good->id;
         ?>
+        <?php 
+            if($order->status == 7 && $refundment) {//When refundment finished, will set order's real_amount
+                $realAmount = $order->real_amount + $refundment->amount; 
+            } else {
+                $realAmount = $order->real_amount;
+            }
+        ?>
         <div style="border: 1px groove #e8e8e8; padding-left: 10px">
             <table width="100%" cellpadding="0" cellspacing="0" align="center" style="border:10px; solid #123456;">
                 <tr>
@@ -131,7 +138,7 @@ use yii\bootstrap\ActiveForm;
                         <?php if(0 == $order->pay_status) {
                             echo Html::a("$order->real_amount", '#', ['id'=>'realAmount', 'onclick'=>"setRealAmount()"]);
                         } else {
-                            echo $order->real_amount;
+                            echo $realAmount;
                         }?></td>
                 </tr>
             </table>

@@ -13,6 +13,7 @@ use backend\models\seller\Member;
 class MemberSearch extends Member
 {
     public $user_name;
+    public $created_at;
     /**
      * @inheritdoc
      */
@@ -21,7 +22,7 @@ class MemberSearch extends Member
         return [
             [['user_id', 'sex', 'group_id', 'exp', 'point', 'grade', 'status', 'country', 'province', 'city', 'area'], 'integer'],
             [['true_name', 'telephone', 'mobile', 'contact_addr', 'qq', 'birthday', 'message_ids', 'time', 'zip',
-                'prop', 'last_login', 'custom', 'email', 'affliation', 'user_name'], 'safe'],
+                'prop', 'last_login', 'custom', 'email', 'affliation', 'user_name','created_at'], 'safe'],
             [['balance'], 'number'],
         ];
     }
@@ -52,11 +53,20 @@ class MemberSearch extends Member
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => ['pagesize' => '10'],
+            'sort'=>[
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ]
+            ],
         ]);
         $sort = $dataProvider->getSort();
         $sort->attributes['user_name'] = [
             'asc' => ['{{%user}}.username'=>SORT_ASC],
             'desc' => ['{{%user}}.username'=>SORT_DESC],
+        ];
+        $sort->attributes['created_at'] = [
+            'asc' => ['{{%user}}.created_at'=>SORT_ASC],
+            'desc' => ['{{%user}}.created_at'=>SORT_DESC],
         ];
         $dataProvider->setSort($sort);
 
@@ -98,7 +108,8 @@ class MemberSearch extends Member
             ->andFilterWhere(['like', 'custom', $this->custom])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'affliation', $this->affliation])
-            ->andFilterWhere(['like', '{{%user}}.username', $this->user_name]);
+            ->andFilterWhere(['like', '{{%user}}.username', $this->user_name])
+            ->andFilterWhere(['like', '{{%user}}.created_at', $this->created_at]);
 
         return $dataProvider;
     }

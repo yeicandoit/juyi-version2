@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap\ActiveForm;
+use backend\models\seller\RefundmentDoc;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -35,10 +36,10 @@ use yii\bootstrap\ActiveForm;
             'order_no',
             ['label'=>'下单时间', 'value'=>$refundment->order->create_time],
             ['label'=>'订单应付金额', 'value'=>$refundment->order->payable_amount],
-            ['label'=>'订单实付金额', 'value'=>$refundment->order->real_amount],
+            ['label'=>'订单实付金额', 'value'=>RefundmentDoc::REFUND_OK == $refundment->pay_status ? $refundment->order->real_amount + $refundment->amount : $refundment->order->real_amount],
             ['label'=>'退款商品', 'format'=>'raw', 'value'=>$good],
-            ['label'=>'已退款金额', 'value'=>$refundment->amount],
-            ['label'=>'退款原因', 'value'=>$refundment->content],
+            ['label'=>'申请退款金额', 'value'=>$refundment->amount],
+            ['label'=>'退款原因', 'format'=>'raw', 'value'=>$refundment->content],
         ],
     ]) ?>
 

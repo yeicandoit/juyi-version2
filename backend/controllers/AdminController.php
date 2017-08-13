@@ -445,11 +445,11 @@ class AdminController extends Controller
         $refundment = RefundmentDoc::findOne($id);
         $refundOk = false;
 
-        if($refundment->way == 'origin'){
+        if($refundment->way == 'origin' && $refundment->order->pay_type == 1){
             $RequestBuilder=new AlipayTradeRefundContentBuilder();
             $RequestBuilder->setOutTradeNo($refundment->order_no);
             $RequestBuilder->setTradeNo('');
-            $RequestBuilder->setRefundAmount($refundment->order->real_amount);
+            $RequestBuilder->setRefundAmount($refundment->amount);
             $RequestBuilder->setOutRequestNo($refundment->order_id);
             $RequestBuilder->setRefundReason($refundment->reason);
 
@@ -458,18 +458,22 @@ class AdminController extends Controller
             if(10000 == $response->code){
                 $refundOk = true;
             }
-        } else if($refundment->way == 'balance') {
+        } else if($refundment->way == 'balance' || ($refundment->way == 'origin' && ($refundment->order->pay_type == 0 || $refundment->order->pay_type = 3))) {
             $refundment->refundBalance();
         }
         if($refundOk){
             $refundment->pay_status = RefundmentDoc::REFUND_OK;
             $refundment->dispose_time = $response->gmt_refund_pay;
             $refundment->save();
+
+            $refundment->order->status = 7;
+            $refundment->order->completion_time = $refundment->dispose_time;
+            if($refundment->amount > 0 && $refundment->amount < $refundment->order->real_amount) {
+                $refundment->order->real_amount -= $refundment->amount;
+            }
+            $refundment->order->save();
         }
         return $this->redirect(['refundmentlist']);
-        //var_dump($response);
-        //$refundment = RefundmentDoc::findOne($id);
-        //return $this->render('refundmentinfo', [ 'refundment'=>$refundment]);
     }
 
     public function actionAppointlist()

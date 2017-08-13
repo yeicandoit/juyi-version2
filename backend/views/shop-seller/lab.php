@@ -116,7 +116,7 @@ use yii\helpers\Url;
     window.onload = function(){
         $('.goodName').each(function(key,value){
             str = $(value).text();
-            textLeng = 40;
+            textLeng = 30;
             if(str.length > textLeng){
                 $(this).html(str.substring(0,textLeng )+"...");
             }

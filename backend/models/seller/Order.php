@@ -342,7 +342,7 @@ class Order extends \yii\db\ActiveRecord
         $data = $query->all();
         foreach($data as $key => $val)
         {
-            $result[$val['xValue']] = intval($val['yValue']);
+            $result[$val['xValue']] = floatval($val['yValue']);
         }
         return $result;
     }
