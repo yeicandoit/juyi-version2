@@ -60,6 +60,9 @@ use yii\db\Query;
  */
 class Order extends \yii\db\ActiveRecord
 {
+    const INVOICE_NO = 0;
+    const INVOICE_NOR = 1;
+    const INVOICE_ZEN = 2;
     /**
      * @inheritdoc
      */
@@ -76,12 +79,12 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['order_no', 'user_id', 'pay_type'], 'required'],
             [['user_id', 'seller_id', 'appointid', 'pay_type', 'invoice', 'status', 'pay_status', 'distribution_status', 'sendbackornot', 'country', 'province', 'city', 'area', 'distribution', 'if_del', 'exp', 'point', 'type', 'takeself', 'active_id', 'is_checkout'], 'integer'],
-            [['create_time', 'completion_time', 'pay_time', 'send_time'], 'safe'],
+            [['create_time', 'completion_time', 'pay_time', 'send_time', 'shibiehao'], 'safe'],
             [['payable_amount', 'payable_freight', 'real_amount', 'real_freight', 'insured', 'pay_fee', 'taxes', 'promotions', 'discount', 'order_amount'], 'number'],
             [['note'], 'string'],
             [['order_no', 'accept_name', 'telphone', 'mobile'], 'string', 'max' => 20],
             [['invoice_title'], 'string', 'max' => 100],
-            [['postscript', 'prop', 'trade_no', 'checkcode'], 'string', 'max' => 255],
+            [['postscript', 'prop', 'trade_no', 'checkcode', 'shibiehao'], 'string', 'max' => 255],
             [['postcode'], 'string', 'max' => 6],
             [['address'], 'string', 'max' => 250],
             [['accept_time'], 'string', 'max' => 80],
@@ -143,6 +146,7 @@ class Order extends \yii\db\ActiveRecord
             'checkcode' => Yii::t('app', '自提方式的验证码'),
             'active_id' => Yii::t('app', '促销活动ID'),
             'is_checkout' => Yii::t('app', '是否给商家结算货款 0:未结算 1:已结算'),
+            'shibiehao' => Yii::t('app', '纳税人识别号'),
         ];
     }
 
@@ -154,7 +158,7 @@ class Order extends \yii\db\ActiveRecord
             3=>'收到样品',
             4=>'寄回测试数据',
             5=>'回寄样品',
-            6=>'买家收到回寄样品',
+            6=>'买家收到回寄样品、数据',
             7=>'交易完成'
         );
 
@@ -169,7 +173,7 @@ class Order extends \yii\db\ActiveRecord
             3=>'收到样品',
             4=>'寄回测试数据',
             5=>'回寄样品',
-            6=>'买家收到回寄样品、数据，交易完成',
+            6=>'买家收到回寄样品、数据',
             7=>'交易完成'
         );
     }
@@ -412,5 +416,15 @@ class Order extends \yii\db\ActiveRecord
     public function getIsSeller()
     {
         return ShopMember::findOne($this->seller_id)->regtype == 'seller';
+    }
+
+    public function getInvoiceType()
+    {
+        $arr = array(
+            self::INVOICE_NO => '不需要',
+            self::INVOICE_NOR => '普通发票',
+            self::INVOICE_ZEN => '增值税发票',
+        );
+        return $arr[$this->invoice];
     }
 }

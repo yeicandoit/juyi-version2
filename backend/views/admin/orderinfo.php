@@ -99,7 +99,6 @@ use yii\bootstrap\ActiveForm;
                 'order_no',
                 ['label'=>'当前状态', 'value'=>$order->stat],
                 ['label'=>'支付状态', 'value'=>$order->payStatus],
-                ['label'=>'配送状态', 'value'=>$userOrderDelivery? "已发送" : "未发送"],
                 ['label'=>'订单类型', 'value'=>$order->orderTypeText],
                 'postscript',
             ],
@@ -175,22 +174,41 @@ use yii\bootstrap\ActiveForm;
                     $location .= Areas::findOne($order->area)->area_name;
                 }
             ?>
-            <?= DetailView::widget([
-                'model' => $order,
-                'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
-                'attributes' => [
-                    'accept_name',
-                    'mobile',
-                    ['label'=>'地区', 'value'=>$location],
-                    'address',
-                    'postcode',
-                    'invoice_title',
-                    'send_time',
-                    ['label'=>'快递公司名称', 'value'=>$order->deliveryBack ? $order->deliveryBack->name : ''],
-                    ['label'=>'快递单号', 'value'=>$order->deliveryBack ? $order->deliveryBack->number : ''],
-                    ['label'=>'快递说明', 'value'=>$order->deliveryBack ? $order->deliveryBack->description  : ''],
-                ],
-            ]) ?>
+            <?php
+            if(\backend\models\seller\Order::INVOICE_NO != $order->invoice) {
+                echo DetailView::widget([
+                    'model' => $order,
+                    'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
+                    'attributes' => [
+                        'accept_name',
+                        'mobile',
+                        ['label' => '地区', 'value' => $location],
+                        'address',
+                        'postcode',
+                        ['label' => '发票类型', 'value' => $order->invoiceType],
+                        'invoice_title',
+                        'shibiehao',
+                        ['label' => '快递公司名称', 'value' => $order->deliveryBack ? $order->deliveryBack->name : ''],
+                        ['label' => '快递单号', 'value' => $order->deliveryBack ? $order->deliveryBack->number : ''],
+                        ['label' => '快递说明', 'value' => $order->deliveryBack ? $order->deliveryBack->description : ''],
+                    ],
+                ]);
+            } else {
+                echo DetailView::widget([
+                    'model' => $order,
+                    'template' => '<tr><th style="width: 150px">{label}</th><td>{value}</td></tr>',
+                    'attributes' => [
+                        'accept_name',
+                        'mobile',
+                        ['label' => '地区', 'value' => $location],
+                        'address',
+                        'postcode',
+                        ['label' => '快递公司名称', 'value' => $order->deliveryBack ? $order->deliveryBack->name : ''],
+                        ['label' => '快递单号', 'value' => $order->deliveryBack ? $order->deliveryBack->number : ''],
+                        ['label' => '快递说明', 'value' => $order->deliveryBack ? $order->deliveryBack->description : ''],
+                    ],
+                ]);
+            }?>
         <?php }?>
     </div>
 
