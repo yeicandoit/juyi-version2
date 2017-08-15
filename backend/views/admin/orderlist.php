@@ -39,8 +39,9 @@ use yii\grid\GridView;
                 'format' => 'raw',
                 'value' => function($model) {
                     $orderDetail = Html::a('订单详情', Url::to(['admin/orderinfo', 'id'=>$model->id]));
-                    $appointDetail = Html::a('预约详情', "#");
-                    return "$orderDetail|$appointDetail";
+                    return "$orderDetail";
+                    //$appointDetail = Html::a('预约详情', "#");
+                    //return "$orderDetail|$appointDetail";
                 }
             ]
         ],
