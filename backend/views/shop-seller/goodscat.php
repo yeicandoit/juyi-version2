@@ -14,7 +14,7 @@ use yii\helpers\Html;
                         if($parentId == 0) {
                             $checkbox = Html::checkbox("category", false, ['value'=>$childId]);
                             $categories = '';
-                            echo "<div onmousemove='showChilds($childId)'>$checkbox$idname[$childId]</div>";
+                            echo "<div onclick='showChilds($childId)'>$checkbox$idname[$childId]</div>";
                         }
                     }
                 ?>

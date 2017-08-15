@@ -699,27 +699,37 @@ class AdminController extends Controller
         if(CommendGoods::HotDevice == $type || CommendGoods::HotHelp == $type || CommendGoods::HotSimulate == $type){
             $good = Goods::find()->where(['goodtype'=>Goods::commendType2GoodType($type), 'goods_no'=>$hot])->one();
             if(null != $good) {
-                $cg = new CommendGoods();
-                $cg->type = $type;
-                $cg->commend_id = $good->id;
-                if ($cg->save()){
-                    $info = '添加成功';
+                $cg = CommendGoods::find()->where(['type'=>$type, 'commend_id'=>$good->id])->one();
+                if(isset($cg)) {
+                    $info = '已经添加过, 不能重复添加';
                 } else {
-                    $info = '添加失败！！';
+                    $cg = new CommendGoods();
+                    $cg->type = $type;
+                    $cg->commend_id = $good->id;
+                    if ($cg->save()){
+                        $info = '添加成功';
+                    } else {
+                        $info = '添加失败！！';
+                    }
                 }
             } else {
-                $info = '添加失败！！';
+                $info = '商品不存在！！';
             }
         } else if(CommendGoods::HotOrganization == $type || CommendGoods::HotExpert == $type){
             $it = ShopMember::find()->where(['regtype'=>ShopMember::commendType2RegType($type), 'username'=>$hot])->one();
             if(null != $it) {
-                $cg = new CommendGoods();
-                $cg->type = $type;
-                $cg->commend_id = $it->id;
-                if ($cg->save()){
-                    $info = '添加成功';
+                $cg = CommendGoods::find()->where(['type'=>$type, 'commend_id'=>$it->id])->one();
+                if(isset($cg)) {
+                    $info = '已经添加过, 不能重复添加';
                 } else {
-                    $info = '添加失败！！';
+                    $cg = new CommendGoods();
+                    $cg->type = $type;
+                    $cg->commend_id = $it->id;
+                    if ($cg->save()){
+                        $info = '添加成功';
+                    } else {
+                        $info = '添加失败！！';
+                    }
                 }
             } else {
                 $info = '添加失败！！';

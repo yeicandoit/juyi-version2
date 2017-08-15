@@ -54,7 +54,7 @@ class SellerSearch extends Seller
             'query' => $query,
             'sort'=>[
                 'defaultOrder' => [
-                    'is_del' => SORT_DESC,
+                    'create_time' => SORT_DESC,
                 ]
             ],
             'pagination' => ['pagesize' => '10'],
