@@ -49,7 +49,7 @@ class GoodsSearch extends Goods
             'query' => $query,
             'sort'=>[
                 'defaultOrder' => [
-                    'is_del' => SORT_DESC,
+                    'id' => SORT_DESC,
                 ]
             ],
             'pagination' => ['pagesize' => '10'],

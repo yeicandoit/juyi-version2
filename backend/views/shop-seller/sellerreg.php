@@ -48,8 +48,7 @@ use yii\helpers\Url;
     ])->textInput([
         'options' => ['class'=>'form-control'],
     ])->label('商户真实全称:')->hint('企业：写企业全称，如：上海××科技有限公司；
-        高校和研究所：写学校全称和具体的实验室，如：上海××大学生物高分子实验室或××研究所××室；
-        专家：写专家的真实姓名，如：张××', ['style'=>'padding-left:30px', 'id'=>'pName']) ?>
+        高校和研究所：写学校全称和具体的实验室，如：上海××大学生物高分子实验室或××研究所××室；', ['style'=>'padding-left:30px', 'id'=>'pName']) ?>
     <?= $form->field($model, 'file', [
         'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style=\"float:left;\">{input}</div>
          <div style='float: left;max-height: 160px; width: 450px;'>{hint}</div><div style='padding-left: 100px;'>{error}</div>",
@@ -99,7 +98,7 @@ use yii\helpers\Url;
         }
 
         if('seller' ==  $("#sellerregform-regtype").val()) {
-            $("#pName").html("企业：写企业全称，如：上海××科技有限公司；高校和研究所：写学校全称和具体的实验室，如：上海××大学生物高分子实验室或××研究所××室；专家：写专家的真实姓名，如：张××");
+            $("#pName").html("企业：写企业全称，如：上海××科技有限公司；高校和研究所：写学校全称和具体的实验室，如：上海××大学生物高分子实验室或××研究所××室；");
             $("#pFile").html("请打包上传相关的资质文件(支持zip或者rar) 聚仪科研检测平台入驻条件 检测中心入驻：高校或研究所实验室入驻需提供实验室负责老师的工作证件照片或证明文件，企业提供营业执照照片；（格式换成图片格式，要多兼容几种图片格式）");
         }
         if('research' ==  $("#sellerregform-regtype").val()) {

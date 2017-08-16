@@ -225,4 +225,13 @@ class Seller extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ShopMember::className(), ['id'=>'id']);
     }
+
+    public static function getSellerTypes()
+    {
+        return array(
+           "seller" => "检测中心", 
+           "simulate" => "数值模拟", 
+           "research" => "科研辅助", 
+        ); 
+    } 
 }
