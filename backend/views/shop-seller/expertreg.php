@@ -21,12 +21,18 @@ use yii\helpers\Url;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'regType',[])->dropDownList(
+    <?= $form->field($model, 'regType',['template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style=\"float:left;\">{input}</div>
+         <div style='float: left;height: 100px; width: 500px;'>{hint}</div><div style='padding-left: 100px;'>{error}</div>",])->dropDownList(
         [ 'expert'=>'专家解码', 'seller'=>'检测中心', 'research'=>'科研辅助', 'simulate'=>'数值模拟'],
         ['onchange'=>'jumpUrl()']
-    )->label("选择入驻类型:"); ?>
+    )->label("选择入驻类型:")->hint('检测中心：从事科研检测，分析测试，提供测试服务和提供仪器共享的请选择；<br>
+                                     专家解码：硕士，博士或者科研人员可提供技术服务的请选择；<br>
+                                     科研辅助：从事试验台加工，仪器维修，仪器租赁，科研仪器及耗材销售，抗体及合成中间体销售等，为服务于科研的请选择；<br>
+                                     数值模拟：从事仿真计算，仿真模拟，数值模拟等方面的人才请选择；
+                                    ', ['style'=>'padding-left:30px',]); ?>
+    <br>
     <?= $form->field($model, 'name', [])->textInput()
-        ->label('用户名:')->hint('* 用户名称（必填）', ['style'=>'padding-left:30px',]) ?>
+        ->label('用户名:')->hint('* 用户名称(必填)，字母和数字组合，如dayang或dayang88', ['style'=>'padding-left:30px',]) ?>
     <?= $form->field($model, 'trueName', [])->textInput()
         ->label('专家真实姓名:')->hint('* 专家真实姓名（必填）', ['style'=>'padding-left:30px',]) ?>
     <?= $form->field($model, 'password')->passwordInput()
