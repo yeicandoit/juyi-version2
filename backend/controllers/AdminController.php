@@ -160,6 +160,9 @@ class AdminController extends Controller
                 if(isset($post['specName'])){
                     $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
                 }
+                if(isset($post['goodsCategory'])){
+                    $goods->saveCat($post['goodsCategory']);
+                }
                 if(isset($post['goodsImgs'])){
                     $goods->saveImgs($post['goodsImgs']);
                 }

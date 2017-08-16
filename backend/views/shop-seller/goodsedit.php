@@ -85,7 +85,7 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
             ?>
             <ctrlarea id=<?='ctrl'.$catId?>>
                 <input name="goodsCategory[]" type="hidden" value=<?=$catId?>>
-                <?=Html::a($catName, '#', ['onclick'=>"rmCatNode($catId)"])?>
+                <?=Html::a($catName, '#')?>
             &nbsp;&nbsp;</ctrlarea>
             <?php }
             ?>
@@ -96,7 +96,8 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
                 'data-toggle' => 'modal',
                 'data-target' => '#create-modal',
             ]); ?>
-            <?php $catUrl = Url::to(['shop-seller/goodscategory', 'type'=>$goods->getGoodType2Int(ShopMember::findOne(Yii::$app->user->id)->regtype)])?>
+            <?php $catUrl = Url::to(['shop-seller/goodscategory', 'type'=>$goods->getGoodType2Int(ShopMember::findOne(Yii::$app->user->id)->regtype),
+            'id'=>$goods->id])?>
             <?php
             Modal::begin([
                 'id' => 'create-modal',
@@ -420,17 +421,13 @@ JS;
 
     function setCategory(){
         var str = '';
-        $("input[name='category']:checked").each(function() {
-            if ('goodsedit' == actionId) {
-                //TODO could not edit str in $.get function. To find why.
-                $.get("<?=Url::to(['shop-seller/addcat'])?>" + "?goodsId=" + goodsId + "&catId=" + $(this).val(), function (data) {});
-            }
-            str += '<ctrlarea id=' + 'ctrl' + $(this).val() + '>' +
-                '<input name="goodsCategory[]" type="hidden" value=' + $(this).val() + '>' +
-                '<a href="#" onclick="rmCatNode(' + $(this).val() + ')">' +
-                idname[$(this).val()] + '</a>&nbsp;&nbsp;</ctrlarea>';
-        });
-        $("#catContainer").append(str);
+        for(var cid in goodsCats) {
+            str += '<ctrlarea id=' + 'ctrl' + cid + '>' +
+                '<input name="goodsCategory[]" type="hidden" value=' + cid + '>' +
+                '<a href="#">' +
+                idname[cid] + '</a>&nbsp;&nbsp;</ctrlarea>';
+        };
+        $("#catContainer").html(str);
     }
 
     function rmCatNode(catId)

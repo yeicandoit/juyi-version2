@@ -159,11 +159,20 @@ class Goods extends \yii\db\ActiveRecord
 
     public function saveCat($cats)
     {
+        //Delete original categories firstly
+        foreach($this->categoryExtends as $key=>$cateExt){
+            $cateExt->delete();
+        }
         foreach($cats as $key=>$val){
-            $catExt = new CategoryExtend();
-            $catExt->goods_id = $this->id;
-            $catExt->category_id = $val;
-            $catExt->save();
+            $catExt = CategoryExtend::find()->where(['category_id'=>$val, 'goods_id'=>$this->id])->one();
+            if(isset($catExt)){
+                continue;
+            } else {
+                $catExt = new CategoryExtend();
+                $catExt->goods_id = $this->id;
+                $catExt->category_id = $val;
+                $catExt->save();
+            }
         }
         return true;
     }

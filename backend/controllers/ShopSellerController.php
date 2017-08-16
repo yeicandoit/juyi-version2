@@ -288,6 +288,9 @@ class ShopSellerController extends Controller
                 if(isset($post['specName'])){
                     $goods->saveSpec($post['specName'], $post['specMktPrice'], $post['specSellPrice']);
                 }
+                if(isset($post['goodsCategory'])){
+                    $goods->saveCat($post['goodsCategory']);
+                }
                 if(isset($post['goodsImgs'])){
                     $goods->saveImgs($post['goodsImgs']);
                 }
@@ -337,12 +340,14 @@ class ShopSellerController extends Controller
         }
     }
 
-    public function actionGoodscategory($type)
+    public function actionGoodscategory($type, $id)
     {
         $data = Category::find()->where(['type'=>$type])->asArray()->all();
         $idname = ArrayHelper::map($data, 'id', 'name');
         $idmap = ArrayHelper::map($data, 'id', 'parent_id');
-        return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap]);
+        $catExts = Goods::findOne($id)->getCategoryExtends()->asArray()->all();
+        $goodsCats = ArrayHelper::map($catExts, 'category_id', 'goods_id');
+        return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap, 'goodsCats'=>$goodsCats]);
     }
 
     public function actionDelcat($goodsId, $catId)

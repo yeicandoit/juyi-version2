@@ -9,12 +9,19 @@ use yii\helpers\Html;
             </td>
             <td>
             <div style="height: 160px; width:200px; border: 1px groove #e8e8e8; overflow-y:scroll;">
+                <!--TODO should use javascript to set parent category, or will some issues-->
                 <?php
                     foreach ($idmap as $childId=>$parentId) {
                         if($parentId == 0) {
-                            $checkbox = Html::checkbox("category", false, ['value'=>$childId]);
+                            $checkboxId = 'gc'.$childId;
+                            if(isset($goodsCats[$childId])){
+                                $checkbox = Html::checkbox("category", true, ['id'=>$checkboxId, 'value'=>$childId]);
+                            } else {
+                                $checkbox = Html::checkbox("category", false, ['id'=>$checkboxId, 'value'=>$childId]);
+                            }
+
                             $categories = '';
-                            echo "<div onclick='showChilds($childId)'>$checkbox$idname[$childId]</div>";
+                            echo "<div onclick='showChilds($childId, $checkboxId)'>$checkbox$idname[$childId]</div>";
                         }
                     }
                 ?>
@@ -30,6 +37,13 @@ use yii\helpers\Html;
 </div>
 <script>
     idname = <?=json_encode($idname)?>;
+    goodsCats = <?=json_encode($goodsCats)?>;
+    idmap = <?=json_encode($idmap)?>;
+
+    //for(var i in goodsCats) {
+    //    alert(i);
+    //}
+
     data = new Object();
     //Store all the category info into js object
     <?php foreach ($idmap as $childId=>$parentId) {
@@ -37,7 +51,12 @@ use yii\helpers\Html;
             $catInfo = array();
             foreach($idmap as $c => $p){
                 if($p == $childId){
-                    $checkbox = Html::checkbox("category", false, ['value'=>$c]);
+                    if(isset($goodsCats[$c])) {
+                        $checkbox = Html::checkbox("category", true, ['value'=>$c]);
+                    } else {
+                        $checkbox = Html::checkbox("category", false, ['value'=>$c]);
+                    }
+
                     $catInfo[$c] = "<div>$checkbox$idname[$c]</div>";
                 }
             }?>
@@ -45,13 +64,91 @@ use yii\helpers\Html;
         <?php } //There have to be some blank between ?php and }, or this html will not display normally.
     }?>
 
-    function showChilds(catId)
+    function showChilds(cid, checkboxId)
     {
-        var cats = eval(data[catId]);
-        var str = '';
-        for(var key in cats){
-            str += cats[key];
+        if(true == $(checkboxId).is(':checked')) {
+            //if goodsCats does not contain this cid
+            var str = '';
+            if(false == hasThisCat(cid)){
+                goodsCats[cid] = 123;
+                for(var c in idmap){
+                    //if c's parent id equal to cid
+                    if(idmap[c] == cid){
+                        str += '<div onclick="verifyThisCat('+c+')"><input id ='+'gc'+c+' name="category" value='+c+' type="checkbox">'
+                        + idname[c] + '</div>';
+                    }
+                }
+            } else {
+                //if goodsCats has contained this cid
+                for(var c in idmap){
+                    //if c's parent id equal to cid
+                    if(idmap[c] == cid){
+                        if(hasThisCat(c)){
+                            str += '<div onclick="verifyThisCat('+c+')"><input id ='+'gc'+c+' name="category" value='+c+' type="checkbox" checked="checked">' + idname[c] + '</div>';
+                        } else {
+                            str += '<div onclick="verifyThisCat('+c+')"><input id ='+'gc'+c+' name="category" value='+c+' type="checkbox">'+idname[c]+'</div>';
+                        }
+
+                    }
+                }
+            }
+            $("#subcats").html(str);
+        } else {
+            // Do not check this box
+            var str = '';
+            if(false == hasThisCat(cid)){
+                for(var c in idmap){
+                    //if c's parent id equal to cid
+                    if(idmap[c] == cid){
+                        str += '<div onclick="verifyThisCat('+c+')"><input id ='+'gc'+c+' name="category" value='+c+' type="checkbox">'
+                            + idname[c] + '</div>';
+                    }
+                }
+            } else {
+                //if goodsCats has contained this cid
+                delete goodsCats[cid];
+                for(var c in idmap){
+                    //if c's parent id equal to cid
+                    if(idmap[c] == cid){
+                        if(hasThisCat(c)){
+                            delete goodsCats[c];
+                        }
+                        str += '<div onclick="verifyThisCat('+c+')"><input id ='+'gc'+c+' name="category" value='+c+' type="checkbox">'+ idname[c]+'</div>';
+                    }
+                }
+            }
+            $("#subcats").html(str);
         }
-        $("#subcats").html(str);
     }
+
+    function verifyThisCat(cid)
+    {
+        var checkboxId = '#gc' + cid;
+        //Selected this category
+        if($(checkboxId).is(':checked') == true){
+            if(false == hasThisCat(cid)){
+                goodsCats[cid] = 123;
+                //Has no parent id
+                if(false == hasThisCat(idmap[cid])){
+                    goodsCats[idmap[cid]] = 123;
+                }
+            }
+        } else {
+            //Do not select this category
+            if(true == hasThisCat(cid)){
+                delete goodsCats[cid];
+            }
+        }
+    }
+
+    function hasThisCat(cid)
+    {
+        for(var i in goodsCats) {
+            if(i == cid){
+                return true;
+            }
+        }
+        return false;
+    }
+
 </script>
