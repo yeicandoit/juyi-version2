@@ -231,7 +231,8 @@ class Seller extends \yii\db\ActiveRecord
         return array(
            "seller" => "检测中心", 
            "simulate" => "数值模拟", 
-           "research" => "科研辅助", 
+           "research" => "科研辅助",
+           "expert" => "专家解码",
         ); 
     } 
 }

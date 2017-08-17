@@ -12,6 +12,7 @@ use yii\helpers\Url;
         </b>
     </div>
     <div class="blank"></div>
+    <div style="height:60px;color:red;text-align:center"> <?= Html::encode($info)?> </div>
     <?php $form = ActiveForm::begin([
         'id' => 'basicInfo',
         'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;', 'enctype' => 'multipart/form-data'],
@@ -65,6 +66,13 @@ use yii\helpers\Url;
     <?= $form->field($sellerinfo, 'sale')->textInput(['readonly'=>"readonly"])?>
     <?= $form->field($sellerinfo, 'qualification')->textInput()?>
     <?= $form->field($sellerinfo, 'tax')->textInput()?>
+
+    <div class="form-group field-seller-address">
+        <div style="float:left; width:100px; margin: 0 auto;"><label class="control-label" for="seller-address">商家类型</label></div><div style="float:left;">
+            <?=Html::dropDownList('shopType', $shopType, $sellerinfo->sellerTypes, [])?></div>
+        <div style='padding-left: 280px;'></div><div><p class="help-block help-block-error"></p></div>
+    </div>
+
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?php ActiveForm::end(); ?>

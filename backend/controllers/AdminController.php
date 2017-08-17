@@ -284,7 +284,10 @@ class AdminController extends Controller
             $shopInfo = Seller::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
                 $shopInfo->saveImg();
-                return $this->redirect(['sellerlist']);
+                $shopInfo->shopMember->regtype = $post['shopType'];;
+                $shopInfo->shopMember->save();
+                $info = '更新成功!!';
+                return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopInfo->shopMember->regtype, 'info'=>$info]);
             }
         } else {
             $shopInfo = Seller::findOne($id);
@@ -293,9 +296,9 @@ class AdminController extends Controller
             return false;
         }
 
-        $shopType = ShopMember::findOne($id)->regtype;
+        $info = '';
         $shopInfo->setImage();
-        return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopType]);
+        return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopInfo->shopMember->regtype, 'info'=>$info]);
     }
 
     public function actionShopdetail($id, $type)
