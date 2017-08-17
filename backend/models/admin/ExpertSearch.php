@@ -47,6 +47,11 @@ class ExpertSearch extends Expert
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
             'pagination' => ['pagesize' => '10'],
         ]);
 

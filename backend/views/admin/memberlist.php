@@ -37,7 +37,13 @@ use \yii\helpers\Url;
             'grade',
             'point',
             'grade',
-            'time',
+            [
+                'label'=>'注册时间',
+                'attribute'=>'created_at',
+                'value'=>function($model){
+                    return date("Y-m-d H:i:s",$model->user->created_at);
+                }
+            ],
             [
                 'label'=>'操作',
                 'format'=>'raw',
