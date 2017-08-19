@@ -26,7 +26,9 @@ use yii\grid\GridView;
                             <col />
                         </colgroup>
                         <tbody>
-                        <tr><th>商家数量</th><td><?=Html::a($summary['shopCnt'] . '家 ', Url::to(['admin/sellerlist']))?></td></tr>
+                        <tr><th>检测中心</th><td><?=Html::a($summary['testCnt'] . '家 ', Url::to(['admin/sellerlist']))?></td></tr>
+                        <tr><th>科研辅助</th><td><?=Html::a($summary['researchCnt'] . '家 ', Url::to(['admin/researchlist']))?></td></tr>
+                        <tr><th>数值模拟</th><td><?=Html::a($summary['simulateCnt'] . '家 ', Url::to(['admin/simulatelist']))?></td></tr>
                         <tr><th>专家数量</th><td><?=Html::a($summary['expertCnt'] . '个 ', Url::to(['admin/expertlist']))?></td></td></tr>
                         <tr><th>销售总额</th><td><?=Html::a($summary['account'] . '元 ', Url::to(['admin/account']))?></td></tr>
                         <tr><th>注册用户</th><td><?=Html::a($summary['userCnt'] . '个 ', Url::to(['admin/memberlist']))?></td></tr>

@@ -79,7 +79,9 @@ class AdminController extends Controller
 
     public function actionAdminhome()
     {
-        $shopCnt = Seller::find()->count();
+        $testCnt = ShopMember::find()->where(['regtype'=>'seller'])->count();
+        $researchCnt = ShopMember::find()->where(['regtype'=>'research'])->count();
+        $simulateCnt = ShopMember::find()->where(['regtype'=>'simulate'])->count();
         $expertCnt = Expert::find()->count();
         $account = Order::getSale(null);
         $userCnt = User::find()->count();
@@ -93,7 +95,9 @@ class AdminController extends Controller
         $refundmentCnt_ = RefundmentDoc::find()->count();
 
         $summary = array(
-            'shopCnt' => $shopCnt,
+            'testCnt' => $testCnt,
+            'researchCnt' => $researchCnt,
+            'simulateCnt' => $simulateCnt,
             'expertCnt' => $expertCnt,
             'account' => $account,
             'userCnt' => $userCnt,
