@@ -65,7 +65,7 @@ use yii\helpers\Url;
         </div>
         <div align="center" style="height: 36px;background-color: #116fb5">
             <ul id="menu">
-                <li><a href="#" onclick="showlab(this, 1)">科研商品</a></li>
+                <li><a style='background-color:#bf800c' href="#" onclick="showlab(this, 1)">科研商品</a></li>
                 <li><a href="#" onclick="showlab(this, 2)">公司简介</a></li>
                 <li><a href="#" onclick="showlab(this, 3)">科研队伍</a></li>
                 <li><a href="#" class="last" onclick="showlab(this, 4)">科研成果</a></li>
