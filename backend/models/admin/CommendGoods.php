@@ -39,6 +39,7 @@ class CommendGoods extends \yii\db\ActiveRecord
         return [
             [['type', 'commend_id'], 'required'],
             [['type', 'commend_id'], 'integer'],
+            ['add_time', 'safe'],
         ];
     }
 
@@ -51,6 +52,7 @@ class CommendGoods extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'type' => Yii::t('app', '1. 热门仪器 2. 热门机构 3. 聚仪专家 4. 热门辅助 5. 热门模拟'),
             'commend_id' => Yii::t('app', '推荐ID'),
+            'add_time' => Yii::t('app', '添加时间'),
         ];
     }
 

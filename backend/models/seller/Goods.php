@@ -282,4 +282,9 @@ class Goods extends \yii\db\ActiveRecord
             Goods::TYPE_SIMULATE =>'数值模拟',
         );
     }
+
+    public function getSeller()
+    {
+        return $this->hasOne(Seller::className(), ['id' => 'seller_id']);
+    }
 }

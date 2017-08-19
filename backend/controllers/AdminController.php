@@ -712,6 +712,7 @@ class AdminController extends Controller
                     $cg = new CommendGoods();
                     $cg->type = $type;
                     $cg->commend_id = $good->id;
+                    $cg->add_time = date("Y-m-d H:i:s");;
                     if ($cg->save()){
                         $info = '添加成功';
                     } else {

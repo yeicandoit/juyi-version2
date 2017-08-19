@@ -42,60 +42,105 @@ use backend\models\admin\CommendGoods;
     <b><?=$name?></b>&nbsp;&nbsp;<input id="hot" type="text" />&nbsp;&nbsp;<button onclick='addHot($("#hot").val(), <?=$type?>)'>添加</button>
     &nbsp;&nbsp;<label style="color:cadetblue"><?=$info?></label>
     <div class="blank"></div>
-    <?= \yii\grid\GridView::widget([
-        'dataProvider' => $hot,
-        'columns' => [
-            [
-                'label'=>'编号/账号',
-                'format'=>'raw',
-                'value'=>function($model){
-                    $commend = $model->commend;
-                    if(null != $commend){
-                        if($model->type == CommendGoods::HotDevice ||
-                            $model->type == CommendGoods::HotHelp ||
-                            $model->type == CommendGoods::HotSimulate){
+    <?php
+    if($type == CommendGoods::HotDevice ||
+       $type == CommendGoods::HotHelp ||
+       $type == CommendGoods::HotSimulate) {
+        echo \yii\grid\GridView::widget([
+            'dataProvider' => $hot,
+            'columns' => [
+                [
+                    'label' => '编号',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $commend = $model->commend;
+                        if (null != $commend) {
                             return $commend->goods_no;
-                        } else if($model->type == CommendGoods::HotOrganization){
-                            return $commend->seller_name;
-                        } else if ($model->type == CommendGoods::HotExpert){
-                            return $commend->name;
+                        } else {
+                            return "";
                         }
-                        return "";
-                    } else {
-                        return "";
                     }
-                }
-            ],
-            [
-                'label'=>'名称',
-                'format'=>'raw',
-                'value'=>function($model){
-                    $commend = $model->commend;
-                    if(null != $commend){
-                        if($model->type == CommendGoods::HotDevice ||
-                            $model->type == CommendGoods::HotHelp ||
-                            $model->type == CommendGoods::HotSimulate){
+                ],
+                [
+                    'label' => '名称',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $commend = $model->commend;
+                        if (null != $commend) {
                             return $commend->name;
-                        } else if($model->type == CommendGoods::HotOrganization ||
-                            $model->type == CommendGoods::HotExpert){
+                        } else {
+                            return "";
+                        }
+                    }
+                ],
+                'add_time',
+                [
+                    'label'=>'所属商家',
+                    'format'=>'raw',
+                    'value'=>function($model){
+                        $commend = $model->commend;
+                        if (null != $commend) {
+                           return $commend->seller->seller_name;
+                        }
+                        return '';
+                    }
+                ],
+                [
+                    'label' => '操作',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $delete = Html::a('删除', Url::to(['admin/delhot', 'id' => $model->id, 'type' => $model->type]));
+                        return "$delete";
+                    }
+                ],
+            ],
+        ]);
+    } else if($type == CommendGoods::HotOrganization ||
+        $type == CommendGoods::HotExpert ) {
+        echo \yii\grid\GridView::widget([
+            'dataProvider' => $hot,
+            'columns' => [
+                [
+                    'label' => '账号',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $commend = $model->commend;
+                        if (null != $commend) {
+                            if ($model->type == CommendGoods::HotOrganization) {
+                                return $commend->seller_name;
+                            } else if ($model->type == CommendGoods::HotExpert) {
+                                return $commend->name;
+                            }
+                            return "";
+                        } else {
+                            return "";
+                        }
+                    }
+                ],
+                [
+                    'label' => '名称',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $commend = $model->commend;
+                        if (null != $commend) {
                             return $commend->true_name;
+                        } else {
+                            return "";
                         }
-                        return "";
-                    } else {
-                        return "";
                     }
-                }
+                ],
+                'add_time',
+                [
+                    'label' => '操作',
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $delete = Html::a('删除', Url::to(['admin/delhot', 'id' => $model->id, 'type' => $model->type]));
+                        return "$delete";
+                    }
+                ],
             ],
-            [
-                'label'=>'操作',
-                'format' => 'raw',
-                'value' => function($model) {
-                    $delete = Html::a('删除', Url::to(['admin/delhot', 'id'=>$model->id, 'type'=>$model->type]));
-                    return "$delete";
-                }
-            ],
-        ],
-    ]); ?>
+        ]);
+    }?>
 </div>
 <script type="text/javascript">
     function addHot(val, type)

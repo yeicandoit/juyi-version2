@@ -19,6 +19,7 @@ class CommendGoodsSearch extends CommendGoods
     {
         return [
             [['id', 'commend_id', 'type'], 'integer'],
+            ['add_time', 'safe'],
         ];
     }
 
@@ -46,6 +47,11 @@ class CommendGoodsSearch extends CommendGoods
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>[
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
             'pagination' => ['pagesize' => '10'],
         ]);
 
@@ -62,6 +68,7 @@ class CommendGoodsSearch extends CommendGoods
             'id' => $this->id,
             'commend_id' => $this->commend_id,
             'type' => $this->type,
+            'add_time' => $this->add_time,
         ]);
 
         return $dataProvider;
