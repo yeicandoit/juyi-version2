@@ -14,6 +14,7 @@ use yii\helpers\Html;
                     foreach ($idmap as $childId=>$parentId) {
                         if($parentId == 0) {
                             $checkboxId = 'gc'.$childId;
+                            $divId = 'div_gc'.$childId;
                             if(isset($goodsCats[$childId])){
                                 $checkbox = Html::checkbox("category", true, ['id'=>$checkboxId, 'value'=>$childId]);
                             } else {
@@ -21,7 +22,7 @@ use yii\helpers\Html;
                             }
 
                             $categories = '';
-                            echo "<div onclick='showChilds($childId, $checkboxId)'>$checkbox$idname[$childId]</div>";
+                            echo "<div id='$divId' class='sParCat' onclick='showChilds($divId, $childId, $checkboxId)'>$checkbox$idname[$childId]</div>";
                         }
                     }
                 ?>
@@ -64,8 +65,10 @@ use yii\helpers\Html;
         <?php } //There have to be some blank between ?php and }, or this html will not display normally.
     }?>
 
-    function showChilds(cid, checkboxId)
+    function showChilds(divid, cid, checkboxId)
     {
+        $(".sParCat").css("backgroundColor","");
+        $(divid).css({"backgroundColor":"#00a1cb", "width":"120px"});
         if(true == $(checkboxId).is(':checked')) {
             //if goodsCats does not contain this cid
             var str = '';
