@@ -87,9 +87,14 @@ class ShopSellerController extends Controller
     public function actionSellerhome()
     {
         $id = Yii::$app->user->id;
+        $shopMember = ShopMember::findOne($id);
         $goodsCnt = Goods::find()->where(['seller_id'=>$id])->count();
         $commentCnt = Comment::find()->where(['seller_id'=>$id])->count();
-        $appointCnt = Appointinfo::find()->joinWith(["good"])->andFilterWhere([ 'jy_goods.seller_id' => Yii::$app->user->id])->count();
+        if('seller' != $shopMember->regtype) {
+            $appointCnt = null;
+        } else {
+            $appointCnt = Appointinfo::find()->joinWith(["good"])->andFilterWhere(['jy_goods.seller_id' => Yii::$app->user->id])->count();
+        }
         $orderCnt = Order::find()->where(['seller_id'=>$id])->count();
         $refundCnt = RefundmentDoc::find()->where(['seller_id'=>$id])->count();
 
@@ -101,7 +106,7 @@ class ShopSellerController extends Controller
             'refundCnt' => $refundCnt
         );
 
-        $startDate = ShopMember::findOne(Yii::$app->user->id)->regtime;
+        $startDate = $shopMember->regtime;
         $endDate = date("Y-m-d");
         $countData = Order::sellerAmount(Yii::$app->user->id, $startDate, $endDate);
         return $this->render('sellerhome', ['summary'=>$summary, 'countData'=>$countData]);
