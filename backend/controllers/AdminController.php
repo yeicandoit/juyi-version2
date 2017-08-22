@@ -421,7 +421,7 @@ class AdminController extends Controller
                 $orderDelivery->save();
                 $order = Order::findOne($orderDelivery->oderid);
                 $order->load($post);
-                $order->send_time = date("Y-m-d");
+                $order->send_time = date('Y-m-d H:i:s',time());
                 $order->save();
                 return $this->redirect(['orderinfo', 'id'=>$order->id]);
             }
