@@ -145,10 +145,15 @@ class ShopSellerController extends Controller
 
         if($shopInfo->load(Yii::$app->request->post()) && $shopInfo->save()){
             $shopInfo->saveImg();
-            return $this->redirect(['sellerhome']);
+            $shopInfo->setImage();
+            $info = '更新成功!!';
+            return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt,
+                'shopType'=>ShopMember::findOne(Yii::$app->user->id)->regtype, 'info'=>$info]);
         }
+        $info = '';
         $shopInfo->setImage();
-        return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt, 'shopType'=>ShopMember::findOne(Yii::$app->user->id)->regtype]);
+        return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt,
+            'shopType'=>ShopMember::findOne(Yii::$app->user->id)->regtype, 'info'=>$info]);
     }
 
     public function actionShopdetail()

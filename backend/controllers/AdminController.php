@@ -284,12 +284,12 @@ class AdminController extends Controller
     {
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
-            $id = $post['Seller']['id'];
             $shopInfo = Seller::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
                 $shopInfo->saveImg();
                 $shopInfo->shopMember->regtype = $post['shopType'];;
                 $shopInfo->shopMember->save();
+                $shopInfo->setImage();
                 $info = '更新成功!!';
                 return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopInfo->shopMember->regtype, 'info'=>$info]);
             }
@@ -341,7 +341,9 @@ class AdminController extends Controller
             $shopInfo = Expert::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
                 $shopInfo->saveImg();
-                return $this->redirect(['expertlist']);
+                $shopInfo->setImage();
+                $info = '更新成功!!';
+                return $this->render("expertinfo", ["expertinfo"=>$shopInfo, 'info'=>$info]);
             }
         } else {
             $shopInfo = Expert::findOne($id);
@@ -349,8 +351,9 @@ class AdminController extends Controller
         if(!$shopInfo) {
             return false;
         }
+        $info = '';
         $shopInfo->setImage();
-        return $this->render("expertinfo", ["expertinfo"=>$shopInfo,]);
+        return $this->render("expertinfo", ["expertinfo"=>$shopInfo,'info'=>$info]);
     }
 
     public function actionMemberlist()

@@ -21,12 +21,12 @@ use yii\helpers\Json;
     <?php Modal::begin([
         'id' => $selector . '-modal',
         'closeButton' => ['onclick' => 'destroyJcrop("' . $selector . '-image");', 'id' => $selector . '-image-close'],
-        'header' => '<h2>' . Yii::t('maxmirazh33/image', 'Crop image') . '</h2>',
+        'header' => '<h2>' . Yii::t('maxmirazh33/image', '裁剪图片') . '</h2>',
         'footer' => Button::widget([
-            'label' => 'ОК',
+            'label' => '保存',
             'options' => [
                 'class' => 'btn btn-flat btn-primary',
-                'onclick' => '$("#' . $selector . '-image-close").click(); return false;'
+                'onclick' => '$("#image-save-2017-08-25").click(); return false;'
             ],
         ]),
     ]); ?>

@@ -12,6 +12,7 @@ use yii\helpers\Url;
         </b>
     </div>
     <div class="blank"></div>
+    <div style="height:60px;color:red;text-align:center"> <?= Html::encode($info)?> </div>
     <?php $form = ActiveForm::begin([
         'id' => 'basicInfo',
         'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;', 'enctype' => 'multipart/form-data'],
@@ -23,6 +24,19 @@ use yii\helpers\Url;
     <?php echo Html::img($sellerinfo->getImageUrl('logo'), ['style'=>'padding-left:70px']);?>
     <div class="blank"></div>
     <?= $form->field($sellerinfo, 'logo')->widget('maxmirazh33\image\Widget');?>
+    <!--Save id should be same as onclick id in maxmirazh33' view-->
+    <?= Html::submitButton('保存', [ 'style' => 'width:50px;display:none', 'class'=>'btn btn-large btn-primary',
+        'id'=>'image-save-2017-08-25']) ?>
+    <?php ActiveForm::end(); ?>
+
+    <?php $form = ActiveForm::begin([
+        'id' => 'basicInfo',
+        'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;', 'enctype' => 'multipart/form-data'],
+        'fieldConfig' => [
+            'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div><div style=\"float:left;\">{input}</div>
+            <div style='padding-left: 280px;'>{hint}</div><div>{error}</div>",
+        ],
+    ]); ?>
     <?= $form->field($sellerinfo, 'seller_name')->textInput(['readonly'=>"readonly"])
         ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
     <?= $form->field($sellerinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
