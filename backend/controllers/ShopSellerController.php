@@ -588,7 +588,7 @@ class ShopSellerController extends Controller
 
     public function actionSetappointment()
     {
-        $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->user->id, 'is_del'=>0]);
+        $searchModel = new GoodsSearch(['seller_id'=>Yii::$app->user->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('setappointment', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }

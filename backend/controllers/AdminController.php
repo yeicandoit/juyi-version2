@@ -502,7 +502,7 @@ class AdminController extends Controller
 
     public function actionSetappointment()
     {
-        $searchModel = new GoodsSearch(['is_del'=>0]);
+        $searchModel = new GoodsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('setappointment', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
