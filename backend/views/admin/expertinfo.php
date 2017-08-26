@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <div class="sellerinfo">
@@ -60,6 +61,51 @@ use yii\helpers\Url;
             <?= Html::dropDownList('test', null, $expertinfo->optServs, [
                 'id'=>'service', 'onchange'=>'addService()', 'style'=>'display:none', 'prompt'=>'请选择'
             ]);?>
+        </div>
+        <div style='padding-left: 280px;'></div><div><p class="help-block help-block-error"></p></div>
+    </div>
+
+    <div class="form-group field-expert-category">
+        <div style="float:left; width:100px; margin: 0 auto;"><label class="control-label" for="expert-degree">所属分类</label></div>
+        <div id="container" style="float:left;">
+            <div id="catContainer" style="float: left;">
+                <?php
+                foreach($expertinfo->categoryExperts as $key=>$catExpert){
+                    $catId = $catExpert->category_id;
+                    $catName = $catExpert->category->name;
+                    ?>
+                    <ctrlarea id=<?='ctrl'.$catId?>>
+                        <input name="expertCategory[]" type="hidden" value=<?=$catId?>>
+                        <?=Html::a($catName, '#')?>
+                        &nbsp;&nbsp;</ctrlarea>
+                <?php }
+                ?>
+            </div>
+            <?= Html::button('设置分类', [
+                'id' => 'create',
+                'data-toggle' => 'modal',
+                'data-target' => '#create-modal-category',
+            ]); ?>
+            <?php $catUrl = Url::to(['shop-seller/expertcategory', 'type'=>\backend\models\seller\Category::TYPE_EXPERT,
+                'id'=>$expertinfo->id])?>
+            <?php
+            Modal::begin([
+                'id' => 'create-modal-category',
+                'header' => '<h4 class="modal-title">选择专家分类</h4>',
+                'footer' => '<a href="#" class="btn btn-primary" data-dismiss="modal" onclick="setCategory()">确定</a>',
+            ]);?>
+            <div class="modal-body-category"></div>
+            <?php
+            $js = <<<JS
+                    $.get("$catUrl", {},
+                        function (data) {
+                            $('.modal-body-category').html(data);
+                        }
+                    );
+JS;
+            $this->registerJs($js);
+            Modal::end();
+            ?>
         </div>
         <div style='padding-left: 280px;'></div><div><p class="help-block help-block-error"></p></div>
     </div>
@@ -163,5 +209,16 @@ use yii\helpers\Url;
                 }
             });
         }
+    }
+
+    function setCategory(){
+        var str = '';
+        for(var cid in goodsCats) {
+            str += '<ctrlarea id=' + 'ctrl' + cid + '>' +
+                '<input name="expertCategory[]" type="hidden" value=' + cid + '>' +
+                '<a href="#">' +
+                idname[cid] + '</a>&nbsp;&nbsp;</ctrlarea>';
+        };
+        $("#catContainer").html(str);
     }
 </script>

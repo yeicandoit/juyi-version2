@@ -341,9 +341,12 @@ class AdminController extends Controller
             $shopInfo = Expert::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
                 $shopInfo->saveImg();
+                $post = Yii::$app->request->post();
+                if(isset($post['expertCategory'])){
+                    $shopInfo->saveCat($post['expertCategory']);
+                }
                 $shopInfo->setImage();
-                $info = '更新成功!!';
-                return $this->render("expertinfo", ["expertinfo"=>$shopInfo, 'info'=>$info]);
+                return $this->redirect(['expertinfo', 'id'=>$id]);
             }
         } else {
             $shopInfo = Expert::findOne($id);

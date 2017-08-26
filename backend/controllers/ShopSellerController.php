@@ -145,10 +145,13 @@ class ShopSellerController extends Controller
 
         if($shopInfo->load(Yii::$app->request->post()) && $shopInfo->save()){
             $shopInfo->saveImg();
+            //If set expert categories, save them
+            $post = Yii::$app->request->post();
+            if(isset($post['expertCategory'])){
+                $shopInfo->saveCat($post['expertCategory']);
+            }
             $shopInfo->setImage();
-            $info = '更新成功!!';
-            return $this->render("$shopView", ["$shopView"=>$shopInfo, "$shopExtView"=>$shopExt,
-                'shopType'=>ShopMember::findOne(Yii::$app->user->id)->regtype, 'info'=>$info]);
+            return $this->redirect(['shopinfo']);
         }
         $info = '';
         $shopInfo->setImage();
@@ -359,6 +362,16 @@ class ShopSellerController extends Controller
         $catExts = Goods::findOne($id)->getCategoryExtends()->asArray()->all();
         $goodsCats = ArrayHelper::map($catExts, 'category_id', 'goods_id');
         return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap, 'goodsCats'=>$goodsCats]);
+    }
+
+    public function actionExpertcategory($type, $id)
+    {
+        $data = Category::find()->where(['type'=>$type])->asArray()->all();
+        $idname = ArrayHelper::map($data, 'id', 'name');
+        $idmap = ArrayHelper::map($data, 'id', 'parent_id');
+        $catExts = Expert::findOne($id)->getCategoryExperts()->asArray()->all();
+        $expertCats = ArrayHelper::map($catExts, 'category_id', 'expert_id');
+        return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap, 'goodsCats'=>$expertCats]);
     }
 
     public function actionDelcat($goodsId, $catId)

@@ -21,6 +21,11 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    const TYPE_TEST = 1;
+    const TYPE_EXPERT = 2;
+    const TYPE_RESEARCH = 3;
+    const TYPE_SIMULATE = 4;
+    const TYPE_DEMAND = 5;
     /**
      * @inheritdoc
      */

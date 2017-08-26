@@ -210,4 +210,29 @@ class Expert extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+    public function getCategoryExperts()
+    {
+        return $this->hasMany(CategoryExpert::className(), ['expert_id'=>'id']);
+    }
+
+    public function saveCat($cats)
+    {
+        //Delete original categories firstly
+        foreach($this->categoryExperts as $key=>$cateExt){
+            $cateExt->delete();
+        }
+        foreach($cats as $key=>$val){
+            $catExt = CategoryExpert::find()->where(['category_id'=>$val, 'expert_id'=>$this->id])->one();
+            if(isset($catExt)){
+                continue;
+            } else {
+                $catExt = new CategoryExpert();
+                $catExt->expert_id = $this->id;
+                $catExt->category_id = $val;
+                $catExt->save();
+            }
+        }
+        return true;
+    }
 }
