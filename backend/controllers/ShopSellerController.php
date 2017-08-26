@@ -354,13 +354,18 @@ class ShopSellerController extends Controller
         }
     }
 
-    public function actionGoodscategory($type, $id)
+    public function actionGoodscategory($type, $id=null)
     {
         $data = Category::find()->where(['type'=>$type])->asArray()->all();
         $idname = ArrayHelper::map($data, 'id', 'name');
         $idmap = ArrayHelper::map($data, 'id', 'parent_id');
-        $catExts = Goods::findOne($id)->getCategoryExtends()->asArray()->all();
-        $goodsCats = ArrayHelper::map($catExts, 'category_id', 'goods_id');
+        if(isset($id)){
+            $catExts = Goods::findOne($id)->getCategoryExtends()->asArray()->all();
+            $goodsCats = ArrayHelper::map($catExts, 'category_id', 'goods_id');
+        } else {
+            $goodsCats = null;
+        }
+
         return $this->renderAjax('goodscat', ['idname'=>$idname, 'idmap'=>$idmap, 'goodsCats'=>$goodsCats]);
     }
 

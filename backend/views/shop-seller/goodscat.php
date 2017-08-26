@@ -38,7 +38,11 @@ use yii\helpers\Html;
 </div>
 <script>
     idname = <?=json_encode($idname)?>;
-    goodsCats = <?=json_encode($goodsCats)?>;
+    <?php if(isset($goodsCats)){?>
+        goodsCats = <?=json_encode($goodsCats)?>;
+    <?php }else{?>
+        goodsCats = new Object();
+    <?php }?>
     idmap = <?=json_encode($idmap)?>;
 
     //for(var i in goodsCats) {
