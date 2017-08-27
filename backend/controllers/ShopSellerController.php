@@ -282,14 +282,17 @@ class ShopSellerController extends Controller
                 if(isset($post['newBrand']) && '' != $post['newBrand']){
                     $goods->saveBrand($post['newBrand'], $goods->goodtype);
                 }
-                return $this->redirect(['goodslist']);
+                $goodsContent = new Goodscontent();
+                $goodsContent->load($post);
+                $goodsContent->goodid = $goods->id;
+                $goodsContent->save();
+                return $this->redirect(['goodsedit', 'id'=>$goods->id]);
             }
-            return $this->goHome();
         }
         $goods = new Goods();
         $goods->goodtype = $goods->getGoodType2Int(ShopMember::findOne(Yii::$app->user->id)->regtype);
         $goodsContent = new Goodscontent();
-        return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
+        return $this->render('goodsadd', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
     }
 
     public function actionGoodsedit($id)
