@@ -180,6 +180,11 @@ class Goods extends \yii\db\ActiveRecord
     public function saveImgs($imgs)
     {
         foreach($imgs as $k=>$v){
+            //If have not set goods' img, set it in this function.
+            if(null == $this->img){
+                $this->img = $v;
+                $this->save();
+            }
             $photo = new GoodsPhoto();
             $photo->img = $v;
             if($photo->save()){

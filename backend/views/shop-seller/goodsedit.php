@@ -204,7 +204,7 @@ JS;
     <?php }?>
     <div class="goodInfoBox">
         <p><label>产品相册</label></p>
-        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M; 点击上传的图像，可设置图像为商品主图</p>
+        <p style="padding-top: 2px">可以上传多张图片，分辨率3000px以下，大小不得超过8M;</p>
         <div>
             <input type="hidden" id="x" name="x" />
             <input type="hidden" id="y" name="y" />
@@ -241,6 +241,7 @@ JS;
             <?= $form->field($goods, 'img', ['options'=>['style'=>"display:none"]])->textInput()?>
             <div class="pic-display"></div>
             <input type="button" name="btn" value="确认裁剪" class="btn btn-primary" />
+            <label style="color:purple;">&nbsp;&nbsp;点击上传的图像，可设置图像为商品主图</label>
         </div>
     </div>
     <br>
