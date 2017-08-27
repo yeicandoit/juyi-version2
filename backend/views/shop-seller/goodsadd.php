@@ -258,7 +258,7 @@ JS;
                 'lang' => 'zh_cn',
                 'plugins' => ['clips', 'fontcolor','imagemanager']
             ]
-        ])->label('');?>
+        ])->label('商品详情');?>
     <?=Html::button('下一步', [ 'style' => 'width:100px;', 'class'=>'btn btn-large btn-primary', 'onclick'=>'showSeo()'])?>
     </div>
 
