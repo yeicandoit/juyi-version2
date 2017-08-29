@@ -53,7 +53,10 @@ class SellerregForm extends Model
             ['email', 'email'],
 
             ['detailAddress', 'required', 'message'=>"详细地址不能为空"],
-            [['provinces', 'citys', 'countrys', 'regType', 'comWeb', 'shopType'], 'safe'],
+            ['provinces', 'required', 'message'=>'省份不能为空'],
+            ['citys', 'required', 'message'=>'城市不能为空'],
+            ['countrys', 'required', 'message'=>'县市不能为空'],
+            [[ 'regType', 'comWeb', 'shopType'], 'safe'],
         ];
     }
 

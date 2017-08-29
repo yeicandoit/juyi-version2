@@ -46,7 +46,7 @@ use yii\helpers\Url;
         ->label('邮箱:')->hint('* 电子邮箱联系方式', ['style'=>'padding-left:30px',]) ?>
     <div style="float:left; margin: 0 auto;">
     <?=$form->field($model, 'province', [ 'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div>
-        <div style=\"float:left; margin: 0 auto; width: 230px;\">{input}</div>", ]
+        <div style=\"float:left; margin: 0 auto; width: 230px;\">{input}{error}</div>", ]
     )->dropDownList(ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
         [
             'style'=>'width:200px',
@@ -55,14 +55,14 @@ use yii\helpers\Url;
         ])->label('地区:'); ?>
     </div>
     <div style="float:left; margin: 0 auto;width: 185px;">
-        <?=$form->field($model, 'city', [ 'template' => "{input}", ])->dropDownList([],
+        <?=$form->field($model, 'city', [ 'template' => "{input}{error}", ])->dropDownList([],
             [
                 'style'=>'width:200px',
                 'prompt'=>'请选择市',
                 'onchange'=>'setAreaOption()',
             ]); ?>
     </div>
-    <?=$form->field($model, 'area', [ 'template' => "{input}", ])->dropDownList([],
+    <?=$form->field($model, 'area', [ 'template' => "{input}{error}", ])->dropDownList([],
         [
             'style'=>'width:200px',
             'prompt'=>'请选择县',

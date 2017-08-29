@@ -48,7 +48,10 @@ class ExpertregForm extends Model
             ['email', 'required', 'message'=>"邮箱不能为空"],
             ['email', 'filter', 'filter'=>'trim'],
             ['email', 'email'],
-            [['country', 'province', 'city', 'area'], 'safe'], //TODO if set to be 'required', $this->validate() will return false!!!
+            ['country', 'safe'],
+            ['province', 'required', 'message'=>'省份不能为空'],
+            ['city', 'required', 'message'=>'城市不能为空'],
+            ['area', 'required', 'message'=>'县市不能为空'],
             ['address', 'required', 'message'=>"详细地址不能为空"],
             [['mobile', 'serverNum', 'regType'], 'safe'],
 

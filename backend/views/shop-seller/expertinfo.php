@@ -119,9 +119,18 @@ JS;
     <?= $form->field($expertinfo, 'email')->textInput()?>
     <?= $form->field($expertinfo, 'server_num')->textInput()?>
     <div style="float:left; margin: 0 auto;width: 280px;">
+        <?php
+        $pArr = ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name');
+        $pArr[0] = '请选择';
+        $cArr = ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>$expertinfo->province])->asArray()->all(),'area_id','area_name');
+        $cArr[0] = '请选择';
+        $aArr = ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>$expertinfo->city])->asArray()->all(),'area_id','area_name');
+        $aArr[0] = '请选择';
+        ?>
         <?=$form->field($expertinfo, 'province', [ 'template' => "<div style=\"float:left; width:100px; margin: 0 auto;\">{label}</div>
         <div style=\"float:left; margin: 0 auto;\">{input}</div>", ]
-        )->dropDownList(ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>0])->asArray()->all(),'area_id','area_name'),
+        )->dropDownList(
+            $pArr,
             [
                 'style'=>'width:180px',
                 'onchange'=>'setCityOption()',
@@ -129,14 +138,14 @@ JS;
     </div>
     <div style="float:left; margin: 0 auto;width: 165px;">
         <?=$form->field($expertinfo, 'city', [ 'template' => "{input}", ])->dropDownList(
-            ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>$expertinfo->province])->asArray()->all(),'area_id','area_name'),
+            $cArr,
             [
                 'style'=>'width:180px',
                 'onchange'=>'setAreaOption()',
             ]); ?>
     </div>
     <?=$form->field($expertinfo, 'area', [ 'template' => "{input}", ])->dropDownList(
-        ArrayHelper::map(backend\models\seller\Areas::find()->where(['parent_id'=>$expertinfo->city])->asArray()->all(),'area_id','area_name'),
+        $aArr,
         [
             'style'=>'width:180px',
         ]); ?>
@@ -150,24 +159,6 @@ JS;
 </div>
 
 <script type="text/javascript">
-    function setDropDownList()
-    {
-        if (0 == <?=$expertinfo->province?>) {
-            $("#seller-province").append("<option value=0>请选择省</option>");
-            $("#seller-province").val(0);
-        }
-        if (0 == <?=$expertinfo->city?>) {
-            $("#seller-city").append("<option value=0>请选择市</option>");
-            $("#seller-city").val(0);
-        }
-        if (0 == <?=$expertinfo->area?>) {
-            $("#seller-area").append("<option value=0>请选择县</option>");
-            $("#seller-area").val(0);
-        }
-    }
-    /*用window.onload调用myfun()*/
-    window.onload=setDropDownList;
-
     <?php $url = Url::to(['shop-seller/areas']); ?>
     function setCityOption()
     {
