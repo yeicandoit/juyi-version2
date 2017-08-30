@@ -72,19 +72,29 @@ use yii\grid\GridView;
         </div>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
+            'filterModel'=>$searchModel,
             'columns' => [
                 'order_no',
                 [
                     'label'=>'订单状态',
+                    'filter'=>\backend\models\seller\Order::getStatArr(),
                     'value'=>function($model){
                         return $model->stat;
                     }
                 ],
                 [
-                    'label'=>'下单用户名',
+                    'attribute'=>'order_type',
+                    'label'=>'订单类型',
+                    'filter'=>\backend\models\seller\Order::getOrderTypeArr(),
                     'value'=>function($model){
-                        return $model->user->username;
+                        return $model->orderType;
                     }
+                ],
+                [
+                    'attribute'=>'user_name',
+                    'label'=>'下单用户名',
+                    "headerOptions" => ["width" => "100"],
+                    'value'=>'user.username',
                 ],
                 [
                     'label'=>'商户名称',
@@ -99,8 +109,9 @@ use yii\grid\GridView;
                     'format' => 'raw',
                     'value' => function($model) {
                         $orderDetail = Html::a('订单详情', Url::to(['admin/orderinfo', 'id'=>$model->id]));
-                        $appointDetail = Html::a('预约详情', "#");
-                        return "$orderDetail|$appointDetail";
+                        return "$orderDetail";
+                        //$appointDetail = Html::a('预约详情', "#");
+                        //return "$orderDetail|$appointDetail";
                     }
                 ]
             ],

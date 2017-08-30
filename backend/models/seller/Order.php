@@ -183,6 +183,32 @@ class Order extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id'=>'user_id']);
     }
 
+    public function getShopMember()
+    {
+        return $this->hasOne(ShopMember::className(), ['id'=>'seller_id']);
+    }
+
+    public static function getOrderTypeArr()
+    {
+        return array(
+            ShopMember::TYPE_TEST=>'检测中心',
+            ShopMember::TYPE_EXPERT=>'专家解码',
+            ShopMember::TYPE_RESEARCH=>'科研辅助',
+            ShopMember::TYPE_SIMULATE=>'数值模拟',
+        );
+    }
+
+    public function getOrderType()
+    {
+        $type = array(
+            ShopMember::TYPE_TEST=>'检测中心',
+            ShopMember::TYPE_EXPERT=>'专家解码',
+            ShopMember::TYPE_RESEARCH=>'科研辅助',
+            ShopMember::TYPE_SIMULATE=>'数值模拟',
+        );
+        return $type[ShopMember::findOne($this->seller_id)->regtype];
+    }
+
     public function getRefundment()
     {
         return $this->hasOne(RefundmentDoc::className(),['order_id'=>'id']);

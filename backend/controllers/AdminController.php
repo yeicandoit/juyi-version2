@@ -115,7 +115,7 @@ class AdminController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere(['not in', '{{%order}}.status', [7]])->limit(10);
 
-        return $this->render('adminhome', ['summary'=>$summary, 'dataProvider'=>$dataProvider]);
+        return $this->render('adminhome', ['summary'=>$summary, 'dataProvider'=>$dataProvider, 'searchModel'=>$searchModel]);
     }
 
     public function actionLogin()

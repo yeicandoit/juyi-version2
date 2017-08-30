@@ -15,6 +15,11 @@ use Yii;
  */
 class ShopMember extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+
+    const TYPE_TEST = 'seller';
+    const TYPE_EXPERT = 'expert';
+    const TYPE_RESEARCH = 'research';
+    const TYPE_SIMULATE = 'simulate';
     /**
      * @inheritdoc
      */

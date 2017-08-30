@@ -22,8 +22,17 @@ use yii\grid\GridView;
                 }
             ],
             [
+                'attribute'=>'order_type',
+                'label'=>'订单类型',
+                'filter'=>\backend\models\seller\Order::getOrderTypeArr(),
+                'value'=>function($model){
+                    return $model->orderType;
+                }
+            ],
+            [
                 'attribute'=>'user_name',
                 'label'=>'下单用户名',
+                "headerOptions" => ["width" => "100"],
                 'value'=>'user.username',
             ],
             [

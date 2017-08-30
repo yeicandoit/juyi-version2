@@ -13,15 +13,21 @@ use backend\models\seller\Order;
 class OrderSearch extends Order
 {
     public $user_name;
+    public $order_type;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'user_id', 'seller_id', 'appointid', 'pay_type', 'invoice', 'status', 'pay_status', 'distribution_status', 'sendbackornot', 'country', 'province', 'city', 'area', 'distribution', 'if_del', 'exp', 'point', 'type', 'takeself', 'active_id', 'is_checkout'], 'integer'],
-            [['order_no', 'invoice_title', 'create_time', 'postscript', 'accept_name', 'telphone', 'postcode', 'address', 'completion_time', 'mobile', 'pay_time', 'send_time', 'note', 'prop', 'accept_time', 'trade_no', 'checkcode', 'user_name'], 'safe'],
-            [['payable_amount', 'payable_freight', 'real_amount', 'real_freight', 'insured', 'pay_fee', 'taxes', 'promotions', 'discount', 'order_amount'], 'number'],
+            [['id', 'user_id', 'seller_id', 'appointid', 'pay_type', 'invoice', 'status', 'pay_status',
+                'distribution_status', 'sendbackornot', 'country', 'province', 'city', 'area', 'distribution',
+                'if_del', 'exp', 'point', 'type', 'takeself', 'active_id', 'is_checkout'], 'integer'],
+            [['order_no', 'invoice_title', 'create_time', 'postscript', 'accept_name', 'telphone', 'postcode',
+                'address', 'completion_time', 'mobile', 'pay_time', 'send_time', 'note', 'prop', 'accept_time',
+                'trade_no', 'checkcode', 'user_name', 'order_type'], 'safe'],
+            [['payable_amount', 'payable_freight', 'real_amount', 'real_freight', 'insured', 'pay_fee', 'taxes',
+                'promotions', 'discount', 'order_amount'], 'number'],
         ];
     }
 
@@ -45,6 +51,7 @@ class OrderSearch extends Order
     {
         $query = Order::find();
         $query->joinWith(['user']);
+        $query->joinWith(['shopMember']);
 
         // add conditions that should always apply here
 
@@ -61,6 +68,10 @@ class OrderSearch extends Order
         $sort->attributes['user_name'] = [
             'asc' => ['{{%user}}.username'=>SORT_ASC],
             'desc' => ['{{%user}}.username'=>SORT_DESC],
+        ];
+        $sort->attributes['order_type'] = [
+            'asc' => ['{{%shop_member}}.regtype'=>SORT_ASC],
+            'desc' => ['{{%shop_member}}.regtype'=>SORT_DESC],
         ];
         $dataProvider->setSort($sort);
 
@@ -110,6 +121,7 @@ class OrderSearch extends Order
             'takeself' => $this->takeself,
             'active_id' => $this->active_id,
             'is_checkout' => $this->is_checkout,
+            '{{%shop_member}}.regtype'=>$this->order_type,
         ]);
 
         $query->andFilterWhere(['like', 'order_no', $this->order_no])
