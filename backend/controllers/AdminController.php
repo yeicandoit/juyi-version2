@@ -84,6 +84,10 @@ class AdminController extends Controller
         $simulateCnt = ShopMember::find()->where(['regtype'=>'simulate'])->count();
         $expertCnt = Expert::find()->count();
         $account = Order::getSale(null);
+        $testAccount = Order::getSale(null, ShopMember::TYPE_TEST);
+        $researchAccount = Order::getSale(null, ShopMember::TYPE_RESEARCH);
+        $simulateAccount = Order::getSale(null, ShopMember::TYPE_SIMULATE);
+        $expertAccount = Order::getSale(null, ShopMember::TYPE_EXPERT);
         $userCnt = User::find()->count();
         $goodsCnt = Goods::find()->count();
         $goodsTestCnt = Goods::find()->where(['goodtype'=>Goods::TYPE_TEST])->count();
@@ -104,6 +108,10 @@ class AdminController extends Controller
             'simulateCnt' => $simulateCnt,
             'expertCnt' => $expertCnt,
             'account' => $account,
+            'testAccount' => $testAccount,
+            'researchAccount' => $researchAccount,
+            'expertAccount' => $expertAccount,
+            'simulateAccount' => $simulateAccount,
             'userCnt' => $userCnt,
             'goodsCnt' => $goodsCnt,
             'goodsTestCnt' => $goodsTestCnt,

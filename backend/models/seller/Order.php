@@ -280,14 +280,18 @@ class Order extends \yii\db\ActiveRecord
         }
     }
 
-    public static function getSale($seller_id)
+    public static function getSale($seller_id, $shopType = null)
     {
-        $query = (new Query())->from('jy_order');
-        $query->select('sum(real_amount) as sale');
+        $query = (new Query())->from('jy_order o');
+        $query->select('sum(o.real_amount) as sale');
         if($seller_id) {
-            $query->where("seller_id=$seller_id AND status>=6");
+            $query->where("o.seller_id=$seller_id AND o.status>=6");
         } else {
-            $query->where("status >= 6");
+            $query->where("o.status >= 6");
+        }
+        if(isset($shopType)){
+            $query->leftJoin('jy_shop_member s', 'o.seller_id=s.id');
+            $query->andWhere("s.regtype=\"$shopType\"");
         }
         $result = $query->all();
         if(count($result) > 0){
