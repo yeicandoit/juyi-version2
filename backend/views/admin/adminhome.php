@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use backend\models\seller\Goods;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -43,7 +44,7 @@ use yii\grid\GridView;
         </table>
         <table cellspacing="0" cellpadding="5" class="border_table_org" >
             <thead>
-            <tr><th>待处理</th></tr>
+            <tr><th>基础统计</th></tr>
             </thead>
             <tbody>
             <tr>
@@ -54,6 +55,14 @@ use yii\grid\GridView;
                             <col />
                         </colgroup>
                         <tbody>
+                        <tr><th>检测中心商品数</th><td><?=Html::a($summary['goodsTestCnt'] . '个',
+                                    Url::to(['admin/goodslist', 'GoodsSearch[goodtype]'=>Goods::TYPE_TEST]))?></td></tr>
+                        <tr><th>科研辅助商品数</th><td><?=Html::a($summary['goodsResearchCnt'] . '个',
+                                    Url::to(['admin/goodslist', 'GoodsSearch[goodtype]'=>Goods::TYPE_RESEARCH]))?></td></tr>
+                        <tr><th>数值模拟商品数</th><td><?=Html::a($summary['goodsSimulateCnt'] . '个',
+                                    Url::to(['admin/goodslist', 'GoodsSearch[goodtype]'=>Goods::TYPE_SIMULATE]))?></td></tr>
+                        <tr><th>专家商品数</th><td><?=Html::a($summary['goodsExpertCnt'] . '个',
+                                    Url::to(['admin/goodslist', 'GoodsSearch[goodtype]'=>Goods::TYPE_EXPERT]))?></td></tr>
                         <tr><th>待审商家</th><td><?=Html::a($summary['shopCnt_'] . '家', Url::to(['admin/sellerlist', 'SellerSearch[is_del]'=>1]))?></td></tr>
                         <tr><th>待审商品</th><td><?=Html::a($summary['goodsCnt_'] . '个', Url::to(['admin/goodslist','GoodsSearch[is_del]'=>3]))?></td></tr>
                         <tr><th>未完成订单</th><td><?=Html::a($summary['orderCnt_'] . '单', Url::to(['admin/orderstay']))?></td></tr>
