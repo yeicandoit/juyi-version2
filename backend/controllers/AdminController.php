@@ -567,12 +567,28 @@ class AdminController extends Controller
     {
         $startDate = '2017-05-02';
         $endDate = date("Y-m-d");
+        $sellerId = null;
+        $shopType = null;
         if(Yii::$app->request->isPost){
             $startDate = Yii::$app->request->post('startDate');
             $endDate = Yii::$app->request->post('endDate');
         }
-        $countData = Order::sellerAmount(null, $startDate, $endDate);
-        return $this->render('account', [ 'countData'=>$countData]);
+        $countData = Order::sellerAmount($sellerId , $startDate, $endDate, $shopType);
+        return $this->render('account', [ 'countData'=>$countData, 'startDate'=>$startDate, 'endDate'=>$endDate]);
+    }
+
+    public function actionAccounttype($shopType)
+    {
+        $startDate = '2017-05-02';
+        $endDate = date("Y-m-d");
+        $sellerId = null;
+        if(Yii::$app->request->isPost){
+            $startDate = Yii::$app->request->post('startDate');
+            $endDate = Yii::$app->request->post('endDate');
+        }
+        $countData = Order::sellerAmount($sellerId, $startDate, $endDate, $shopType);
+        return $this->render('accounttype', [ 'countData'=>$countData, 'startDate'=>$startDate, 'endDate'=>$endDate,
+        'shopType'=>$shopType]);
     }
 
     public function actionConsultlist()

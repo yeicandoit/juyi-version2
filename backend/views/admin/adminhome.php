@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 use backend\models\seller\Goods;
+use backend\models\seller\ShopMember;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -32,10 +33,14 @@ use backend\models\seller\Goods;
                         <tr><th>数值模拟</th><td><?=Html::a($summary['simulateCnt'] . '家 ', Url::to(['admin/simulatelist']))?></td></tr>
                         <tr><th>专家数量</th><td><?=Html::a($summary['expertCnt'] . '个 ', Url::to(['admin/expertlist']))?></td></td></tr>
                         <tr><th>销售总额</th><td><?=Html::a($summary['account'] . '元 ', Url::to(['admin/account']))?></td></tr>
-                        <tr><th>检测中心销售额</th><td><?=Html::a($summary['testAccount'] . '元 ', "")?></td></tr>
-                        <tr><th>科研辅助销售额</th><td><?=Html::a($summary['researchAccount'] . '元 ', "")?></td></tr>
-                        <tr><th>数值模拟销售额</th><td><?=Html::a($summary['simulateAccount'] . '元 ', "")?></td></tr>
-                        <tr><th>专家销售额</th><td><?=Html::a($summary['expertAccount'] . '元 ', "")?></td></tr>
+                        <tr><th>检测中心销售额</th><td><?=Html::a($summary['testAccount'] . '元 ',
+                                    Url::to(['admin/accounttype', 'shopType'=>ShopMember::TYPE_TEST]))?></td></tr>
+                        <tr><th>科研辅助销售额</th><td><?=Html::a($summary['researchAccount'] . '元 ',
+                                    Url::to(['admin/accounttype', 'shopType'=>ShopMember::TYPE_RESEARCH]))?></td></tr>
+                        <tr><th>数值模拟销售额</th><td><?=Html::a($summary['simulateAccount'] . '元 ',
+                                    Url::to(['admin/accounttype', 'shopType'=>ShopMember::TYPE_SIMULATE]))?></td></tr>
+                        <tr><th>专家销售额</th><td><?=Html::a($summary['expertAccount'] . '元 ',
+                                    Url::to(['admin/accounttype', 'shopType'=>ShopMembeR::TYPE_EXPERT]))?></td></tr>
                         <tr><th>注册用户</th><td><?=Html::a($summary['userCnt'] . '个 ', Url::to(['admin/memberlist']))?></td></tr>
                         <tr><th>商品数量</th><td><?=Html::a($summary['goodsCnt'] . '个 ', Url::to(['admin/goodslist']))?></td></tr>
                         <tr><th>订单数量</th><td><?=Html::a($summary['orderCnt'] . '单 ', Url::to(['admin/orderlist']))?></td></tr>

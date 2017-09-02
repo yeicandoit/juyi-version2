@@ -306,7 +306,7 @@ class Order extends \yii\db\ActiveRecord
      * @param string $end   结束日期 Y-m-d
      * @return array key => 日期时间,value => 销售金额
      */
-    public static function sellerAmount($seller_id, $start = '', $end = '')
+    public static function sellerAmount($seller_id, $start = '', $end = '', $shopType = null)
     {
         $query = (new Query())->from('jy_order');
         $query->select('sum(real_amount) as yValue, completion_time');
@@ -315,6 +315,12 @@ class Order extends \yii\db\ActiveRecord
         } else {
             $query->where("status >= 6");
         }
+
+        if(isset($shopType)){
+            $query->leftJoin('jy_shop_member', 'seller_id=jy_shop_member.id');
+            $query->andWhere("jy_shop_member.regtype=\"$shopType\"");
+        }
+
         return self::ParseCondition($query,'completion_time',$start,$end);
     }
 

@@ -20,6 +20,7 @@ $this->registerJsFile('@web/assets/new/_systemjs/highcharts/highcharts.js', ['de
             <td>
                 <?= DatePicker::widget([
                     'name' => 'startDate',
+                    'value' => $startDate,
                     'language' => 'zh-CN',
                     'template' => '{addon}{input}',
                     'clientOptions' => [
@@ -36,6 +37,7 @@ $this->registerJsFile('@web/assets/new/_systemjs/highcharts/highcharts.js', ['de
             <td>
                 <?= DatePicker::widget([
                     'name' => 'endDate',
+                    'value' => $endDate,
                     'language' => 'zh-CN',
                     'template' => '{addon}{input}',
                     'clientOptions' => [

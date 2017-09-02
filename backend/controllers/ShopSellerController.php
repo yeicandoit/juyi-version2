@@ -631,7 +631,7 @@ class ShopSellerController extends Controller
             $endDate = Yii::$app->request->post('endDate');
         }
         $countData = Order::sellerAmount(Yii::$app->user->id, $startDate, $endDate);
-        return $this->render('account', [ 'countData'=>$countData]);
+        return $this->render('account', [ 'countData'=>$countData, 'startDate'=>$startDate, 'endDate'=>$endDate]);
     }
 
     public function actionConsult()
