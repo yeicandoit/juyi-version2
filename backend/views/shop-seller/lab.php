@@ -34,7 +34,8 @@ use yii\helpers\Url;
             </li>
             <?=Html::img("$lab->logo", ['style'=>'width:200px;height:150px;padding-top:5px'])?><br>
             <?=Html::label('名称:').$lab->true_name?> <br>
-            <?=Html::label('评分:')?><span class="grade"><i style="width: 70px;"></i></span><br>
+            <?php $grade = 14 * $lab->grade?>
+            <?=Html::label('评分:')?><span class="grade"><i style=<?="width:$grade" . "px"?>></i></span><br>
             <?=Html::label('所在地:').$lab->getLocation("/")?> 
         </div>
         <div style="width: 210px">
