@@ -39,9 +39,15 @@ use yii\helpers\Url;
                     return '未回复';
                 }
             }],
-            ['label'=>'查看', 'format'=>'raw', 'value'=>function($model){
-                return Html::a('查看', Url::to(['admin/commentedit', 'id'=>$model->id]));
-            }],
+            [
+                'label'=>'操作',
+                'format'=>'raw',
+                'value'=>function($model){
+                    $check =  Html::a('查看', Url::to(['admin/commentedit', 'id'=>$model->id]));
+                    $del = Html::a('删除', Url::to(['admin/delcomment', 'id'=>$model->id]));
+                    return "$check | $del";
+                }
+            ],
         ],
     ]); ?>
 </div>

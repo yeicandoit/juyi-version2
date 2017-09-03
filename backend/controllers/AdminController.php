@@ -563,6 +563,15 @@ class AdminController extends Controller
         return $this->render('commentedit', [ 'comment'=>$comment]);
     }
 
+    public function actionDelcomment($id)
+    {
+        $comment = Comment::findOne($id);
+        if($comment){
+            $comment->delete();
+        }
+        return $this->redirect(['commentlist']);
+    }
+
     public function actionAccount()
     {
         $startDate = '2017-05-02';
