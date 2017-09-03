@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 <table>
     <tr>
-    <td valign="top" style="width: 15%">
+    <td valign="top" style="width: 10%">
         <div class="fix">
             <div id="sroll_1" style="height: 30px;min-width: 65px;text-align:center;border-right:1px inset;">
                 <?=Html::a('技术服务','#',['onclick'=>'mScroll("service", "sroll_1")', 'style'=>'color:black'])?>&nbsp;
@@ -128,7 +128,7 @@ use yii\helpers\Html;
             </div>
         </div>
     </td>
-    <td style="padding-left: 20px;padding-top: 10px; width:15%" valign="top">
+    <td style="padding-left: 20px;padding-top: 10px; width:20%" valign="top">
         <div style="background-color: #116fb5;border-radius:0 0 0 15px;min-width: 70px;color: #fdfdfd;font-size: 15px">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;相关专家
         </div>
@@ -147,7 +147,7 @@ use yii\helpers\Html;
                     ?>
                     <tr>
                         <td><a href=<?=\yii\helpers\Url::to(['shop-seller/expert', 'id'=>$v->id])?>>
-                                <?= Html::img($v->img, ['style' => 'width:40px;height:40px', 'class' => 'img-circle']) ?></a></td>
+                                <?= Html::img($v->img, ['style' => 'width:50px;height:50px', 'class' => 'img-circle']) ?></a></td>
                         <td style="padding-left: 3px">
                             <span style="font-size: 11px"><?=$v->true_name?></span><br>
                             <span style="font-size: 10px"><?=$v->degree?></span>
