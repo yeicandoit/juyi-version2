@@ -413,7 +413,7 @@ class AdminController extends Controller
     {
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['not in', 'status', [7]]);
+        $dataProvider->query->andFilterWhere(['not in', 'jy_order.status', [7]]);
         return $this->render('orderlist', ['dataProvider'=>$dataProvider]);
     }
 
