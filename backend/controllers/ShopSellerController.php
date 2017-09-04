@@ -18,6 +18,7 @@ use backend\models\seller\Message;
 use backend\models\seller\MessageSearch;
 use backend\models\seller\OnlineService;
 use backend\models\seller\OrderDelivery;
+use backend\models\seller\PasswordForm;
 use backend\models\seller\Seller;
 use backend\models\seller\ShopMember;
 use backend\models\seller\Category;
@@ -769,5 +770,17 @@ class ShopSellerController extends Controller
     {
         $mg = Message::findOne($id);
         return $this->render('message', ['message' => $mg]);
+    }
+
+    public function actionChangepw()
+    {
+        $info = '';
+        $pw = new PasswordForm();
+        if(Yii::$app->request->isPost){
+            if($pw->load(Yii::$app->request->post()) && $pw->save()){
+                $info = '密码更新成功！';
+            }
+        }
+        return $this->render('chpw', ['pw'=>$pw, 'info'=>$info]);
     }
 }
