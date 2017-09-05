@@ -298,19 +298,23 @@ class AdminController extends Controller
 
     public function actionSellerinfo($id)
     {
+        $shopInfo = Seller::findOne($id);
+        $shopMember = ShopMember::findOne($id);
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
-            $shopInfo = Seller::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
                 $shopInfo->saveImg();
-                $shopInfo->shopMember->regtype = $post['shopType'];;
-                $shopInfo->shopMember->save();
+                if($shopMember){
+                    $shopMember->load($post);
+                    if(isset($post['ShopMember']['password'])){
+                        $shopMember->password = md5($post['ShopMember']['password']);
+                    }
+                    $shopMember->save();
+                }
                 $shopInfo->setImage();
                 $info = '更新成功!!';
-                return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopInfo->shopMember->regtype, 'info'=>$info]);
+                return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopMember'=>$shopMember, 'info'=>$info]);
             }
-        } else {
-            $shopInfo = Seller::findOne($id);
         }
         if(!$shopInfo) {
             return false;
@@ -318,7 +322,7 @@ class AdminController extends Controller
 
         $info = '';
         $shopInfo->setImage();
-        return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopType'=>$shopInfo->shopMember->regtype, 'info'=>$info]);
+        return $this->render("sellerinfo", ["sellerinfo"=>$shopInfo, 'shopMember'=>$shopMember, 'info'=>$info]);
     }
 
     public function actionShopdetail($id, $type)
@@ -352,27 +356,31 @@ class AdminController extends Controller
 
     public function actionExpertinfo($id)
     {
+        $shopInfo = Expert::findOne($id);
+        $shopMember = ShopMember::findOne($id);
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
-            $shopInfo = Expert::findOne($id);
             if($shopInfo && $shopInfo->load($post) && $shopInfo->save()){
                 $shopInfo->saveImg();
                 $post = Yii::$app->request->post();
                 if(isset($post['expertCategory'])){
                     $shopInfo->saveCat($post['expertCategory']);
                 }
+                if($shopMember){
+                    if(isset($post['ShopMember']['password'])){
+                        $shopMember->password = md5($post['ShopMember']['password']);
+                    }
+                    $shopMember->save();
+                }
                 $shopInfo->setImage();
-                return $this->redirect(['expertinfo', 'id'=>$id]);
+                return $this->redirect(["expertinfo", 'id'=>$id]);
             }
-        } else {
-            $shopInfo = Expert::findOne($id);
         }
         if(!$shopInfo) {
             return false;
         }
-        $info = '';
         $shopInfo->setImage();
-        return $this->render("expertinfo", ["expertinfo"=>$shopInfo,'info'=>$info]);
+        return $this->render("expertinfo", ["expertinfo"=>$shopInfo, 'shopMember'=>$shopMember]);
     }
 
     public function actionMemberlist()

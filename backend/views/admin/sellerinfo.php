@@ -24,7 +24,6 @@ use yii\helpers\Url;
     <?php echo Html::img($sellerinfo->getImageUrl('logo'), ['style'=>'padding-left:70px']);?>
     <div class="blank"></div>
     <?= $form->field($sellerinfo, 'logo')->widget('maxmirazh33\image\Widget');?>
-    <?= Html::hiddenInput('shopType', $shopType)?>
     <!--Save id should be same as onclick id in maxmirazh33' view-->
     <?= Html::submitButton('保存', [ 'style' => 'width:50px;display:none', 'class'=>'btn btn-large btn-primary',
     'id'=>'image-save-2017-08-25']) ?>
@@ -41,6 +40,7 @@ use yii\helpers\Url;
     <?= $form->field($sellerinfo, 'seller_name')->textInput(['readonly'=>"readonly"])
         ->label('用户名')->hint('* 用户名称不能更改', ['style'=>'padding-left:30px',])?>
     <?= $form->field($sellerinfo, 'true_name')->textInput(['style'=>'width:250px', 'readonly'=>"readonly"])->label('真实名称')?>
+    <?= $form->field($shopMember, 'password')->passwordInput()->label('设置新密码')?>
     <?= $form->field($sellerinfo, 'affliation')->textInput()?>
     <?= $form->field($sellerinfo, 'affliationtype')->textInput()?>
     <?= $form->field($sellerinfo, 'phone')->textInput()?>
@@ -79,13 +79,7 @@ use yii\helpers\Url;
     <?= $form->field($sellerinfo, 'sale')->textInput(['readonly'=>"readonly"])?>
     <?= $form->field($sellerinfo, 'qualification')->textInput()?>
     <?= $form->field($sellerinfo, 'tax')->textInput()?>
-
-    <div class="form-group field-seller-address">
-        <div style="float:left; width:100px; margin: 0 auto;"><label class="control-label" for="seller-address">商家类型</label></div><div style="float:left;">
-            <?=Html::dropDownList('shopType', $shopType, $sellerinfo->sellerTypes, [])?></div>
-        <div style='padding-left: 280px;'></div><div><p class="help-block help-block-error"></p></div>
-    </div>
-
+    <?= $form->field($shopMember, 'regtype')->dropDownList($sellerinfo->sellerTypes)->label('商家类型')?>
     <?= Html::submitButton('保存', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?= Html::resetButton('取消', [ 'style' => 'width:50px', 'class'=>'btn btn-large btn-primary']) ?>
     <?php ActiveForm::end(); ?>
