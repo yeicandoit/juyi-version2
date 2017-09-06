@@ -15,6 +15,7 @@ use yii\grid\GridView;
             'order_no',
             [
                 'attribute'=>'status',
+                "headerOptions" => ["width" => "150"],
                 'label'=>'订单状态',
                 'filter'=>\backend\models\seller\Order::getStatArr(),
                 'value'=>function($model){
@@ -42,7 +43,7 @@ use yii\grid\GridView;
                 }
             ],
 
-            'create_time',
+            ['attribute'=>'create_time', 'contentOptions' => ['style' => 'white-space: normal;', 'width' => '100'],],
             [
                 'label'=>'操作',
                 'format' => 'raw',

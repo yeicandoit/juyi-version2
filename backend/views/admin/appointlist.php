@@ -38,14 +38,15 @@ use \yii\helpers\Url;
             ],
             [
                 'attribute'=>'user_name',
+                'options' => ['width' => "100"],
                 'label'=>'预约人',
                 'format'=>'raw',
                 'value'=> function($model){
                     return $model->user->username;
                 }
             ],
-            'appointdate',
-            'appointnum',
+            ['attribute'=>'appointdate', 'options' => ['width' => "100"]],
+            ['attribute'=>'appointnum', 'options' => ['width' => "80"]],
             [
                 'attribute'=>'orderstate',
                 'filter'=>\backend\models\seller\Appointinfo::getCreatedOrderArr(),

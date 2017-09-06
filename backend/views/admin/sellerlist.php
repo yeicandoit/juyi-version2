@@ -16,7 +16,7 @@ use \yii\helpers\Url;
         'columns' => [
             ['attribute'=>'id',  'options' => ['width' => "120"]],
             ['attribute'=>'seller_name', 'options' => ['width' => "100"],'label'=>'登录名'],
-            'true_name',
+            ['attribute'=>'true_name', 'contentOptions' => ['style' => 'white-space: normal;', 'width' => '200'],],
             ['attribute'=>'mobile', 'options' => ['width' => "120"]],
             ['attribute'=>'grade','options' => ['width' => "80"]],
             ['attribute'=>'create_time', 'contentOptions' => ['style' => 'white-space: normal;', 'width' => '100'],],

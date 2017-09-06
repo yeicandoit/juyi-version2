@@ -34,17 +34,18 @@ use backend\models\seller\Goods;
                                 </table>";
                 }
             ],
-            'goods_no',
+            ['attribute'=>'goods_no', 'options' => ['width' => "80"]],
             [
                 'label'=>'分类',
                 'format'=>'raw',
+                'contentOptions' => ['style' => 'white-space: normal;', 'width' => '150'],
                 'value'=>function($model){
                     $catName = array();
                     foreach($model->categoryExtends as $key=>$catExt){
                         $catName[] = $catExt->category->name;
                     }
                     $strCats = join(',',$catName);
-                    return "<div style='max-width: 250px;white-space: normal;'>$strCats</div>";
+                    return $strCats;
                 }
             ],
             [
