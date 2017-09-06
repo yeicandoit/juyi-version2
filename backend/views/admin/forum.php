@@ -12,10 +12,20 @@ use yii\grid\GridView;
         'dataProvider' => $dataProvider,
         'filterModel'=>$searchModel,
         'columns' => [
-            'title',
+            [
+                'attribute'=>'title',
+                //'options' => ['width' => "100"],
+                'contentOptions' => ['style' => 'white-space: normal;', 'width' => '250'],
+            ],
             'author',
-            'bigtype',
-            'subtype',
+            [
+                'attribute'=>'bigtype',
+                'options' => ['width' => "30"],
+            ],
+            [
+                'attribute'=>'subtype',
+                'options' => ['width' => "30"],
+            ],
             'datetime',
             [
                 'label'=>'操作',

@@ -14,12 +14,12 @@ use \yii\helpers\Url;
         'dataProvider' => $dataProvider,
         'filterModel'=>$searchModel,
         'columns' => [
-            'id',
-            'seller_name',
+            ['attribute'=>'id',  'options' => ['width' => "120"]],
+            ['attribute'=>'seller_name', 'options' => ['width' => "100"],'label'=>'登录名'],
             'true_name',
-            'mobile',
-            'grade',
-            'create_time',
+            ['attribute'=>'mobile', 'options' => ['width' => "120"]],
+            ['attribute'=>'grade','options' => ['width' => "80"]],
+            ['attribute'=>'create_time', 'contentOptions' => ['style' => 'white-space: normal;', 'width' => '100'],],
             [
                 'label'=>'状态',
                 'attribute'=>'is_del',

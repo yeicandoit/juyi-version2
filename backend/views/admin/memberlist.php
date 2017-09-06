@@ -16,10 +16,11 @@ use \yii\helpers\Url;
         'columns' => [
             [
                 'label'=>'用户名',
+                'options' => ['width' => "150"],
                 'attribute'=>'user_name',
                 'value'=>'user.username',
             ],
-            'true_name',
+            //'true_name',
             [
                 'label'=>'性别',
                 'filter'=> array(1=>'男', 2=>'女'),
@@ -32,14 +33,18 @@ use \yii\helpers\Url;
                 }
             ],
             'email',
-            'balance',
-            'mobile',
-            'grade',
-            'point',
-            'grade',
+            ['attribute'=>'balance','options' => ['width' => "100"],],
+            ['attribute'=>'mobile','options' => ['width' => "100"],],
+            ['attribute'=>'grade','options' => ['width' => "80"],
+            ],
+            [
+                'attribute'=>'point',
+                'options' => ['width' => "30"],
+            ],
             [
                 'label'=>'注册时间',
                 'attribute'=>'created_at',
+                'contentOptions' => ['style' => 'white-space: normal;', 'width' => '100'],
                 'value'=>function($model){
                     return date("Y-m-d H:i:s",$model->user->created_at);
                 }

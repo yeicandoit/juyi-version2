@@ -14,11 +14,11 @@ use \yii\helpers\Url;
         'dataProvider' => $dataProvider,
         'filterModel'=>$searchModel,
         'columns' => [
-            'id',
+            ['attribute'=>'id',  'options' => ['width' => "80"]],
             'name',
             'true_name',
-            'mobile',
-            'grade',
+            ['attribute'=>'mobile', 'options' => ['width' => "120"]],
+            ['attribute'=>'grade', 'options' => ['width' => "80"]],
             'regedittime',
             [
                 'label'=>'操作',
