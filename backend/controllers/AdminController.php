@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\admin\AdPosition;
+use backend\models\admin\AdPositionSearch;
 use backend\models\admin\AnnounceNewsForm;
 use backend\models\admin\AppointinfoSearch;
 use backend\models\admin\BrandSearch;
@@ -936,5 +938,43 @@ class AdminController extends Controller
             ForumReply::deleteAll(['topic_id'=>$id]);
         }
         return $this->redirect(['forum']);
+    }
+
+    public function actionAdpos()
+    {
+        $adPos = new AdPosition();
+        if(Yii::$app->request->isPost){
+            if($adPos->load(Yii::$app->request->post())){
+                $adPos->save();
+                $info = '添加成功';
+                return $this->render('adpos', ['adPos'=>$adPos, 'info'=>$info]);
+            }
+        }
+        $info = null;
+        return $this->render('adpos', ['adPos'=>$adPos, 'info'=>$info]);
+    }
+
+    public function actionAdposlist()
+    {
+        $searchModel = new AdPositionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('adposlist', [ 'searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionAdposstat($id, $val, $type)
+    {
+        $adpos = AdPosition::findOne($id);
+        $flag = false;
+        if($adpos){
+            $adpos->$type = $val;
+            if($adpos->save()){
+                $flag = true;
+            }
+        }
+        if($flag){
+            echo 'OK';
+        } else {
+            echo 'Failed';
+        }
     }
 }
