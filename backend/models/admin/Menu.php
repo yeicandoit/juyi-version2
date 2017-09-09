@@ -17,6 +17,8 @@ class Menu
                 "热门设置" => "admin/hot",
                 "添加广告位" => "admin/adpos",
                 "查看广告位" => "admin/adposlist",
+                "添加广告" => "admin/ad",
+                "查看广告" => "admin/adlist",
             ),
             "新闻资讯" => array(
                 "新闻发布" => "admin/announcenews",
@@ -83,6 +85,8 @@ class Menu
         "admin/hot"                 =>      "热门设置",
         "admin/adpos"               =>      "添加广告位",
         "admin/adposlist"           =>      "查看广告位",
+        "admin/ad"                  =>      "添加广告",
+        "admin/adlist"              =>      "查看广告",
         "admin/goodsedit"           =>      "商品编辑",
         "admin/brandlist"           =>      "品牌管理",
         "admin/addmessage"          =>      "消息发布",

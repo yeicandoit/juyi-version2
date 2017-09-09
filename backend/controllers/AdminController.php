@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\admin\AdManage;
+use backend\models\admin\AdManageSearch;
 use backend\models\admin\AdPosition;
 use backend\models\admin\AdPositionSearch;
 use backend\models\admin\AnnounceNewsForm;
@@ -976,5 +978,39 @@ class AdminController extends Controller
         } else {
             echo 'Failed';
         }
+    }
+
+    public function actionAd($id = null)
+    {
+        if(isset($id)){
+            $ad = AdManage::findOne($id);
+        } else {
+            $ad = new AdManage();
+        }
+        if(Yii::$app->request->isPost){
+            if($ad->load(Yii::$app->request->post())){
+                $ad->save();
+                $info = '添加成功';
+                return $this->render('ad', ['ad'=>$ad, 'info'=>$info]);
+            }
+        }
+        $info = null;
+        return $this->render('ad', ['ad'=>$ad, 'info'=>$info]);
+    }
+
+    public function actionAdlist()
+    {
+        $searchModel = new AdManageSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('adlist', [ 'searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
+    public function actionDelad($id)
+    {
+        $ad = AdManage::findOne($id);
+        if($ad){
+            $ad->delete();
+        }
+        return $this->redirect(['admin/adlist']);
     }
 }
