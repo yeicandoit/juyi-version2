@@ -30,7 +30,7 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($adPos, 'name')->textInput()?>
     <?= $form->field($adPos, 'width')->textInput()?>
     <?= $form->field($adPos, 'height')->textInput()?>
-    <?= $form->field($adPos, 'fashion')->radioList([1 => '轮显', 0 => '随即'])->label('显示方式')?>
+    <?= $form->field($adPos, 'fashion')->radioList([1 => '轮显', 2 => '随即'])->label('显示方式')?>
     <?= $form->field($adPos, 'status')->radioList([1 => '开启', 0 => '关闭'])->label('状态')?>
     <?= Html::submitButton('确定', [ 'style' => 'width:50px', 'class'=>'btn btn-primary']) ?>
     <?= Html::resetButton('重置', [ 'style' => 'width:50px', 'class'=>'btn btn-primary']) ?>

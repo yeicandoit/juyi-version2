@@ -32,7 +32,7 @@ class AdPosition extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'width', 'height', 'fashion'], 'required'],
+            [['name', 'width', 'height', 'fashion', 'status'], 'required'],
             [['width', 'height', 'fashion', 'status'], 'integer'],
             [['name'], 'string', 'max' => 30],
         ];
@@ -48,8 +48,10 @@ class AdPosition extends \yii\db\ActiveRecord
             'name' => Yii::t('app', '广告位名称'),
             'width' => Yii::t('app', '广告位宽度'),
             'height' => Yii::t('app', '广告位高度'),
-            'fashion' => Yii::t('app', '1:轮显;2:随即'),
-            'status' => Yii::t('app', '1:开启; 0: 关闭'),
+            #'fashion' => Yii::t('app', '1:轮显;2:随即'),
+            #'status' => Yii::t('app', '1:开启; 0: 关闭'),
+            'fashion' => Yii::t('app', '显示方式'),
+            'status' => Yii::t('app', '状态'),
         ];
     }
 
