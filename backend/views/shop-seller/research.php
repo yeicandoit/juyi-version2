@@ -61,7 +61,7 @@ use yii\helpers\Url;
     </td>
     <td style="padding-left: 20px;min-width: 850px; max-width: 1000px;" valign="top">
         <div style="height: 100px; background-image: url(images/labAd.jpg);" align="center" >
-            <?=Html::label($lab->ext->reserve1, null, ['style'=>'margin-top:40px;color:red;font-size:25px']);?>
+            <?=Html::label($labInfo->reserve1, null, ['style'=>'margin-top:40px;color:red;font-size:25px']);?>
         </div>
         <div align="center" style="height: 36px;background-color: #116fb5">
             <ul id="menu">
