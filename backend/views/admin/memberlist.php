@@ -32,7 +32,11 @@ use \yii\helpers\Url;
                     return null;
                 }
             ],
-            'email',
+            [
+                'label'=>'Email',
+                'attribute'=>'user_email',
+                'value'=>'user.email',
+            ],
             ['attribute'=>'balance','options' => ['width' => "100"],],
             ['attribute'=>'mobile','options' => ['width' => "100"],],
             ['attribute'=>'grade','options' => ['width' => "80"],

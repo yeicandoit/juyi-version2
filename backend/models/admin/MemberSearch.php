@@ -14,6 +14,7 @@ class MemberSearch extends Member
 {
     public $user_name;
     public $created_at;
+    public $user_email;
     /**
      * @inheritdoc
      */
@@ -22,7 +23,7 @@ class MemberSearch extends Member
         return [
             [['user_id', 'sex', 'group_id', 'exp', 'point', 'grade', 'status', 'country', 'province', 'city', 'area'], 'integer'],
             [['true_name', 'telephone', 'mobile', 'contact_addr', 'qq', 'birthday', 'message_ids', 'time', 'zip',
-                'prop', 'last_login', 'custom', 'email', 'affliation', 'user_name','created_at'], 'safe'],
+                'prop', 'last_login', 'custom', 'email', 'affliation', 'user_name', 'user_email', 'created_at'], 'safe'],
             [['balance'], 'number'],
         ];
     }
@@ -68,6 +69,10 @@ class MemberSearch extends Member
             'asc' => ['{{%user}}.created_at'=>SORT_ASC],
             'desc' => ['{{%user}}.created_at'=>SORT_DESC],
         ];
+        $sort->attributes['user_email'] = [
+            'asc' => ['{{%user}}.email'=>SORT_ASC],
+            'desc' => ['{{%user}}.email'=>SORT_DESC],
+        ];
         $dataProvider->setSort($sort);
 
         $this->load($params);
@@ -109,6 +114,7 @@ class MemberSearch extends Member
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'affliation', $this->affliation])
             ->andFilterWhere(['like', '{{%user}}.username', $this->user_name])
+            ->andFilterWhere(['like', '{{%user}}.email', $this->user_email])
             ->andFilterWhere(['like', '{{%user}}.created_at', $this->created_at]);
 
         return $dataProvider;

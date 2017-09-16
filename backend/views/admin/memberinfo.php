@@ -117,7 +117,7 @@ use backend\models\seller\Member;
         <div class="form-group">
             <div style="float: left;width:100px;"><label><strong>学生证:</strong></label></div>
             <div style="width: 280px;">
-                <?php echo Html::img($memberinfo->photo3, ['class'=>'user_fav_img'])?>
+                <?php echo Html::img("@web/$memberinfo->photo3", ['class'=>'user_fav_img'])?>
             </div>
         </div>
     <?php } elseif(Member::TYPE_TEACHER == $memberinfo->type) {?>
@@ -130,13 +130,13 @@ use backend\models\seller\Member;
     <div class="form-group">
         <div style="float: left;width:100px;"><label><strong>身份证正面照:</strong></label></div>
         <div style="width: 280px;">
-            <?php echo Html::img($memberinfo->cardphoto1, ['class'=>'user_fav_img'])?>
+            <?php echo Html::img("@web/$memberinfo->cardphoto1", ['class'=>'user_fav_img'])?>
         </div>
     </div>
     <div class="form-group">
         <div style="float: left;width:100px;"><label><strong>身份证反面照:</strong></label></div>
         <div style="width: 280px;">
-            <?php echo Html::img($memberinfo->cardphpto2, ['class'=>'user_fav_img'])?>
+            <?php echo Html::img("@web/$memberinfo->cardphpto2", ['class'=>'user_fav_img'])?>
         </div>
     </div>
     <?= Html::submitButton('保存基本信息', [ 'style' => 'width:110px']) ?>
