@@ -4,6 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use dosamigos\datepicker\DatePicker;
 use yii\helpers\Url;
+use backend\models\seller\Member;
 ?>
 <?=Html::cssFile('@web/css/userhome.css')?>
 <!--Show user info-->
@@ -61,21 +62,83 @@ use yii\helpers\Url;
         [
             'style'=>'width:180px',
         ]); ?>
-        <?= $form->field($memberinfo, 'contact_addr', [
-        ])->textInput([
-        ])->label('联系地址:') ?>
-        <?= $form->field($memberinfo, 'mobile', [
-        ])->textInput([
-        ])->label('手机号码:') ?>
-        <?= $form->field($memberinfo, 'email', [
-        ])->textInput([
-        ])->label('邮箱:') ?>
-        <?= $form->field($memberinfo, 'zip', [
-        ])->textInput([
-        ])->label('邮编:') ?>
-        <?= $form->field($memberinfo, 'qq', [
-        ])->textInput([
-        ])->label('QQ:') ?>
+    <?= $form->field($memberinfo, 'contact_addr', [])->textInput([])->label('联系地址:') ?>
+    <?= $form->field($memberinfo, 'mobile', [])->textInput([])->label('手机号码:') ?>
+    <?= $form->field($memberinfo, 'email', [])->textInput([])->label('邮箱:') ?>
+    <?= $form->field($memberinfo, 'zip', [])->textInput([])->label('邮编:') ?>
+    <?= $form->field($memberinfo, 'qq', [])->textInput([])->label('QQ:') ?>
+
+    <?= $form->field($memberinfo, 'type', [])->dropDownList(Member::getUserTypeArr())->label('用户类型:')?>
+    <?= $form->field($memberinfo, 'cardid', [])->textInput()?>
+    <?php if(Member::TYPE_STUDENT == $memberinfo->type) {?>
+        <?= $form->field($memberinfo, 'studentid', [])->textInput()?>
+        <?= $form->field($memberinfo, 'studenttype', [])->dropDownList(Member::getStudentTypeArr())->label('学生类型:')?>
+        <div class="form-group">
+            <div style="float: left;width:100px;"><label><strong>入学时间:</strong></label></div>
+            <div style="width: 280px;">
+                <?= DatePicker::widget([
+                    'model' => $memberinfo,
+                    'attribute' => 'intime',
+                    'template' => '{addon}{input}',
+                    'language'=>'zh-CN',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight' => true,
+                        'pickButtonIcon' => 'glyphicon glyphicon-time'
+                    ]
+                ]);?>
+            </div>
+        </div>
+        <div class="form-group">
+            <div style="float: left;width:100px;"><label><strong>预计毕业时间:</strong></label></div>
+            <div style="width: 280px;">
+                <?= DatePicker::widget([
+                    'model' => $memberinfo,
+                    'attribute' => 'outtime',
+                    'template' => '{addon}{input}',
+                    'language'=>'zh-CN', //
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight' => true,
+                        'pickButtonIcon' => 'glyphicon glyphicon-time'
+                    ]
+                ]);?>
+            </div>
+        </div>
+        <?php if($doc) {?>
+            <?= $form->field($doc, 'name', [])->textInput()?>
+            <?= $form->field($doc, 'tel', [])->textInput()?>
+            <?= $form->field($doc, 'email', [])->textInput()?>
+            <?= $form->field($doc, 'title', [])->textInput()?>
+            <?= $form->field($doc, 'job', [])->textInput()?>
+        <?php }?>
+        <div class="form-group">
+            <div style="float: left;width:100px;"><label><strong>学生证:</strong></label></div>
+            <div style="width: 280px;">
+                <?php echo Html::img($memberinfo->photo3, ['class'=>'user_fav_img'])?>
+            </div>
+        </div>
+    <?php } elseif(Member::TYPE_TEACHER == $memberinfo->type) {?>
+        <?php
+            //TODO title, job 怎么在jy_member中没有此字段，这是怎么回事？看苏的代码应该是有的啊
+        ?>
+    <?php } elseif(Member::TYPE_RESEARCHER == $memberinfo->type) {?>
+    <?php } elseif(Member::TYPE_WORKER == $memberinfo->type) {?>
+    <?php }?>
+    <div class="form-group">
+        <div style="float: left;width:100px;"><label><strong>身份证正面照:</strong></label></div>
+        <div style="width: 280px;">
+            <?php echo Html::img($memberinfo->cardphoto1, ['class'=>'user_fav_img'])?>
+        </div>
+    </div>
+    <div class="form-group">
+        <div style="float: left;width:100px;"><label><strong>身份证反面照:</strong></label></div>
+        <div style="width: 280px;">
+            <?php echo Html::img($memberinfo->cardphpto2, ['class'=>'user_fav_img'])?>
+        </div>
+    </div>
     <?= Html::submitButton('保存基本信息', [ 'style' => 'width:110px']) ?>
     <?php ActiveForm::end(); ?>
 </div>

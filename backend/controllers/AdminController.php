@@ -30,6 +30,7 @@ use backend\models\seller\ExpertExt;
 use backend\models\seller\GoodsConsult;
 use backend\models\seller\GoodsConsultSearch;
 use backend\models\seller\Member;
+use backend\models\seller\MemberDoctor;
 use backend\models\seller\Message;
 use backend\models\seller\MessageSearch;
 use backend\models\seller\Seller;
@@ -397,6 +398,10 @@ class AdminController extends Controller
     public function actionMemberinfo($id)
     {
         $memberInfo = Member::findOne($id);
+        $doc = null;
+        if($memberInfo){
+            $doc = MemberDoctor::findOne($memberInfo->docid);
+        }
         if(Yii::$app->request->isPost){
             if($memberInfo && $memberInfo->load(Yii::$app->request->post()) && $memberInfo->save()){
                 return $this->redirect(['memberlist']);
@@ -405,7 +410,7 @@ class AdminController extends Controller
         if(!$memberInfo) {
             return false;
         }
-        return $this->render("memberinfo", ["memberinfo"=>$memberInfo,]);
+        return $this->render("memberinfo", ["memberinfo"=>$memberInfo,'doc'=>$doc]);
     }
     public function actionOrderlist()
     {   

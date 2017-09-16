@@ -33,9 +33,35 @@ use Yii;
  * @property integer $province
  * @property integer $city
  * @property integer $area
+ * @property string $department
+ * @property string $studentid
+ * @property string $cardid
+ * @property integer $type
+ * @property string $intime
+ * @property string $outtime
+ * @property integer $studenttype
+ * @property integer $docid
+ * @property integer $ischeck
+ * @property string $cardphoto1
+ * @property string $cardphpto2
+ * @property string $photo3
+ * @property string $photo4
  */
 class Member extends \yii\db\ActiveRecord
 {
+
+    //1 高校学生 2 高校教职工 3 科研机构员工 4 企业员工'
+    const TYPE_STUDENT = 1;
+    const TYPE_TEACHER = 2;
+    const TYPE_RESEARCHER = 3;
+    const TYPE_WORKER = 4;
+
+    //0 不是学生 1 在读本专科生 2 在读硕士 3 在读博士
+    const STUDENT_NO = 0;
+    const STUDENT_BACHELOR = 1;
+    const STUDENT_MASTER = 2;
+    const STUDENT_DOCTOR = 3;
+
     /**
      * @inheritdoc
      */
@@ -51,8 +77,8 @@ class Member extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'sex', 'group_id', 'exp', 'point', 'grade', 'status', 'country', 'province', 'city', 'area'], 'integer'],
-            [['birthday', 'time', 'last_login'], 'safe'],
+            [['user_id', 'sex', 'group_id', 'exp', 'point', 'grade', 'status', 'country', 'province', 'city', 'area', 'type', 'studenttype', 'docid', 'ischeck'], 'integer'],
+            [['birthday', 'time', 'last_login', 'intime', 'outtime'], 'safe'],
             [['message_ids', 'prop'], 'string'],
             [['balance'], 'number'],
             [['true_name', 'telephone'], 'string', 'max' => 50],
@@ -60,7 +86,7 @@ class Member extends \yii\db\ActiveRecord
             [['contact_addr'], 'string', 'max' => 250],
             [['qq'], 'string', 'max' => 15],
             [['zip'], 'string', 'max' => 10],
-            [['custom', 'email'], 'string', 'max' => 255],
+            [['custom', 'email', 'department', 'studentid', 'cardid', 'cardphoto1', 'cardphpto2', 'photo3', 'photo4'], 'string', 'max' => 255],
             [['affliation'], 'string', 'max' => 80],
         ];
     }
@@ -97,11 +123,45 @@ class Member extends \yii\db\ActiveRecord
             'province' => Yii::t('app', '省ID'),
             'city' => Yii::t('app', '市ID'),
             'area' => Yii::t('app', '区ID'),
+            'department' => Yii::t('app', '部门、院系'),
+            'studentid' => Yii::t('app', '学生证号'),
+            'cardid' => Yii::t('app', '身份证号'),
+            'type' => Yii::t('app', '用户类型 1 高校学生 2 高校教职工 3 科研机构员工 4 企业员工'),
+            'intime' => Yii::t('app', '入学时间'),
+            'outtime' => Yii::t('app', '预计毕业时间'),
+            'studenttype' => Yii::t('app', '学生类型 0 不是学生 1 在读本专科生 2 在读硕士 3 在读博士'),
+            'docid' => Yii::t('app', '导师id，没有导师为0'),
+            'ischeck' => Yii::t('app', '是否已经审核
+'),
+            'cardphoto1' => Yii::t('app', '身份证件正面'),
+            'cardphpto2' => Yii::t('app', '身份证证件反面'),
+            'photo3' => Yii::t('app', '学生证'),
+            'photo4' => Yii::t('app', '学生证补充'),
         ];
     }
 
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id'=>'user_id']);
+    }
+
+    public static function getUserTypeArr()
+    {
+        return array(
+            null=>'未知',
+            self::TYPE_STUDENT=>'高校学生',
+            self::TYPE_TEACHER=>'高校教职工',
+            self::TYPE_RESEARCHER=>'科研机构员工',
+            self::TYPE_WORKER=>'企业员工',
+        );
+    }
+
+    public static function getStudentTypeArr()
+    {
+        return array(
+            self::STUDENT_BACHELOR=>'在读本科生',
+            self::STUDENT_MASTER=>'在读硕士生',
+            self::STUDENT_DOCTOR=>'在读博士生',
+        );
     }
 }
