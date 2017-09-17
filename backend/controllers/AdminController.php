@@ -399,7 +399,7 @@ class AdminController extends Controller
     {
         $memberInfo = Member::findOne($id);
         $doc = null;
-        if($memberInfo){
+        if($memberInfo && Member::TYPE_STUDENT == $memberInfo->type){
             $doc = MemberDoctor::findOne($memberInfo->docid);
         }
         if(Yii::$app->request->isPost){
@@ -410,6 +410,8 @@ class AdminController extends Controller
         if(!$memberInfo) {
             return false;
         }
+
+
         return $this->render("memberinfo", ["memberinfo"=>$memberInfo,'doc'=>$doc]);
     }
     public function actionOrderlist()

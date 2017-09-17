@@ -145,6 +145,11 @@ class Member extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id'=>'user_id']);
     }
 
+    public function getDoc()
+    {
+        return $this->hasOne(MemberDoctor::className(), ['id'=>'docid']);
+    }
+
     public static function getUserTypeArr()
     {
         return array(

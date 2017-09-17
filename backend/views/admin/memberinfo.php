@@ -165,7 +165,7 @@ use backend\models\seller\Member;
     <?php $url = Url::to(['shop-seller/areas']); ?>
     function setCityOption()
     {
-        $.get("<?= $url?>&id="+$("#member-province").val(),function(data){
+        $.get("<?= $url?>?id="+$("#member-province").val(),function(data){
             $("#member-city").html("<option value=0>请选择市</option>");
             $("#member-area").html("<option value=0>请选择县</option>");
             $("#member-city").append(data);
@@ -174,7 +174,7 @@ use backend\models\seller\Member;
 
     function setAreaOption()
     {
-        $.get("<?= $url?>&id="+$("#member-city").val(),function(data){
+        $.get("<?= $url?>?id="+$("#member-city").val(),function(data){
             $("#member-area").html("<option value=0>请选择县</option>");
             $("#member-area").append(data);
         });
