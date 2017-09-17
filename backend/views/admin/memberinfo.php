@@ -64,7 +64,7 @@ use backend\models\seller\Member;
         ]); ?>
     <?= $form->field($memberinfo, 'contact_addr', [])->textInput([])->label('联系地址:') ?>
     <?= $form->field($memberinfo, 'mobile', [])->textInput([])->label('手机号码:') ?>
-    <?= $form->field($memberinfo, 'email', [])->textInput([])->label('邮箱:') ?>
+    <?= $form->field($memberinfo->user, 'email', [])->textInput([])->label('邮箱:') ?>
     <?= $form->field($memberinfo, 'zip', [])->textInput([])->label('邮编:') ?>
     <?= $form->field($memberinfo, 'qq', [])->textInput([])->label('QQ:') ?>
 
