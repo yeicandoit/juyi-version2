@@ -51,7 +51,7 @@ use \yii\helpers\Url;
 <script type="text/javascript">
     function updateStatus(id, val)
     {
-        $.get("<?= Url::to(['admin/sellerstat'])?>&id="+id+"&status="+val,function(data){});
+        $.get("<?= Url::to(['admin/sellerstat'])?>?id="+id+"&status="+val,function(data){});
     }
 </script>
 
