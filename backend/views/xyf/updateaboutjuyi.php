@@ -18,7 +18,6 @@ use yii\bootstrap\ActiveForm;
     }
 
     window.onload = function(){
-        alert('hello world');
         $("#ajyjj").css("background-color", '#bf800c');
     }
 </script>
