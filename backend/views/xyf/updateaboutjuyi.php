@@ -9,16 +9,33 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 ?>
 <script type="text/javascript">
-    function showItem(id)
+    function showItem(self, id)
     {
         $(".jyabout").hide();
         $("#" + id).show();
+        $("#items a").css("background-color", '#ffffff')
+        $(self).css("background-color", '#bf800c');
+    }
+
+    window.onload = function(){
+        alert('hello world');
+        $("#ajyjj").css("background-color", '#bf800c');
     }
 </script>
 <div class="sellerinfo">
-<?=
-    Html::dropDownList('',null,$model->item, ['onchange'=>"showItem(this.value)"]);
+<div id="items">
+<?php
+    $num = 1;
+    foreach($model->item as $key=>$value){
+        echo Html::a($value, '#', ['style'=>'btn btn-primary;padding-left:10px;padding-right:10px;',
+        'onclick'=>"showItem(this, \"$key\")", 'id'=>"a$key"]);
+        if($num % 9 == 0){
+            echo '<br>';
+        }
+        $num ++;
+    }
 ?>
+</div>
 <?php $form = ActiveForm::begin(['fieldConfig' => ['template'=>'{input}{hint}{error}']]); ?>
 <?= $form->field($model, 'jyjj', ['options'=>['id'=>'jyjj', 'class'=>'jyabout']])->widget(\yii\redactor\widgets\Redactor::className(),
     [
