@@ -12,10 +12,10 @@ use yii\grid\GridView;
         'dataProvider' => $dataProvider,
         'filterModel'=>$searchModel,
         'columns' => [
-            'order_no',
+            ['attribute'=>'order_no', 'options' => ['width' => "100"]],
             [
                 'attribute'=>'status',
-                "headerOptions" => ["width" => "150"],
+                "headerOptions" => ["width" => "100"],
                 'label'=>'订单状态',
                 'filter'=>\backend\models\seller\Order::getStatArr(),
                 'value'=>function($model){
@@ -25,6 +25,7 @@ use yii\grid\GridView;
             [
                 'attribute'=>'order_type',
                 'label'=>'订单类型',
+                'options' => ['width' => "100"],
                 'filter'=>\backend\models\seller\Order::getOrderTypeArr(),
                 'value'=>function($model){
                     return $model->orderType;
@@ -33,11 +34,13 @@ use yii\grid\GridView;
             [
                 'attribute'=>'user_name',
                 'label'=>'下单用户名',
+                'options' => ['width' => "100"],
                 "headerOptions" => ["width" => "100"],
                 'value'=>'user.username',
             ],
             [
                 'label'=>'商户名称',
+                'options' => ['width' => "80"],
                 'value'=>function($model){
                     return $model->shop->true_name;
                 }
@@ -46,6 +49,7 @@ use yii\grid\GridView;
             ['attribute'=>'create_time', 'contentOptions' => ['style' => 'white-space: normal;', 'width' => '100'],],
             [
                 'label'=>'操作',
+                'options' => ['width' => "100"],
                 'format' => 'raw',
                 'value' => function($model) {
                     $orderDetail = Html::a('订单详情', Url::to(['admin/orderinfo', 'id'=>$model->id]));

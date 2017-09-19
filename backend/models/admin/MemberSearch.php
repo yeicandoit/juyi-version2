@@ -23,7 +23,7 @@ class MemberSearch extends Member
         return [
             [['user_id', 'sex', 'group_id', 'exp', 'point', 'grade', 'status', 'country', 'province', 'city', 'area'], 'integer'],
             [['true_name', 'telephone', 'mobile', 'contact_addr', 'qq', 'birthday', 'message_ids', 'time', 'zip',
-                'prop', 'last_login', 'custom', 'email', 'affliation', 'user_name', 'user_email', 'created_at'], 'safe'],
+                'prop', 'last_login', 'custom', 'email', 'affliation', 'user_name', 'user_email', 'created_at', 'type', 'ischeck'], 'safe'],
             [['balance'], 'number'],
         ];
     }
@@ -100,6 +100,8 @@ class MemberSearch extends Member
             'province' => $this->province,
             'city' => $this->city,
             'area' => $this->area,
+            'type' => $this->type,
+            'ischeck' => $this->ischeck,
         ]);
 
         $query->andFilterWhere(['like', 'true_name', $this->true_name])

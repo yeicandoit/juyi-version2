@@ -121,11 +121,14 @@ use backend\models\seller\Member;
             </div>
         </div>
     <?php } elseif(Member::TYPE_TEACHER == $memberinfo->type) {?>
-        <?php
-            //TODO title, job 怎么在jy_member中没有此字段，这是怎么回事？看苏的代码应该是有的啊
-        ?>
+        <?= $form->field($memberinfo, 'title', [])->textInput()?>
+        <?= $form->field($memberinfo, 'job', [])->textInput()?>
     <?php } elseif(Member::TYPE_RESEARCHER == $memberinfo->type) {?>
+        <?= $form->field($memberinfo, 'title', [])->textInput()?>
+        <?= $form->field($memberinfo, 'job', [])->textInput()?>
     <?php } elseif(Member::TYPE_WORKER == $memberinfo->type) {?>
+        <?= $form->field($memberinfo, 'title', [])->textInput()?>
+        <?= $form->field($memberinfo, 'job', [])->textInput()?>
     <?php }?>
     <div class="form-group">
         <div style="float: left;width:100px;"><label><strong>身份证正面照:</strong></label></div>
@@ -139,6 +142,8 @@ use backend\models\seller\Member;
             <?php echo Html::img("@web/$memberinfo->cardphpto2", ['class'=>'user_fav_img'])?>
         </div>
     </div>
+    <?= $form->field($memberinfo, 'ischeck')->textInput()->
+    radioList( ['0'=>'未审核','1'=>'已审核'],['class'=>'label-group'])->label('审核状态：')?>
     <?= Html::submitButton('保存基本信息', [ 'style' => 'width:110px']) ?>
     <?php ActiveForm::end(); ?>
 </div>

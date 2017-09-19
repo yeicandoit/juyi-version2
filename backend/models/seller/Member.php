@@ -46,6 +46,8 @@ use Yii;
  * @property string $cardphpto2
  * @property string $photo3
  * @property string $photo4
+ * @property string $title
+ * @property string $job
  */
 class Member extends \yii\db\ActiveRecord
 {
@@ -86,7 +88,7 @@ class Member extends \yii\db\ActiveRecord
             [['contact_addr'], 'string', 'max' => 250],
             [['qq'], 'string', 'max' => 15],
             [['zip'], 'string', 'max' => 10],
-            [['custom', 'email', 'department', 'studentid', 'cardid', 'cardphoto1', 'cardphpto2', 'photo3', 'photo4'], 'string', 'max' => 255],
+            [['custom', 'email', 'department', 'studentid', 'cardid', 'cardphoto1', 'cardphpto2', 'photo3', 'photo4', 'title', 'job'], 'string', 'max' => 255],
             [['affliation'], 'string', 'max' => 80],
         ];
     }
@@ -137,6 +139,8 @@ class Member extends \yii\db\ActiveRecord
             'cardphpto2' => Yii::t('app', '身份证证件反面'),
             'photo3' => Yii::t('app', '学生证'),
             'photo4' => Yii::t('app', '学生证补充'),
+            'title' => Yii::t('app', '职称'),
+            'job' => Yii::t('app', '职位'),
         ];
     }
 

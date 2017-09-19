@@ -92,9 +92,13 @@ use backend\models\seller\ShopMember;
             'dataProvider' => $dataProvider,
             'filterModel'=>$searchModel,
             'columns' => [
-                'order_no',
+                [
+                    'attribute'=>'order_no',
+                    'options' => ['width' => "80"],
+                ],
                 [
                     'label'=>'订单状态',
+                    'options' => ['width' => "80"],
                     'filter'=>\backend\models\seller\Order::getStatArr(),
                     'value'=>function($model){
                         return $model->stat;
@@ -102,6 +106,7 @@ use backend\models\seller\ShopMember;
                 ],
                 [
                     'attribute'=>'order_type',
+                    'options' => ['width' => "80"],
                     'label'=>'订单类型',
                     'filter'=>\backend\models\seller\Order::getOrderTypeArr(),
                     'value'=>function($model){
@@ -116,14 +121,20 @@ use backend\models\seller\ShopMember;
                 ],
                 [
                     'label'=>'商户名称',
+                    'options' => ['width' => "80"],
                     'value'=>function($model){
                         return $model->shop->true_name;
                     }
                 ],
 
-                'create_time',
+                [
+                    'attribute'=>'create_time',
+                    'contentOptions' => ['style' => 'white-space: normal;', 'width' => '100'],
+
+                ],
                 [
                     'label'=>'操作',
+                    'options' => ['width' => "80"],
                     'format' => 'raw',
                     'value' => function($model) {
                         $orderDetail = Html::a('订单详情', Url::to(['admin/orderinfo', 'id'=>$model->id]));

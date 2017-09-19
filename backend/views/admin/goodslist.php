@@ -18,6 +18,7 @@ use backend\models\seller\Goods;
             [
                 'attribute' => 'name',
                 'label'=>'商品名称',
+                'options' => ['width' => "200"],
                 'format'=>'raw',
                 'value'=> function($model){
                     if($model->img){
