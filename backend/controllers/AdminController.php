@@ -710,6 +710,8 @@ class AdminController extends Controller
             $news = JyAnnouncement::findone($newsid);
             $model->title = $news->title;
             $model->content = $news->content;
+            $model->keywords = $news->keywords;
+            $model->description = $news->description;
         }
         return $this->render('changenews', ['model' => $model, 'info' => $info, 'news' => $news,]);
     }

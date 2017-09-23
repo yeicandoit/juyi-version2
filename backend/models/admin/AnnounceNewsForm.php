@@ -13,6 +13,8 @@ class AnnounceNewsForm extends Model
 {
     public $title;
     public $content;
+    public $keywords;
+    public $description;
     /**
      * @inheritdoc
      */
@@ -22,6 +24,15 @@ class AnnounceNewsForm extends Model
             ['title', 'trim'],
             ['title', 'required'],
             ['content', 'required'],
+            [['keywords', 'description'], 'safe'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'keywords'=>Yii::t('app', 'SEO关键词'),
+            'description'=>Yii::t('app', 'SEO描述'),
         ];
     }
 
@@ -41,6 +52,8 @@ class AnnounceNewsForm extends Model
         $news = new JyAnnouncement();
         $news->title = $this->title;
         $news->content = $this->content;
+        $news->keywords = $this->keywords;
+        $news->description = $this->description;
         $news->time=date("Y-m-d H:i:s");
         
         return $news->save() ? $news : null;
@@ -50,8 +63,11 @@ class AnnounceNewsForm extends Model
     {
     	$title = $this->title;
     	$content = $this->content;
+        $keywords = $this->keywords;
+        $description = $this->description;
     	$newsid= Yii::$app->request->post("postnewsid");
-    	$update=Yii::$app->db->createCommand("UPDATE jy_announcement SET title='{$title}',content='{$content}' WHERE id='{$newsid}'")->execute();
+    	$update=Yii::$app->db->createCommand("UPDATE jy_announcement SET title='{$title}',content='{$content}',
+            keywords='{$keywords}',description='{$description}' WHERE id='{$newsid}'")->execute();
     	return $update ? 1 : null;
     }
 }

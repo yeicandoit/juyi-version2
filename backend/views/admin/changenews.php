@@ -9,28 +9,17 @@ use yii\redactor\widgets\Redactor;
 
 ?>
 <style type="text/css">
-#whole {
-	width:1100px;
-	margin:auto;
-}
-
-#left
-{
-	width:120px;
-	float:left;
-	border-right-style : double;
-	border-right-width : 4px;
-}
-
-#right
-{
-	width:970px;
-	float:right;
-}
 </style>
 <div class="sellerinfo">
+<div class="info_bar">
+    <b>
+        <?=Html::a('新闻发布', '#', ['onclick'=>'showBasicInfo()'])?>&nbsp;&nbsp;
+        <?=Html::a('SEO优化', '#', ['onclick'=>'showSeo()'])?>
+    </b>
+</div>
 <div style="height:60px;color:red;text-align:center"> <?= Html::encode($info)?> </div>
-  <?php $form = ActiveForm::begin(['id' => 'form-signup','layout' => 'horizontal',  ]); ?>
+  <?php $form = ActiveForm::begin(['id' => 'form-signup','layout' => 'horizontal']); ?>
+    <div id="basicInfo">
     <?= $form->field($model, 'title')->textInput(['autofocus' => true])->label('标题') ?>
     <?= $form->field($model, 'content')->widget(Redactor::className(),
         [
@@ -43,6 +32,27 @@ use yii\redactor\widgets\Redactor;
             ]
         ]) ->label('新闻内容')?>
     <input type="hidden" name="postnewsid" value="<?= $news->id ?>">
-    <div style="width:300px;margin:auto"> <?= Html::submitButton('发布修改的新闻', ['class' => 'btn btn-primary', 'name' => 'announce-button']) ?></div>
+    </div>
+
+    <div id="seo" style="display: none">
+    <?= $form->field($model, 'keywords')->textInput()?>
+    <?= $form->field($model, 'description')->textarea()?>
+    </div>
+    <div style="width:300px;margin:auto">
+        <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>
+        <?= Html::resetButton('重置', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>
+    </div>
     <?php ActiveForm::end(); ?>
 </div>
+<script>
+    function showBasicInfo()
+    {
+        $("#basicInfo").show();
+        $("#seo").hide();
+    }
+    function showSeo()
+    {
+        $("#seo").show();
+        $("#basicInfo").hide();
+    }
+</script>
