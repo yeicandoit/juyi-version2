@@ -30,8 +30,8 @@ class JyAnnouncement extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['content'], 'string'],
-            [['time'], 'safe'],
-            [['title'], 'string', 'max' => 255],
+            [['time', 'keywords', 'description'], 'safe'],
+            [['title', 'keywords', 'description'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,6 +45,8 @@ class JyAnnouncement extends \yii\db\ActiveRecord
             'title' => 'Title',
             'content' => 'Content',
             'time' => 'Time',
+            'keywords'=>Yii::t('app', 'SEO关键词'),
+            'description'=>Yii::t('app', 'SEO描述'),
         ];
     }
 }
