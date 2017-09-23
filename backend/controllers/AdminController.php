@@ -271,6 +271,13 @@ class AdminController extends Controller
         return $this->render('goodsedit', ['goods'=>$goods, 'goodsContent'=>$goodsContent]);
     }
 
+    public function actionShoplist()
+    {
+        $searchModel = new SellerSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('sellerlist', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
+    }
+
     public function actionSellerlist()
     {
         $searchModel = new SellerSearch(['type'=>'seller']);

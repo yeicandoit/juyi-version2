@@ -14,9 +14,9 @@ use \yii\helpers\Url;
         'dataProvider' => $dataProvider,
         'filterModel'=>$searchModel,
         'columns' => [
-            ['attribute'=>'id',  'options' => ['width' => "80"]],
-            'name',
-            'true_name',
+            ['attribute'=>'id', 'options' => ['width' => "80"]],
+            ['attribute'=>'name', 'options' => ['width' => "80"]],
+            ['attribute'=>'true_name', 'options' => ['width' => "80"]],
             ['attribute'=>'mobile', 'options' => ['width' => "120"]],
             ['attribute'=>'grade', 'options' => ['width' => "80"]],
             'regedittime',

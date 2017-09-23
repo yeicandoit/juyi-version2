@@ -72,7 +72,7 @@ use backend\models\seller\ShopMember;
                                     Url::to(['admin/goodslist', 'GoodsSearch[goodtype]'=>Goods::TYPE_SIMULATE]))?></td></tr>
                         <tr><th>专家商品数</th><td><?=Html::a($summary['goodsExpertCnt'] . '个',
                                     Url::to(['admin/goodslist', 'GoodsSearch[goodtype]'=>Goods::TYPE_EXPERT]))?></td></tr>
-                        <tr><th>待审商家</th><td><?=Html::a($summary['shopCnt_'] . '家', Url::to(['admin/sellerlist', 'SellerSearch[is_del]'=>1]))?></td></tr>
+                        <tr><th>待审商家</th><td><?=Html::a($summary['shopCnt_'] . '家', Url::to(['admin/shoplist', 'SellerSearch[is_del]'=>1]))?></td></tr>
                         <tr><th>待审商品</th><td><?=Html::a($summary['goodsCnt_'] . '个', Url::to(['admin/goodslist','GoodsSearch[is_del]'=>3]))?></td></tr>
                         <tr><th>未完成订单</th><td><?=Html::a($summary['orderCnt_'] . '单', Url::to(['admin/orderstay']))?></td></tr>
                         <tr><th>待回复咨询</th><td><?=Html::a($summary['consultCnt_'] . '条', Url::to(['admin/consultstay']))?></td></tr>
