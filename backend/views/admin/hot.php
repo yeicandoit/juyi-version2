@@ -134,7 +134,7 @@ use backend\models\admin\CommendGoods;
                     'label' => '操作',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        $delete = Html::a('删除', Url::to(['admin/delhot', 'id' => $model->id, 'type' => $model->type]));
+                        $delete = Html::a('删除', Url::to(['admin/delhot', 'id'=>$model->id, 'type'=>$model->type]));
                         return "$delete";
                     }
                 ],
@@ -148,7 +148,9 @@ use backend\models\admin\CommendGoods;
         if('' == val) {
             alert('编号/账号不能为空');
         } else {
-            location.href= "<?= Url::to(['admin/addhot'])?>?type=" + type + "&hot=" + val;
+            $.get("<?=Url::to(['admin/addhot'])?>" + "?type=" + type + "&hot=" + val, function (data) {
+                    location.href = "<?= Url::to(['admin/hot'])?>?type=" + type + '&info=' + data;
+            });
         }
     }
 </script>

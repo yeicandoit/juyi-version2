@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use \yii\helpers\Url;
 use backend\models\seller\Goods;
+use backend\models\admin\CommendGoods;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -78,6 +79,16 @@ use backend\models\seller\Goods;
                 'format'=>'raw',
                 'value'=>function($model){
                     $edit = Html::a('修改', Url::to(['admin/goodsedit', 'id'=>$model->id]));
+                    $hot = '';
+                    if($model->goodtype == Goods::TYPE_TEST){
+                        $type = CommendGoods::HotDevice;
+                        if(CommendGoods::findOne(['commend_id'=>$model->id, 'type'=>$type])){
+                            $hot =  Html::a('<font color="#8a2be2">删除热门</font>', '#', ['onclick'=>"delhot('$model->goods_no', '$type', $model->id)"]);
+                        } else {
+                            $hot = Html::a('添加热门', '#', ['onclick'=>"addhot('$model->goods_no', '$type', $model->id)"]);
+                        }
+                        return "$edit|<ctrl id='ctrl$model->id'>$hot</ctrl>";
+                    }
                     return "$edit";
                 }
             ]
@@ -88,6 +99,28 @@ use backend\models\seller\Goods;
     function updateStatus(id, val)
     {
         $.get("<?= Url::to(['admin/goodsstat'])?>?id="+id+"&status="+val,function(data){});
+    }
+
+    function addhot(hot, mtype, id)
+    {
+        $.get("<?=Url::to(['admin/addhot'])?>" + "?hot=" + hot + "&type=" + mtype, function (data) {
+            if('添加成功' == data){
+                $('#ctrl'+id).html('<a href="#" onclick="delhot(\''+hot+'\','+mtype+','+id+')" ><font color="#8a2be2">删除热门</font></a>');
+            }  else {
+                alert(data);
+            }
+        });
+    }
+
+    function delhot(hot, mtype, id)
+    {
+        $.get("<?=Url::to(['admin/delhotdevice'])?>" + "?id=" + id, function (data) {
+            if('OK' == data){
+                $('#ctrl'+id).html('<a href="#" onclick="addhot(\''+hot+'\','+mtype+','+id+')">添加热门</a>');
+            } else {
+                alert(data);
+            }
+        });
     }
 </script>
 

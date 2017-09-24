@@ -792,7 +792,7 @@ class AdminController extends Controller
                     $cg = new CommendGoods();
                     $cg->type = $type;
                     $cg->commend_id = $good->id;
-                    $cg->add_time = date("Y-m-d H:i:s");;
+                    $cg->add_time = date("Y-m-d H:i:s");
                     if ($cg->save()){
                         $info = '添加成功';
                     } else {
@@ -812,6 +812,7 @@ class AdminController extends Controller
                     $cg = new CommendGoods();
                     $cg->type = $type;
                     $cg->commend_id = $it->id;
+                    $cg->add_time = date("Y-m-d H:i:s");
                     if ($cg->save()){
                         $info = '添加成功';
                     } else {
@@ -822,10 +823,10 @@ class AdminController extends Controller
                 $info = '添加失败！！';
             }
         }
-        return $this->redirect(['hot', 'type'=>$type, 'info'=>$info]);
+        echo $info;
     }
 
-    public function actionDelhot($id, $type)
+    public function actionDelhot($id, $type=CommendGoods::HotDevice)
     {
         $commend = CommendGoods::findOne($id);
         if(null != $commend) {
@@ -833,6 +834,19 @@ class AdminController extends Controller
         }
         return $this->redirect(['hot', 'type'=>$type]);
     }
+
+    public function actionDelhotdevice($id, $type=CommendGoods::HotDevice)
+    {
+        $commend = CommendGoods::findOne(['commend_id'=>$id, 'type'=>$type]);
+        $info = 'Failed';
+        if(null != $commend) {
+            if($commend->delete()){
+                $info = 'OK';
+            }
+        }
+        echo $info;
+    }
+
     public function actionBrandlist()
     {
         $searchModel = new BrandSearch();
