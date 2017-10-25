@@ -102,11 +102,11 @@ class Order extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', '用户ID'),
             'seller_id' => Yii::t('app', '商家ID'),
             'appointid' => Yii::t('app', '关联的预约单'),
-            'pay_type' => Yii::t('app', '用户支付方式ID,当为0时表示货到付款'),
+            'pay_type' => Yii::t('app', '用户支付方式ID,0 账户支付, 1 支付宝, 2 银联, 3 账户直接支付, 4 信用支付'),
             'invoice' => Yii::t('app', '发票：0不索要1 普通发票 2 增值税发票'),
             'invoice_title' => Yii::t('app', '发票抬头'),
             'status' => Yii::t('app', '1 订单生成 2 买家寄出样品 3 商家收到样品，测试进行 4 商家发送测试数据 5 商家回寄样品 6 买家收到回寄样品 7 交易完成'),
-            'pay_status' => Yii::t('app', '支付状态 0：未支付; 1：已支付;'),
+            'pay_status' => Yii::t('app', '支付状态 0：未支付; 1：已支付; 2: 信用支付'),
             'distribution_status' => Yii::t('app', '配送状态 0：未发送,1：已发送,2：部分发送'),
             'create_time' => Yii::t('app', '下单时间'),
             'payable_amount' => Yii::t('app', '应付商品总金额'),
@@ -157,7 +157,7 @@ class Order extends \yii\db\ActiveRecord
             2=>'买家寄出样品',
             3=>'收到样品',
             4=>'寄回测试数据',
-            5=>'回寄样品',
+            5=>'回寄样品或商品',
             6=>'买家收到回寄样品、数据',
             7=>'交易完成'
         );
@@ -219,6 +219,7 @@ class Order extends \yii\db\ActiveRecord
         $payStatus = array(
             0=>'未支付',
             1=>'已支付',
+            2=>'信用支付',
         );
         $refundmentStatus = array(
             0=>'申请退款',
@@ -283,7 +284,7 @@ class Order extends \yii\db\ActiveRecord
     public static function getSale($seller_id, $shopType = null)
     {
         $query = (new Query())->from('jy_order o');
-        $query->select('sum(o.real_amount) as sale');
+        $query->select('sum(o.realpay_amount) as sale');
         if($seller_id) {
             $query->where("o.seller_id=$seller_id AND o.status>=6");
         } else {
@@ -309,7 +310,7 @@ class Order extends \yii\db\ActiveRecord
     public static function sellerAmount($seller_id, $start = '', $end = '', $shopType = null)
     {
         $query = (new Query())->from('jy_order');
-        $query->select('sum(real_amount) as yValue, completion_time');
+        $query->select('sum(realpay_amount) as yValue, completion_time');
         if($seller_id) {
             $query->where("seller_id=$seller_id AND status>=6");
         } else {

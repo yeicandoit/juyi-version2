@@ -4,6 +4,8 @@ namespace backend\models\seller;
 
 use backend\models\admin\Acc;
 use backend\models\admin\AccountOrder;
+use backend\models\seller\Member;
+use backend\models\admin\Xinyongorder;
 use Yii;
 
 /**
@@ -147,6 +149,7 @@ class RefundmentDoc extends \yii\db\ActiveRecord
 
                 if($this->amount > 0 && $this->amount < $this->order->real_amount) {
                     $this->order->real_amount -= $this->amount;
+                    $this->order->realpay_amount = $this->order->real_amount;
                 }
                 $this->order->status = 7;
                 $this->order->completion_time = $this->dispose_time;
@@ -155,5 +158,28 @@ class RefundmentDoc extends \yii\db\ActiveRecord
                 $accOrder->delete();
             }
         }
+    }
+
+    public function refundXinyong()
+    {
+        //Xinyong refunment will return all
+        $member = Member::findOne(['user_id'=>$this->user_id]);
+        $member->curmoney -= $this->order->real_amount;
+        $xinyongOrder = new Xinyongorder();
+        $xinyongOrder->num = $this->order->real_amount;
+        $xinyongOrder->inorout = 1;
+        $xinyongOrder->time = date('Y-m-d H:i:s');
+        $xinyongOrder->orderno = $this->order->order_no;
+
+        $this->order->status = 7;
+        $this->order->completion_time = date("Y-m-d H:i:s");
+        $this->order->realpay_amount = $this->order->real_amount = 0;
+        $member->save();
+        $xinyongOrder->save();
+        $this->order->save();
+
+        $this->pay_status = RefundmentDoc::REFUND_OK;
+        $this->dispose_time = date("Y-m-d H:i:s");
+        $this->save();
     }
 }

@@ -82,7 +82,7 @@ class Member extends \yii\db\ActiveRecord
             [['user_id', 'sex', 'group_id', 'exp', 'point', 'grade', 'status', 'country', 'province', 'city', 'area', 'type', 'studenttype', 'docid', 'ischeck'], 'integer'],
             [['birthday', 'time', 'last_login', 'intime', 'outtime'], 'safe'],
             [['message_ids', 'prop'], 'string'],
-            [['balance'], 'number'],
+            [['balance', 'curmoney'], 'number'],
             [['true_name', 'telephone'], 'string', 'max' => 50],
             [['mobile'], 'string', 'max' => 20],
             [['contact_addr'], 'string', 'max' => 250],
@@ -141,6 +141,7 @@ class Member extends \yii\db\ActiveRecord
             'photo4' => Yii::t('app', '学生证补充'),
             'title' => Yii::t('app', '职称'),
             'job' => Yii::t('app', '职位'),
+            'curmoney' => Yii::t('app', '当前已经使用的额度'),
         ];
     }
 

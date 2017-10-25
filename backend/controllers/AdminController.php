@@ -37,6 +37,7 @@ use backend\models\seller\Seller;
 use backend\models\seller\SellerExt;
 use backend\models\seller\ShopMember;
 use backend\models\seller\User;
+use backend\models\admin\Xinyongorder;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -447,10 +448,27 @@ class AdminController extends Controller
     {
         if(Yii::$app->request->isPost){
             $order = Order::findOne($id);
-            if($order->load(Yii::$app->request->post()) && $order->save()){
+            if($order->load(Yii::$app->request->post())){
+                //if credit pay
+                if(2 == $order->pay_status && 7 == $order->status){
+                    $order->completion_time = date("Y-m-d H:i:s");
+                    $order->realpay_amount = $order->real_amount;
+                    $member = Member::findOne(['user_id'=>$order->user_id]);
+                    $member->curmoney -= $order->real_amount;
+                    $xinyongOrder = new Xinyongorder();
+                    $xinyongOrder->num = $order->real_amount;
+                    $xinyongOrder->inorout = 1;
+                    $xinyongOrder->time = date('Y-m-d H:i:s');
+                    $xinyongOrder->orderno = $order->order_no;
+
+                    $member->save();
+                    $xinyongOrder->save();
+                }
+                $order->save();
                 return $this->render('orderinfo', ['order'=>$order]);
             } else {
-                return $this->redirect(['orderlist']);
+                return $this->redirect(['order']);
+
             }
         }
         $order = Order::findOne($id);
@@ -517,8 +535,10 @@ class AdminController extends Controller
             if(10000 == $response->code){
                 $refundOk = true;
             }
-        } else if($refundment->way == 'balance' || ($refundment->way == 'origin' && ($refundment->order->pay_type == 0 || $refundment->order->pay_type = 3))) {
+        } else if($refundment->way == 'balance' || ($refundment->way == 'origin' && ($refundment->order->pay_type == 0 || 3 == $refundment->order->pay_type))) {
             $refundment->refundBalance();
+        } else if($refundment->way == 'origin' && $refundment->order->pay_type == 4){
+            $refundment->refundXinyong();
         }
         if($refundOk){
             $refundment->pay_status = RefundmentDoc::REFUND_OK;
@@ -529,6 +549,7 @@ class AdminController extends Controller
             $refundment->order->completion_time = $refundment->dispose_time;
             if($refundment->amount > 0 && $refundment->amount < $refundment->order->real_amount) {
                 $refundment->order->real_amount -= $refundment->amount;
+                $refundment->order->realpay_amount = $refundment->order->real_amount;
             }
             $refundment->order->save();
         }

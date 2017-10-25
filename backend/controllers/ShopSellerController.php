@@ -29,6 +29,8 @@ use backend\models\seller\Order;
 use backend\models\seller\RefundmentDoc;
 use backend\models\seller\RefundmentDocSearch;
 use backend\models\seller\ShopService;
+use backend\models\seller\Member;
+use backend\models\admin\Xinyongorder;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -182,7 +184,23 @@ class ShopSellerController extends Controller
         if(Yii::$app->request->post()){
             $post = Yii::$app->request->post();
             $order = Order::findOne($post['Order']['id']);
-            if($order->load($post) && $order->save()){
+            if($order->load($post)){
+                //if credit pay
+                if(2 == $order->pay_status && 7 == $order->status){
+                    $order->completion_time = date("Y-m-d H:i:s");
+                    $order->realpay_amount = $order->real_amount;
+                    $member = Member::findOne(['user_id'=>$order->user_id]);
+                    $member->curmoney -= $order->real_amount;
+                    $xinyongOrder = new Xinyongorder();
+                    $xinyongOrder->num = $order->real_amount;
+                    $xinyongOrder->inorout = 1;
+                    $xinyongOrder->time = date('Y-m-d H:i:s');
+                    $xinyongOrder->orderno = $order->order_no;
+
+                    $member->save();
+                    $xinyongOrder->save();
+                }
+                $order->save();
                 return $this->render('orderinfo', ['order'=>$order]);
             } else {
                 return $this->redirect(['order']);

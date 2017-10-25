@@ -66,7 +66,14 @@ use yii\bootstrap\ActiveForm;
                     <?php ActiveForm::end(); ?>
                 <?php }?>
             </div>
-        <?php } ?>
+        <?php } else if($order->isSeller && $order->status != 7 && $order->pay_status == 2){?>
+            <?php $form = ActiveForm::begin([]); ?>
+            <?= $form->field($order, 'id', ['options'=>['style'=>'display:none']])->hiddenInput()?>
+            <?= $form->field($order, 'status', ['options'=>['style'=>'display:none']])->hiddenInput(['value'=>7])?>
+            <b style="color: green;">收到全额付款？</b>
+            <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
+            <?php ActiveForm::end(); ?>
+        <?php }?>
         <?php if(!$order->isSeller && $order->status == 1) {?> 
             <?php $form = ActiveForm::begin(['action'=>['shop-seller/delivery'],
                 'options' => ['class'=>'form-signin, form-horizontal', 'style'=>'padding-left: 20px;'],
@@ -86,6 +93,13 @@ use yii\bootstrap\ActiveForm;
             <?= $form->field($delivery, 'name')->textInput()?>
             <?= $form->field($delivery, 'number')->textInput()?>
             <?= $form->field($delivery, 'description')->textarea(['style'=>'min-width: 400px'])->label('快递说明')?>
+            <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
+            <?php ActiveForm::end(); ?>
+        <?php } else if(!$order->isSeller && $order->status != 7 && $order->pay_status == 2){?>
+            <?php $form = ActiveForm::begin([]); ?>
+            <?= $form->field($order, 'id', ['options'=>['style'=>'display:none']])->hiddenInput()?>
+            <?= $form->field($order, 'status', ['options'=>['style'=>'display:none']])->hiddenInput(['value'=>7])?>
+            <b style="color: green;">收到全额付款？</b>
             <?= Html::submitButton('确定', ['class'=>'btn btn-primary']) ?>
             <?php ActiveForm::end(); ?>
         <?php }?>
