@@ -45,7 +45,7 @@ class SellerregForm extends Model
 
             ['shopRealName', 'required', 'message'=>"商户真实名称不能为空"],
             //['file', 'file', 'skipOnEmpty' => false, 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png'],
-            ['file', 'file','checkExtensionByMimeType'=>false, 'extensions' => 'jpg, png', 'skipOnEmpty' => false],
+            ['file', 'file','checkExtensionByMimeType'=>false, 'extensions' => 'zip, rar, jpg, png', 'skipOnEmpty' => false],
             ['phoneNumber', 'required', 'message'=>"手机号码不能为空"],
 
             ['email', 'required', 'message'=>"邮箱不能为空"],
