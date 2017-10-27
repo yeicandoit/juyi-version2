@@ -278,6 +278,7 @@ JS;
         'options' => ['style'=>'padding-left: 20px; display:none'],
     ]); ?>
     <?= $form->field($goods, 'id', ['options'=>['style'=>"display:none"]])?>
+    <?= $form->field($goods, 'seotitle')->textInput()?>
     <?= $form->field($goods, 'keywords')->textInput()?>
     <?= $form->field($goods, 'description')->textarea()?>
     <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>

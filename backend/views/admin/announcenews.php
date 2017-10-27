@@ -36,6 +36,7 @@ use yii\redactor\widgets\Redactor;
     </div>
 
     <div id="seo" style="display: none;">
+        <?= $form->field($model, 'seotitle')->textInput()?>
         <?= $form->field($model, 'keywords')->textInput()?>
         <?= $form->field($model, 'description')->textarea()?>
         <?= Html::submitButton('确定', [ 'style' => 'width:50px;', 'class'=>'btn btn-primary'])?>

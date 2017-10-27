@@ -733,6 +733,7 @@ class AdminController extends Controller
             $model->content = $news->content;
             $model->keywords = $news->keywords;
             $model->description = $news->description;
+            $model->seotitle = $news->seotitle;
         }
         return $this->render('changenews', ['model' => $model, 'info' => $info, 'news' => $news,]);
     }
@@ -789,6 +790,9 @@ class AdminController extends Controller
             $news=JyInformation::findone($newsid);
             $model->title = $news->title;
             $model->content = $news->content;
+            $model->keywords = $news->keywords;
+            $model->description = $news->description;
+            $model->seotitle = $news->seotitle;
         }
         return $this->render('changeinformation', ['model' => $model, 'info' => $info, 'news' => $news,]);
     }

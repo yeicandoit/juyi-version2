@@ -72,6 +72,7 @@ class Goods extends \yii\db\ActiveRecord
             [['goods_no'], 'string', 'max' => 20],
             [['brandversion'], 'string', 'max' => 60],
             [['img', 'keywords', 'description', 'ad_img'], 'string', 'max' => 255],
+            [['seotitle'], 'string', 'max' => 128],
             [['unit'], 'string', 'max' => 10],
         ];
     }
@@ -95,6 +96,7 @@ class Goods extends \yii\db\ActiveRecord
             'create_time' => Yii::t('app', '创建时间'),
             'img' => Yii::t('app', '原图'),
             'is_del' => Yii::t('app', '商品状态 0正常 1已删除 2下架 3申请上架'),
+            'seotitle' => Yii::t('app', 'SEO标题'),
             'keywords' => Yii::t('app', 'SEO关键词'),
             'description' => Yii::t('app', 'SEO描述'),
             'search_words' => Yii::t('app', '产品搜索词库,逗号分隔'),

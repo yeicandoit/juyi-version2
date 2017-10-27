@@ -15,6 +15,7 @@ class AnnounceNewsForm extends Model
     public $content;
     public $keywords;
     public $description;
+    public $seotitle;
     /**
      * @inheritdoc
      */
@@ -24,7 +25,7 @@ class AnnounceNewsForm extends Model
             ['title', 'trim'],
             ['title', 'required'],
             ['content', 'required'],
-            [['keywords', 'description'], 'safe'],
+            [['keywords', 'description', 'seotitle'], 'safe'],
         ];
     }
 
@@ -33,6 +34,7 @@ class AnnounceNewsForm extends Model
         return [
             'keywords'=>Yii::t('app', 'SEO关键词'),
             'description'=>Yii::t('app', 'SEO描述'),
+            'seotitle'=>Yii::t('app', 'SEO标题'),
         ];
     }
 
@@ -54,6 +56,7 @@ class AnnounceNewsForm extends Model
         $news->content = $this->content;
         $news->keywords = $this->keywords;
         $news->description = $this->description;
+        $news->seotitle = $this->seotitle;
         $news->time=date("Y-m-d H:i:s");
         
         return $news->save() ? $news : null;
@@ -65,9 +68,11 @@ class AnnounceNewsForm extends Model
     	$content = $this->content;
         $keywords = $this->keywords;
         $description = $this->description;
+        $seotitle = $this->seotitle;
     	$newsid= Yii::$app->request->post("postnewsid");
     	$update=Yii::$app->db->createCommand("UPDATE jy_announcement SET title='{$title}',content='{$content}',
-            keywords='{$keywords}',description='{$description}' WHERE id='{$newsid}'")->execute();
+            keywords='{$keywords}',description='{$description}',seotitle='{$seotitle}'
+             WHERE id='{$newsid}'")->execute();
     	return $update ? 1 : null;
     }
 }
