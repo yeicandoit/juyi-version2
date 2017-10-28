@@ -801,4 +801,10 @@ class ShopSellerController extends Controller
         }
         return $this->render('chpw', ['pw'=>$pw, 'info'=>$info]);
     }
+
+    public function actionQrcode()
+    {
+        $url = 'http://www.juyitest.com/shop/frontend/web/index.php?r=shop-seller/expert&id=' . Yii::$app->user->id;
+        return $this->render('qrcode', ['url'=>$url]);
+    }
 }

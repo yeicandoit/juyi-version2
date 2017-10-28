@@ -33,6 +33,7 @@ class Menu
             "详细信息" => "shop-seller/shopdetail",
             "修改密码" => "shop-seller/changepw",
             "QQ客服" => "shop-seller/onlineservice",
+            "二维码"=>"shop-seller/qrcode",
         ),
     );
 
@@ -51,6 +52,7 @@ class Menu
         "shop-seller/shopdetail"            =>      "详细信息",
         "shop-seller/onlineservice"         =>      "QQ客服",
         "shop-seller/changepw"              =>      "修改密码",
+        "shop-seller/qrcode"                =>      "二维码",
     );
     /**
      * @brief 根据权限初始化菜单
