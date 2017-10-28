@@ -804,7 +804,7 @@ class ShopSellerController extends Controller
 
     public function actionQrcode()
     {
-        $url = 'http://www.juyitest.com/shop/frontend/web/index.php?r=shop-seller/expert&id=' . Yii::$app->user->id;
+        $url = Yii::$app->params['fUrl'] . 'shop-seller/expert&id=' . Yii::$app->user->id;
         return $this->render('qrcode', ['url'=>$url]);
     }
 }

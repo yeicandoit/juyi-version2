@@ -62,12 +62,15 @@ class Menu
     public static function getMenu($shopType = "seller")
     {
         //菜单创建事件触发
+        $arr = self::$menu;
         if($shopType != 'seller') {
-            $arr = self::$menu;
-            unset($arr['预约模块']);  
-            return $arr;
-        } 
-        return self::$menu;
+            unset($arr['预约模块']);
+        }
+        if($shopType != 'expert'){
+            unset($arr['配置模块']['二维码']);
+        }
+
+        return $arr;
     }
 
     public static function getRoute2name($route){
