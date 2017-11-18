@@ -111,6 +111,21 @@ class Menu
         "admin/account"     =>  "订单",
     );
 
+    public static $ArrPartMenu = array(
+        'managenews' => array(
+            "新闻资讯" => array(
+                "新闻发布" => "admin/announcenews",
+                "新闻管理" => "admin/managenews",
+                "资讯发布" => "admin/setinformation",
+                "资讯管理" => "admin/manageinformation",
+            ),
+        ),
+    );
+
+    public static $ArrPartShow = array(
+        'mnews' => 'managenews',
+    );
+
     public static function getMenu($cate=null)
     {
         //菜单创建事件触发

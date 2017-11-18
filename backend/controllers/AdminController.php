@@ -58,6 +58,7 @@ use backend\models\seller\CommentSearch;
 use AlipayConfig;
 use AlipayTradeService;
 use AlipayTradeRefundContentBuilder;
+use backend\models\admin\Menu;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -147,7 +148,11 @@ class AdminController extends Controller
         }
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect(['adminhome']);
+            if(!isset(Menu::$ArrPartShow[$model->username])) {
+                return $this->redirect(['adminhome']);
+            } else {
+                return $this->redirect([Menu::$ArrPartShow[$model->username]]);
+            }
         }
         return $this->render('login', ['model' => $model]);
     }

@@ -209,8 +209,10 @@ AppAsset::register($this);
 		<font style="line-height:250%;"></font><!--Set LineSpacing -->
 		<br>
 		<ul class="mynav-cate">
+			<?php if(!isset(Menu::$ArrPartShow[$curuser])){?>
 			<?php foreach(Menu::getCate2Url() as $item=>$value){?>
 				<li><a href="<?=Url::to([Menu::getCate2Url($item)])?>"><?=$item?></a></li>
+			<?php }?>
 			<?php }?>
 		</ul>
 	</div><!--mynavright-->
@@ -226,7 +228,12 @@ AppAsset::register($this);
 	 <?php
 	 if($actionId != 'login') {?>
 		 <div class="menuInfo">
-			 <?php foreach(Menu::getMenu($session['cate']) as $item=>$subMenu){?>
+			 <?php if(isset(Menu::$ArrPartShow[$curuser])){
+				 $menu = Menu::$ArrPartMenu[Menu::$ArrPartShow[$curuser]];
+			 } else {
+				 $menu = Menu::getMenu($session['cate']);
+			 }?>
+			 <?php foreach($menu as $item=>$subMenu){?>
 				 <div class="box">
 					 <div class="smenu"><h5><?php echo isset($item)?$item:"";?></h5></div>
 					 <div class="cont">
