@@ -43,7 +43,7 @@ class ShopSellerController extends Controller
     	$expert = Expert::findOne($id);
     	$expertInfo = $expert->ext;
     	
-    	/*
+    	
     	//判断终端类型
     	$is_mobile = null;
     	 
@@ -66,20 +66,17 @@ class ShopSellerController extends Controller
     	}
     	 
     	
+    	$relatedExperts = $expert->relatedExperts;
+    	 
     	if($is_mobile)
     	{
-    		$this->layout= "mymain-mobile";
+    		//$this->layout= "mymain-mobile";
     		
-    		return $this->render('expertmobile', ['expert'=>$expert, 'expertInfo'=>$expertInfo]);
+    		return $this->renderPartial('expertmobile', ['expert'=>$expert, 'expertInfo'=>$expertInfo,'relatedExperts'=>$relatedExperts]);
     		
     	}
-    	else 
-    	{   	
     
-       			 return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo]);
-    	}
-*/
-        $relatedExperts = $expert->relatedExperts; 	
+
     	return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo, 'relatedExperts'=>$relatedExperts]);
     	//return $this->render('expert', ['expert'=>$expert, 'expertInfo'=>$expertInfo]);
     	 

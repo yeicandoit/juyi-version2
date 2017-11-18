@@ -5,6 +5,19 @@ use yii\helpers\Html;
 <?=Html::cssFile('@web/css/reg.css')?>
 <?=Html::jsFile('@web/js/scrollfix.js')?>
 
+<style type='text/css'>
+.goodbox {
+    float: left;
+    padding-top:20px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.goodshow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #f6f6f6;
+}
+</style>
+
 <table>
     <tr>
     <td valign="top" style="width: 10%">
@@ -78,14 +91,16 @@ use yii\helpers\Html;
             </table>
         </div>
         <div id="service" style="padding-top: 20px;">
-            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;技术服务</div>
-            <?php
-                foreach($expert->goods as $k=>$g){
-                    echo Html::a($g->name, ['site/goodinfoexpert', 'id'=>$g->id], ['style'=>'width:115px; btn btn-primary;padding-top:20px; padding-left:25px;padding-right:25px;']);
-                }
-            ?>
+            <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:70%">&nbsp;&nbsp;&nbsp;技术服务</div>
+            <?php foreach($expert->goods as $k=>$g){?>
+                    <div class='goodbox'>
+                        <div class='goodshow'>
+                            &nbsp;<?=Html::a($g->name, ['site/goodinfoexpert', 'id'=>$g->id])?>&nbsp;
+                        </div>
+                    </div>
+            <?php }?>
         </div>
-        <div id="description" style="padding-top: 20px;word-wrap:break-word;word-break:break-all">
+        <div id="description" style="padding-top: 20px;word-wrap:break-word;word-break:break-all;clear:both;">
             <div style="background-color:#0e5e98;color: #fdfdfd;border-radius:0 15px 0 0;height:23px;width:100px">&nbsp;&nbsp;&nbsp;专家介绍</div>
             <div>
                 <?=$expertInfo->description?>
