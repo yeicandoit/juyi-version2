@@ -77,7 +77,8 @@ $this->registerJsFile('@web/js/jquery.Jcrop.min.js', ['depends' => ['backend\ass
     <?= $form->field($goods, 'sort')->textInput(['style'=>'width:10%'])?>
     <?= $form->field($goods, 'seller_id')->dropDownList(ArrayHelper::map(Expert::find()->asArray()->all(), 'id', 'true_name') +
         ArrayHelper::map(Seller::find()->asArray()->all(), 'id', 'true_name'), ['style'=>'width:60%'])->label('所属商户:');?>
-    <?= $form->field($goods, 'goodtype')->dropDownList([1=>'检测中心', 2=>'专家解码', 3=>'科研辅助', 4=>'数值模拟'], ['style'=>'width:60%'])->label('所属商户类型:');?>
+    <?= $form->field($goods, 'goodtype')->dropDownList([1=>'检测中心', 2=>'专家解码', 3=>'科研辅助', 4=>'数值模拟'],
+        ['style'=>'width:60%', 'onchange'=>'setStoreNum()'])->label('所属商户类型:');?>
     <div class="goodInfoBox">
     <div>
         <?=Html::label('所属分类');?>
@@ -140,19 +141,14 @@ JS;
         ?>
         <table>
             <tr>
-                <th>商品货号</th><th>市场价格</th><th>销售价格</th><th>成本价格</th>
-                <?php if(Goods::TYPE_RESEARCH ==$goods->goodtype || Goods::TYPE_SIMULATE == $goods->goodtype){?>
-                    <th>库存</th>
-                <?php }?>
+                <th>商品货号</th><th>市场价格</th><th>销售价格</th><th>成本价格</th><th class="store_num">库存</th>
             </tr>
             <tr>
                 <td style="width: 160px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:150px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
-                <?php if(Goods::TYPE_RESEARCH ==$goods->goodtype || Goods::TYPE_SIMULATE == $goods->goodtype){?>
-                    <td style="width: 150px;"><?= $form->field($goods, 'store_nums', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
-                <?php }?>
+                <td style="width: 150px;" class="store_num"><?= $form->field($goods, 'store_nums', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
             </tr>
         </table>
         <div style="display: none"><?= $form->field($goods, 'model_id')->textInput(['style'=>'width:25%', 'value'=>'1'])?></div>
@@ -539,6 +535,19 @@ JS;
                 $(node).remove();
             }
         }
+    }
+    
+    function setStoreNum() {
+        var val = $("#goods-goodtype").val();
+        if(<?=Goods::TYPE_RESEARCH?> == val || <?=Goods::TYPE_SIMULATE?> == val) {
+            $(".store_num").show();
+        } else {
+            $(".store_num").hide();
+        }
+    }
+
+    window.onload = function(){
+        setStoreNum();
     }
 </script>
 
