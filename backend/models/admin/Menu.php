@@ -9,7 +9,6 @@ class Menu
             "网站管理" => array(
                 "后台首页" => "admin/adminhome",
                 "关于聚仪" => "xyf/updateaboutjuyi",
-                "权限管理" => "sysadmin/",
                 "品牌管理" => "admin/brandlist",
                 "论坛管理" => "admin/forum",
             ),
@@ -60,6 +59,12 @@ class Menu
                 "设置预约" => "admin/setappointment",
             ),
         ),
+        "账户" => array(
+            "账户管理" => array(
+                "添加管理员" => "addadmin",
+                "权限管理" => "sysadmin/",
+            ),
+        ),
     );
 
     public static $route2name = array(
@@ -94,6 +99,7 @@ class Menu
         "admin/researchlist"        =>      "科研辅助",
         "admin/simulatelist"        =>      "数值模拟",
         "admin/forum"               =>      "论坛管理",
+        "admin/addadmin"            =>      "添加管理员",
 
     );
 
@@ -102,6 +108,7 @@ class Menu
         "商品" => "admin/goodslist",
         "会员" => "admin/memberlist",
         "订单" => "admin/account",
+        "账户" => "admin/addadmin",
     );
 
     public static $Url2Cate = array(
@@ -109,6 +116,7 @@ class Menu
         "admin/goodslist"   =>  "商品",
         "admin/memberlist"  =>  "会员",
         "admin/account"     =>  "订单",
+        "admin/addadmin"    =>  "账户",
     );
 
     public static $ArrPartMenu = array(

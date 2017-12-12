@@ -59,6 +59,7 @@ use AlipayConfig;
 use AlipayTradeService;
 use AlipayTradeRefundContentBuilder;
 use backend\models\admin\Menu;
+use backend\models\admin\AdminForm;
 
 /**
  * AdminController implements the CRUD actions for Admin model.
@@ -1072,5 +1073,20 @@ class AdminController extends Controller
             $ad->delete();
         }
         return $this->redirect(['admin/adlist']);
+    }
+
+    public function actionAddadmin()
+    {
+        $model = new AdminForm();
+        $info = '';
+        if ($model->load(Yii::$app->request->post())){
+            if ($model->addAdmin()) {
+                $info = '添加成功，可以继续添加';
+                return $this->render("addadmin", ['model'=>$model,'info' => $info]);
+            } else {
+                $info = '添加失败';
+            }
+        }
+        return $this->render('addadmin', ['model' => $model, 'info' => $info]);
     }
 }
