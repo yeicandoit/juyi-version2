@@ -79,6 +79,7 @@ use backend\models\admin\CommendGoods;
                 'format'=>'raw',
                 'value'=>function($model){
                     $edit = Html::a('修改', Url::to(['admin/goodsedit', 'id'=>$model->id]));
+                    $operationLog = Html::a('修改历史', Url::to(['admin/operationlog', 'table_name'=>'jy_goods', 'element_id'=>$model->id]));
                     $hot = '';
                     if($model->goodtype == Goods::TYPE_TEST){
                         $type = CommendGoods::HotDevice;
@@ -87,9 +88,9 @@ use backend\models\admin\CommendGoods;
                         } else {
                             $hot = Html::a('添加热门', '#', ['onclick'=>"addhot('$model->goods_no', '$type', $model->id)"]);
                         }
-                        return "$edit|<ctrl id='ctrl$model->id'>$hot</ctrl>";
+                        return "$edit|<ctrl id='ctrl$model->id'>$hot</ctrl>|$operationLog";
                     }
-                    return "$edit";
+                    return "$edit|$operationLog";
                 }
             ]
         ],

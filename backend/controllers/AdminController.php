@@ -17,6 +17,8 @@ use backend\models\admin\ForumReply;
 use backend\models\admin\ForumReplySearch;
 use backend\models\admin\JyAnnouncement;
 use backend\models\admin\JyInformation;
+use backend\models\admin\OperationLog;
+use backend\models\admin\OperationLogSearch;
 use backend\models\admin\SetInformationForm;
 use backend\models\seller\Appointinfo;
 use backend\models\seller\Brand;
@@ -201,6 +203,7 @@ class AdminController extends Controller
                 if(isset($post['newBrand']) && '' != $post['newBrand']){
                     $goods->saveBrand($post['newBrand'], $goods->goodtype);
                 }
+                OperationLog::addLog('jy_goods', $goods->id, Yii::$app->user->id, 'edit');
                 return $this->redirect(['goodslist']);
             }
             return $this->goBack();
@@ -269,6 +272,7 @@ class AdminController extends Controller
                 if(isset($post['newBrand']) && '' != $post['newBrand']){
                     $goods->saveBrand($post['newBrand'], $goods->goodtype);
                 }
+                OperationLog::addLog('jy_goods', $goods->id, Yii::$app->user->id, 'add');
                 return $this->redirect(['goodslist']);
             }
             return $this->goHome();
@@ -1088,5 +1092,12 @@ class AdminController extends Controller
             }
         }
         return $this->render('addadmin', ['model' => $model, 'info' => $info]);
+    }
+
+    public function actionOperationlog($table_name, $element_id)
+    {
+        $searchModel = new OperationLogSearch(['table_name'=>$table_name, 'element_id'=>$element_id]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('operationlog', ['searchModel'=>$searchModel, 'dataProvider'=>$dataProvider]);
     }
 }
