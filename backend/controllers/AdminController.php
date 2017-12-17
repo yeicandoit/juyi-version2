@@ -227,6 +227,7 @@ class AdminController extends Controller
                 }
                 $goodsContent->load($post);
                 $goodsContent->save();
+                OperationLog::addLog('jy_goods', $post['Goodscontent']['goodid'], Yii::$app->user->id, 'edit');
             }
             return $this->redirect(['goodsedit', 'id'=>$post['Goodscontent']['goodid']]);
         }
@@ -241,6 +242,7 @@ class AdminController extends Controller
                 if (null != $good) {
                     $good->load($post);
                     $good->save();
+                    OperationLog::addLog('jy_goods', $good->id, Yii::$app->user->id, 'edit');
                 }
             }
             return $this->redirect(['goodsedit', 'id'=>$post['Goods']['id']]);
