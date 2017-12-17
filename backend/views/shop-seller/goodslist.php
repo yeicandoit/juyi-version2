@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use \yii\helpers\Url;
+use \backend\models\admin\OperationLog;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -34,6 +35,25 @@ use \yii\helpers\Url;
                 }
             ],
             [
+                'attribute'=>'goods_no',
+                'options' => ['width' => "80"],
+                'format'=>'raw',
+                'value'=> function($model){
+                    $addTime = OperationLog::find()->where(['table_name'=>'jy_goods', 'element_id'=>$model->id,
+                        'operation_type'=>'add'])->min('operation_time');
+                    $editTime = OperationLog::find()->where(['table_name'=>'jy_goods', 'element_id'=>$model->id,
+                        'operation_type'=>'edit'])->max('operation_time');
+                    $operationLog = "";
+                    if(isset($addTime)){
+                        $operationLog .= "<br>添加时间：$addTime";
+                    }
+                    if(isset($editTime)){
+                        $operationLog .= "<br>最近修改：$editTime";
+                    }
+                    return "$model->goods_no$operationLog";
+                }
+            ],
+            [
                 'label'=>'分类',
                 'format'=>'raw',
                 'value'=>function($model){
@@ -45,7 +65,7 @@ use \yii\helpers\Url;
                     return "<div style='max-width: 250px;white-space: normal;'>$strCats</div>";
                 }
             ],
-            'sell_price',
+            ['attribute' => 'sell_price', 'options' => ['width' => "80"],],
             [
                 'attribute' => 'is_del',
                 'label'=>'状态',

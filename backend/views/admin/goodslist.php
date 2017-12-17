@@ -4,6 +4,7 @@ use yii\grid\GridView;
 use \yii\helpers\Url;
 use backend\models\seller\Goods;
 use backend\models\admin\CommendGoods;
+use \backend\models\admin\OperationLog;
 ?>
 <?=Html::cssFile('@web/css/reg.css')?>
 <!--Show seller info-->
@@ -36,7 +37,25 @@ use backend\models\admin\CommendGoods;
                                 </table>";
                 }
             ],
-            ['attribute'=>'goods_no', 'options' => ['width' => "80"]],
+            [
+                'attribute'=>'goods_no',
+                'options' => ['width' => "80"],
+                'format'=>'raw',
+                'value'=> function($model){
+                    $addTime = OperationLog::find()->where(['table_name'=>'jy_goods', 'element_id'=>$model->id,
+                        'operation_type'=>'add'])->min('operation_time');
+                    $editTime = OperationLog::find()->where(['table_name'=>'jy_goods', 'element_id'=>$model->id,
+                        'operation_type'=>'edit'])->max('operation_time');
+                    $operationLog = "";
+                    if(isset($addTime)){
+                        $operationLog .= "<br>添加时间：$addTime";
+                    }
+                    if(isset($editTime)){
+                        $operationLog .= "<br>最近修改：$editTime";
+                    }
+                    return "$model->goods_no$operationLog";
+                }
+            ],
             [
                 'label'=>'分类',
                 'format'=>'raw',
@@ -52,7 +71,8 @@ use backend\models\admin\CommendGoods;
             ],
             [
                 'attribute' => 'sell_price',
-                "headerOptions" => ["width" => "80"],
+                //"headerOptions" => ["width" => "50"],
+                'options' => ['width' => "80"],
             ],
             [
                 'attribute' => 'goodtype',
@@ -79,7 +99,6 @@ use backend\models\admin\CommendGoods;
                 'format'=>'raw',
                 'value'=>function($model){
                     $edit = Html::a('修改', Url::to(['admin/goodsedit', 'id'=>$model->id]));
-                    $operationLog = Html::a('修改历史', Url::to(['admin/operationlog', 'table_name'=>'jy_goods', 'element_id'=>$model->id]));
                     $hot = '';
                     if($model->goodtype == Goods::TYPE_TEST){
                         $type = CommendGoods::HotDevice;
@@ -88,9 +107,9 @@ use backend\models\admin\CommendGoods;
                         } else {
                             $hot = Html::a('添加热门', '#', ['onclick'=>"addhot('$model->goods_no', '$type', $model->id)"]);
                         }
-                        return "$edit|<ctrl id='ctrl$model->id'>$hot</ctrl>|$operationLog";
+                        return "$edit|<ctrl id='ctrl$model->id'>$hot</ctrl>";
                     }
-                    return "$edit|$operationLog";
+                    return "$edit";
                 }
             ]
         ],

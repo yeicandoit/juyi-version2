@@ -47,6 +47,7 @@ use backend\models\seller\AppointinfoSearch;
 use backend\models\seller\GoodService;
 use yii\helpers\Html;
 use yii\data\Pagination;
+use backend\models\admin\OperationLog;
 
 use yii\filters\AccessControl;
 
@@ -305,6 +306,7 @@ class ShopSellerController extends Controller
                 $goodsContent->load($post);
                 $goodsContent->goodid = $goods->id;
                 $goodsContent->save();
+                OperationLog::addLog('jy_goods', $goods->id, Yii::$app->user->id, 'add');
                 return $this->redirect(['goodsedit', 'id'=>$goods->id]);
             }
         }
@@ -333,6 +335,7 @@ class ShopSellerController extends Controller
                 if(isset($post['newBrand']) && '' != $post['newBrand']){
                     $goods->saveBrand($post['newBrand'], $goods->goodtype);
                 }
+                OperationLog::addLog('jy_goods', $goods->id, Yii::$app->user->id, 'edit');
                 return $this->redirect(['goodslist']);
             }
             return $this->goBack();
