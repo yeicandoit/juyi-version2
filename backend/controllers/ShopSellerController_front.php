@@ -156,9 +156,15 @@ class ShopSellerController extends Controller
             $researchInfo->reserve1 = substr($researchInfo->reserve1, 0, 61);
         }
         $pages = new Pagination(['totalCount' =>$research->pageGoods()->count(), 'pageSize' => '12']);
-        $model = $research->pageGoods()->offset($pages->offset)->limit($pages->limit)->all();
+        $model = $research->pageGoods()->orderBy('id DESC')->offset($pages->offset)->limit($pages->limit)->all();
         $relatedLabs = $research->relatedLabs;
-        return $this->render('research', ['lab'=>$research, 'labInfo'=>$researchInfo, 'model'=>$model, 'pages' => $pages, 'relatedLabs'=>$relatedLabs]);
+
+        if ($this->isMobile()){
+            $model = $research->pageGoods()->orderBy('id DESC')->offset(0)->limit(3)->all();
+            return $this->renderPartial('researchmobile', ['lab' => $research, 'labInfo' => $researchInfo, 'model' => $model, 'relatedLabs' => $relatedLabs]);
+        } else {
+            return $this->render('research', ['lab' => $research, 'labInfo' => $reseaerchInfo, 'model' => $model, 'pages' => $pages, 'relatedLabs' => $relatedLabs]);
+        }
     }
 
     public function actionSimulate($id)
@@ -166,9 +172,15 @@ class ShopSellerController extends Controller
         $simulate = Seller::findOne($id);
         $simulateInfo = $simulate->ext;
         $pages = new Pagination(['totalCount' =>$simulate->pageGoods()->count(), 'pageSize' => '12']);
-        $model = $simulate->pageGoods()->offset($pages->offset)->limit($pages->limit)->all();
+        $model = $simulate->pageGoods()->orderBy('id DESC')->offset($pages->offset)->limit($pages->limit)->all();
         $relatedLabs = $simulate->relatedLabs;
-        return $this->render('simulate', ['lab'=>$simulate, 'labInfo'=>$simulateInfo, 'model'=>$model, 'pages' => $pages, 'relatedLabs'=>$relatedLabs]);
+
+        if ($this->isMobile()){
+            $model = $simulate->pageGoods()->orderBy('id DESC')->offset(0)->limit(3)->all();
+            return $this->renderPartial('simulatemobile', ['lab' => $simulate, 'labInfo' => $simulateInfo, 'model' => $model, 'relatedLabs' => $relatedLabs]);
+        } else {
+            return $this->render('simulate', ['lab' => $simulate, 'labInfo' => $simulateInfo, 'model' => $model, 'pages' => $pages, 'relatedLabs' => $relatedLabs]);
+        }
     }
 
     private function isMobile()
