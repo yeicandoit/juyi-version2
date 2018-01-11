@@ -126,6 +126,7 @@ JS;
     <br>
     <div class="goodInfoBox">
     <label>基本数据</label>
+    <p>提示：若市场价格或销售价格为面议，请填0 </p> 
         <?php $goodsNo = $goods->goods_no;
             if(!isset($goods->goods_no)){
                 $goodsNo = "JY" . uniqid();
@@ -140,9 +141,9 @@ JS;
             </tr>
             <tr>
                 <td style="width: 160px;"><?= $form->field($goods, 'goods_no', ['template'=>'{input}'])->textInput(['value'=>"$goodsNo", 'readonly'=>true, 'style'=>'width:150px'])?></td>
-                <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+                <td style="width: 150px;"><?= $form->field($goods, 'market_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <td style="width: 150px;"><?= $form->field($goods, 'sell_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
-                <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
+                <td style="width: 150px;"><?= $form->field($goods, 'cost_price', ['template'=>'{input}{error}'])->textInput(['style'=>'width:120px'])?></td>
                 <?php if(Goods::TYPE_RESEARCH ==$goods->goodtype || Goods::TYPE_SIMULATE == $goods->goodtype){?>
                     <td style="width: 150px;"><?= $form->field($goods, 'store_nums', ['template'=>'{input}'])->textInput(['style'=>'width:120px'])?></td>
                 <?php }?>
