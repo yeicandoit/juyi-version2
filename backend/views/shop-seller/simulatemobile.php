@@ -100,13 +100,13 @@ use yii\helpers\Url;
                         var myobj = eval('(' + result + ')');
                         for(var i=0;i<myobj.length;i++){  
                             var str1="<tr>";
-                            var str2= "<td style='width:8rem;'>  <img src= "    + myobj[i]['img'] + " alt='Norway' style='width:100%' class='myp2'>    </td>";
+                            var str2= "<td style='width:8rem;'>  <img src= "    + myobj[i]['img'] + " alt='Norway' style='width:100%' class='myp2'> <input type='hidden'   value='"+myobj[i]['id']+"'>   </td>";
                             var str3="<td>  <div class='myp2'>" +  myobj[i]['name']  + "</div>";
                             var str4= "<div class='myp2'>品  &nbsp&nbsp 牌："+  myobj[i]['brand']+ "</div>";
                             var str5= "<div class='myp2'>型  &nbsp&nbsp 号："+  myobj[i]['brandversion']+ "</div>";
                             var str6="<div class='myp2'>模拟价："+  myobj[i]['sell_price']+ "</div>";
                             var str7="	 <div class='myp2' style='text-decoration:line-through;color:red'>市场价："+  myobj[i]['market_price']+ "</div>";
-                            var str9="</td></tr>  ";
+                            var str9="<input type='hidden'   value='"+myobj[i]['id']+"'></td></tr>  ";
 
                             var str=str1+str2+str3+str4+str5+str6+str7+str9;
                             $("#goodTable").append(str);
@@ -162,6 +162,7 @@ use yii\helpers\Url;
                     <tr>
                         <td style="width:8rem;">
                             <img src="<?= $g['img'] ?>" alt="Norway" style="width:100%" class="myp">
+            	            <input type="hidden"   value="<?= Html::encode($g['id']);?>">
                         </td>
                         <td>
                             <div class="myp"><?= Html::encode($g['name']); ?></div>
@@ -183,6 +184,7 @@ use yii\helpers\Url;
                                 }
                                 ?>
                             </div>
+               	            <input type="hidden"   value="<?= Html::encode($g['id']);?>">
                         </td>
                     </tr>
                 <?php endforeach; ?>
