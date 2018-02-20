@@ -212,7 +212,7 @@ use yii\helpers\Url;
                     <?php 
                         $logo = $lab->logo;
                         if("images/" == $logo || "" == $logo){
-                            $logo = "img/1111.jpg";
+                            $logo = "img/lab_default.jpg";
                         }
                     ?>
                     <?= Html::img($logo,['style' => 'width:200px;height:200px;padding-top:5px'])?>
@@ -250,7 +250,7 @@ use yii\helpers\Url;
                     <?php 
                         $logo = $v->logo;
                         if("images/" == $logo || "" == $logo){
-                            $logo = "img/1111.jpg";
+                            $logo = "img/lab_default.jpg";
                         }
                     ?>
                     <tr>
