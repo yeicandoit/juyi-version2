@@ -53,6 +53,18 @@ use \yii\helpers\Url;
                     return $model->createdOrderArr[$model->orderstate];
                 }
             ],
+            [
+                'label'=>'操作',
+                'format' => 'raw',
+                'value' => function($model) {
+                    $yangpin = \backend\models\seller\Yangpininfo::findOne($model->appointid);
+                    if($yangpin){
+                        return Html::a('查看样品', Url::to(['shop-seller/yangpininfo', 'id'=>$model->appointid]));
+                    } else {
+                        return "";
+                    }
+                }
+            ]
         ],
     ]); ?>
 </div>

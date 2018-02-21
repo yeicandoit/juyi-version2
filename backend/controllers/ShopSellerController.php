@@ -31,6 +31,7 @@ use backend\models\seller\RefundmentDocSearch;
 use backend\models\seller\ShopService;
 use backend\models\seller\Member;
 use backend\models\admin\Xinyongorder;
+use backend\models\seller\Yangpininfo;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -811,5 +812,15 @@ class ShopSellerController extends Controller
     {
         $url = Yii::$app->params['fUrl'] . 'shop-seller/expert&id=' . Yii::$app->user->id;
         return $this->render('qrcode', ['url'=>$url]);
+    }
+
+    public function actionYangpininfo($id)
+    {
+        $yangpininfo = Yangpininfo::findOne($id);
+        if($yangpininfo){
+            return $this->render('yangpininfo', ['yangpininfo'=>$yangpininfo]);
+        } else {
+            //TODO error page
+        }
     }
 }
