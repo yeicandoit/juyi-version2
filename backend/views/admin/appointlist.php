@@ -54,6 +54,19 @@ use \yii\helpers\Url;
                     return $model->createdOrderArr[$model->orderstate];
                 }
             ],
+            [
+                'label'=>'操作',
+                'format' => 'raw',
+                'value' => function($model) {
+                    $yangpin = \backend\models\seller\Order::find()->where(['appointid'=>$model->appointid])->one();
+                    if($yangpin){
+                        return Html::a('查看样品', "http://www.juyitest.com/shop/frontend/web/index.php?r=site/test3&id=$yangpin->id");
+                    } else {
+                        return "";
+                    }
+                }
+            ]
+
         ],
     ]); ?>
 </div>

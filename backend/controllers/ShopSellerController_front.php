@@ -65,7 +65,7 @@ class ShopSellerController extends Controller
     		$is_mobile = false;
     	}
     	 
-    		$is_mobile = false;
+    	//	$is_mobile = false;
     	
     	$relatedExperts = $expert->relatedExperts;
     	 
